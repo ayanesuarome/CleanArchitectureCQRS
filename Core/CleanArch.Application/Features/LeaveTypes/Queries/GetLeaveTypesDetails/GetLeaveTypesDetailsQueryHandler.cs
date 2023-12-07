@@ -6,16 +6,11 @@ using MediatR;
 
 namespace CleanArch.Application.Features.LeaveTypesdetails.Queries.GetLeaveTypesDetails;
 
-public class GetLeaveTypesDetailsQueryHandler : IRequestHandler<GetLeaveTypesDetailsQuery, LeaveTypeDetailsDto>
+public class GetLeaveTypesDetailsQueryHandler(IMapper mapper, ILeaveTypeRepository repository)
+    : IRequestHandler<GetLeaveTypesDetailsQuery, LeaveTypeDetailsDto>
 {
-    private readonly IMapper _mapper;
-    private readonly ILeaveTypeRepository _repository;
-
-    public GetLeaveTypesDetailsQueryHandler(IMapper mapper, ILeaveTypeRepository repository)
-    {
-        _mapper = mapper;
-        _repository = repository;
-    }
+    private readonly IMapper _mapper = mapper;
+    private readonly ILeaveTypeRepository _repository = repository;
 
     public async Task<LeaveTypeDetailsDto> Handle(GetLeaveTypesDetailsQuery request, CancellationToken cancellationToken)
     {

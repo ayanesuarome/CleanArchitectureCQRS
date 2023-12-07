@@ -5,16 +5,11 @@ using MediatR;
 
 namespace CleanArch.Application.Features.LeaveTypes.Queries.GetAllLeaveTypes;
 
-public class GetLeaveTypesQueryHandler : IRequestHandler<GetLeaveTypesQuery, List<LeaveTypeDto>>
+public class GetLeaveTypesQueryHandler(IMapper mapper, ILeaveTypeRepository repository)
+    : IRequestHandler<GetLeaveTypesQuery, List<LeaveTypeDto>>
 {
-    private readonly IMapper _mapper;
-    private readonly ILeaveTypeRepository _repository;
-
-    public GetLeaveTypesQueryHandler(IMapper mapper, ILeaveTypeRepository repository)
-    {
-        _mapper = mapper;
-        _repository = repository;
-    }
+    private readonly IMapper _mapper = mapper;
+    private readonly ILeaveTypeRepository _repository = repository;
 
     public async Task<List<LeaveTypeDto>> Handle(GetLeaveTypesQuery request, CancellationToken cancellationToken)
     {
