@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.7.34031.279
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CleanArch.Application", "CleanArch.Application", "{BA83205C-D4E1-4E79-87ED-ED46C11F631F}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CleanArch.IoC", "CleanArch.IoC", "{0978DB04-3E2E-46C2-9AAE-49B8EAC0C758}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CleanArch.UI.Mvc", "CleanArch.UI.Mvc", "{431BAE94-2364-4E29-B40D-E319EEF1BDF5}"
@@ -23,7 +21,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CleanArch.Domain", "Core\Cl
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CleanArch.Application", "Core\CleanArch.Application\CleanArch.Application.csproj", "{1FE4CEAF-126F-42F6-A4C4-DF559E34EFAE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CleanArch.Persistence", "Infrastructure\CleanArch.Persistence\CleanArch.Persistence.csproj", "{2B41DDF3-AE36-481C-9EBE-8ED57DF035EB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CleanArch.Persistence", "Infrastructure\CleanArch.Persistence\CleanArch.Persistence.csproj", "{2B41DDF3-AE36-481C-9EBE-8ED57DF035EB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
