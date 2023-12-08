@@ -17,4 +17,11 @@
     <ProjectReference Include="..\CleanArch.Domain\CleanArch.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Features\LeaveAllocations\Commands\" />
+    <Folder Include="Features\LeaveAllocations\Queries\" />
+    <Folder Include="Features\LeaveRequests\Commands\" />
+    <Folder Include="Features\LeaveRequests\Queries\" />
+  </ItemGroup>
+
 </Project>
