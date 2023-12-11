@@ -5,28 +5,27 @@ using CleanArch.Domain.Interfaces.Persistence;
 using FluentValidation.Results;
 using MediatR;
 
-namespace CleanArch.Application.Features.LeaveTypes.Commands.CreateLeaveTypes
+namespace CleanArch.Application.Features.LeaveTypes.Commands.CreateLeaveTypes;
+
+public class CreateLeaveTypeCommandHandler(IMapper mapper, ILeaveTypeRepository repository)
+    : IRequestHandler<CreateLeaveTypeCommand, int>
 {
-    public class CreateLeaveTypeCommandHandler(IMapper mapper, ILeaveTypeRepository repository)
-        : IRequestHandler<CreateLeaveTypeCommand, int>
+    private readonly IMapper _mapper = mapper;
+    private readonly ILeaveTypeRepository _repository = repository;
+
+    public async Task<int> Handle(CreateLeaveTypeCommand request, CancellationToken cancellationToken)
     {
-        private readonly IMapper _mapper = mapper;
-        private readonly ILeaveTypeRepository _repository = repository;
+        CreateLeaveTypeCommandValidator validator = new(_repository);
+        ValidationResult validationResult = await validator.ValidateAsync(request, cancellationToken);
 
-        public async Task<int> Handle(CreateLeaveTypeCommand request, CancellationToken cancellationToken)
+        if(!validationResult.IsValid)
         {
-            CreateLeaveTypeCommandValidator validator = new(_repository);
-            ValidationResult validationResult = await validator.ValidateAsync(request, cancellationToken);
-
-            if(!validationResult.IsValid)
-            {
-                throw new BadRequestException($"Invalid {nameof(LeaveType)}", validationResult);
-            }
-
-            LeaveType leaveTypeToCreate = _mapper.Map<LeaveType>(request);
-            await _repository.CreateAsync(leaveTypeToCreate);
-
-            return leaveTypeToCreate.Id;
+            throw new BadRequestException($"Invalid {nameof(LeaveType)}", validationResult);
         }
+
+        LeaveType leaveTypeToCreate = _mapper.Map<LeaveType>(request);
+        await _repository.CreateAsync(leaveTypeToCreate);
+
+        return leaveTypeToCreate.Id;
     }
 }

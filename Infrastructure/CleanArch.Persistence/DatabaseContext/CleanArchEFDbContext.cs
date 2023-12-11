@@ -3,15 +3,16 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CleanArch.Persistence.DatabaseContext;
 
-public partial class CleanArchEFDbContext : DbContext
+public sealed partial class CleanArchEFDbContext : DbContext
 {
-    public CleanArchEFDbContext(DbContextOptions<CleanArchEFDbContext> options) : base(options)
-    {            
+    public CleanArchEFDbContext(DbContextOptions<CleanArchEFDbContext> options)
+        : base(options)
+    {        
     }
 
-    public virtual DbSet<LeaveType> LeaveTypes { get; set; }
-    public virtual DbSet<LeaveRequest> LeaveRequests { get; set; }
-    public virtual DbSet<LeaveAllocation> LeaveAllocations { get; set; }
+    public DbSet<LeaveType> LeaveTypes { get; set; }
+    public DbSet<LeaveRequest> LeaveRequests { get; set; }
+    public DbSet<LeaveAllocation> LeaveAllocations { get; set; }
 
     public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
     {

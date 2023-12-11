@@ -13,7 +13,7 @@ public class GetLeaveTypesQueryHandler(IMapper mapper, ILeaveTypeRepository repo
 
     public async Task<List<LeaveTypeDto>> Handle(GetLeaveTypesQuery request, CancellationToken cancellationToken)
     {
-        List<LeaveType> leaveTypes = await _repository.GetAsync();
+        IReadOnlyList<LeaveType> leaveTypes = await _repository.GetAsync();
         List<LeaveTypeDto> leaveTypeDtos = _mapper.Map<List<LeaveTypeDto>>(leaveTypes);
 
         return leaveTypeDtos;
