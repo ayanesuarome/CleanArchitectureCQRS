@@ -10,11 +10,13 @@ namespace CleanArch.Persistence;
 
 public static class PersistenceServiceRegistration
 {
+    private const string CleanArchSqlServerDbContext = "CleanArchSqlServerDbContext";
+
     public static IServiceCollection AddCleanArchEFDbContext(this IServiceCollection services, IConfiguration configuration)
     {
         services.AddDbContext<CleanArchEFDbContext>(options =>
         {
-            options.UseSqlServer(configuration.GetConnectionString("CleanArchSqlServerDbContext"));
+            options.UseSqlServer(configuration.GetConnectionString(CleanArchSqlServerDbContext));
             options.LogTo(Console.WriteLine, new[] { RelationalEventId.CommandExecuting });
         });
 

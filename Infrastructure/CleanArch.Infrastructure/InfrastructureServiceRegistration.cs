@@ -10,7 +10,6 @@ namespace CleanArch.Infrastructure;
 
 public static class InfrastructureServiceRegistration 
 {
-    // TODO: add settings
     private const string EmailSettingsSection = "EmailSettings";
 
     public static IServiceCollection AddInfrastructureServices(this IServiceCollection services, IConfiguration configuration)
