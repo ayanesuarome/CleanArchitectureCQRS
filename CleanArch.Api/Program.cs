@@ -1,7 +1,6 @@
 using CleanArch.Application;
 using CleanArch.Infrastructure;
 using CleanArch.Persistence;
-using Microsoft.AspNetCore.HttpLogging;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,6 +8,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddApplicationServices();
 builder.Services.AddInfrastructureServices(builder.Configuration);
+builder.Services.AddCleanArchEFDbContext(builder.Configuration);
 builder.Services.AddPersistenceServices();
 
 builder.Services.AddControllers();
