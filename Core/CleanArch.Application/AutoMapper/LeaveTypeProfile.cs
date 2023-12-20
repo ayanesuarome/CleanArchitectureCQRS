@@ -2,7 +2,6 @@
 using CleanArch.Application.Features.LeaveTypes.Commands.CreateLeaveTypes;
 using CleanArch.Application.Features.LeaveTypes.Commands.UpdateLeaveTypes;
 using CleanArch.Application.Features.LeaveTypes.Queries.GetAllLeaveTypes;
-using CleanArch.Application.Features.LeaveTypesDetails.Queries.GetLeaveTypesDetails;
 using CleanArch.Domain.Entities;
 
 namespace CleanArch.Application.AutoMapper;
@@ -23,7 +22,5 @@ public class LeaveTypeProfile : Profile
 
         CreateMap<UpdateLeaveTypeCommand, LeaveType>()
             .ForMember(dest => dest.DateModified, opt => opt.Ignore());
-
-        CreateMap<LeaveType, LeaveTypeDetailsDto>();
     }
 }

@@ -10,7 +10,7 @@ public class GetLeaveTypesQueryHandlerTest : IDisposable
 {
     #region Fields
 
-    private GetLeaveTypesQueryHandler handler;
+    private GetLeaveTypeListQueryHandler handler;
     private Mock<IMapper> mapperMock;
     private Mock<ILeaveTypeRepository> repositoryMock;
 
@@ -22,7 +22,7 @@ public class GetLeaveTypesQueryHandlerTest : IDisposable
     {
         mapperMock = new Mock<IMapper>();
         repositoryMock = new Mock<ILeaveTypeRepository>();
-        handler = new GetLeaveTypesQueryHandler(mapperMock.Object, repositoryMock.Object);
+        handler = new GetLeaveTypeListQueryHandler(mapperMock.Object, repositoryMock.Object);
     }
 
     public void Dispose()
@@ -37,7 +37,7 @@ public class GetLeaveTypesQueryHandlerTest : IDisposable
     #region Test Methods
 
     /// <summary>
-    /// Test that <see cref="GetLeaveTypesQueryHandler.Handle(GetLeaveTypesQuery, CancellationToken)"/>
+    /// Test that <see cref="GetLeaveTypeListQueryHandler.Handle(GetLeaveTypeListQuery, CancellationToken)"/>
     /// returns <see cref="List{LeaveTypeDto}"/>.
     /// </summary>
     [Fact]
@@ -47,7 +47,7 @@ public class GetLeaveTypesQueryHandlerTest : IDisposable
             .SetupMapperMock()
             .Build();
 
-        List<LeaveTypeDto> leaveTypes = await handler.Handle(It.IsAny<GetLeaveTypesQuery>(), default);
+        List<LeaveTypeDto> leaveTypes = await handler.Handle(It.IsAny<GetLeaveTypeListQuery>(), default);
         Assert.NotNull(leaveTypes);
     }
 
@@ -55,7 +55,7 @@ public class GetLeaveTypesQueryHandlerTest : IDisposable
 
     #region Mocking
 
-    private GetLeaveTypesQueryHandler Build()
+    private GetLeaveTypeListQueryHandler Build()
     {
         return handler;
     }

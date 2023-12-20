@@ -25,7 +25,7 @@ namespace CleanArch.Api.Controllers
         [HttpGet]
         public async Task<List<LeaveTypeDto>> Get()
         {
-            return await _mediator.Send(new GetLeaveTypesQuery());
+            return await _mediator.Send(new GetLeaveTypeListQuery());
         }
 
         // GET api/<LeaveTypesController>/5

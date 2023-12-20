@@ -28,6 +28,7 @@ public class MapperConfigurationTests
     public static IEnumerable<object[]> GetMapperProfiles()
     {
         yield return new object[] { typeof(LeaveTypeProfile) };
+        yield return new object[] { typeof(LeaveAllocationProfile) };
     }
 
     #endregion

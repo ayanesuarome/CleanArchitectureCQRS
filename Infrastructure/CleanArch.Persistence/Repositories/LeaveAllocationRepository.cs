@@ -43,6 +43,7 @@ public class LeaveAllocationRepository : GenericRepository<LeaveAllocation>, ILe
 
     public async Task<LeaveAllocation> GetLeaveAllocationWithDetails(int id)
     {
+        // TODO: remove if no other logic is used and use GetAsync
         return await TableNoTracking.FirstOrDefaultAsync(e => e.Id == id);
     }
 }
