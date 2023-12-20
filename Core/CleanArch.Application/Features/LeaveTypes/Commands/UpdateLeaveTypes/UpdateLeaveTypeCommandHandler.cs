@@ -15,6 +15,14 @@ public class UpdateLeaveTypeCommandHandler(IMapper mapper, ILeaveTypeRepository 
 
     public async Task<Unit> Handle(UpdateLeaveTypeCommand request, CancellationToken cancellationToken)
     {
+        // TODO: use Benchmark to calculate whether find or any works faster
+        LeaveType leaveType = await _repository.GetByIdAsync(request.Id);
+
+        if (leaveType == null)
+        {
+            throw new NotFoundException(nameof(LeaveType), request.Id);
+        }
+
         UpdateLeaveTypeCommandValidator validator = new(_repository);
         ValidationResult validationResult = await validator.ValidateAsync(request, cancellationToken);
 
@@ -23,8 +31,8 @@ public class UpdateLeaveTypeCommandHandler(IMapper mapper, ILeaveTypeRepository 
             throw new BadRequestException($"Invalid {nameof(LeaveType)}", validationResult);
         }
 
-        LeaveType leaveTypeToUpdate = _mapper.Map<LeaveType>(request);
-        await _repository.UpdateAsync(leaveTypeToUpdate);
+        _mapper.Map(request, leaveType);
+        await _repository.UpdateAsync(leaveType);
         return Unit.Value;
     }
 }

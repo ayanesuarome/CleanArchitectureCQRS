@@ -14,6 +14,6 @@ public class LeaveTypeRepository : GenericRepository<LeaveType>, ILeaveTypeRepos
 
     public async Task<bool> IsUniqueAsync(string name, CancellationToken token = default)
     {
-        return await TableNoTracking.AnyAsync(t => t.Name == name);
+        return !await TableNoTracking.AnyAsync(t => t.Name == name);
     }
 }

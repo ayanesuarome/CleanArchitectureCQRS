@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using CleanArch.Application.Features.LeaveTypes.Commands.CreateLeaveTypes;
+using CleanArch.Application.Features.LeaveTypes.Commands.UpdateLeaveTypes;
 using CleanArch.Application.Features.LeaveTypes.Queries.GetAllLeaveTypes;
 using CleanArch.Application.Features.LeaveTypesDetails.Queries.GetLeaveTypesDetails;
 using CleanArch.Domain.Entities;
@@ -13,6 +15,14 @@ public class LeaveTypeProfile : Profile
             .ForMember(dest => dest.DateCreated, opt => opt.Ignore())
             .ForMember(dest => dest.DateModified, opt => opt.Ignore())
             .ReverseMap();
+
+        CreateMap<CreateLeaveTypeCommand, LeaveType>()
+            .ForMember(dest => dest.Id, opt => opt.Ignore())
+            .ForMember(dest => dest.DateCreated, opt => opt.Ignore())
+            .ForMember(dest => dest.DateModified, opt => opt.Ignore());
+
+        CreateMap<UpdateLeaveTypeCommand, LeaveType>()
+            .ForMember(dest => dest.DateModified, opt => opt.Ignore());
 
         CreateMap<LeaveType, LeaveTypeDetailsDto>();
     }

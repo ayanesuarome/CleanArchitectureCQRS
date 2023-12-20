@@ -4,5 +4,5 @@ namespace CleanArch.Application.Interfaces.Email;
 
 public interface IEmailSender
 {
-    Task<bool> SendEmial(EmailMessage email);
+    Task<bool> SendEmail(EmailMessage email);
 }

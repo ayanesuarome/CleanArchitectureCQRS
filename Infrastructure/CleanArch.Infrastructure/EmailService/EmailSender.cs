@@ -8,25 +8,46 @@ namespace CleanArch.Infrastructure.EmailService;
 
 public class EmailSender : IEmailSender
 {
-    public readonly EmailSettings emailSettings;
+    private readonly EmailSettings _emailSettings;
+    private readonly SendGridClient _client;
 
     public EmailSender(IOptions<EmailSettings> emailSettings)
     {
-        this.emailSettings = emailSettings.Value;
+        _emailSettings = emailSettings.Value;
+        _client = new(_emailSettings.ApiKey);
     }
 
-    public async Task<bool> SendEmial(EmailMessage email)
+    // Another way
+    //public async Task<bool> SendEmail(EmailMessage email)
+    //{
+    //    SendGridClient client = new(_emailSettings.ApiKey);
+
+    //    EmailAddress to = new(email.To);
+    //    EmailAddress from = new()
+    //    {
+    //        Email = _emailSettings.FromAddress,
+    //        Name = _emailSettings.FromNa me
+    //    };
+
+    //    SendGridMessage message = MailHelper.CreateSingleEmail(from, to, email.Subject, email.Body, email.Body);
+    //    var response = await client.SendEmailAsync(message);
+
+    //    return response.IsSuccessStatusCode;
+    //}
+
+    public async Task<bool> SendEmail(EmailMessage email)
     {
-        SendGridClient client = new(emailSettings.ApiKey);
-        EmailAddress to = new(email.To);
-        EmailAddress from = new()
+        SendGridMessage message = new()
         {
-            Email = emailSettings.FromAddress,
-            Name = emailSettings.FromName
+            From = new(email: _emailSettings.FromAddress, name: _emailSettings.FromName),
+            Subject = email.Subject,
+            PlainTextContent = email.Body,
+            HtmlContent = email.Body
         };
 
-        SendGridMessage message = MailHelper.CreateSingleEmail(from, to, email.Subject, email.Body, email.Body);
-        var response = await client.SendEmailAsync(message);
+        message.AddTo(email.To);
+
+        var response = await _client.SendEmailAsync(message);
 
         return response.IsSuccessStatusCode;
     }

@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using CleanArch.Application.Exceptions;
 using CleanArch.Application.Features.LeaveTypesDetails.Queries.GetLeaveTypesDetails;
 using CleanArch.Domain.Entities;
 using CleanArch.Domain.Interfaces.Persistence;
@@ -15,6 +16,12 @@ public class GetLeaveTypesDetailsQueryHandler(IMapper mapper, ILeaveTypeReposito
     public async Task<LeaveTypeDetailsDto> Handle(GetLeaveTypesDetailsQuery request, CancellationToken cancellationToken)
     {
         LeaveType leaveType = await _repository.GetByIdAsync(request.Id);
+
+        if (leaveType == null)
+        {
+            throw new NotFoundException(nameof(LeaveType), request.Id);
+        }
+
         LeaveTypeDetailsDto leaveTypeDetails = _mapper.Map<LeaveTypeDetailsDto>(leaveType);
 
         return leaveTypeDetails;
