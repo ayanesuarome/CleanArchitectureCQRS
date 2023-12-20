@@ -33,7 +33,7 @@ namespace CleanArch.Api.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<LeaveTypeDetailsDto>> Get(int id)
         {
-            return Ok(await _mediator.Send(new GetLeaveTypesDetailsQuery(id)));
+            return Ok(await _mediator.Send(new GetLeaveTypeDetailsQuery(id)));
         }
 
         // POST api/<LeaveTypesController>

@@ -1,6 +1,6 @@
 ﻿namespace CleanArch.Application.Features;
 
-public abstract class BaseEntityDto
+public abstract class BaseDto
 {
     public int Id { get; set; }
     public DateTime? DateCreated { get; set; }

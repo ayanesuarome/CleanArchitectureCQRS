@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using CleanArch.Application.Features.LeaveTypes.Queries.GetAllLeaveTypes;
 
-namespace CleanArch.Application.Features.LeaveAllocations.Queries.GetLeaveAllocationDetails
+namespace CleanArch.Application.Features.LeaveAllocations.Queries.GetLeaveAllocationDetails;
+
+public class LeaveAllocationDetailsDto : BaseDto
 {
-    public class LeaveAllocationDetailsDto
-    {
-    }
+    public int NumberOfDays { get; set; }
+    public int Period { get; set; }
+    public int LeaveTypeId { get; set; }
+    public LeaveTypeDto? LeaveType { get; set; }
 }
