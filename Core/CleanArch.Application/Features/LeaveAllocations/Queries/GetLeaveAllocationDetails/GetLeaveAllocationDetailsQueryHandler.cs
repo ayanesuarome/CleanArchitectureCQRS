@@ -22,6 +22,5 @@ public class GetLeaveAllocationDetailsQueryHandler(IMapper mapper, ILeaveAllocat
         }
 
         return _mapper.Map<LeaveAllocationDetailsDto>(leaveAllocation);
-
     }
 }

@@ -9,6 +9,12 @@ public class UpdateLeaveTypeCommandValidator : AbstractValidator<UpdateLeaveType
 
     public UpdateLeaveTypeCommandValidator(ILeaveTypeRepository repository)
     {
+        _repository = repository;
+
+        RuleFor(m => m.Id)
+            .NotNull()
+            .WithMessage("{PropertyName} is required");
+
         RuleFor(m => m.Name)
             .MaximumLength(70)
                 .WithMessage("{PropertyName} must be up to 70 characters")
@@ -18,8 +24,6 @@ public class UpdateLeaveTypeCommandValidator : AbstractValidator<UpdateLeaveType
         RuleFor(m => m.DefaultDays)
             .InclusiveBetween(1, 100)
                 .WithMessage("{PropertyName} must be between 1 - 100");
-
-        _repository = repository;
     }
 
     private async Task<bool> LeaveTypeUniqueName(string name, CancellationToken token)

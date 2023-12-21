@@ -15,7 +15,6 @@ public class UpdateLeaveTypeCommandHandler(IMapper mapper, ILeaveTypeRepository 
 
     public async Task<Unit> Handle(UpdateLeaveTypeCommand request, CancellationToken cancellationToken)
     {
-        // TODO: use Benchmark to calculate whether find or any works faster
         LeaveType leaveType = await _repository.GetByIdAsync(request.Id);
 
         if (leaveType == null)

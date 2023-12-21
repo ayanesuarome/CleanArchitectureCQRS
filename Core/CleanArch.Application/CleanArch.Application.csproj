@@ -19,9 +19,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Features\LeaveAllocations\Commands\CreateLeaveAllocations\" />
-    <Folder Include="Features\LeaveAllocations\Commands\DeleteLeaveAllocations\" />
-    <Folder Include="Features\LeaveAllocations\Commands\UpdateLeaveAllocations\" />
     <Folder Include="Features\LeaveRequests\Commands\" />
     <Folder Include="Features\LeaveRequests\Queries\" />
   </ItemGroup>
