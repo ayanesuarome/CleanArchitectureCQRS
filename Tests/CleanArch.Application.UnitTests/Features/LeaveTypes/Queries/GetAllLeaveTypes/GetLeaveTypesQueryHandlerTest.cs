@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using CleanArch.Application.Features.LeaveTypes.Queries.GetAllLeaveTypes;
+using CleanArch.Application.Features.LeaveTypes.Queries.GetLeaveTypeList;
 using CleanArch.Domain.Entities;
 using CleanArch.Domain.Interfaces.Persistence;
 using Moq;

@@ -1,7 +1,7 @@
-﻿using CleanArch.Application.Features.LeaveTypes.Commands.CreateLeaveTypes;
-using CleanArch.Application.Features.LeaveTypes.Commands.DeleteLeaveTypes;
-using CleanArch.Application.Features.LeaveTypes.Commands.UpdateLeaveTypes;
-using CleanArch.Application.Features.LeaveTypes.Queries.GetAllLeaveTypes;
+﻿using CleanArch.Application.Features.LeaveTypes.Commands.CreateLeaveType;
+using CleanArch.Application.Features.LeaveTypes.Commands.DeleteLeaveType;
+using CleanArch.Application.Features.LeaveTypes.Commands.UpdateLeaveType;
+using CleanArch.Application.Features.LeaveTypes.Queries.GetLeaveTypeList;
 using CleanArch.Application.Features.LeaveTypeDetails.Queries.GetLeaveTypesDetails;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;

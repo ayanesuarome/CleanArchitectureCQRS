@@ -12,7 +12,7 @@ public class LeaveRequestRepository : GenericRepository<LeaveRequest>, ILeaveReq
     {
     }
 
-    public async Task<List<LeaveRequest>> GetLeaveRequestsWithDetails(string? employeeId)
+    public async Task<List<LeaveRequest>> GetLeaveRequestsWithDetailsAsync(string? employeeId)
     {
         IQueryable<LeaveRequest> query = TableNoTracking;
 
@@ -26,7 +26,7 @@ public class LeaveRequestRepository : GenericRepository<LeaveRequest>, ILeaveReq
             .ToListAsync();
     }
 
-    public async Task<LeaveRequest> GetLeaveRequestWithDetails(int id)
+    public async Task<LeaveRequest> GetLeaveRequestWithDetailsAsync(int id)
     {
         return await TableNoTracking
             .Include(e => e.LeaveType)

@@ -1,4 +1,6 @@
-﻿namespace CleanArch.Application.Features.LeaveTypeDetails.Queries.GetLeaveTypesDetails;
+﻿using CleanArch.Application.Features.Shared;
+
+namespace CleanArch.Application.Features.LeaveTypeDetails.Queries.GetLeaveTypesDetails;
 
 public class LeaveTypeDetailsDto : BaseDto
 {

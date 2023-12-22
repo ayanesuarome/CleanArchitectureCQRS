@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
-using CleanArch.Application.Features.LeaveTypes.Commands.CreateLeaveTypes;
-using CleanArch.Application.Features.LeaveTypes.Commands.UpdateLeaveTypes;
-using CleanArch.Application.Features.LeaveTypes.Queries.GetAllLeaveTypes;
+using CleanArch.Application.Features.LeaveTypes.Commands.CreateLeaveType;
+using CleanArch.Application.Features.LeaveTypes.Commands.UpdateLeaveType;
+using CleanArch.Application.Features.LeaveTypes.Queries.GetLeaveTypeList;
 using CleanArch.Domain.Entities;
 
 namespace CleanArch.Application.AutoMapper;

@@ -1,10 +1,10 @@
 ﻿using CleanArch.Application.Features.LeaveTypes.Queries.GetLeaveTypeList;
-using CleanArch.Application.Features.Shared;
 
-namespace CleanArch.Application.Features.LeaveAllocations.Queries.GetLeaveAllocationDetails;
+namespace CleanArch.Application.Features.LeaveAllocations.Queries.GetLeaveAllocationList;
 
-public class LeaveAllocationDetailsDto : BaseDto
+public class LeaveAllocationDto
 {
+    public int Id { get; set; }
     public int NumberOfDays { get; set; }
     public int Period { get; set; }
     public int LeaveTypeId { get; set; }

@@ -4,6 +4,6 @@ namespace CleanArch.Domain.Interfaces.Persistence;
 
 public interface ILeaveRequestRepository : IGenericRepository<LeaveRequest>
 {
-    Task<LeaveRequest> GetLeaveRequestWithDetails(int id);
-    Task<List<LeaveRequest>> GetLeaveRequestsWithDetails(string? employeeId);
+    Task<LeaveRequest> GetLeaveRequestWithDetailsAsync(int id);
+    Task<List<LeaveRequest>> GetLeaveRequestsWithDetailsAsync(string? employeeId = null);
 }

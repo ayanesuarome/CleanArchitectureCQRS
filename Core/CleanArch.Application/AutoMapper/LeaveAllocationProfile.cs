@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
-using CleanArch.Application.Features.LeaveAllocations.Commands.CreateLeaveAllocations;
-using CleanArch.Application.Features.LeaveAllocations.Commands.UpdateLeaveAllocations;
+using CleanArch.Application.Features.LeaveAllocations.Commands.CreateLeaveAllocation;
+using CleanArch.Application.Features.LeaveAllocations.Commands.UpdateLeaveAllocation;
 using CleanArch.Application.Features.LeaveAllocations.Queries.GetLeaveAllocationDetails;
-using CleanArch.Application.Features.LeaveAllocations.Queries.GetLeaveAllocations;
+using CleanArch.Application.Features.LeaveAllocations.Queries.GetLeaveAllocationList;
 using CleanArch.Domain.Entities;
 
 namespace CleanArch.Application.AutoMapper;

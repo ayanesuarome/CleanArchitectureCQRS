@@ -1,4 +1,4 @@
-﻿using CleanArch.Application.Features.LeaveTypes.Commands.CreateLeaveTypes;
+﻿using CleanArch.Application.Features.LeaveTypes.Commands.CreateLeaveType;
 using CleanArch.Domain.Interfaces.Persistence;
 using FluentValidation.TestHelper;
 using Moq;
