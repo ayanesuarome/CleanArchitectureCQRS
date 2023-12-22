@@ -12,20 +12,15 @@ namespace CleanArch.Api.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-public class LeaveTypesController : ControllerBase
+public class LeaveTypesController(IMediator mediator) : ControllerBase
 {
-    private readonly IMediator _mediator;
-
-    public LeaveTypesController(IMediator mediator)
-    {
-        _mediator = mediator;
-    }
+    private readonly IMediator _mediator = mediator;
 
     // GET: api/<LeaveTypesController>
     [HttpGet]
-    public async Task<List<LeaveTypeDto>> Get()
+    public async Task<ActionResult<List<LeaveTypeDto>>> Get()
     {
-        return await _mediator.Send(new GetLeaveTypeListQuery());
+        return Ok(await _mediator.Send(new GetLeaveTypeListQuery()));
     }
 
     // GET api/<LeaveTypesController>/5
