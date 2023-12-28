@@ -54,7 +54,7 @@ public class CreateLeaveRequestCommandHandler : IRequestHandler<CreateLeaveReque
             // send confirmation email
             EmailMessage email = new()
             {
-                To = string.Empty, // TODO: get email from employee record
+                To = "ayanesuarome@gmx.es", // TODO: get email from employee record
                 Body = $"Your leave request for {request.StartDate:D} to {request.EndDate:D} " +
                         $"has been created successfully.",
                 Subject = "Leave Request Created"

@@ -33,7 +33,7 @@ public class GenericRepository<TEntity>(CleanArchEFDbContext dbContext) : IGener
         }
         catch (DbUpdateException ex)
         {
-            // TODO: throw ex
+            throw new Exception(ex.Message, ex);
         }
     }
 
@@ -46,7 +46,7 @@ public class GenericRepository<TEntity>(CleanArchEFDbContext dbContext) : IGener
         }
         catch (DbUpdateException ex)
         {
-            // TODO: throw ex
+            throw new Exception(ex.Message, ex);
         }
     }
 
@@ -59,7 +59,7 @@ public class GenericRepository<TEntity>(CleanArchEFDbContext dbContext) : IGener
         }
         catch (DbUpdateException ex)
         {
-            // TODO: throw ex
+            throw new Exception(ex.Message, ex);
         }
     }
 
@@ -72,7 +72,7 @@ public class GenericRepository<TEntity>(CleanArchEFDbContext dbContext) : IGener
         }
         catch (DbUpdateException ex)
         {
-            // TODO: throw ex
+            throw new Exception(ex.Message, ex);
         }
     }
 }

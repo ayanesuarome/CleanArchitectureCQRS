@@ -7,7 +7,7 @@ public sealed partial class CleanArchEFDbContext : DbContext
 {
     public CleanArchEFDbContext(DbContextOptions<CleanArchEFDbContext> options)
         : base(options)
-    {        
+    {
     }
 
     public DbSet<LeaveType> LeaveTypes { get; set; }

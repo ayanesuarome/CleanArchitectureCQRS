@@ -1,23 +1,27 @@
 ﻿using CleanArch.Api.Models;
 using CleanArch.Application.Exceptions;
 using CleanArch.Application.Interfaces.Logging;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Logging;
 using System.Net;
 
 namespace CleanArch.Api.Middlewares;
 
-public class ExceptionMiddleware(RequestDelegate next)
+public class TestExceptionMiddleware(RequestDelegate next, IAppLogger<ExceptionMiddleware> logger)
+    : IMiddleware
 {
     private readonly RequestDelegate _next = next;
+    private readonly IAppLogger<ExceptionMiddleware> _logger = logger;
 
-    public async Task InvokeAsync(HttpContext httpContext, IAppLogger<ExceptionMiddleware> logger)
+    public async Task InvokeAsync(HttpContext context, RequestDelegate next)
     {
         try
         {
-            await _next(httpContext);
+            await _next(context);
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
-            await HandleExceptionAsync(httpContext, ex, logger);
+            await HandleExceptionAsync(context, ex, _logger);
         }
     }
 

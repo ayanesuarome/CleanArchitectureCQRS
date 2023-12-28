@@ -1,3 +1,4 @@
+using CleanArch.Api.Middlewares;
 using CleanArch.Application;
 using CleanArch.Infrastructure;
 using CleanArch.Persistence;
@@ -34,6 +35,9 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
+
+// Custom middlewares
+app.UseMiddleware<ExceptionMiddleware>();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
