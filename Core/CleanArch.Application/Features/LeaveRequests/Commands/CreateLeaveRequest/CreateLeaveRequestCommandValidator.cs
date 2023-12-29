@@ -16,6 +16,7 @@ public class CreateLeaveRequestCommandValidator : AbstractValidator<CreateLeaveR
         RuleFor(m => m.LeaveTypeId)
             .Cascade(CascadeMode.Stop)
             .GreaterThan(0)
+            .WithMessage("{PropertyName} should be greather than 0")
             .MustAsync(LeaveTypeMustExist)
             .WithMessage("{PropertyName} does not exist");
 

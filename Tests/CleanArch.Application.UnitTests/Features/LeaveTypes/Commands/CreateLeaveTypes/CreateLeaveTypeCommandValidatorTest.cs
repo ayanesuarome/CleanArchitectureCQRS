@@ -1,30 +1,13 @@
 ﻿using CleanArch.Application.Features.LeaveTypes.Commands.CreateLeaveType;
-using CleanArch.Domain.Interfaces.Persistence;
 using FluentValidation.TestHelper;
 using Moq;
 
 namespace CleanArch.Application.UnitTests.Features.LeaveTypes.Commands.CreateLeaveTypes;
 
-public class CreateLeaveTypeCommandValidatorTest : IDisposable
+public class CreateLeaveTypeCommandValidatorTest(CreateLeaveTypeCommandValidatorFixture fixture)
+    : IClassFixture<CreateLeaveTypeCommandValidatorFixture>
 {
-    private CreateLeaveTypeCommandValidator validator;
-    private Mock<ILeaveTypeRepository> repositoryMock;
-
-    #region Setup and Cleanup
-
-    public CreateLeaveTypeCommandValidatorTest()
-    {
-        repositoryMock = new Mock<ILeaveTypeRepository>();
-        validator = new CreateLeaveTypeCommandValidator(repositoryMock.Object);
-    }
-
-    public void Dispose()
-    {
-        repositoryMock = null;
-        validator = null;
-    }
-
-    #endregion
+    private readonly CreateLeaveTypeCommandValidatorFixture _fixture = fixture;
 
     #region Tests
 
@@ -37,41 +20,24 @@ public class CreateLeaveTypeCommandValidatorTest : IDisposable
             Name = name
         };
 
-        var result = validator.TestValidate(command);
+        var result = _fixture.validator.TestValidate(command);
 
         result.ShouldHaveValidationErrorFor(x => x.Name)
-            .WithErrorMessage("Name is required");
+            .WithErrorMessage($"{nameof(CreateLeaveTypeCommand.Name)} is required");
     }
-    
+
     [Fact]
-    public void TestValidatorShouldFailWithNameLengthGreatherThan70()
+    public void TestValidatorShouldFailWithNameLengthGreaterThan70()
     {
         CreateLeaveTypeCommand command = new()
         {
             Name = "somenamesomenamesomenamesomenamesomenamesomenamesomenamesomenamesomename"
         };
 
-        var result = validator.TestValidate(command);
+        var result = _fixture.validator.TestValidate(command);
 
         result.ShouldHaveValidationErrorFor(x => x.Name)
-            .WithErrorMessage("Name must be up to 70 characters");
-    }
-
-    [Fact]
-    public async Task TestValidatorShouldNotFailWithNameLengthLessThan70()
-    {
-        CreateLeaveTypeCommand command = new()
-        {
-            Name = "somename"
-        };
-
-        repositoryMock
-            .Setup(m => m.IsUniqueAsync(It.IsAny<string>(), default))
-            .ReturnsAsync(true);
-
-        var result = await validator.TestValidateAsync(command);
-
-        result.ShouldNotHaveValidationErrorFor(x => x.Name);
+            .WithErrorMessage($"{nameof(CreateLeaveTypeCommand.Name)} must be up to 70 characters");
     }
 
     [Fact]
@@ -82,11 +48,11 @@ public class CreateLeaveTypeCommandValidatorTest : IDisposable
             Name = "somename"
         };
 
-        repositoryMock
+        _fixture.repositoryMock
             .Setup(m => m.IsUniqueAsync(It.IsAny<string>(), default))
-            .ReturnsAsync(false);
+        .ReturnsAsync(false);
 
-        var result = await validator.TestValidateAsync(command);
+        var result = await _fixture.validator.TestValidateAsync(command);
 
         result.ShouldHaveValidationErrorFor(x => x.Name)
             .WithErrorMessage("Leave type already exist");
@@ -103,14 +69,32 @@ public class CreateLeaveTypeCommandValidatorTest : IDisposable
             DefaultDays = defaultDays
         };
 
-        repositoryMock
+        _fixture.repositoryMock
             .Setup(m => m.IsUniqueAsync(It.IsAny<string>(), default))
-            .ReturnsAsync(true);
+        .ReturnsAsync(true);
 
-        var result = await validator.TestValidateAsync(command);
+        var result = await _fixture.validator.TestValidateAsync(command);
 
         result.ShouldHaveValidationErrorFor(x => x.DefaultDays)
             .WithErrorMessage("Default Days must be between 1 - 100");
+    }
+
+    [Fact]
+    public async Task TestValidatorShouldNotFail()
+    {
+        CreateLeaveTypeCommand command = new()
+        {
+            Name = "somename",
+            DefaultDays = 100
+        };
+
+        _fixture.repositoryMock
+            .Setup(m => m.IsUniqueAsync(It.IsAny<string>(), default))
+        .ReturnsAsync(true);
+
+        var result = await _fixture.validator.TestValidateAsync(command);
+
+        result.ShouldNotHaveAnyValidationErrors();
     }
 
     #endregion
