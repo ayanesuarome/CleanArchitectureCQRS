@@ -1,34 +1,15 @@
 ﻿using CleanArch.Application.Features.LeaveRequests.Commands.CreateLeaveRequest;
-using CleanArch.Application.Features.LeaveRequests.Shared;
-using CleanArch.Application.Features.LeaveTypes.Commands.CreateLeaveType;
 using CleanArch.Domain.Entities;
-using CleanArch.Domain.Interfaces.Persistence;
 using FluentValidation.TestHelper;
 using Moq;
 
 namespace CleanArch.Application.UnitTests.Features.LeaveRequests.Commands.CreateLeaveRequest;
 
-public class CreateLeaveRequestCommandValidatorTest : IDisposable
+public class CreateLeaveRequestCommandValidatorTest(CreateLeaveRequestCommandValidatorFixture fixture)
+    : IClassFixture<CreateLeaveRequestCommandValidatorFixture>
 {
-    private CreateLeaveRequestCommandValidator validator;
-    private Mock<ILeaveTypeRepository> repositoryMock;
-
-    #region Setup and Cleanup
-
-    public CreateLeaveRequestCommandValidatorTest()
-    {
-        repositoryMock = new Mock<ILeaveTypeRepository>();
-        validator = new CreateLeaveRequestCommandValidator(repositoryMock.Object);
-    }
-
-    public void Dispose()
-    {
-        repositoryMock = null;
-        validator = null;
-    }
-
-    #endregion
-
+    private readonly CreateLeaveRequestCommandValidatorFixture _fixture = fixture;
+    
     #region Tests
 
     [Theory]
@@ -41,10 +22,29 @@ public class CreateLeaveRequestCommandValidatorTest : IDisposable
             LeaveTypeId = leaveTypeId
         };
 
-        var result = validator.TestValidate(command);
+        var result = _fixture.validator.TestValidate(command);
 
         result.ShouldHaveValidationErrorFor(x => x.LeaveTypeId)
             .WithErrorMessage("Leave Type Id should be greather than 0");
+    }
+
+    [Theory]
+    [MemberData(nameof(GetInvalidStrings))]
+    public void TestValidatorShouldFailWithNullOrEmptyRequestingEmployeeId(string employeeId)
+    {
+        CreateLeaveRequestCommand command = new()
+        {
+            RequestingEmployeeId = employeeId
+        };
+
+        _fixture.repositoryMock
+            .Setup(m => m.GetByIdAsync(It.IsAny<int>()))
+            .ReturnsAsync(new LeaveType());
+
+        var result = _fixture.validator.TestValidate(command);
+
+        result.ShouldHaveValidationErrorFor(x => x.RequestingEmployeeId)
+            .WithErrorMessage("Requesting Employee Id is required");
     }
 
     [Fact]
@@ -52,16 +52,14 @@ public class CreateLeaveRequestCommandValidatorTest : IDisposable
     {
         CreateLeaveRequestCommand command = new()
         {
-            LeaveTypeId = 1,
-            StartDate = DateTime.Now,
-            EndDate = DateTime.Now,
+            LeaveTypeId = 1
         };
 
-        repositoryMock
+        _fixture.repositoryMock
             .Setup(m => m.GetByIdAsync(It.IsAny<int>()))
             .ReturnsAsync(() => null);
 
-        var result = await validator.TestValidateAsync(command);
+        var result = await _fixture.validator.TestValidateAsync(command);
 
         result.ShouldHaveValidationErrorFor(x => x.LeaveTypeId)
             .WithErrorMessage("Leave Type Id does not exist");
@@ -72,16 +70,15 @@ public class CreateLeaveRequestCommandValidatorTest : IDisposable
     {
         CreateLeaveRequestCommand command = new()
         {
-            LeaveTypeId = 1,
             StartDate = DateTime.Now.AddDays(1),
             EndDate = DateTime.Now,
         };
 
-        repositoryMock
+        _fixture.repositoryMock
             .Setup(m => m.GetByIdAsync(It.IsAny<int>()))
             .ReturnsAsync(new LeaveType());
 
-        var result = await validator.TestValidateAsync(command);
+        var result = await _fixture.validator.TestValidateAsync(command);
 
         result.ShouldHaveValidationErrorFor(x => x.StartDate)
             .WithoutErrorMessage("Start Date must be before End Date");
@@ -95,17 +92,29 @@ public class CreateLeaveRequestCommandValidatorTest : IDisposable
         CreateLeaveRequestCommand command = new()
         {
             LeaveTypeId = 1,
+            RequestingEmployeeId = "123",
             StartDate = DateTime.Now,
-            EndDate = DateTime.Now.AddDays(1),
+            EndDate = DateTime.Now.AddDays(1)
         };
 
-        repositoryMock
+        _fixture.repositoryMock
             .Setup(m => m.GetByIdAsync(It.IsAny<int>()))
             .ReturnsAsync(new LeaveType());
 
-        var result = await validator.TestValidateAsync(command);
+        var result = await _fixture.validator.TestValidateAsync(command);
 
         result.ShouldNotHaveAnyValidationErrors();
+    }
+
+    #endregion
+
+    #region Member Test Data
+
+    public static IEnumerable<object[]> GetInvalidStrings()
+    {
+        yield return new object[] { null };
+        yield return new object[] { string.Empty };
+        yield return new object[] { " " };
     }
 
     #endregion

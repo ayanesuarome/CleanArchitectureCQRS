@@ -6,6 +6,10 @@ public class BaseLeaveRequestCommandValidator : AbstractValidator<BaseLeaveReque
 {
     public BaseLeaveRequestCommandValidator()
     {
+        RuleFor(m => m.RequestingEmployeeId)
+            .NotEmpty()
+            .WithMessage("{PropertyName} is required");
+
         RuleFor(m => m.StartDate)
             .LessThan(m => m.EndDate)
             .WithMessage("{PropertyName} must be before {ComparisonValue}");
