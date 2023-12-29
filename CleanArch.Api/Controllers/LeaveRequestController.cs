@@ -40,7 +40,7 @@ public class LeaveRequestController(IMediator mediator) : ControllerBase
     public async Task<ActionResult> Post([FromBody] CreateLeaveRequestCommand model)
     {
         int id = await _mediator.Send(model);
-        return CreatedAtAction(nameof(Get), id);
+        return CreatedAtAction(nameof(Get), new { id });
     }
 
     // PUT api/<LeaveRequestController>/5

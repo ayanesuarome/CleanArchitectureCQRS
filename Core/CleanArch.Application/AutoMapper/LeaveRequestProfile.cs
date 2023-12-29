@@ -19,7 +19,6 @@ public class LeaveRequestProfile : Profile
             .ForMember(dest => dest.Id, opt => opt.Ignore())
             .ForMember(dest => dest.LeaveType, opt => opt.Ignore())
             .ForMember(dest => dest.IsApproved, opt => opt.Ignore())
-            .ForMember(dest => dest.RequestingEmployeeId, opt => opt.Ignore())
             .ForMember(dest => dest.DateRequested, opt => opt.Ignore())
             .ForMember(dest => dest.DateCreated, opt => opt.Ignore())
             .ForMember(dest => dest.DateModified, opt => opt.Ignore());
@@ -29,7 +28,6 @@ public class LeaveRequestProfile : Profile
             .ForMember(dest => dest.LeaveTypeId, opt => opt.Ignore())
             .ForMember(dest => dest.LeaveType, opt => opt.Ignore())
             .ForMember(dest => dest.IsApproved, opt => opt.Ignore())
-            .ForMember(dest => dest.RequestingEmployeeId, opt => opt.Ignore())
             .ForMember(dest => dest.DateRequested, opt => opt.Ignore())
             .ForMember(dest => dest.DateCreated, opt => opt.Ignore())
             .ForMember(dest => dest.DateModified, opt => opt.Ignore());

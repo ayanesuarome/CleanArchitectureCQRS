@@ -1,33 +1,30 @@
 ﻿using CleanArch.Api.Models;
 using CleanArch.Application.Exceptions;
 using CleanArch.Application.Interfaces.Logging;
-using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Logging;
 using System.Net;
 
 namespace CleanArch.Api.Middlewares;
 
-public class TestExceptionMiddleware(RequestDelegate next, IAppLogger<ExceptionMiddleware> logger)
-    : IMiddleware
+// This Middleware is activated by convention.
+public class ConventionalExceptionMiddleware(RequestDelegate next)
 {
     private readonly RequestDelegate _next = next;
-    private readonly IAppLogger<ExceptionMiddleware> _logger = logger;
 
-    public async Task InvokeAsync(HttpContext context, RequestDelegate next)
+    public async Task InvokeAsync(HttpContext httpContext, IAppLogger<ConventionalExceptionMiddleware> logger)
     {
         try
         {
-            await _next(context);
+            await _next(httpContext);
         }
-        catch (Exception ex)
+        catch(Exception ex)
         {
-            await HandleExceptionAsync(context, ex, _logger);
+            await HandleExceptionAsync(httpContext, ex, logger);
         }
     }
 
     private async Task HandleExceptionAsync(HttpContext httpContext,
         Exception exception,
-        IAppLogger<ExceptionMiddleware> logger)
+        IAppLogger<ConventionalExceptionMiddleware> logger)
     {
         HttpStatusCode statusCode = HttpStatusCode.InternalServerError;
         CustomProblemDetails errorDetails;

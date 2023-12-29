@@ -2,6 +2,7 @@ using CleanArch.Api.Middlewares;
 using CleanArch.Application;
 using CleanArch.Infrastructure;
 using CleanArch.Persistence;
+using Microsoft.AspNetCore.Http;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,6 +12,8 @@ builder.Services.AddApplicationServices();
 builder.Services.AddCleanArchEFDbContext(builder.Configuration);
 builder.Services.AddInfrastructureServices(builder.Configuration);
 builder.Services.AddPersistenceServices();
+// The factory-activated middleware is added to the built-in container
+builder.Services.AddTransient<ExceptionMiddleware>();
 
 builder.Services.AddControllers();
 
@@ -36,7 +39,11 @@ builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
-// Custom middlewares
+// Middleware activated by convention and it is registered in the request processing pipeline
+//app.UseMiddleware<ConventionalExceptionMiddleware>();
+
+// Middleware activated by MiddlewareFactory and it is registered in the request processing pipeline.
+// The factory-activated middleware is added to the built-in container with builder.Services.AddTransient<FactoryActivatedMiddleware>();
 app.UseMiddleware<ExceptionMiddleware>();
 
 // Configure the HTTP request pipeline.
