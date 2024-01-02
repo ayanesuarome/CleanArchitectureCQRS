@@ -2,7 +2,7 @@
 using CleanArch.Domain.Interfaces.Persistence;
 using Moq;
 
-namespace CleanArch.Application.UnitTests.Features.LeaveTypes.Commands.CreateLeaveTypes;
+namespace CleanArch.Application.Tests.Features.LeaveTypes.Commands.CreateLeaveTypes;
 
 public class CreateLeaveTypeCommandValidatorFixture : IDisposable
 {

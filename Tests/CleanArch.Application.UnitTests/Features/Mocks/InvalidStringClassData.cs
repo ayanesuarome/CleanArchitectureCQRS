@@ -1,6 +1,6 @@
 ﻿using System.Collections;
 
-namespace CleanArch.Application.UnitTests.Features.Mocks;
+namespace CleanArch.Application.Tests.Features.Mocks;
 
 public class InvalidStringClassData : IEnumerable<object[]>
 {

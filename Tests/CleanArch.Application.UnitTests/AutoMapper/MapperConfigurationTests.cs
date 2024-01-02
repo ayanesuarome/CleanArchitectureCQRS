@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using CleanArch.Application.AutoMapper;
 
-namespace CleanArch.Application.UnitTests.AutoMapper;
+namespace CleanArch.Application.Tests.AutoMapper;
 
 /// <summary>
 /// Test class to test the mapper configuration.

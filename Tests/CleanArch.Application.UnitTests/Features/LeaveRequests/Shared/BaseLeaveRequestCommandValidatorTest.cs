@@ -1,10 +1,10 @@
 ﻿using CleanArch.Application.Features.LeaveRequests.Commands.CreateLeaveRequest;
 using CleanArch.Application.Features.LeaveRequests.Commands.UpdateLeaveRequest;
 using CleanArch.Application.Features.LeaveRequests.Shared;
-using CleanArch.Application.UnitTests.Features.Mocks;
+using CleanArch.Application.Tests.Features.Mocks;
 using FluentValidation.TestHelper;
 
-namespace CleanArch.Application.UnitTests.Features.LeaveRequests.Shared;
+namespace CleanArch.Application.Tests.Features.LeaveRequests.Shared;
 
 public class BaseLeaveRequestCommandValidatorTest
 {

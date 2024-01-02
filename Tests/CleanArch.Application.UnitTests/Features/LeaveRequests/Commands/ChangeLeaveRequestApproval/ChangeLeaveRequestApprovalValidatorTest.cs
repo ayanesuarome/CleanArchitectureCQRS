@@ -1,7 +1,7 @@
 ﻿using CleanArch.Application.Features.LeaveRequests.Commands.ChangeLeaveRequestApproval;
 using FluentValidation.TestHelper;
 
-namespace CleanArch.Application.UnitTests.Features.LeaveRequests.Commands.ChangeLeaveRequestApproval;
+namespace CleanArch.Application.Tests.Features.LeaveRequests.Commands.ChangeLeaveRequestApproval;
 
 public class ChangeLeaveRequestApprovalValidatorTest
 {

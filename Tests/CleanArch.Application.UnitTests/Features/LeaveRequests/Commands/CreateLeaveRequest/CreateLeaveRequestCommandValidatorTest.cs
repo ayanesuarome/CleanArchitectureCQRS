@@ -3,7 +3,7 @@ using CleanArch.Domain.Entities;
 using FluentValidation.TestHelper;
 using Moq;
 
-namespace CleanArch.Application.UnitTests.Features.LeaveRequests.Commands.CreateLeaveRequest;
+namespace CleanArch.Application.Tests.Features.LeaveRequests.Commands.CreateLeaveRequest;
 
 public class CreateLeaveRequestCommandValidatorTest(CreateLeaveRequestCommandValidatorFixture fixture)
     : IClassFixture<CreateLeaveRequestCommandValidatorFixture>

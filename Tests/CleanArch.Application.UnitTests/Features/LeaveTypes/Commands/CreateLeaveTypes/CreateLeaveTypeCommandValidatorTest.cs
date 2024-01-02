@@ -1,9 +1,9 @@
 ﻿using CleanArch.Application.Features.LeaveTypes.Commands.CreateLeaveType;
-using CleanArch.Application.UnitTests.Features.Mocks;
+using CleanArch.Application.Tests.Features.Mocks;
 using FluentValidation.TestHelper;
 using Moq;
 
-namespace CleanArch.Application.UnitTests.Features.LeaveTypes.Commands.CreateLeaveTypes;
+namespace CleanArch.Application.Tests.Features.LeaveTypes.Commands.CreateLeaveTypes;
 
 public class CreateLeaveTypeCommandValidatorTest(CreateLeaveTypeCommandValidatorFixture fixture)
     : IClassFixture<CreateLeaveTypeCommandValidatorFixture>

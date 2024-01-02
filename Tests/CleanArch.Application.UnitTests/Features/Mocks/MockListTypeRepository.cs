@@ -2,7 +2,7 @@
 using CleanArch.Domain.Interfaces.Persistence;
 using Moq;
 
-namespace CleanArch.Application.UnitTests.Features.Mocks;
+namespace CleanArch.Application.Tests.Features.Mocks;
 
 public static class MockListTypeRepository
 {

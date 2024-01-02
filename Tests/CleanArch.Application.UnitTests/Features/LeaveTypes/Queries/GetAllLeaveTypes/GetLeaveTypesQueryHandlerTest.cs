@@ -1,12 +1,12 @@
 ﻿using AutoMapper;
 using CleanArch.Application.AutoMapper;
 using CleanArch.Application.Features.LeaveTypes.Queries.GetLeaveTypeList;
-using CleanArch.Application.UnitTests.Features.Mocks;
-using CleanArch.Domain.Entities;
+using CleanArch.Application.Tests.Features.Mocks;
 using CleanArch.Domain.Interfaces.Persistence;
 using Moq;
+using Shouldly;
 
-namespace CleanArch.Application.UnitTests.Features.LeaveTypes.Queries.GetAllLeaveTypes;
+namespace CleanArch.Application.Tests.Features.LeaveTypes.Queries.GetAllLeaveTypes;
 
 public class GetLeaveTypesQueryHandlerTest : IDisposable
 {
@@ -48,26 +48,11 @@ public class GetLeaveTypesQueryHandlerTest : IDisposable
     public async Task HandleReturnListOfLeaveTypeDto()
     {
         List<LeaveTypeDto> leaveTypes = await _handler.Handle(It.IsAny<GetLeaveTypeListQuery>(), default);
-        Assert.NotNull(leaveTypes);
-        Assert.Equal(3, leaveTypes.Count);
-    }
 
-    #endregion
-
-    #region Mocking
-
-    private GetLeaveTypeListQueryHandler Build()
-    {
-        return _handler;
-    }
-
-    private GetLeaveTypesQueryHandlerTest SetupRepositoryMock()
-    {
         _repositoryMock
-            .Setup(m => m.GetAsync())
-            .ReturnsAsync(new List<LeaveType>());
-
-        return this;
+            .Verify(m => m.GetAsync(), Times.Once);
+        leaveTypes.ShouldNotBeNull();
+        leaveTypes.Count.ShouldBe(3);
     }
 
     #endregion
