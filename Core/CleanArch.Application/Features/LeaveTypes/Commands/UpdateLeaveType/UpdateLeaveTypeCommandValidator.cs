@@ -12,10 +12,11 @@ public class UpdateLeaveTypeCommandValidator : AbstractValidator<UpdateLeaveType
         _repository = repository;
 
         RuleFor(m => m.Id)
-            .NotNull()
+            .NotEmpty()
             .WithMessage("{PropertyName} is required");
 
         RuleFor(m => m.Name)
+            .Cascade(CascadeMode.Stop)
             .MaximumLength(70)
                 .WithMessage("{PropertyName} must be up to 70 characters")
             .MustAsync(LeaveTypeUniqueName)
@@ -26,11 +27,11 @@ public class UpdateLeaveTypeCommandValidator : AbstractValidator<UpdateLeaveType
                 .WithMessage("{PropertyName} must be between 1 - 100");
     }
 
-    private async Task<bool> LeaveTypeUniqueName(string name, CancellationToken token)
+    private async Task<bool> LeaveTypeUniqueName(string name, CancellationToken cancellation)
     {
         if(!string.IsNullOrWhiteSpace(name))
         {
-            return await _repository.IsUniqueAsync(name, token);
+            return await _repository.IsUniqueAsync(name, cancellation);
         }
 
         // No name is provided to update

@@ -8,7 +8,7 @@ public class UpdateLeaveRequestCommandValidator : AbstractValidator<UpdateLeaveR
     public UpdateLeaveRequestCommandValidator()
     {
         RuleFor(m => m.Id)
-            .NotNull()
+            .NotEmpty()
             .WithMessage("{PropertyName} is required");
 
         Include(new BaseLeaveRequestCommandValidator());

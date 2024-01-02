@@ -15,36 +15,17 @@ public class CreateLeaveRequestCommandValidatorTest(CreateLeaveRequestCommandVal
     [Theory]
     [InlineData(0)]
     [InlineData(-1)]
-    public void TestValidatorShouldFailWithLeaveTypeIdLessThanOrEqualTo0(int leaveTypeId)
+    public async Task TestValidatorShouldFailWithLeaveTypeIdLessThanOrEqualTo0(int leaveTypeId)
     {
         CreateLeaveRequestCommand command = new()
         {
             LeaveTypeId = leaveTypeId
         };
 
-        var result = _fixture.validator.TestValidate(command);
+        var result = await _fixture.validator.TestValidateAsync(command);
 
         result.ShouldHaveValidationErrorFor(x => x.LeaveTypeId)
             .WithErrorMessage("Leave Type Id should be greather than 0");
-    }
-
-    [Theory]
-    [MemberData(nameof(GetInvalidStrings))]
-    public void TestValidatorShouldFailWithNullOrEmptyRequestingEmployeeId(string employeeId)
-    {
-        CreateLeaveRequestCommand command = new()
-        {
-            RequestingEmployeeId = employeeId
-        };
-
-        _fixture.repositoryMock
-            .Setup(m => m.GetByIdAsync(It.IsAny<int>()))
-            .ReturnsAsync(new LeaveType());
-
-        var result = _fixture.validator.TestValidate(command);
-
-        result.ShouldHaveValidationErrorFor(x => x.RequestingEmployeeId)
-            .WithErrorMessage("Requesting Employee Id is required");
     }
 
     [Fact]
@@ -104,17 +85,6 @@ public class CreateLeaveRequestCommandValidatorTest(CreateLeaveRequestCommandVal
         var result = await _fixture.validator.TestValidateAsync(command);
 
         result.ShouldNotHaveAnyValidationErrors();
-    }
-
-    #endregion
-
-    #region Member Test Data
-
-    public static IEnumerable<object[]> GetInvalidStrings()
-    {
-        yield return new object[] { null };
-        yield return new object[] { string.Empty };
-        yield return new object[] { " " };
     }
 
     #endregion

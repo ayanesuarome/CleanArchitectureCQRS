@@ -17,7 +17,7 @@ public class MapperConfigurationTests
     [Theory, MemberData(nameof(GetMapperProfiles))]
     public void TestAutoMapperProfilesConfiguration(Type profileType)
     {
-        var configuration = new MapperConfiguration(cfg => cfg.AddProfile(profileType));
+        MapperConfiguration configuration = new(cfg => cfg.AddProfile(profileType));
         configuration.AssertConfigurationIsValid();
     }
 

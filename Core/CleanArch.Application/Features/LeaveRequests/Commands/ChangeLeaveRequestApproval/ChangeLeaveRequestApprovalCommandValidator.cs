@@ -6,6 +6,10 @@ public class ChangeLeaveRequestApprovalCommandValidator : AbstractValidator<Chan
 {
     public ChangeLeaveRequestApprovalCommandValidator()
     {
+        RuleFor(m => m.Id)
+            .NotEmpty()
+            .WithMessage("{PropertyName} is required");
+
         RuleFor(m => m.Approved)
             .NotNull()
             .WithMessage("Approval status cannot be null");

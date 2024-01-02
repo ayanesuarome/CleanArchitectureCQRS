@@ -1,4 +1,5 @@
 ﻿using CleanArch.Application.Features.LeaveTypes.Commands.CreateLeaveType;
+using CleanArch.Application.UnitTests.Features.Mocks;
 using FluentValidation.TestHelper;
 using Moq;
 
@@ -12,29 +13,29 @@ public class CreateLeaveTypeCommandValidatorTest(CreateLeaveTypeCommandValidator
     #region Tests
 
     [Theory]
-    [MemberData(nameof(GetInvalidStrings))]
-    public void TestValidatorShouldFailWithNullOrEmptyName(string name)
+    [ClassData(typeof(InvalidStringClassData))]
+    public async Task TestValidatorShouldFailWithNullOrEmptyName(string name)
     {
         CreateLeaveTypeCommand command = new()
         {
             Name = name
         };
 
-        var result = _fixture.validator.TestValidate(command);
+        var result = await _fixture.validator.TestValidateAsync(command);
 
         result.ShouldHaveValidationErrorFor(x => x.Name)
             .WithErrorMessage($"{nameof(CreateLeaveTypeCommand.Name)} is required");
     }
 
     [Fact]
-    public void TestValidatorShouldFailWithNameLengthGreaterThan70()
+    public async Task TestValidatorShouldFailWithNameLengthGreaterThan70()
     {
         CreateLeaveTypeCommand command = new()
         {
             Name = "somenamesomenamesomenamesomenamesomenamesomenamesomenamesomenamesomename"
         };
 
-        var result = _fixture.validator.TestValidate(command);
+        var result = await _fixture.validator.TestValidateAsync(command);
 
         result.ShouldHaveValidationErrorFor(x => x.Name)
             .WithErrorMessage($"{nameof(CreateLeaveTypeCommand.Name)} must be up to 70 characters");
@@ -95,17 +96,6 @@ public class CreateLeaveTypeCommandValidatorTest(CreateLeaveTypeCommandValidator
         var result = await _fixture.validator.TestValidateAsync(command);
 
         result.ShouldNotHaveAnyValidationErrors();
-    }
-
-    #endregion
-
-    #region Member Test Data
-
-    public static IEnumerable<object[]> GetInvalidStrings()
-    {
-        yield return new object[] { null };
-        yield return new object[] { string.Empty };
-        yield return new object[] { " " };
     }
 
     #endregion

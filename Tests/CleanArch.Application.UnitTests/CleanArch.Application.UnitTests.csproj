@@ -29,4 +29,10 @@
     <ProjectReference Include="..\..\Core\CleanArch.Application\CleanArch.Application.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Features\LeaveAllocations\Commands\CreateLeaveAllocation\" />
+    <Folder Include="Features\LeaveAllocations\Commands\UpdateLeaveAllocation\" />
+    <Folder Include="Features\LeaveRequests\Commands\CancelLeaveRequest\" />
+  </ItemGroup>
+
 </Project>
