@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.7.34031.279
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CleanArch.UI.Mvc", "CleanArch.UI.Mvc", "{431BAE94-2364-4E29-B40D-E319EEF1BDF5}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CleanArch.UI", "CleanArch.UI", "{431BAE94-2364-4E29-B40D-E319EEF1BDF5}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CleanArch.Infrastructure", "CleanArch.Infrastructure", "{07F42FF2-958D-40A8-88E8-097560F48756}"
 EndProject
@@ -26,6 +26,8 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CleanArch.Api", "CleanArch.Api\CleanArch.Api.csproj", "{A59164B5-63F9-4D13-B070-1F82CBFA8D17}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CleanArch.Persistence.Tests", "Tests\CleanArch.Persistence.IntegrationTests\CleanArch.Persistence.Tests.csproj", "{E84D1E10-8E72-4D68-8004-C31B453F71C6}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CleanArch.BlazorUI", "CleanArch.UI\CleanArch.BlazorUI\CleanArch.BlazorUI.csproj", "{4D9296F4-B8E6-41DD-968D-5D20233C61B0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -61,6 +63,10 @@ Global
 		{E84D1E10-8E72-4D68-8004-C31B453F71C6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E84D1E10-8E72-4D68-8004-C31B453F71C6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E84D1E10-8E72-4D68-8004-C31B453F71C6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4D9296F4-B8E6-41DD-968D-5D20233C61B0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4D9296F4-B8E6-41DD-968D-5D20233C61B0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4D9296F4-B8E6-41DD-968D-5D20233C61B0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4D9296F4-B8E6-41DD-968D-5D20233C61B0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -73,6 +79,7 @@ Global
 		{5DCE38A2-8B4F-4DED-AF3B-E9587933CBD3} = {07F42FF2-958D-40A8-88E8-097560F48756}
 		{A59164B5-63F9-4D13-B070-1F82CBFA8D17} = {BDC3BEB6-DA47-4F30-BF78-35F951668CF5}
 		{E84D1E10-8E72-4D68-8004-C31B453F71C6} = {2C993BAE-D83E-4358-82B9-F9699D17278A}
+		{4D9296F4-B8E6-41DD-968D-5D20233C61B0} = {431BAE94-2364-4E29-B40D-E319EEF1BDF5}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {7C0E0F61-4B8B-474C-A81B-FF12555375F2}
