@@ -27,6 +27,7 @@ public class LeaveRequestController(IMediator mediator) : ControllerBase
 
     // GET api/<LeaveRequestController>/5
     [HttpGet("{id}")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<LeaveRequestDetailsDto>> Get(int id)
     {

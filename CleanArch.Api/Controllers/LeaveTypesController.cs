@@ -25,6 +25,7 @@ public class LeaveTypesController(IMediator mediator) : ControllerBase
 
     // GET api/<LeaveTypesController>/5
     [HttpGet("{id}")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<LeaveTypeDetailsDto>> Get(int id)
     {

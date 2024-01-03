@@ -18,22 +18,57 @@ public class LeaveTypeService(IClient client, IMapper mapper)
 
     public async Task<LeaveTypeVM> GetLeaveTypeDetails(int id)
     {
-        //LeaveTypeDto leaveType = await _client.LeaveTypesGETAsync(id);
-        throw new NotImplementedException();
+        try
+        {
+            LeaveTypeDetailsDto leaveType = await _client.LeaveTypesGETAsync(id);
+            return _mapper.Map<LeaveTypeVM>(leaveType);
+        }
+        catch (ApiException ex)
+        {
+            return null;
+        }
     }
 
-    public Task<Response<Guid>> CreateLeaveType(LeaveTypeVM leaveType)
+    public async Task<Response<Guid>> CreateLeaveType(LeaveTypeVM leaveType)
     {
-        throw new NotImplementedException();
+        try
+        {
+            CreateLeaveTypeCommand command = _mapper.Map<CreateLeaveTypeCommand>(leaveType);
+            await _client.LeaveTypesPOSTAsync(command);
+
+            return new Response<Guid> { Success = true };
+        }
+        catch (ApiException ex)
+        {
+            return ConvertApiExceptions<Guid>(ex);
+        }
     }
 
-    public Task<Response<Guid>> UpdateLeaveType(LeaveTypeVM leaveType)
+    public async Task<Response<Guid>> UpdateLeaveType(LeaveTypeVM leaveType)
     {
-        throw new NotImplementedException();
+        try
+        {
+            UpdateLeaveTypeCommand command = _mapper.Map<UpdateLeaveTypeCommand>(leaveType);
+            await _client.LeaveTypesPUTAsync(leaveType.Id, command);
+
+            return new Response<Guid> { Success = true };
+        }
+        catch(ApiException ex)
+        {
+            return ConvertApiExceptions<Guid>(ex);
+        }
     }
 
-    public Task<Response<Guid>> DeleteLeaveType(int id)
+    public async Task<Response<Guid>> DeleteLeaveType(int id)
     {
-        throw new NotImplementedException();
+        try
+        {
+            await _client.LeaveTypesDELETEAsync(id);
+            return new Response<Guid> { Success = true };
+        }
+        catch(ApiException ex)
+        {
+            return ConvertApiExceptions<Guid>(ex);
+        }
     }
 }

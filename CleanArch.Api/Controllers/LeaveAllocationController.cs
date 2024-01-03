@@ -26,6 +26,7 @@ public class LeaveAllocationController(IMediator mediator) : ControllerBase
 
     // GET api/<LeaveAllocationController>/5
     [HttpGet("{id}")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<LeaveAllocationDetailsDto>> Get(int id)
     {
