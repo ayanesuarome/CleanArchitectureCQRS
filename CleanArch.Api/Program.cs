@@ -29,8 +29,10 @@ builder.Services.AddHttpLogging(options =>
 builder.Services.AddCors(options =>
 {
     options.AddPolicy(name: "CleanArchAll",
-        policy => policy.AllowAnyOrigin()
-            .AllowAnyMethod());
+        //policy => policy.AllowAnyOrigin().AllowAnyMethod());
+        policy => policy
+            .WithOrigins("https://localhost:7162", "http://localhost:5195")
+            .WithMethods("GET", "POST", "PUT", "DELETE"));
 });
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -52,6 +54,9 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+// Enables same CORS policy to the whole web servie.
+app.UseCors(policyName: "CleanArchAll");
 
 app.UseHttpsRedirection();
 

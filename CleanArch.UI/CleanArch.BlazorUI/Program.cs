@@ -17,7 +17,7 @@ builder.RootComponents.Add<HeadOutlet>("head::after");
 builder.Services.AddHttpClient<IClient, Client>(
     configureClient: options =>
     {
-        options.BaseAddress = new Uri("https://localhost:7162");
+        options.BaseAddress = new Uri("https://localhost:7256");
     });
 
 builder.Services.AddScoped<ILeaveTypeService, LeaveTypeService>();
