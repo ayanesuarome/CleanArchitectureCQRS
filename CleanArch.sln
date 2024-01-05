@@ -29,6 +29,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CleanArch.Persistence.Tests
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CleanArch.BlazorUI", "CleanArch.UI\CleanArch.BlazorUI\CleanArch.BlazorUI.csproj", "{4D9296F4-B8E6-41DD-968D-5D20233C61B0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CleanArch.Identity", "Infrastructure\CleanArch.Identity\CleanArch.Identity.csproj", "{5CAB075F-EAED-4C89-971B-007EA5EB1EE8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -67,6 +69,10 @@ Global
 		{4D9296F4-B8E6-41DD-968D-5D20233C61B0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4D9296F4-B8E6-41DD-968D-5D20233C61B0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4D9296F4-B8E6-41DD-968D-5D20233C61B0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5CAB075F-EAED-4C89-971B-007EA5EB1EE8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5CAB075F-EAED-4C89-971B-007EA5EB1EE8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5CAB075F-EAED-4C89-971B-007EA5EB1EE8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5CAB075F-EAED-4C89-971B-007EA5EB1EE8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -80,6 +86,7 @@ Global
 		{A59164B5-63F9-4D13-B070-1F82CBFA8D17} = {BDC3BEB6-DA47-4F30-BF78-35F951668CF5}
 		{E84D1E10-8E72-4D68-8004-C31B453F71C6} = {2C993BAE-D83E-4358-82B9-F9699D17278A}
 		{4D9296F4-B8E6-41DD-968D-5D20233C61B0} = {431BAE94-2364-4E29-B40D-E319EEF1BDF5}
+		{5CAB075F-EAED-4C89-971B-007EA5EB1EE8} = {07F42FF2-958D-40A8-88E8-097560F48756}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {7C0E0F61-4B8B-474C-A81B-FF12555375F2}

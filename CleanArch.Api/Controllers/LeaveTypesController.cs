@@ -5,6 +5,7 @@ using CleanArch.Application.Features.LeaveTypes.Queries.GetLeaveTypeList;
 using CleanArch.Application.Features.LeaveTypeDetails.Queries.GetLeaveTypesDetails;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -12,6 +13,7 @@ namespace CleanArch.Api.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
+[Authorize]
 public class LeaveTypesController(IMediator mediator) : ControllerBase
 {
     private readonly IMediator _mediator = mediator;

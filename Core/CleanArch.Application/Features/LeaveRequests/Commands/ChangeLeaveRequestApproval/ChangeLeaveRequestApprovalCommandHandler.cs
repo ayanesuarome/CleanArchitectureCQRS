@@ -54,7 +54,7 @@ public class ChangeLeaveRequestApprovalCommandHandler : IRequestHandler<ChangeLe
             // send confirmation email
             EmailMessage email = new()
             {
-                To = string.Empty, // TODO: get email from employee record
+                To = "ayanesuarezromero@gmail.com", // TODO: get email from employee record
                 Body = $"The approval status for your leave request for" +
                         $" {leaveRequest.StartDate:D} to {leaveRequest.EndDate:D} " +
                         $"has been updated.",

@@ -1,5 +1,6 @@
 using CleanArch.Api.Middlewares;
 using CleanArch.Application;
+using CleanArch.Identity;
 using CleanArch.Infrastructure;
 using CleanArch.Persistence;
 using Microsoft.AspNetCore.Http;
@@ -12,6 +13,7 @@ builder.Services.AddApplicationServices();
 builder.Services.AddCleanArchEFDbContext(builder.Configuration);
 builder.Services.AddInfrastructureServices(builder.Configuration);
 builder.Services.AddPersistenceServices();
+builder.Services.AddIdentityServices(builder.Configuration);
 // The factory-activated middleware is added to the built-in container
 builder.Services.AddTransient<ExceptionMiddleware>();
 
@@ -57,6 +59,9 @@ if (app.Environment.IsDevelopment())
 
 // Enables same CORS policy to the whole web servie.
 app.UseCors(policyName: "CleanArchAll");
+
+// Authentication and Authorization
+app.UseAuthentication().UseAuthorization();
 
 app.UseHttpsRedirection();
 
