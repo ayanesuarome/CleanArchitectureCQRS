@@ -2,6 +2,7 @@
 using CleanArch.Application.Interfaces.Identity;
 using CleanArch.Application.Models.Identity;
 using CleanArch.Identity.Models;
+using FluentValidation.Results;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
@@ -59,6 +60,14 @@ public class AuthService : IAuthService
 
     public async Task<RegistrationResponse> Register(RegistrationRequest request)
     {
+        RegistrationRequestValidator validator = new();
+        ValidationResult validationResult = await validator.ValidateAsync(request);
+
+        if (!validationResult.IsValid)
+        {
+            throw new BadRequestException("Invalid registration", validationResult);
+        }
+
         ApplicationUser user = new()
         {
             Email = request.Email,

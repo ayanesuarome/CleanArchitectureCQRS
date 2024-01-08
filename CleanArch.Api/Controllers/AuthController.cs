@@ -19,15 +19,19 @@ namespace CleanArch.Api.Controllers
 
         [HttpPost("login")]
         [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<AuthResponse>> Login([FromBody] AuthRequest request)
         {
             return Ok(await _authService.Login(request));
         }
 
         [HttpPost("register")]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<RegistrationResponse>> Register([FromBody] RegistrationRequest request)
         {
-            return Ok(await _authService.Register(request));
+            await _authService.Register(request);
+            return Created();
         }
     }
 }

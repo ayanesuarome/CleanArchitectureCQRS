@@ -1,13 +1,17 @@
-﻿using CleanArch.Domain.Entities;
+﻿using CleanArch.Application.Interfaces.Identity;
+using CleanArch.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace CleanArch.Persistence.DatabaseContext;
 
 public sealed partial class CleanArchEFDbContext : DbContext
 {
-    public CleanArchEFDbContext(DbContextOptions<CleanArchEFDbContext> options)
+    private readonly IUserService _userService;
+
+    public CleanArchEFDbContext(DbContextOptions<CleanArchEFDbContext> options, IUserService userService)
         : base(options)
     {
+        _userService = userService;
     }
 
     public DbSet<LeaveType> LeaveTypes { get; set; }
@@ -21,10 +25,12 @@ public sealed partial class CleanArchEFDbContext : DbContext
         {
             DateTime now = DateTime.Now;
             entry.Entity.DateModified = now;
+            entry.Entity.ModifiedBy = _userService.UserId;
 
             if(entry.State == EntityState.Added)
             {
                 entry.Entity.DateCreated = now;
+                entry.Entity.CreatedBy = _userService.UserId;
             }
         }
 

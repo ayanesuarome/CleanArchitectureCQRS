@@ -8,6 +8,7 @@ namespace CleanArch.Identity.Services;
 public class UserService(UserManager<ApplicationUser> userManager) : IUserService
 {
     private readonly UserManager<ApplicationUser> _userManager = userManager;
+    public string UserId => throw new NotImplementedException();
 
     // TODO: move to a static class
     private const string EmployeeRole = "Employee";

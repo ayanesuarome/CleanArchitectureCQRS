@@ -27,12 +27,5 @@ public class RegistrationRequestValidator : AbstractValidator<RegistrationReques
             .WithMessage("{PropertyName} is required")
             .MinimumLength(6)
             .WithMessage("{PropertyName} must contain at least {ComparisonValue} characters");
-        
-        RuleFor(m => m.Password)
-            .Cascade(CascadeMode.Stop)
-            .NotEmpty()
-            .WithMessage("{PropertyName} is required")
-            .MinimumLength(8)
-            .WithMessage("Minimum {PropertyName} allowed is {ComparisonValue}");
     }
 }
