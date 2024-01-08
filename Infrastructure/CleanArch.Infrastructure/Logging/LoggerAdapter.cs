@@ -17,7 +17,7 @@ public class LoggerAdapter<T>(ILoggerFactory loggerFactory) : IAppLogger<T>
         _logger.LogWarning(message, args);
     }
     
-    public void LogError(Exception exception, string message, params object[] args)
+    public void LogError(Exception? exception = null, string? message = null, params object[] args)
     {
         _logger.LogError(exception, message, args);
     }

@@ -1,6 +1,7 @@
 ﻿using CleanArch.Api.Models;
 using CleanArch.Application.Exceptions;
 using CleanArch.Application.Interfaces.Logging;
+using Newtonsoft.Json;
 using System.Net;
 
 namespace CleanArch.Api.Middlewares;
@@ -64,7 +65,8 @@ public class ExceptionMiddleware(IAppLogger<ExceptionMiddleware> logger)
                 break;
         }
 
-        logger.LogError(exception, exception.Message);
+        string logMessage = JsonConvert.SerializeObject(errorDetails, Formatting.None);
+        logger.LogError(message: logMessage);
 
         httpContext.Response.StatusCode = (int)statusCode;
         await httpContext.Response.WriteAsJsonAsync(errorDetails);

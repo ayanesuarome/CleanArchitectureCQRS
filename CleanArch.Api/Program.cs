@@ -4,10 +4,16 @@ using CleanArch.Identity;
 using CleanArch.Infrastructure;
 using CleanArch.Persistence;
 using Microsoft.AspNetCore.Http;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+
+// Serilog
+builder.Host.UseSerilog((context, config) => config
+    .WriteTo.Console()
+    .ReadFrom.Configuration(context.Configuration));
 
 builder.Services.AddApplicationServices();
 builder.Services.AddCleanArchEFDbContext(builder.Configuration);
@@ -56,6 +62,9 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+// Adds Serilog
+app.UseSerilogRequestLogging();
 
 // Enables same CORS policy to the whole web servie.
 app.UseCors(policyName: "CleanArchAll");
