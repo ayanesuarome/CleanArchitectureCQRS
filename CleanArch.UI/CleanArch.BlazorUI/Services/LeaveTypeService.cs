@@ -1,12 +1,13 @@
 ﻿using AutoMapper;
+using Blazored.LocalStorage;
 using CleanArch.BlazorUI.Interfaces;
 using CleanArch.BlazorUI.Models.LeaveTypes;
 using CleanArch.BlazorUI.Services.Base;
 
 namespace CleanArch.BlazorUI.Services;
 
-public class LeaveTypeService(IClient client, IMapper mapper)
-    : BaseHttpService(client), ILeaveTypeService
+public class LeaveTypeService(IClient client, IMapper mapper, ILocalStorageService localStorage)
+    : BaseHttpService(client, localStorage), ILeaveTypeService
 {
     private readonly IMapper _mapper = mapper;
 

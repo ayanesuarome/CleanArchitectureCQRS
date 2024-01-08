@@ -8,8 +8,6 @@ public partial class Client : IClient
 
     public Client()
     {
-        HttpClientHandler handler = new HttpClientHandler();
-        handler.Credentials = new NetworkCredential();
         _httpClient = new HttpClient();
     }
 }

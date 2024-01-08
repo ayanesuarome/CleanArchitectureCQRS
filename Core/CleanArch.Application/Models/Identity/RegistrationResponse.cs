@@ -1,6 +1,7 @@
-﻿namespace CleanArch.Application.Models.Identity;
+﻿using System.Reflection.Metadata;
 
-public class RegistrationResponse
+namespace CleanArch.Application.Models.Identity;
+
+public record RegistrationResponse(string UserId)
 {
-    public string UserId { get; set; }
 }

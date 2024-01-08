@@ -1,10 +1,12 @@
-﻿using System.Net;
+﻿using Blazored.LocalStorage;
+using System.Net;
 
 namespace CleanArch.BlazorUI.Services.Base;
 
-public class BaseHttpService(IClient client)
+public class BaseHttpService(IClient client, ILocalStorageService localStorage)
 {
-    protected IClient _client = client;
+    protected readonly IClient _client = client;
+    protected readonly ILocalStorageService _localStorage = localStorage;
 
     protected Response<Guid> ConvertApiExceptions<Guid>(ApiException exception)
     {

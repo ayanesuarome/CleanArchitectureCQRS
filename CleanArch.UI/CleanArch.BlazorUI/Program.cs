@@ -1,3 +1,4 @@
+using Blazored.LocalStorage;
 using CleanArch.BlazorUI;
 using CleanArch.BlazorUI.Interfaces;
 using CleanArch.BlazorUI.Services;
@@ -23,6 +24,7 @@ builder.Services.AddHttpClient<IClient, Client>(
             new MediaTypeWithQualityHeaderValue("application/json", 1.0));
     });
 
+builder.Services.AddBlazoredLocalStorage();
 builder.Services.AddScoped<ILeaveTypeService, LeaveTypeService>();
 builder.Services.AddScoped<ILeaveRequestService, LeaveRequestService>();
 builder.Services.AddScoped<ILeaveAllocationService, LeaveAllocationService>();

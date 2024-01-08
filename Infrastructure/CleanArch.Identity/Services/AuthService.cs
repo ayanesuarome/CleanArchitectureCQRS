@@ -91,11 +91,8 @@ public class AuthService : IAuthService
         }
 
         await _userManager.AddToRoleAsync(user, EmployeeRole);
-        
-        return new RegistrationResponse
-        {
-            UserId = user.Id
-        };
+
+        return new RegistrationResponse(user.Id);
     }
 
     private async Task<JwtSecurityToken> GenerateToken(ApplicationUser user)

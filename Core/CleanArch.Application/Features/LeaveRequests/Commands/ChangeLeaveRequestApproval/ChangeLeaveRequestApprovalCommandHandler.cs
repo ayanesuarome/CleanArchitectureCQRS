@@ -51,6 +51,7 @@ public class ChangeLeaveRequestApprovalCommandHandler : IRequestHandler<ChangeLe
 
         try
         {
+            // TODO: use email templates
             // send confirmation email
             EmailMessage email = new()
             {

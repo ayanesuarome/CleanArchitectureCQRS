@@ -1,9 +1,10 @@
-﻿using CleanArch.BlazorUI.Interfaces;
+﻿using Blazored.LocalStorage;
+using CleanArch.BlazorUI.Interfaces;
 using CleanArch.BlazorUI.Services.Base;
 
 namespace CleanArch.BlazorUI.Services;
 
-public class LeaveAllocationService(IClient client)
-    : BaseHttpService(client), ILeaveAllocationService
+public class LeaveAllocationService(IClient client, ILocalStorageService localStorage)
+    : BaseHttpService(client, localStorage), ILeaveAllocationService
 {
 }
