@@ -1,29 +1,34 @@
 ﻿using AutoMapper;
 using Blazored.LocalStorage;
 using CleanArch.BlazorUI.Interfaces;
-using CleanArch.BlazorUI.Models.I;
 using CleanArch.BlazorUI.Models.Identity;
+using CleanArch.BlazorUI.Providers;
 using CleanArch.BlazorUI.Services.Base;
+using Microsoft.AspNetCore.Components.Authorization;
 
 namespace CleanArch.BlazorUI.Services;
 
-public class AuthenticationService(IClient client, IMapper mapper, ILocalStorageService localStorage)
-    : BaseHttpService(client, localStorage), IAuthenticationService
+public class AuthenticationService : BaseHttpService, IAuthenticationService
 {
-    private readonly IMapper _mapper = mapper;
-    // TODO: move to static class
-    private const string StorageKey = "token";
+    private readonly IMapper _mapper;
+    private readonly AuthenticationStateProvider _authenticationStateProvider;
 
-    public async Task<bool> Authenticate(string email, string password)
+    public AuthenticationService(IClient client,
+        IMapper mapper,
+        AuthenticationStateProvider authenticationStateProvider,
+        ILocalStorageService localStorage)
+        : base(client, localStorage)
     {
-        AuthRequest authRequest = new()
-        {
-            Email = email,
-            Password = password
-        };
+        _mapper = mapper;
+        _authenticationStateProvider = authenticationStateProvider;
+    }
+
+    public async Task<bool> AuthenticateAsync(LoginVM model)
+    {
+        AuthRequest authRequest = _mapper.Map<AuthRequest>(model);
+
         try
         {
-
             AuthResponse response = await _client.LoginAsync(authRequest);
 
             if (string.IsNullOrEmpty(response?.Token))
@@ -31,10 +36,9 @@ public class AuthenticationService(IClient client, IMapper mapper, ILocalStorage
                 return false;
             }
 
-            await _localStorage.SetItemAsync(StorageKey, response.Token);
-            
-            // TODO: Set Claims in Blazor and login state
-            
+            // set Claims in Blazor and login state
+            await ((ApiAuthenticationStateProvider) _authenticationStateProvider).LoggedIn(response.Token);
+
             return true;
         }
         catch
@@ -45,8 +49,8 @@ public class AuthenticationService(IClient client, IMapper mapper, ILocalStorage
 
     public async Task Logout()
     {
-        await _localStorage.RemoveItemAsync(StorageKey);
-        // TODO: remove claims in Blazor and invalidate login state
+        // remove claims in Blazor and invalidate login state
+        await((ApiAuthenticationStateProvider)_authenticationStateProvider).LoggedOut();
     }
 
     public async Task<bool> RegisterAsync(RegistrationRequestVM model)

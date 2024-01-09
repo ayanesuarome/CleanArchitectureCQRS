@@ -1,3 +1,4 @@
+using CleanArch.BlazorUI.Extensions;
 using CleanArch.BlazorUI.Interfaces;
 using CleanArch.BlazorUI.Models.LeaveTypes;
 using CleanArch.BlazorUI.Services.Base;
@@ -9,15 +10,23 @@ namespace CleanArch.BlazorUI.Pages.LeaveTypes;
 public partial class Index
 {
     [Inject]
-    public NavigationManager NavigationManager { get; set; }
+    private NavigationManager NavigationManager { get; set; } = null!;
+
     [Inject]
-    public ILeaveTypeService LeaveTypeService { get; set; }
-    public List<LeaveTypeVM> LeaveTypes { get; private set; }
-    public string Message { get; set; } = null!;
+    private ILeaveTypeService LeaveTypeService { get; set; } = null!;
+    
+    private List<LeaveTypeVM> LeaveTypes { get; set; } = null!;
+
+    public string? Message { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        LeaveTypes = await LeaveTypeService.GetLeaveTypeList();
+    }
 
     private void CreateLeaveType(MouseEventArgs e)
     {
-        NavigationManager.NavigateTo(LeaveTypePaths.CreateLeaveType);
+        NavigationManager.NavigateToCreateLeaveType();
     }
 
     private async Task AllocateLeaveType(int id)
@@ -27,12 +36,12 @@ public partial class Index
 
     private void EditLeaveType(int id)
     {
-        NavigationManager.NavigateTo(String.Format(LeaveTypePaths.EditLeaveType, id));
+        NavigationManager.NavigateToEditLeaveType(id);
     }
     
     private void DetailsLeaveType(int id)
     {
-        NavigationManager.NavigateTo(String.Format(LeaveTypePaths.DetailsLeaveType, id));
+        NavigationManager.NavigateToDetailsLeaveType(id);
     }
 
     private async Task DeleteLeaveType(int id)
@@ -47,10 +56,5 @@ public partial class Index
         {
             Message = response.Message;
         }
-    }
-
-    protected override async Task OnInitializedAsync()
-    {
-        LeaveTypes = await LeaveTypeService.GetLeaveTypeList();
     }
 }

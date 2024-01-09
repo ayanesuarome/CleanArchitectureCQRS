@@ -13,6 +13,7 @@ namespace CleanArch.Api.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
+[Authorize ]
 public class LeaveTypesController(IMediator mediator) : ControllerBase
 {
     private readonly IMediator _mediator = mediator;

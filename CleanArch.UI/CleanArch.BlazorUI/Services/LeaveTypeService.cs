@@ -21,10 +21,11 @@ public class LeaveTypeService(IClient client, IMapper mapper, ILocalStorageServi
     {
         try
         {
+            await AddBearerToken();
             LeaveTypeDetailsDto leaveType = await _client.LeaveTypesGETAsync(id);
             return _mapper.Map<LeaveTypeVM>(leaveType);
         }
-        catch (ApiException ex)
+        catch (ApiException)
         {
             return null;
         }
@@ -34,6 +35,7 @@ public class LeaveTypeService(IClient client, IMapper mapper, ILocalStorageServi
     {
         try
         {
+            await AddBearerToken();
             CreateLeaveTypeCommand command = _mapper.Map<CreateLeaveTypeCommand>(leaveType);
             await _client.LeaveTypesPOSTAsync(command);
 
@@ -49,6 +51,7 @@ public class LeaveTypeService(IClient client, IMapper mapper, ILocalStorageServi
     {
         try
         {
+            await AddBearerToken();
             UpdateLeaveTypeCommand command = _mapper.Map<UpdateLeaveTypeCommand>(leaveType);
             await _client.LeaveTypesPUTAsync(leaveType.Id, command);
 

@@ -1,8 +1,10 @@
-﻿namespace CleanArch.BlazorUI.Interfaces;
+﻿using CleanArch.BlazorUI.Models.Identity;
+
+namespace CleanArch.BlazorUI.Interfaces;
 
 public interface IAuthenticationService
 {
-    Task<bool> Authenticate(string email, string password);
-    Task<bool> RegisterAsync(string firstName, string lastName, string userName, string email, string password);
+    Task<bool> AuthenticateAsync(LoginVM model);
     Task Logout();
+    Task<bool> RegisterAsync(RegistrationRequestVM model);
 }

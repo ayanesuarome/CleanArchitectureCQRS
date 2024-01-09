@@ -29,7 +29,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CleanArch.Persistence.Tests
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CleanArch.BlazorUI", "CleanArch.UI\CleanArch.BlazorUI\CleanArch.BlazorUI.csproj", "{4D9296F4-B8E6-41DD-968D-5D20233C61B0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CleanArch.Identity", "Infrastructure\CleanArch.Identity\CleanArch.Identity.csproj", "{5CAB075F-EAED-4C89-971B-007EA5EB1EE8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CleanArch.Identity", "Infrastructure\CleanArch.Identity\CleanArch.Identity.csproj", "{5CAB075F-EAED-4C89-971B-007EA5EB1EE8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

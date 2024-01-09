@@ -1,8 +1,10 @@
 using Blazored.LocalStorage;
 using CleanArch.BlazorUI;
 using CleanArch.BlazorUI.Interfaces;
+using CleanArch.BlazorUI.Providers;
 using CleanArch.BlazorUI.Services;
 using CleanArch.BlazorUI.Services.Base;
+using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using System.Net.Http.Headers;
@@ -25,6 +27,10 @@ builder.Services.AddHttpClient<IClient, Client>(
     });
 
 builder.Services.AddBlazoredLocalStorage();
+builder.Services.AddAuthorizationCore();
+
+builder.Services.AddScoped<AuthenticationStateProvider, ApiAuthenticationStateProvider>();
+builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
 builder.Services.AddScoped<ILeaveTypeService, LeaveTypeService>();
 builder.Services.AddScoped<ILeaveRequestService, LeaveRequestService>();
 builder.Services.AddScoped<ILeaveAllocationService, LeaveAllocationService>();

@@ -9,5 +9,6 @@ public class IdentityProfile : Profile
     public IdentityProfile()
     {
         CreateMap<RegistrationRequestVM, RegistrationRequest>();
+        CreateMap<LoginVM, AuthRequest>();
     }
 }
