@@ -1,0 +1,12 @@
+﻿@page "/logout"
+@using CleanArch.BlazorUI.Interfaces
+@inject NavigationManager Navigation
+@inject IAuthenticationService AuthenticationService
+
+@code {
+    protected override async Task OnInitializedAsync()
+    {
+        await AuthenticationService.Logout();
+        Navigation.NavigateToHome();
+    }
+}

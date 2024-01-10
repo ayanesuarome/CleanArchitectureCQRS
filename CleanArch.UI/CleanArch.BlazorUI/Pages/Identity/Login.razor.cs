@@ -7,14 +7,13 @@ namespace CleanArch.BlazorUI.Pages.Identity;
 
 public partial class Login
 {
-    private LoginVM Model { get; set; } = null!;
-
     [Inject]
     private NavigationManager NavigationManager { get; set; } = null!;
 
     [Inject]
     private IAuthenticationService AuthenticationService { get; set; } = null!;
 
+    private LoginVM Model { get; set; } = null!;
     public string? Message { get; set; }
 
     protected override void OnInitialized()
@@ -26,11 +25,11 @@ public partial class Login
     {
         bool canAuthenticate = await AuthenticationService.AuthenticateAsync(Model);
 
-        if(!canAuthenticate)
+        if(canAuthenticate)
         {
-            Message = "Username/password combination unknown";
+            NavigationManager.NavigateToHome();
         }
 
-        NavigationManager.NavigateToHome();
+        Message = "Username/password combination unknown";
     }
 }
