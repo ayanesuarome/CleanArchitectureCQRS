@@ -3,8 +3,10 @@ using CleanArch.Application;
 using CleanArch.Identity;
 using CleanArch.Infrastructure;
 using CleanArch.Persistence;
+using CleanArch.Persistence.Migrations;
 using Microsoft.AspNetCore.Http;
 using Serilog;
+using System.Net.Mime;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,6 +18,7 @@ builder.Host.UseSerilog((context, config) => config
     .ReadFrom.Configuration(context.Configuration));
 
 builder.Services.AddApplicationServices();
+builder.Services.AddValidators();
 builder.Services.AddCleanArchEFDbContext(builder.Configuration);
 builder.Services.AddInfrastructureServices(builder.Configuration);
 builder.Services.AddPersistenceServices();
@@ -37,10 +40,10 @@ builder.Services.AddHttpLogging(options =>
 builder.Services.AddCors(options =>
 {
     options.AddPolicy(name: "CleanArchAll",
-        //policy => policy.AllowAnyOrigin().AllowAnyMethod());
         policy => policy
-            .WithOrigins("https://localhost:7162", "http://localhost:5195")
-            .WithMethods("GET", "POST", "PUT", "DELETE"));
+            .WithOrigins("https://localhost:7162")
+            .WithMethods("GET", "POST", "PUT", "DELETE")
+            .AllowAnyHeader());
 });
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -77,5 +80,8 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+
+// apply pending migrations
+MigrationHelper.ApplyMigration(app.Services);
 
 app.Run();

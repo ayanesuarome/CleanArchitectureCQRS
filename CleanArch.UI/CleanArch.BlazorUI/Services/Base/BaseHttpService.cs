@@ -4,7 +4,7 @@ using System.Net.Http.Headers;
 
 namespace CleanArch.BlazorUI.Services.Base;
 
-public class BaseHttpService(IClient client, ILocalStorageService localStorage)
+public abstract class BaseHttpService(IClient client, ILocalStorageService localStorage)
 {
     protected readonly IClient _client = client;
     protected readonly ILocalStorageService _localStorage = localStorage;

@@ -5,6 +5,7 @@ using CleanArch.Application.Interfaces.Logging;
 using CleanArch.Application.Models;
 using CleanArch.Domain.Entities;
 using CleanArch.Domain.Interfaces.Persistence;
+using FluentValidation;
 using FluentValidation.Results;
 using MediatR;
 
@@ -15,16 +16,19 @@ public class UpdateLeaveRequestCommandHandler : IRequestHandler<UpdateLeaveReque
     private readonly IMapper _mapper;
     private readonly ILeaveRequestRepository _repository;
     private readonly IEmailSender _emailSender;
+    private readonly IValidator<UpdateLeaveRequestCommand> _validator;
     private readonly IAppLogger<UpdateLeaveRequestCommandHandler> _logger;
 
     public UpdateLeaveRequestCommandHandler(IMapper mapper,
         ILeaveRequestRepository repository,
         IEmailSender emailSender,
+        IValidator<UpdateLeaveRequestCommand> validator,
         IAppLogger<UpdateLeaveRequestCommandHandler> logger)
     {
         _mapper = mapper;
         _repository = repository;
         _emailSender = emailSender;
+        _validator = validator;
         _logger = logger;
     }
 
@@ -37,8 +41,7 @@ public class UpdateLeaveRequestCommandHandler : IRequestHandler<UpdateLeaveReque
             throw new NotFoundException(nameof(LeaveRequest), request.Id);
         }
 
-        UpdateLeaveRequestCommandValidator validator = new();
-        ValidationResult validationResult = await validator.ValidateAsync(request, cancellationToken);
+        ValidationResult validationResult = await _validator.ValidateAsync(request, cancellationToken);
 
         if(!validationResult.IsValid)
         {

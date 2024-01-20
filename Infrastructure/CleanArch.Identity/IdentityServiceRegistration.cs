@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 
@@ -19,9 +20,6 @@ public static class IdentityServiceRegistration
 
     public static IServiceCollection AddIdentityServices(this IServiceCollection services, IConfiguration configuration)
     {
-        // TODO: add settings
-        services.Configure<JwtSettings>(configuration.GetSection("JwtSettings"));
-
         services.AddDbContext<CleanArchIdentityEFDbContext>(options =>
         {
             options.UseSqlServer(configuration.GetConnectionString(CleanArchIdentitySqlServerDbContext));
@@ -34,6 +32,13 @@ public static class IdentityServiceRegistration
         services.AddTransient<IAuthService, AuthService>();
         services.AddTransient<IUserService, UserService>();
 
+        services.Configure<JwtSettings>(configuration.GetSection(nameof(JwtSettings)));
+        IServiceProvider serviceProvider = services.BuildServiceProvider();
+
+        JwtSettings jwtSettings = serviceProvider
+            .GetRequiredService<IOptions<JwtSettings>>()
+            .Value;
+
         services.AddAuthentication(options =>
         {
             options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -45,10 +50,11 @@ public static class IdentityServiceRegistration
                 ValidateIssuerSigningKey = true,
                 ValidateIssuer = true,
                 ValidateLifetime = true,
+                ValidateAudience = true,
                 ClockSkew = TimeSpan.Zero,
-                ValidIssuer = configuration["JwtSettings:Issuer"],
-                ValidAudience = configuration["JwtSettings:Audience"],
-                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["JwtSettings:Key"]))
+                ValidIssuer = jwtSettings.Issuer,
+                ValidAudience = jwtSettings.Audience,
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings.Key))
             };
         });
 

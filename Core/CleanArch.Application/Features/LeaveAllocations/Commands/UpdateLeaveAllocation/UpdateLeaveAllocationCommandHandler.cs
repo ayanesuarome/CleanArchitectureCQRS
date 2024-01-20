@@ -2,16 +2,21 @@
 using CleanArch.Application.Exceptions;
 using CleanArch.Domain.Entities;
 using CleanArch.Domain.Interfaces.Persistence;
+using FluentValidation;
 using FluentValidation.Results;
 using MediatR;
 
 namespace CleanArch.Application.Features.LeaveAllocations.Commands.UpdateLeaveAllocation
 {
-    public class UpdateLeaveAllocationCommandHandler(IMapper mapper, ILeaveAllocationRepository repository)
+    public class UpdateLeaveAllocationCommandHandler(
+        IMapper mapper,
+        ILeaveAllocationRepository repository,
+        IValidator<UpdateLeaveAllocationCommand> validator)
         : IRequestHandler<UpdateLeaveAllocationCommand>
     {
         private readonly IMapper _mapper = mapper;
         private readonly ILeaveAllocationRepository _repository = repository;
+        private readonly IValidator<UpdateLeaveAllocationCommand> _validator = validator;
 
         public async Task Handle(UpdateLeaveAllocationCommand request, CancellationToken cancellationToken)
         {
@@ -22,8 +27,7 @@ namespace CleanArch.Application.Features.LeaveAllocations.Commands.UpdateLeaveAl
                 throw new NotFoundException(nameof(LeaveAllocation), request.Id);
             }
 
-            UpdateLeaveAllocationCommandValidator validator = new();
-            ValidationResult validationResult = await validator.ValidateAsync(request, cancellationToken);
+            ValidationResult validationResult = await _validator.ValidateAsync(request, cancellationToken);
 
             if(!validationResult.IsValid)
             {

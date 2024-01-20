@@ -17,7 +17,7 @@ builder.RootComponents.Add<HeadOutlet>("head::after");
 // Original registration
 //builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
 
-// Microsoft.Extensions.Http
+// Add Microsoft.Extensions.Http
 builder.Services.AddHttpClient<IClient, Client>(
     configureClient: options =>
     {

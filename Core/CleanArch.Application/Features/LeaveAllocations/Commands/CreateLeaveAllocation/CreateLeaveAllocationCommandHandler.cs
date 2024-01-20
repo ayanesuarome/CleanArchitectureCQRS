@@ -2,6 +2,7 @@
 using CleanArch.Application.Exceptions;
 using CleanArch.Domain.Entities;
 using CleanArch.Domain.Interfaces.Persistence;
+using FluentValidation;
 using FluentValidation.Results;
 using MediatR;
 
@@ -12,20 +13,22 @@ public class CreateLeaveAllocationCommandHandler : IRequestHandler<CreateLeaveAl
     private readonly IMapper _mapper;
     private readonly ILeaveAllocationRepository _allocationRepository;
     private readonly ILeaveTypeRepository _leaveTypeRepository;
+    private readonly IValidator<CreateLeaveAllocationCommand> _validator;
 
     public CreateLeaveAllocationCommandHandler(IMapper mapper,
         ILeaveAllocationRepository allocationRepository,
-        ILeaveTypeRepository leaveTypeRepository)
+        ILeaveTypeRepository leaveTypeRepository,
+        IValidator<CreateLeaveAllocationCommand> validator)
     {
         _mapper = mapper;
         _allocationRepository = allocationRepository;
         _leaveTypeRepository = leaveTypeRepository;
+        _validator = validator;
     }
 
     public async Task<int> Handle(CreateLeaveAllocationCommand request, CancellationToken cancellationToken)
     {
-        CreateLeaveAllocationCommandValidator validator = new(_leaveTypeRepository);
-        ValidationResult validationResult = await validator.ValidateAsync(request, cancellationToken);
+        ValidationResult validationResult = await _validator.ValidateAsync(request, cancellationToken);
 
         if(!validationResult.IsValid)
         {

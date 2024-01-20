@@ -4,6 +4,7 @@ using CleanArch.Application.Interfaces.Logging;
 using CleanArch.Application.Models;
 using CleanArch.Domain.Entities;
 using CleanArch.Domain.Interfaces.Persistence;
+using FluentValidation;
 using FluentValidation.Results;
 using MediatR;
 using System;
@@ -18,14 +19,17 @@ public class ChangeLeaveRequestApprovalCommandHandler : IRequestHandler<ChangeLe
 {
     private readonly ILeaveRequestRepository _repository;
     private readonly IEmailSender _emailSender;
+    private readonly IValidator<ChangeLeaveRequestApprovalCommand> _validator;
     private readonly IAppLogger<ChangeLeaveRequestApprovalCommand> _logger;
 
     public ChangeLeaveRequestApprovalCommandHandler(ILeaveRequestRepository repository,
         IEmailSender emailSender,
+        IValidator<ChangeLeaveRequestApprovalCommand> validator,
         IAppLogger<ChangeLeaveRequestApprovalCommand> logger)
     {
         _repository = repository;
         _emailSender = emailSender;
+        this.validator = validator;
         _logger = logger;
     }
 
@@ -38,8 +42,7 @@ public class ChangeLeaveRequestApprovalCommandHandler : IRequestHandler<ChangeLe
             throw new NotFoundException(nameof(LeaveRequest), request.Id);
         }
 
-        ChangeLeaveRequestApprovalCommandValidator validator = new();
-        ValidationResult validationResult = await validator.ValidateAsync(request, cancellationToken);
+        ValidationResult validationResult = await _validator.ValidateAsync(request, cancellationToken);
 
         if(!validationResult.IsValid)
         {

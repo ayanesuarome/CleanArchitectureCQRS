@@ -41,7 +41,7 @@ public class AuthenticationService : BaseHttpService, IAuthenticationService
 
             return true;
         }
-        catch(Exception ex)
+        catch
         {
             return false;
         }

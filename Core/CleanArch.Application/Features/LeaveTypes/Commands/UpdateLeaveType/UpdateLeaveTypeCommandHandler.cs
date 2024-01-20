@@ -2,16 +2,21 @@
 using CleanArch.Application.Exceptions;
 using CleanArch.Domain.Entities;
 using CleanArch.Domain.Interfaces.Persistence;
+using FluentValidation;
 using FluentValidation.Results;
 using MediatR;
 
 namespace CleanArch.Application.Features.LeaveTypes.Commands.UpdateLeaveType;
 
-public class UpdateLeaveTypeCommandHandler(IMapper mapper, ILeaveTypeRepository repository)
+public class UpdateLeaveTypeCommandHandler(
+    IMapper mapper,
+    ILeaveTypeRepository repository,
+    IValidator<UpdateLeaveTypeCommand> validator)
     : IRequestHandler<UpdateLeaveTypeCommand, Unit>
 {
     private readonly IMapper _mapper = mapper;
     private readonly ILeaveTypeRepository _repository = repository;
+    private readonly IValidator<UpdateLeaveTypeCommand> _validator = validator;
 
     public async Task<Unit> Handle(UpdateLeaveTypeCommand request, CancellationToken cancellationToken)
     {
@@ -22,8 +27,7 @@ public class UpdateLeaveTypeCommandHandler(IMapper mapper, ILeaveTypeRepository 
             throw new NotFoundException(nameof(LeaveType), request.Id);
         }
 
-        UpdateLeaveTypeCommandValidator validator = new(_repository);
-        ValidationResult validationResult = await validator.ValidateAsync(request, cancellationToken);
+        ValidationResult validationResult = await _validator.ValidateAsync(request, cancellationToken);
 
         if(!validationResult.IsValid)
         {

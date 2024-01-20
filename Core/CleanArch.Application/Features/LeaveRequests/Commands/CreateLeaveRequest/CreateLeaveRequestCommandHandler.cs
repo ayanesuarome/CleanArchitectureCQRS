@@ -5,6 +5,7 @@ using CleanArch.Application.Interfaces.Logging;
 using CleanArch.Application.Models;
 using CleanArch.Domain.Entities;
 using CleanArch.Domain.Interfaces.Persistence;
+using FluentValidation;
 using FluentValidation.Results;
 using MediatR;
 using System;
@@ -21,25 +22,27 @@ public class CreateLeaveRequestCommandHandler : IRequestHandler<CreateLeaveReque
     private readonly ILeaveRequestRepository _leaveRequestRepository;
     private readonly ILeaveTypeRepository _leaveTypeRepository;
     private readonly IEmailSender _emailSender;
+    private readonly IValidator<CreateLeaveRequestCommand> _validator;
     private readonly IAppLogger<CreateLeaveRequestCommandHandler> _logger;
 
     public CreateLeaveRequestCommandHandler(IMapper mapper,
         ILeaveRequestRepository leaveRequestRepository,
         ILeaveTypeRepository leaveTypeRepository,
         IEmailSender emailSender,
+        IValidator<CreateLeaveRequestCommand> validator,
         IAppLogger<CreateLeaveRequestCommandHandler> logger)
     {
         _mapper = mapper;
         _leaveRequestRepository = leaveRequestRepository;
         _leaveTypeRepository = leaveTypeRepository;
         _emailSender = emailSender;
+        _validator = validator;
         _logger = logger;
     }
 
     public async Task<int> Handle(CreateLeaveRequestCommand request, CancellationToken cancellationToken)
     {
-        CreateLeaveRequestCommandValidator validator = new(_leaveTypeRepository);
-        ValidationResult validationResult = await validator.ValidateAsync(request, cancellationToken);
+        ValidationResult validationResult = await _validator.ValidateAsync(request, cancellationToken);
 
         if(!validationResult.IsValid)
         {

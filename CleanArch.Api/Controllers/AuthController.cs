@@ -26,12 +26,12 @@ namespace CleanArch.Api.Controllers
         }
 
         [HttpPost("register")]
-        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<RegistrationResponse>> Register([FromBody] RegistrationRequest request)
         {
             await _authService.Register(request);
-            return Created();
+            return Ok();
         }
     }
 }

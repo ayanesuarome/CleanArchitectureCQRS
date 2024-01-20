@@ -13,6 +13,7 @@ public class LeaveTypeService(IClient client, IMapper mapper, ILocalStorageServi
 
     public async Task<List<LeaveTypeVM>> GetLeaveTypeList()
     {
+        await AddBearerToken();
         ICollection<LeaveTypeDto> leaveTypes = await _client.LeaveTypesAllAsync();
         return _mapper.Map<List<LeaveTypeVM>>(leaveTypes);
     }

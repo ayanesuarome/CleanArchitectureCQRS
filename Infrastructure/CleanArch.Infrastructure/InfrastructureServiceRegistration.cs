@@ -10,11 +10,9 @@ namespace CleanArch.Infrastructure;
 
 public static class InfrastructureServiceRegistration 
 {
-    private const string EmailSettingsSection = "EmailSettings";
-
     public static IServiceCollection AddInfrastructureServices(this IServiceCollection services, IConfiguration configuration)
     {
-        services.Configure<EmailSettings>(configuration.GetSection(EmailSettingsSection));
+        services.Configure<EmailSettings>(configuration.GetSection(nameof(EmailSettings)));
         services.AddTransient<IEmailSender, EmailSender>();
         services.AddScoped(typeof(IAppLogger<>), typeof(LoggerAdapter<>));
 

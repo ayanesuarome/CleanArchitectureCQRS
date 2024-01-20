@@ -2,21 +2,24 @@
 using CleanArch.Application.Exceptions;
 using CleanArch.Domain.Entities;
 using CleanArch.Domain.Interfaces.Persistence;
+using FluentValidation;
 using FluentValidation.Results;
 using MediatR;
 
 namespace CleanArch.Application.Features.LeaveTypes.Commands.CreateLeaveType;
 
-public class CreateLeaveTypeCommandHandler(IMapper mapper, ILeaveTypeRepository repository)
+public class CreateLeaveTypeCommandHandler(IMapper mapper,
+    ILeaveTypeRepository repository,
+    IValidator<CreateLeaveTypeCommand> validator)
     : IRequestHandler<CreateLeaveTypeCommand, int>
 {
     private readonly IMapper _mapper = mapper;
     private readonly ILeaveTypeRepository _repository = repository;
+    private readonly IValidator<CreateLeaveTypeCommand> _validator = validator;
 
     public async Task<int> Handle(CreateLeaveTypeCommand request, CancellationToken cancellationToken)
     {
-        CreateLeaveTypeCommandValidator validator = new(_repository);
-        ValidationResult validationResult = await validator.ValidateAsync(request, cancellationToken);
+        ValidationResult validationResult = await _validator.ValidateAsync(request, cancellationToken);
 
         if(!validationResult.IsValid)
         {
