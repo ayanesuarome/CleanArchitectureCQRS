@@ -1,6 +1,7 @@
 ﻿using CleanArch.Application.Interfaces.Identity;
 using CleanArch.Application.Models.Identity;
 using CleanArch.Identity.DatabaseContext;
+using CleanArch.Identity.Interfaces;
 using CleanArch.Identity.Models;
 using CleanArch.Identity.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -31,6 +32,7 @@ public static class IdentityServiceRegistration
 
         services.AddTransient<IAuthService, AuthService>();
         services.AddTransient<IUserService, UserService>();
+        services.AddTransient<IJwtTokenGenerator, JwtTokenGenerator>();
 
         services.Configure<JwtSettings>(configuration.GetSection(nameof(JwtSettings)));
         IServiceProvider serviceProvider = services.BuildServiceProvider();

@@ -29,7 +29,7 @@ public class ChangeLeaveRequestApprovalCommandHandler : IRequestHandler<ChangeLe
     {
         _repository = repository;
         _emailSender = emailSender;
-        this.validator = validator;
+        _validator = validator;
         _logger = logger;
     }
 
