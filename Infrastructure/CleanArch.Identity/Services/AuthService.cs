@@ -5,7 +5,6 @@ using CleanArch.Identity.Interfaces;
 using CleanArch.Identity.Models;
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.Extensions.Options;
 using System.Text;
 
 namespace CleanArch.Identity.Services;
@@ -15,7 +14,6 @@ public class AuthService : IAuthService
     private readonly UserManager<ApplicationUser> _userManager;
     private readonly SignInManager<ApplicationUser> _signInManager;
     private readonly IJwtTokenGenerator _jwtTokenGenerator;
-    private readonly JwtSettings _jwtSettings;
 
     // TODO: move to a static class
     private const string EmployeeRole = "Employee";
@@ -23,13 +21,11 @@ public class AuthService : IAuthService
     public AuthService(
         UserManager<ApplicationUser> userManager,
         SignInManager<ApplicationUser> signInManager,
-        IJwtTokenGenerator jwtTokenGenerator,
-        IOptions<JwtSettings> jwtSettings)
+        IJwtTokenGenerator jwtTokenGenerator)
     {
         _userManager = userManager;
         _signInManager = signInManager;
         _jwtTokenGenerator = jwtTokenGenerator;
-        _jwtSettings = jwtSettings.Value;
     }
 
     public async Task<AuthResponse> Login(AuthRequest request)

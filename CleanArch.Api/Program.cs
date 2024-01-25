@@ -1,12 +1,11 @@
 using CleanArch.Api.Middlewares;
+using CleanArch.Api.Swagger;
 using CleanArch.Application;
 using CleanArch.Identity;
 using CleanArch.Infrastructure;
 using CleanArch.Persistence;
 using CleanArch.Persistence.Migrations;
-using Microsoft.AspNetCore.Http;
 using Serilog;
-using System.Net.Mime;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -48,7 +47,7 @@ builder.Services.AddCors(options =>
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwagger();
 
 var app = builder.Build();
 
@@ -60,11 +59,8 @@ var app = builder.Build();
 app.UseMiddleware<ExceptionMiddleware>();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+app.UseSwagger();
+app.UseSwaggerUI();
 
 // Adds Serilog
 app.UseSerilogRequestLogging();
@@ -76,8 +72,6 @@ app.UseCors(policyName: "CleanArchAll");
 app.UseAuthentication().UseAuthorization();
 
 app.UseHttpsRedirection();
-
-app.UseAuthorization();
 
 app.MapControllers();
 

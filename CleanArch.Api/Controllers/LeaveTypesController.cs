@@ -6,19 +6,24 @@ using CleanArch.Application.Features.LeaveTypeDetails.Queries.GetLeaveTypesDetai
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
+using Asp.Versioning;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace CleanArch.Api.Controllers;
 
-[Route("api/[controller]")]
+[ApiVersion("1.0")]
+[Route("api/v{version:apiVersion}/[controller]")]
 [ApiController]
+[Authorize]
+[ProducesResponseType(StatusCodes.Status401Unauthorized)]
 public class LeaveTypesController(IMediator mediator) : ControllerBase
 {
     private readonly IMediator _mediator = mediator;
 
     // GET: api/<LeaveTypesController>
     [HttpGet]
+    [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<ActionResult<List<LeaveTypeDto>>> Get()
     {
         return Ok(await _mediator.Send(new GetLeaveTypeListQuery()));
@@ -57,6 +62,7 @@ public class LeaveTypesController(IMediator mediator) : ControllerBase
 
     // DELETE api/<LeaveTypesController>/5
     [HttpDelete("{id}")]
+    [Authorize(Roles = "Administrator")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult> Delete(int id)

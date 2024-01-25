@@ -53,12 +53,15 @@ public static class IdentityServiceRegistration
                 ValidateIssuer = true,
                 ValidateLifetime = true,
                 ValidateAudience = true,
+                // set clockskew to zero so tokens expire exactly at token expiration time (instead of 5 minutes later)
                 ClockSkew = TimeSpan.Zero,
                 ValidIssuer = jwtSettings.Issuer,
                 ValidAudience = jwtSettings.Audience,
                 IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings.Key))
             };
         });
+
+        services.AddAuthorization();
 
         return services;
     }
