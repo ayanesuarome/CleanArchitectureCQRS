@@ -12,20 +12,20 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CleanArch.Api.Controllers;
 
-[Route("api/[controller]")]
+[Route("api/v{version:apiVersion}/[controller]")]
 [ApiController]
 public class LeaveRequestController(IMediator mediator) : ControllerBase
 {
     private readonly IMediator _mediator = mediator;
 
-    // GET: api/<LeaveRequestController>
+    // GET: api/<v>/<LeaveRequestController>
     [HttpGet]
     public async Task<ActionResult<List<LeaveRequestDto>>> Get()
     {
         return Ok(await _mediator.Send(new GetLeaveRequestListQuery()));
     }
 
-    // GET api/<LeaveRequestController>/5
+    // GET api/<v>/<LeaveRequestController>/5
     [HttpGet("{id}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -34,7 +34,7 @@ public class LeaveRequestController(IMediator mediator) : ControllerBase
         return Ok(await _mediator.Send(new GetLeaveRequestDetailsQuery(id)));
     }
 
-    // POST api/<LeaveRequestController>
+    // POST api/<v>/<LeaveRequestController>
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -44,7 +44,7 @@ public class LeaveRequestController(IMediator mediator) : ControllerBase
         return CreatedAtAction(nameof(Get), new { id });
     }
 
-    // PUT api/<LeaveRequestController>/5
+    // PUT api/<v>/<LeaveRequestController>/5
     [HttpPut("{id}")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -56,7 +56,7 @@ public class LeaveRequestController(IMediator mediator) : ControllerBase
         return NoContent();
     }
 
-    // DELETE api/<LeaveRequestController>/5
+    // DELETE api/<v>/<LeaveRequestController>/5
     [HttpDelete("{id}")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -66,7 +66,7 @@ public class LeaveRequestController(IMediator mediator) : ControllerBase
         return NoContent();
     }
 
-    // PUT api/<LeaveRequestController>/5/CancelRequest
+    // PUT api/<v>/<LeaveRequestController>/5/CancelRequest
     [HttpPut("{id}/CancelRequest")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -77,7 +77,7 @@ public class LeaveRequestController(IMediator mediator) : ControllerBase
         return NoContent();
     }
 
-    // PUT api/<LeaveRequestController>/5/UpdateApproval
+    // PUT api/<v>/<LeaveRequestController>/5/UpdateApproval
     [HttpPut("{id}/UpdateApproval")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]

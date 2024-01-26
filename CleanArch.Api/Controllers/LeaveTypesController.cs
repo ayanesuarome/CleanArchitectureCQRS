@@ -12,7 +12,6 @@ using Asp.Versioning;
 
 namespace CleanArch.Api.Controllers;
 
-[ApiVersion("1.0")]
 [Route("api/v{version:apiVersion}/[controller]")]
 [ApiController]
 [Authorize]
@@ -21,7 +20,7 @@ public class LeaveTypesController(IMediator mediator) : ControllerBase
 {
     private readonly IMediator _mediator = mediator;
 
-    // GET: api/<LeaveTypesController>
+    // GET: api/<v>/<LeaveTypesController>
     [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<ActionResult<List<LeaveTypeDto>>> Get()
@@ -29,7 +28,7 @@ public class LeaveTypesController(IMediator mediator) : ControllerBase
         return Ok(await _mediator.Send(new GetLeaveTypeListQuery()));
     }
 
-    // GET api/<LeaveTypesController>/5
+    // GET api/<v>/<LeaveTypesController>/5
     [HttpGet("{id}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -38,7 +37,7 @@ public class LeaveTypesController(IMediator mediator) : ControllerBase
         return Ok(await _mediator.Send(new GetLeaveTypeDetailsQuery(id)));
     }
 
-    // POST api/<LeaveTypesController>
+    // POST api/<v>/<LeaveTypesController>
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -48,7 +47,7 @@ public class LeaveTypesController(IMediator mediator) : ControllerBase
         return CreatedAtAction(nameof(Get), id);
     }
 
-    // PUT api/<LeaveTypesController>/5
+    // PUT api/<v>/<LeaveTypesController>/5
     [HttpPut("{id}")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -60,7 +59,7 @@ public class LeaveTypesController(IMediator mediator) : ControllerBase
         return NoContent();
     }
 
-    // DELETE api/<LeaveTypesController>/5
+    // DELETE api/<v>/<LeaveTypesController>/5
     [HttpDelete("{id}")]
     [Authorize(Roles = "Administrator")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]

@@ -11,20 +11,20 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CleanArch.Api.Controllers;
 
-[Route("api/[controller]")]
+[Route("api/v{version:apiVersion}/[controller]")]
 [ApiController]
 public class LeaveAllocationController(IMediator mediator) : ControllerBase
 {
     private readonly IMediator _mediator = mediator;
 
-    // GET: api/<LeaveAllocationController>
+    // GET: api/<v>/<LeaveAllocationController>
     [HttpGet]
     public async Task<ActionResult<List<LeaveAllocationDto>>> Get()
     {
         return Ok(await _mediator.Send(new GetLeaveAllocationListQuery()));
     }
 
-    // GET api/<LeaveAllocationController>/5
+    // GET api/<v>/<LeaveAllocationController>/5
     [HttpGet("{id}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -33,7 +33,7 @@ public class LeaveAllocationController(IMediator mediator) : ControllerBase
         return Ok(await _mediator.Send(new GetLeaveAllocationDetailsQuery(id)));
     }
 
-    // POST api/<LeaveAllocationController>
+    // POST api/<v>/<LeaveAllocationController>
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -43,7 +43,7 @@ public class LeaveAllocationController(IMediator mediator) : ControllerBase
         return CreatedAtAction(nameof(Get), id);
     }
 
-    // PUT api/<LeaveAllocationController>/5
+    // PUT api/<v>/<LeaveAllocationController>/5
     [HttpPut("{id}")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -55,7 +55,7 @@ public class LeaveAllocationController(IMediator mediator) : ControllerBase
         return NoContent();
     }
 
-    // DELETE api/<LeaveAllocationController>/5
+    // DELETE api/<v>/<LeaveAllocationController>/5
     [HttpDelete("{id}")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
