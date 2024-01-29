@@ -25,12 +25,12 @@ public sealed partial class CleanArchEFDbContext : DbContext
         {
             DateTime now = DateTime.Now;
             entry.Entity.DateModified = now;
-            entry.Entity.ModifiedBy = _userService.UserId;
+            //entry.Entity.ModifiedBy = _userService.UserId;
 
             if(entry.State == EntityState.Added)
             {
                 entry.Entity.DateCreated = now;
-                entry.Entity.CreatedBy = _userService.UserId;
+                //entry.Entity.CreatedBy = _userService.UserId;
             }
         }
 

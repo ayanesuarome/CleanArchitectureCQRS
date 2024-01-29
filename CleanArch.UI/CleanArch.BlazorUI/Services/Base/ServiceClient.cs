@@ -2124,17 +2124,8 @@ namespace CleanArch.BlazorUI.Services.Base
     public partial class CreateLeaveAllocationCommand
     {
 
-        [System.Text.Json.Serialization.JsonPropertyName("numberOfDays")]
-        public int NumberOfDays { get; set; }
-
-        [System.Text.Json.Serialization.JsonPropertyName("period")]
-        public int Period { get; set; }
-
         [System.Text.Json.Serialization.JsonPropertyName("leaveTypeId")]
         public int LeaveTypeId { get; set; }
-
-        [System.Text.Json.Serialization.JsonPropertyName("employeeId")]
-        public string EmployeeId { get; set; }
 
     }
 
@@ -2367,9 +2358,6 @@ namespace CleanArch.BlazorUI.Services.Base
         [System.Text.Json.Serialization.JsonPropertyName("email")]
         public string Email { get; set; }
 
-        [System.Text.Json.Serialization.JsonPropertyName("userName")]
-        public string UserName { get; set; }
-
         [System.Text.Json.Serialization.JsonPropertyName("password")]
         public string Password { get; set; }
 
@@ -2388,14 +2376,14 @@ namespace CleanArch.BlazorUI.Services.Base
     public partial class UpdateLeaveAllocationCommand
     {
 
+        [System.Text.Json.Serialization.JsonPropertyName("leaveTypeId")]
+        public int LeaveTypeId { get; set; }
+
         [System.Text.Json.Serialization.JsonPropertyName("numberOfDays")]
         public int NumberOfDays { get; set; }
 
         [System.Text.Json.Serialization.JsonPropertyName("period")]
         public int Period { get; set; }
-
-        [System.Text.Json.Serialization.JsonPropertyName("leaveTypeId")]
-        public int LeaveTypeId { get; set; }
 
         [System.Text.Json.Serialization.JsonPropertyName("id")]
         public int Id { get; set; }

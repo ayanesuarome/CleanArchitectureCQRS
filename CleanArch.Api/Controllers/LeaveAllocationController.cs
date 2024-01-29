@@ -4,7 +4,7 @@ using CleanArch.Application.Features.LeaveAllocations.Commands.UpdateLeaveAlloca
 using CleanArch.Application.Features.LeaveAllocations.Queries.GetLeaveAllocationDetails;
 using CleanArch.Application.Features.LeaveAllocations.Queries.GetLeaveAllocationList;
 using MediatR;
-using Microsoft.AspNetCore.Components.Forms;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -13,6 +13,7 @@ namespace CleanArch.Api.Controllers;
 
 [Route("api/v{version:apiVersion}/[controller]")]
 [ApiController]
+[Authorize(Roles = "Administrator")]
 public class LeaveAllocationController(IMediator mediator) : ControllerBase
 {
     private readonly IMediator _mediator = mediator;
@@ -35,12 +36,12 @@ public class LeaveAllocationController(IMediator mediator) : ControllerBase
 
     // POST api/<v>/<LeaveAllocationController>
     [HttpPost]
-    [ProducesResponseType(StatusCodes.Status201Created)]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<ActionResult> Post([FromBody] CreateLeaveAllocationCommand leaveAllocation)
     {
-        int id = await _mediator.Send(leaveAllocation);
-        return CreatedAtAction(nameof(Get), id);
+        await _mediator.Send(leaveAllocation);
+        return NoContent();
     }
 
     // PUT api/<v>/<LeaveAllocationController>/5

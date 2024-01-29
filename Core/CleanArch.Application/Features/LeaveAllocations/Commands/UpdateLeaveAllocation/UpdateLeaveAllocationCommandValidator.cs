@@ -1,5 +1,4 @@
-﻿using CleanArch.Application.Features.LeaveAllocations.Shared;
-using FluentValidation;
+﻿using FluentValidation;
 
 namespace CleanArch.Application.Features.LeaveAllocations.Commands.UpdateLeaveAllocation;
 
@@ -11,6 +10,12 @@ public class UpdateLeaveAllocationCommandValidator : AbstractValidator<UpdateLea
             .NotNull()
             .WithMessage("{PropertyName} is required");
 
-        Include(new BaseLeaveAllocationCommandValidtor());
+        RuleFor(m => m.NumberOfDays)
+            .GreaterThan(0)
+            .WithMessage("{PropertyName} must be greather than {ComparisonValue}");
+
+        RuleFor(m => m.Period)
+            .GreaterThanOrEqualTo(DateTime.Now.Year)
+            .WithMessage("{PropertyName} must be after {ComparisonValue}");
     }
 }

@@ -14,7 +14,9 @@ public partial class Index
 
     [Inject]
     private ILeaveTypeService LeaveTypeService { get; set; } = null!;
-    
+    [Inject]
+    private ILeaveAllocationService LeaveAllocationService { get; set; } = null!;
+
     private List<LeaveTypeVM> LeaveTypes { get; set; } = null!;
 
     public string? Message { get; set; }
@@ -31,7 +33,7 @@ public partial class Index
 
     private async Task AllocateLeaveType(int id)
     {
-        LeaveTypeVM leaveType = await LeaveTypeService.GetLeaveTypeDetails(id);
+        await LeaveAllocationService.CreateLeaveAllocations(id);
     }
 
     private void EditLeaveType(int id)

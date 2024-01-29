@@ -1,5 +1,6 @@
-﻿using AutoMapper;
-using CleanArch.Application.Exceptions;
+﻿using CleanArch.Application.Exceptions;
+using CleanArch.Application.Interfaces.Identity;
+using CleanArch.Application.Models.Identity;
 using CleanArch.Domain.Entities;
 using CleanArch.Domain.Interfaces.Persistence;
 using FluentValidation;
@@ -8,25 +9,26 @@ using MediatR;
 
 namespace CleanArch.Application.Features.LeaveAllocations.Commands.CreateLeaveAllocation;
 
-public class CreateLeaveAllocationCommandHandler : IRequestHandler<CreateLeaveAllocationCommand, int>
+public class CreateLeaveAllocationCommandHandler : IRequestHandler<CreateLeaveAllocationCommand>
 {
-    private readonly IMapper _mapper;
     private readonly ILeaveAllocationRepository _allocationRepository;
     private readonly ILeaveTypeRepository _leaveTypeRepository;
     private readonly IValidator<CreateLeaveAllocationCommand> _validator;
+    private readonly IUserService _userService;
 
-    public CreateLeaveAllocationCommandHandler(IMapper mapper,
+    public CreateLeaveAllocationCommandHandler(
         ILeaveAllocationRepository allocationRepository,
         ILeaveTypeRepository leaveTypeRepository,
-        IValidator<CreateLeaveAllocationCommand> validator)
+        IValidator<CreateLeaveAllocationCommand> validator,
+        IUserService userService)
     {
-        _mapper = mapper;
         _allocationRepository = allocationRepository;
         _leaveTypeRepository = leaveTypeRepository;
         _validator = validator;
+        _userService = userService;
     }
 
-    public async Task<int> Handle(CreateLeaveAllocationCommand request, CancellationToken cancellationToken)
+    public async Task Handle(CreateLeaveAllocationCommand request, CancellationToken cancellationToken)
     {
         ValidationResult validationResult = await _validator.ValidateAsync(request, cancellationToken);
 
@@ -35,9 +37,37 @@ public class CreateLeaveAllocationCommandHandler : IRequestHandler<CreateLeaveAl
             throw new BadRequestException($"Invalid {nameof(LeaveAllocation)}", validationResult);
         }
 
-        LeaveAllocation leaveAllocation = _mapper.Map<LeaveAllocation>(request);
-        await _allocationRepository.CreateAsync(leaveAllocation);
-        
-        return leaveAllocation.Id;
+        // get leave types for allocations
+        LeaveType leaveType = await _leaveTypeRepository.GetByIdAsync(request.LeaveTypeId);
+
+        // get employees
+        List<Employee> employees = await _userService.GetEmployees();
+
+        // get period
+        int period = DateTime.Now.Year;
+
+        // assign allocations if an allocation does not already exist for a period and leave type
+        List<LeaveAllocation> allocations = [];
+
+        foreach (Employee employee in employees)
+        {
+            bool allocationExist = await _allocationRepository.AllocationExists(employee.Id, leaveType.Id, period);
+
+            if(!allocationExist)
+            {
+                allocations.Add(new LeaveAllocation
+                {
+                    EmployeeId = employee.Id,
+                    LeaveTypeId = leaveType.Id,
+                    NumberOfDays = leaveType.DefaultDays,
+                    Period = period
+                });
+            }
+        }
+
+        if(allocations.Any())
+        {
+            await _allocationRepository.CreateListAsync(allocations);
+        }
     }
 }

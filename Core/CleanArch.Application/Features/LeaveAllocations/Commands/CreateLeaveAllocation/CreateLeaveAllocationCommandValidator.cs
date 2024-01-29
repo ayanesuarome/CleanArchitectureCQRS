@@ -1,5 +1,4 @@
-﻿using CleanArch.Application.Features.LeaveAllocations.Shared;
-using CleanArch.Domain.Entities;
+﻿using CleanArch.Domain.Entities;
 using CleanArch.Domain.Interfaces.Persistence;
 using FluentValidation;
 
@@ -18,8 +17,6 @@ public class CreateLeaveAllocationCommandValidator : AbstractValidator<CreateLea
             .GreaterThan(0)
             .MustAsync(LeaveTypeMustExist)
             .WithMessage("{PropertyName} does not exist");
-
-        Include(new BaseLeaveAllocationCommandValidtor());
     }
 
     private async Task<bool> LeaveTypeMustExist(int id, CancellationToken token)
