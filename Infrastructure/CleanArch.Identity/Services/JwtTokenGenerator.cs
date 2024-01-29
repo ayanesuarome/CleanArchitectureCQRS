@@ -26,10 +26,12 @@ public class JwtTokenGenerator(UserManager<ApplicationUser> userManager, IOption
 
         IEnumerable<Claim> claims = new[]
         {
-            new Claim(JwtRegisteredClaimNames.Sub, user.Id),
-            new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()), // should be unique for every token
+            // identifies the principal that is the subject of the JWT
+            new Claim(JwtRegisteredClaimNames.Sub, user.Email),
+            // unique identifier for the JWT. It can be used to prevent the JWT from being replayed
+            new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
             new Claim(JwtRegisteredClaimNames.Email, user.Email),
-            new Claim(JwtRegisteredClaimNames.Name, user.UserName),
+            new Claim(JwtRegisteredClaimNames.Name, user.Email),
             new Claim("uid", user.Id)
         }
         .Union(userClaims)
@@ -42,7 +44,7 @@ public class JwtTokenGenerator(UserManager<ApplicationUser> userManager, IOption
             issuer: _jwtSettings.Issuer,
             audience: _jwtSettings.Audience,
             claims: claims,
-            expires: DateTime.Now.AddMinutes(_jwtSettings.DurationInMinutes),
+            expires: DateTime.UtcNow.AddMinutes(_jwtSettings.DurationInMinutes),
             signingCredentials: signingCredentials);
 
         return new JwtSecurityTokenHandler().WriteToken(securityToken);

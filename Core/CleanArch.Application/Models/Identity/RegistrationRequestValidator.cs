@@ -20,12 +20,5 @@ public class RegistrationRequestValidator : AbstractValidator<RegistrationReques
             .WithMessage("{PropertyName} is required")
             .EmailAddress()
             .WithMessage("{PropertyName} invalid");
-        
-        RuleFor(m => m.UserName)
-            .Cascade(CascadeMode.Stop)
-            .NotEmpty()
-            .WithMessage("{PropertyName} is required")
-            .MinimumLength(6)
-            .WithMessage("{PropertyName} must contain at least {ComparisonValue} characters");
     }
 }

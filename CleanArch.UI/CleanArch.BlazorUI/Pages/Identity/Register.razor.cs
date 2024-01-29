@@ -17,7 +17,7 @@ public partial class Register
 
     protected override void OnInitialized()
     {
-        Model = new RegistrationRequestVM();
+        Model = new();
     }
 
     private async Task HandleRegister()
@@ -26,7 +26,7 @@ public partial class Register
 
         if(!canRegister)
         {
-            Message = "";
+            Message = string.Empty;
         }
     }
 }

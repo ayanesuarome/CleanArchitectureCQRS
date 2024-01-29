@@ -1,0 +1,32 @@
+﻿@page "/leavetypes/create"
+@attribute [Authorize(Roles = "Administrator")]
+
+<h3>Create Leave Type</h3>
+
+@if (!string.IsNullOrEmpty(Message))
+{
+    <div class="alert alert-danger">@Message</div>
+}
+
+<div class="row">
+    <div class="col-md-4">
+        <EditForm Model="@Model" OnValidSubmit="CreateLeaveType">
+            <DataAnnotationsValidator />
+            <ValidationSummary />
+
+            <div class="form-group">
+                <label class="control-label">Name</label>
+                <InputText id="name" class="form-control" @bind-Value="@Model.Name" required></InputText>
+                <ValidationMessage For="@(() => Model.Name)" />
+            </div>
+            <div class="form-group">
+                <label class="control-label">Default Days</label>
+                <InputNumber id="defaultDays" class="form-control" @bind-Value="@Model.DefaultDays" required></InputNumber>
+                <ValidationMessage For="@(() => Model.DefaultDays)" />
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </EditForm>
+    </div>
+</div>

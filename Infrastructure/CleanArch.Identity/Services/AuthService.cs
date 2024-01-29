@@ -70,7 +70,7 @@ public class AuthService : IAuthService
             Email = request.Email,
             FirstName = request.FirstName,
             LastName = request.LastName,
-            UserName = request.UserName,
+            UserName = request.Email,
             EmailConfirmed = true
         };
 

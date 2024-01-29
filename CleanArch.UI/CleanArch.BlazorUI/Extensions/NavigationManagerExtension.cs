@@ -20,6 +20,13 @@ public static class NavigationManagerExtension
         navigationManager.NavigateTo(Paths.Identity.Register);
     }
 
+    #region Leave Types
+
+    public static void NavigateToIndexLeaveType(this NavigationManager navigationManager)
+    {
+        navigationManager.NavigateTo(Paths.LeaveType.LeaveTypes);
+    }
+
     public static void NavigateToCreateLeaveType(this NavigationManager navigationManager)
     {
         navigationManager.NavigateTo(Paths.LeaveType.CreateLeaveType);
@@ -34,4 +41,6 @@ public static class NavigationManagerExtension
     {
         navigationManager.NavigateTo(String.Format(Paths.LeaveType.EditLeaveType, id));
     }
+
+    #endregion
 }

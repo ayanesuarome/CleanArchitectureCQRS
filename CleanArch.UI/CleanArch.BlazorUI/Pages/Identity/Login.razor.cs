@@ -25,11 +25,13 @@ public partial class Login
     {
         bool canAuthenticate = await AuthenticationService.AuthenticateAsync(Model);
 
-        if(canAuthenticate)
+        if(!canAuthenticate)
+        {
+            Message = "Username/password combination unknown";
+        }
+        else
         {
             NavigationManager.NavigateToHome();
         }
-
-        Message = "Username/password combination unknown";
     }
 }
