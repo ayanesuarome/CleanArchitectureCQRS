@@ -20,7 +20,7 @@ public class LeaveAllocationRepository : GenericRepository<LeaveAllocation>, ILe
                 && e.Period == period);
     }
 
-    public async Task<LeaveAllocation> GetEmployeeAllocations(string employeeId, int leaveTypeId)
+    public async Task<LeaveAllocation> GetEmployeeAllocation(string employeeId, int leaveTypeId)
     {
         return await TableNoTracking
             .FirstOrDefaultAsync(e => e.EmployeeId == employeeId

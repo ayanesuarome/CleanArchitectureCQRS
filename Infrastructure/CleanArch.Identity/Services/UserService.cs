@@ -1,14 +1,18 @@
 ﻿using CleanArch.Application.Interfaces.Identity;
 using CleanArch.Application.Models.Identity;
 using CleanArch.Identity.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 
 namespace CleanArch.Identity.Services;
 
-public class UserService(UserManager<ApplicationUser> userManager) : IUserService
+public class UserService(UserManager<ApplicationUser> userManager, IHttpContextAccessor httpContextAccessor)
+    : IUserService
 {
     private readonly UserManager<ApplicationUser> _userManager = userManager;
-    public string UserId => throw new NotImplementedException();
+    private readonly IHttpContextAccessor _httpContextAccessor = httpContextAccessor;
+
+    public string? UserId => _httpContextAccessor.HttpContext?.User?.FindFirst("uid")?.Value;
 
     // TODO: move to a static class
     private const string EmployeeRole = "Employee";

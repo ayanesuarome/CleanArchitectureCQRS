@@ -2,4 +2,4 @@
 
 namespace CleanArch.Application.Features.LeaveAllocations.Commands.CreateLeaveAllocation;
 
-public record CreateLeaveAllocationCommand(int LeaveTypeId) : IRequest { }
+public record CreateLeaveAllocationCommand(int LeaveTypeId) : IRequest<int> { }

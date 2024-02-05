@@ -23,14 +23,14 @@ public sealed partial class CleanArchEFDbContext : DbContext
         foreach (var entry in base.ChangeTracker.Entries<BaseEntity>()
             .Where(e => e.State == EntityState.Added || e.State == EntityState.Modified))
         {
-            DateTime now = DateTime.Now;
+            DateTimeOffset now = DateTimeOffset.Now;
             entry.Entity.DateModified = now;
-            //entry.Entity.ModifiedBy = _userService.UserId;
+            entry.Entity.ModifiedBy = _userService.UserId;
 
             if(entry.State == EntityState.Added)
             {
                 entry.Entity.DateCreated = now;
-                //entry.Entity.CreatedBy = _userService.UserId;
+                entry.Entity.CreatedBy = _userService.UserId;
             }
         }
 

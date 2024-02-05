@@ -2,7 +2,6 @@
 
 public abstract class BaseLeaveRequestCommand
 {
-    public DateTime StartDate { get; set; }
-    public DateTime EndDate { get; set; }
-    public string RequestingEmployeeId { get; set; } = null!;
+    public DateTimeOffset StartDate { get; set; }
+    public DateTimeOffset EndDate { get; set; }
 }

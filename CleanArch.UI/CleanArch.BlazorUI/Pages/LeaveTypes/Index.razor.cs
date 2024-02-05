@@ -9,16 +9,11 @@ namespace CleanArch.BlazorUI.Pages.LeaveTypes;
 
 public partial class Index
 {
-    [Inject]
-    private NavigationManager NavigationManager { get; set; } = null!;
+    [Inject] private NavigationManager NavigationManager { get; set; } = null!;
+    [Inject] private ILeaveTypeService LeaveTypeService { get; set; } = null!;
+    [Inject] private ILeaveAllocationService LeaveAllocationService { get; set; } = null!;
 
-    [Inject]
-    private ILeaveTypeService LeaveTypeService { get; set; } = null!;
-    [Inject]
-    private ILeaveAllocationService LeaveAllocationService { get; set; } = null!;
-
-    private List<LeaveTypeVM> LeaveTypes { get; set; } = null!;
-
+    private List<LeaveTypeVM>? LeaveTypes { get; set; }
     public string? Message { get; set; }
 
     protected override async Task OnInitializedAsync()

@@ -36,12 +36,14 @@ public class LeaveAllocationController(IMediator mediator) : ControllerBase
 
     // POST api/<v>/<LeaveAllocationController>
     [HttpPost]
+    [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<ActionResult> Post([FromBody] CreateLeaveAllocationCommand leaveAllocation)
     {
-        await _mediator.Send(leaveAllocation);
-        return NoContent();
+        int rowsAffected = await _mediator.Send(leaveAllocation);
+
+        return rowsAffected > 0 ? Created() : NoContent();
     }
 
     // PUT api/<v>/<LeaveAllocationController>/5

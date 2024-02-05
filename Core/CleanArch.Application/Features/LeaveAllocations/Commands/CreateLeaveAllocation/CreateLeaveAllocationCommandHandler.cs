@@ -9,7 +9,7 @@ using MediatR;
 
 namespace CleanArch.Application.Features.LeaveAllocations.Commands.CreateLeaveAllocation;
 
-public class CreateLeaveAllocationCommandHandler : IRequestHandler<CreateLeaveAllocationCommand>
+public class CreateLeaveAllocationCommandHandler : IRequestHandler<CreateLeaveAllocationCommand, int>
 {
     private readonly ILeaveAllocationRepository _allocationRepository;
     private readonly ILeaveTypeRepository _leaveTypeRepository;
@@ -28,7 +28,7 @@ public class CreateLeaveAllocationCommandHandler : IRequestHandler<CreateLeaveAl
         _userService = userService;
     }
 
-    public async Task Handle(CreateLeaveAllocationCommand request, CancellationToken cancellationToken)
+    public async Task<int> Handle(CreateLeaveAllocationCommand request, CancellationToken cancellationToken)
     {
         ValidationResult validationResult = await _validator.ValidateAsync(request, cancellationToken);
 
@@ -65,9 +65,13 @@ public class CreateLeaveAllocationCommandHandler : IRequestHandler<CreateLeaveAl
             }
         }
 
+        int rowsAffected = 0;
+
         if(allocations.Any())
         {
-            await _allocationRepository.CreateListAsync(allocations);
+            rowsAffected = await _allocationRepository.CreateListAsync(allocations);
         }
+
+        return rowsAffected;
     }
 }

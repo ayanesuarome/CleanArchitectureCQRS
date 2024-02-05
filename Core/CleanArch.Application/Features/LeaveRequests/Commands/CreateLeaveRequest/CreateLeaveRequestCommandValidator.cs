@@ -20,6 +20,10 @@ public class CreateLeaveRequestCommandValidator : AbstractValidator<CreateLeaveR
             .MustAsync(LeaveTypeMustExist)
             .WithMessage("{PropertyName} does not exist");
 
+        RuleFor(m => m.RequestComments)
+            .MaximumLength(300)
+            .WithMessage("{PropertyName} must be up to {ComparisonValue}");
+
         Include(new BaseLeaveRequestCommandValidator());
     }
 

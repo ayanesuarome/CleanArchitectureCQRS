@@ -15,21 +15,6 @@ public class BaseLeaveRequestCommandValidatorTest
         _validator = new BaseLeaveRequestCommandValidator();
     }
 
-    [Theory]
-    [ClassData(typeof(InvalidStringClassData))]
-    public async Task TestValidatorShouldFailWithNullOrEmptyRequestingEmployeeId(string employeeId)
-    {
-        CreateLeaveRequestCommand command = new()
-        {
-            RequestingEmployeeId = employeeId
-        };
-
-        var result = await _validator.TestValidateAsync(command);
-
-        result.ShouldHaveValidationErrorFor(x => x.RequestingEmployeeId)
-            .WithErrorMessage("Requesting Employee Id is required");
-    }
-
     [Fact]
     public async Task TestValidatorShouldFailWhenStartDateIsGreaterThanEndDate()
     {
@@ -52,7 +37,6 @@ public class BaseLeaveRequestCommandValidatorTest
     {
         CreateLeaveRequestCommand command = new()
         {
-            RequestingEmployeeId = "123",
             StartDate = DateTime.Now,
             EndDate = DateTime.Now.AddDays(1)
         };

@@ -73,7 +73,6 @@ public class CreateLeaveRequestCommandValidatorTest(CreateLeaveRequestCommandVal
         CreateLeaveRequestCommand command = new()
         {
             LeaveTypeId = 1,
-            RequestingEmployeeId = "123",
             StartDate = DateTime.Now,
             EndDate = DateTime.Now.AddDays(1)
         };

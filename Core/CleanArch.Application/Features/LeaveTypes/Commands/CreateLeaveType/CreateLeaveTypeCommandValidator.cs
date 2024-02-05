@@ -14,7 +14,7 @@ public class CreateLeaveTypeCommandValidator : AbstractValidator<CreateLeaveType
             .NotEmpty()
                 .WithMessage("{PropertyName} is required")
             .MaximumLength(70)
-                .WithMessage("{PropertyName} must be up to 70 characters")
+                .WithMessage("{PropertyName} must be up to {ComparisonValue} characters")
             .MustAsync(LeaveTypeUniqueName)
                 .WithMessage("Leave type already exist");
 

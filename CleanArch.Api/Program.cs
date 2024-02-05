@@ -24,6 +24,7 @@ builder.Services.AddPersistenceServices();
 builder.Services.AddIdentityServices(builder.Configuration);
 // The factory-activated middleware is added to the built-in container
 builder.Services.AddTransient<ExceptionMiddleware>();
+builder.Services.AddHttpContextAccessor();
 
 builder.Services.AddControllers();
 

@@ -9,14 +9,9 @@ namespace CleanArch.BlazorUI.Pages;
 
 public partial class Home
 {
-    [Inject]
-    private AuthenticationStateProvider AuthenticationStateProvider { get; set; } = null!;
-
-    [Inject]
-    private NavigationManager NavigationManager { get; set; } = null!;
-
-    [Inject]
-    private IAuthenticationService AuthenticationService { get; set; } = null!;
+    [Inject] private AuthenticationStateProvider AuthenticationStateProvider { get; set; } = null!;
+    [Inject] private NavigationManager NavigationManager { get; set; } = null!;
+    [Inject] private IAuthenticationService AuthenticationService { get; set; } = null!;
 
     protected override async Task OnInitializedAsync()
     {

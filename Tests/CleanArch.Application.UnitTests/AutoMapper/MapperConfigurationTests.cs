@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using CleanArch.Application.AutoMapper;
+using CleanArch.Application.AutoMapper.LeaveRequests;
 
 namespace CleanArch.Application.Tests.AutoMapper;
 

@@ -37,12 +37,12 @@ public class GenericRepository<TEntity>(CleanArchEFDbContext dbContext) : IGener
         }
     }
 
-    public async Task CreateListAsync(List<TEntity> entities)
+    public async Task<int> CreateListAsync(List<TEntity> entities)
     {
         try
         {
             await _dbContext.AddRangeAsync(entities);
-            await _dbContext.SaveChangesAsync();
+            return await _dbContext.SaveChangesAsync();
         }
         catch (DbUpdateException ex)
         {

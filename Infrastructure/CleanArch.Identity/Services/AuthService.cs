@@ -3,6 +3,7 @@ using CleanArch.Application.Interfaces.Identity;
 using CleanArch.Application.Models.Identity;
 using CleanArch.Identity.Interfaces;
 using CleanArch.Identity.Models;
+using FluentValidation;
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Identity;
 using System.Text;
@@ -14,6 +15,7 @@ public class AuthService : IAuthService
     private readonly UserManager<ApplicationUser> _userManager;
     private readonly SignInManager<ApplicationUser> _signInManager;
     private readonly IJwtTokenGenerator _jwtTokenGenerator;
+    private readonly IValidator<RegistrationRequest> _validator;
 
     // TODO: move to a static class
     private const string EmployeeRole = "Employee";
@@ -21,11 +23,13 @@ public class AuthService : IAuthService
     public AuthService(
         UserManager<ApplicationUser> userManager,
         SignInManager<ApplicationUser> signInManager,
-        IJwtTokenGenerator jwtTokenGenerator)
+        IJwtTokenGenerator jwtTokenGenerator,
+        IValidator<RegistrationRequest> validator)
     {
         _userManager = userManager;
         _signInManager = signInManager;
         _jwtTokenGenerator = jwtTokenGenerator;
+        _validator = validator;
     }
 
     public async Task<AuthResponse> Login(AuthRequest request)
@@ -57,8 +61,7 @@ public class AuthService : IAuthService
 
     public async Task<RegistrationResponse> Register(RegistrationRequest request)
     {
-        RegistrationRequestValidator validator = new();
-        ValidationResult validationResult = await validator.ValidateAsync(request);
+        ValidationResult validationResult = await _validator.ValidateAsync(request);
 
         if (!validationResult.IsValid)
         {

@@ -8,14 +8,10 @@ namespace CleanArch.BlazorUI.Pages.LeaveTypes;
 
 public partial class Create
 {
-    [Inject]
-    private NavigationManager NavigationManager { get; set; } = null!;
-
-    [Inject]
-    private ILeaveTypeService LeaveTypeService { get; set; } = null!;
+    [Inject] private NavigationManager NavigationManager { get; set; } = null!;
+    [Inject] private ILeaveTypeService LeaveTypeService { get; set; } = null!;
     
     private string? Message { get; set; }
-
     private LeaveTypeVM Model { get; set; }
 
     protected override async Task OnInitializedAsync()

@@ -7,19 +7,11 @@ namespace CleanArch.BlazorUI.Pages.Identity;
 
 public partial class Login
 {
-    [Inject]
-    private NavigationManager NavigationManager { get; set; } = null!;
+    [Inject] private NavigationManager NavigationManager { get; set; } = null!;
+    [Inject] private IAuthenticationService AuthenticationService { get; set; } = null!;
 
-    [Inject]
-    private IAuthenticationService AuthenticationService { get; set; } = null!;
-
-    private LoginVM Model { get; set; } = null!;
+    private LoginVM Model { get; set; } = new();
     public string? Message { get; set; }
-
-    protected override void OnInitialized()
-    {
-        Model = new LoginVM();
-    }
 
     private async Task HandleLogin()
     {

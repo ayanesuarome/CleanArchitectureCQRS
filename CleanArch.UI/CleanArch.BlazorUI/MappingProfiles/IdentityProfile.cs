@@ -10,5 +10,7 @@ public class IdentityProfile : Profile
     {
         CreateMap<RegistrationRequestVM, RegistrationRequest>();
         CreateMap<LoginVM, AuthRequest>();
+        CreateMap<EmployeeVM, Employee>()
+            .ReverseMap();
     }
 }

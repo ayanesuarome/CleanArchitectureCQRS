@@ -33,11 +33,11 @@ namespace CleanArch.Persistence.Migrations
                     b.Property<string>("CreatedBy")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime?>("DateCreated")
-                        .HasColumnType("datetime2");
+                    b.Property<DateTimeOffset?>("DateCreated")
+                        .HasColumnType("datetimeoffset");
 
-                    b.Property<DateTime?>("DateModified")
-                        .HasColumnType("datetime2");
+                    b.Property<DateTimeOffset?>("DateModified")
+                        .HasColumnType("datetimeoffset");
 
                     b.Property<string>("EmployeeId")
                         .IsRequired()
@@ -73,17 +73,17 @@ namespace CleanArch.Persistence.Migrations
                     b.Property<string>("CreatedBy")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime?>("DateCreated")
-                        .HasColumnType("datetime2");
+                    b.Property<DateTimeOffset?>("DateCreated")
+                        .HasColumnType("datetimeoffset");
 
-                    b.Property<DateTime?>("DateModified")
-                        .HasColumnType("datetime2");
+                    b.Property<DateTimeOffset?>("DateModified")
+                        .HasColumnType("datetimeoffset");
 
-                    b.Property<DateTime>("DateRequested")
-                        .HasColumnType("datetime2");
+                    b.Property<DateTimeOffset>("DateRequested")
+                        .HasColumnType("datetimeoffset");
 
-                    b.Property<DateTime>("EndDate")
-                        .HasColumnType("datetime2");
+                    b.Property<DateTimeOffset>("EndDate")
+                        .HasColumnType("datetimeoffset");
 
                     b.Property<bool?>("IsApproved")
                         .HasColumnType("bit");
@@ -104,8 +104,8 @@ namespace CleanArch.Persistence.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("StartDate")
-                        .HasColumnType("datetime2");
+                    b.Property<DateTimeOffset>("StartDate")
+                        .HasColumnType("datetimeoffset");
 
                     b.HasKey("Id");
 
@@ -125,11 +125,11 @@ namespace CleanArch.Persistence.Migrations
                     b.Property<string>("CreatedBy")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime?>("DateCreated")
-                        .HasColumnType("datetime2");
+                    b.Property<DateTimeOffset?>("DateCreated")
+                        .HasColumnType("datetimeoffset");
 
-                    b.Property<DateTime?>("DateModified")
-                        .HasColumnType("datetime2");
+                    b.Property<DateTimeOffset?>("DateModified")
+                        .HasColumnType("datetimeoffset");
 
                     b.Property<int>("DefaultDays")
                         .HasColumnType("int");
@@ -150,8 +150,8 @@ namespace CleanArch.Persistence.Migrations
                         new
                         {
                             Id = 1,
-                            DateCreated = new DateTime(2024, 1, 8, 15, 41, 51, 521, DateTimeKind.Local).AddTicks(2318),
-                            DateModified = new DateTime(2024, 1, 8, 15, 41, 51, 521, DateTimeKind.Local).AddTicks(2377),
+                            DateCreated = new DateTimeOffset(new DateTime(2024, 2, 5, 15, 20, 13, 164, DateTimeKind.Unspecified).AddTicks(2000), new TimeSpan(0, 2, 0, 0, 0)),
+                            DateModified = new DateTimeOffset(new DateTime(2024, 2, 5, 15, 20, 13, 164, DateTimeKind.Unspecified).AddTicks(2075), new TimeSpan(0, 2, 0, 0, 0)),
                             DefaultDays = 10,
                             Name = "Vacation"
                         });

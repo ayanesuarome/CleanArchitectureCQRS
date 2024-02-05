@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using Blazored.LocalStorage;
 using CleanArch.BlazorUI.Interfaces;
 using CleanArch.BlazorUI.Models.Identity;
 using CleanArch.BlazorUI.Providers;
@@ -15,9 +14,8 @@ public class AuthenticationService : BaseHttpService, IAuthenticationService
 
     public AuthenticationService(IClient client,
         IMapper mapper,
-        AuthenticationStateProvider authenticationStateProvider,
-        ILocalStorageService localStorage)
-        : base(client, localStorage)
+        AuthenticationStateProvider authenticationStateProvider)
+        : base(client)
     {
         _mapper = mapper;
         _authenticationStateProvider = authenticationStateProvider;

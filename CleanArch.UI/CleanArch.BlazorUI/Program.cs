@@ -1,5 +1,6 @@
 using Blazored.LocalStorage;
 using CleanArch.BlazorUI;
+using CleanArch.BlazorUI.Handlers;
 using CleanArch.BlazorUI.Interfaces;
 using CleanArch.BlazorUI.Providers;
 using CleanArch.BlazorUI.Services;
@@ -14,17 +15,16 @@ var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");
 builder.RootComponents.Add<HeadOutlet>("head::after");
 
-// Original registration
-//builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
-
 // Add Microsoft.Extensions.Http
+builder.Services.AddTransient<JwtAuthorizationMessageHandler>();
 builder.Services.AddHttpClient<IClient, Client>(
     configureClient: options =>
     {
         options.BaseAddress = new Uri("https://localhost:7256");
         options.DefaultRequestHeaders.Accept.Add(
             new MediaTypeWithQualityHeaderValue("application/json", 1.0));
-    });
+    })
+    .AddHttpMessageHandler<JwtAuthorizationMessageHandler>();
 
 builder.Services.AddBlazoredLocalStorage();
 builder.Services.AddAuthorizationCore();

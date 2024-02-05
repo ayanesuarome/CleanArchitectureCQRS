@@ -14,7 +14,6 @@ public class UpdateLeaveRequestValidatorTest(UpdateLeaveRequestValidatorFixture 
         UpdateLeaveRequestCommand command = new()
         {
             Id = 0,
-            RequestingEmployeeId = "123",
             StartDate = DateTime.Now,
             EndDate = DateTime.Now.AddDays(1)
         };
@@ -31,7 +30,6 @@ public class UpdateLeaveRequestValidatorTest(UpdateLeaveRequestValidatorFixture 
         UpdateLeaveRequestCommand command = new()
         {
             Id = 1,
-            RequestingEmployeeId = "123",
             StartDate = DateTime.Now,
             EndDate = DateTime.Now.AddDays(1)
         };

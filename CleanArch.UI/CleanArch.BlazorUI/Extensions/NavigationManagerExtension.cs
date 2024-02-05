@@ -43,4 +43,17 @@ public static class NavigationManagerExtension
     }
 
     #endregion
+
+    #region Leave Requests
+
+    public static void NavigateToIndexLeaveRequest(this NavigationManager navigationManager)
+    {
+        navigationManager.NavigateTo(Paths.LeaveRequest.LeaveRequests);
+    }
+    public static void NavigateToDetailsLeaveRequest(this NavigationManager navigationManager, int id)
+    {
+        navigationManager.NavigateTo(String.Format(Paths.LeaveRequest.DetailsLeaveRequest, id));
+    }
+
+    #endregion
 }
