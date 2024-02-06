@@ -1,5 +1,5 @@
 ﻿using CleanArch.Application.Interfaces.Email;
-using CleanArch.Application.Models;
+using CleanArch.Application.Models.Emails;
 using Microsoft.Extensions.Options;
 using SendGrid;
 using SendGrid.Helpers.Mail;
@@ -17,36 +17,38 @@ public class EmailSender : IEmailSender
         _client = new(_emailSettings.ApiKey);
     }
 
-    // Another way
-    //public async Task<bool> SendEmail(EmailMessage email)
-    //{
-    //    SendGridClient client = new(_emailSettings.ApiKey);
-
-    //    EmailAddress to = new(email.To);
-    //    EmailAddress from = new()
-    //    {
-    //        Email = _emailSettings.FromAddress,
-    //        Name = _emailSettings.FromNa me
-    //    };
-
-    //    SendGridMessage message = MailHelper.CreateSingleEmail(from, to, email.Subject, email.Body, email.Body);
-    //    var response = await client.SendEmailAsync(message);
-
-    //    return response.IsSuccessStatusCode;
-    //}
-
     public async Task<bool> SendEmail(EmailMessage email)
     {
         SendGridMessage message = new()
         {
             From = new(email: _emailSettings.FromAddress, name: _emailSettings.FromName),
+            ReplyTo = new(email: _emailSettings.ReplyTo),
             Subject = email.Subject,
             PlainTextContent = email.Body,
             HtmlContent = email.Body
         };
 
+        message.AddHeader("Content-Encoding", "gzip");
         message.AddTo(email.To);
 
+        var response = await _client.SendEmailAsync(message);
+
+        return response.IsSuccessStatusCode;
+    }
+
+    public async Task<bool> SendEmail(EmailMessageTemplate email)
+    {
+        EmailAddress to = new(email.To);
+        EmailAddress from = new()
+        {
+            Email = _emailSettings.FromAddress,
+            Name = _emailSettings.FromName
+        };
+        EmailAddress replyTo = new(_emailSettings.ReplyTo);
+
+        SendGridMessage message = MailHelper.CreateSingleTemplateEmail(from, to, email.TemplateId, email.TemplateData);
+        message.AddReplyTo(replyTo);
+        
         var response = await _client.SendEmailAsync(message);
 
         return response.IsSuccessStatusCode;

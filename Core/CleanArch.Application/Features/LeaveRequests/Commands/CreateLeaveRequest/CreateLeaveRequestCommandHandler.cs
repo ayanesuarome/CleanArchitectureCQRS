@@ -4,7 +4,7 @@ using CleanArch.Application.Extensions;
 using CleanArch.Application.Interfaces.Email;
 using CleanArch.Application.Interfaces.Identity;
 using CleanArch.Application.Interfaces.Logging;
-using CleanArch.Application.Models;
+using CleanArch.Application.Models.Emails;
 using CleanArch.Domain.Entities;
 using CleanArch.Domain.Interfaces.Persistence;
 using FluentValidation;
