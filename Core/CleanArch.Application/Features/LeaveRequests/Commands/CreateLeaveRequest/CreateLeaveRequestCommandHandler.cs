@@ -5,11 +5,13 @@ using CleanArch.Application.Interfaces.Email;
 using CleanArch.Application.Interfaces.Identity;
 using CleanArch.Application.Interfaces.Logging;
 using CleanArch.Application.Models.Emails;
+using CleanArch.Application.Models.Identity;
 using CleanArch.Domain.Entities;
 using CleanArch.Domain.Interfaces.Persistence;
 using FluentValidation;
 using FluentValidation.Results;
 using MediatR;
+using Microsoft.Extensions.Options;
 
 namespace CleanArch.Application.Features.LeaveRequests.Commands.CreateLeaveRequest;
 
@@ -19,8 +21,9 @@ public class CreateLeaveRequestCommandHandler : IRequestHandler<CreateLeaveReque
     private readonly ILeaveRequestRepository _leaveRequestRepository;
     private readonly ILeaveTypeRepository _leaveTypeRepository;
     private readonly ILeaveAllocationRepository _allocationRepository;
-    private readonly IEmailSender _emailSender;
     private readonly IUserService _userService;
+    private readonly IEmailSender _emailSender;
+    private readonly EmailTemplateIds _emailTemplateSettings;
 
     private readonly IValidator<CreateLeaveRequestCommand> _validator;
     private readonly IAppLogger<CreateLeaveRequestCommandHandler> _logger;
@@ -29,8 +32,9 @@ public class CreateLeaveRequestCommandHandler : IRequestHandler<CreateLeaveReque
         ILeaveRequestRepository leaveRequestRepository,
         ILeaveTypeRepository leaveTypeRepository,
         ILeaveAllocationRepository allocationRepository,
-        IEmailSender emailSender,
         IUserService userService,
+        IEmailSender emailSender,
+        IOptions<EmailTemplateIds> emailTemplateSettings,
         IValidator<CreateLeaveRequestCommand> validator,
         IAppLogger<CreateLeaveRequestCommandHandler> logger)
     {
@@ -38,8 +42,9 @@ public class CreateLeaveRequestCommandHandler : IRequestHandler<CreateLeaveReque
         _leaveRequestRepository = leaveRequestRepository;
         _leaveTypeRepository = leaveTypeRepository;
         _allocationRepository = allocationRepository;
-        _emailSender = emailSender;
         _userService = userService;
+        _emailSender = emailSender;
+        _emailTemplateSettings = emailTemplateSettings.Value;
         _validator = validator;
         _logger = logger;
     }
@@ -78,13 +83,20 @@ public class CreateLeaveRequestCommandHandler : IRequestHandler<CreateLeaveReque
 
         try
         {
+            Employee employee = await _userService.GetEmployee(leaveRequest.RequestingEmployeeId);
+
             // send confirmation email
-            EmailMessage email = new()
+            EmailMessageTemplate email = new()
             {
-                To = "ayanesuarome@gmx.es", // TODO: get email from employee record
-                Body = $"Your leave request for {request.StartDate:D} to {request.EndDate:D} " +
-                        $"has been created successfully.",
-                Subject = "Leave Request Created"
+                To = employee.Email,
+                TemplateId = _emailTemplateSettings.LeaveRequestCreate,
+                TemplateData = new EmailMessageCreateDto
+                {
+                    RecipientName = employee.GetName(),
+                    Start = leaveRequest.StartDate,
+                    End = leaveRequest.EndDate,
+                    Now = DateTimeOffset.Now
+                }
             };
 
             await _emailSender.SendEmail(email);

@@ -1,14 +1,17 @@
 ﻿using CleanArch.Application.Exceptions;
+using CleanArch.Application.Extensions;
 using CleanArch.Application.Interfaces.Email;
 using CleanArch.Application.Interfaces.Identity;
 using CleanArch.Application.Interfaces.Logging;
 using CleanArch.Application.Models.Emails;
+using CleanArch.Application.Models.Identity;
 using CleanArch.Domain.Entities;
 using CleanArch.Domain.Interfaces.Persistence;
 using FluentValidation;
 using FluentValidation.Results;
 using MediatR;
 using Microsoft.Extensions.Options;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace CleanArch.Application.Features.LeaveRequests.Commands.ChangeLeaveRequestApproval;
 
@@ -52,22 +55,34 @@ public class ChangeLeaveRequestApprovalCommandHandler : IRequestHandler<ChangeLe
             throw new BadRequestException("Invalid approval request", validationResult);
         }
 
+        if(leaveRequest.IsCancelled)
+        {
+            validationResult.AddError(
+                nameof(leaveRequest.IsCancelled),
+                "This leave request has been cancelled and its approval state cannot be updated");
+
+            throw new BadRequestException($"Invalid {nameof(LeaveRequest)}", validationResult);
+        }
+        
         leaveRequest.IsApproved = request.Approved;
         await _repository.UpdateAsync(leaveRequest);
 
         try
         {
+            Employee employee = await _userService.GetEmployee(leaveRequest.RequestingEmployeeId);
+            
             // send confirmation email
             EmailMessageTemplate email = new()
             {
-                To = "ayanesuarome@yahoo.com", // TODO: get email from employee record
+                To = employee.Email,
                 TemplateId = _emailTemplateSettings.LeaveRequestApproval,
-                TemplateData = new
+                TemplateData = new EmailMessageChangeApprovalDto
                 {
-                    //recipientName = // TODO: get name
-                    start = leaveRequest.StartDate.Date.ToShortDateString(),
-                    end = leaveRequest.EndDate.Date.ToShortDateString(),
-                    isApproved = leaveRequest.IsApproved
+                    RecipientName = employee.GetName(),
+                    Start = leaveRequest.StartDate,
+                    End = leaveRequest.EndDate,
+                    IsApproved = leaveRequest.IsApproved,
+                    Now = DateTimeOffset.Now
                 }
             };
 
