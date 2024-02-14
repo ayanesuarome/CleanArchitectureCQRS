@@ -17,15 +17,8 @@ public class LeaveTypeService(IClient client, IMapper mapper) : BaseHttpService(
 
     public async Task<LeaveTypeVM> GetLeaveTypeDetails(int id)
     {
-        try
-        {
-            LeaveTypeDetailsDto leaveType = await _client.LeaveTypesGETAsync(id);
-            return _mapper.Map<LeaveTypeVM>(leaveType);
-        }
-        catch (ApiException)
-        {
-            return null;
-        }
+        LeaveTypeDetailsDto leaveType = await _client.LeaveTypesGETAsync(id);
+        return _mapper.Map<LeaveTypeVM>(leaveType);
     }
 
     public async Task<Response<Guid>> CreateLeaveType(LeaveTypeVM leaveType)

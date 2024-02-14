@@ -17,21 +17,25 @@ namespace CleanArch.Application.Features.LeaveRequests.Commands.ChangeLeaveReque
 
 public class ChangeLeaveRequestApprovalCommandHandler : IRequestHandler<ChangeLeaveRequestApprovalCommand>
 {
-    private readonly ILeaveRequestRepository _repository;
+    private readonly ILeaveRequestRepository _leaveRequestRepository;
+    private readonly ILeaveAllocationRepository _leaveAllocationRepository;
     private readonly IUserService _userService;
     private readonly IEmailSender _emailSender;
     private readonly EmailTemplateIds _emailTemplateSettings;
     private readonly IValidator<ChangeLeaveRequestApprovalCommand> _validator;
     private readonly IAppLogger<ChangeLeaveRequestApprovalCommand> _logger;
 
-    public ChangeLeaveRequestApprovalCommandHandler(ILeaveRequestRepository repository,
+    public ChangeLeaveRequestApprovalCommandHandler(
+        ILeaveRequestRepository leaveRequestRepository,
+        ILeaveAllocationRepository leaveAllocationRepository,
         IUserService userService,
         IEmailSender emailSender,
         IOptions<EmailTemplateIds> emailTemplateSettings,
         IValidator<ChangeLeaveRequestApprovalCommand> validator,
         IAppLogger<ChangeLeaveRequestApprovalCommand> logger)
     {
-        _repository = repository;
+        _leaveRequestRepository = leaveRequestRepository;
+        _leaveAllocationRepository = leaveAllocationRepository;
         _userService = userService;
         _emailSender = emailSender;
         _emailTemplateSettings = emailTemplateSettings.Value;
@@ -41,7 +45,7 @@ public class ChangeLeaveRequestApprovalCommandHandler : IRequestHandler<ChangeLe
 
     public async Task Handle(ChangeLeaveRequestApprovalCommand request, CancellationToken cancellationToken)
     {
-        LeaveRequest leaveRequest = await _repository.GetByIdAsync(request.Id);
+        LeaveRequest leaveRequest = await _leaveRequestRepository.GetByIdAsync(request.Id);
 
         if (leaveRequest == null)
         {
@@ -65,7 +69,19 @@ public class ChangeLeaveRequestApprovalCommandHandler : IRequestHandler<ChangeLe
         }
         
         leaveRequest.IsApproved = request.Approved;
-        await _repository.UpdateAsync(leaveRequest);
+        await _leaveRequestRepository.UpdateAsync(leaveRequest);
+
+        // if request is approved, get and update the employee's allocation
+        if(leaveRequest.IsApproved == true)
+        {
+            LeaveAllocation allocation = await _leaveAllocationRepository.GetEmployeeAllocation(
+                leaveRequest.RequestingEmployeeId,
+                leaveRequest.LeaveTypeId);
+            // TODO: use command patter
+            allocation.NumberOfDays -= leaveRequest.GetDaysRequested();
+
+            await _leaveAllocationRepository.UpdateAsync(allocation);
+        }
 
         try
         {

@@ -10,14 +10,8 @@ public class LeaveRequestProfile : Profile
     {
         CreateMap<LeaveRequestVM, CreateLeaveRequestCommand>();
 
-        CreateMap<LeaveRequestDto, LeaveRequestVM>()
-            .ForMember(dest => dest.StartDate, opt => opt.MapFrom(s => s.StartDate))
-            .ForMember(dest => dest.EndDate, opt => opt.MapFrom(s => s.EndDate))
-            .ForMember(dest => dest.DateRequested, opt => opt.MapFrom(s => s.DateRequested));
+        CreateMap<LeaveRequestDto, LeaveRequestVM>();
 
-        CreateMap<LeaveRequestDetailsDto, LeaveRequestVM>()
-            .ForMember(dest => dest.StartDate, opt => opt.MapFrom(s => s.StartDate.DateTime))
-            .ForMember(dest => dest.EndDate, opt => opt.MapFrom(s => s.EndDate.DateTime))
-            .ForMember(dest => dest.DateRequested, opt => opt.MapFrom(s => s.DateRequested));
+        CreateMap<LeaveRequestDetailsDto, LeaveRequestVM>();
     }
 }

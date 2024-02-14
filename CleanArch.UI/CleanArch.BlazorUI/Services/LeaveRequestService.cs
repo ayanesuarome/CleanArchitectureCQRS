@@ -24,26 +24,41 @@ public class LeaveRequestService(IClient client, IMapper mapper) : BaseHttpServi
         }
     }
 
-    public async Task<Response<AdminLeaveRequestVM>> GetAdminLeaveRequestListAsync()
+    public async Task<AdminLeaveRequestVM> GetAdminLeaveRequestListAsync()
     {
+        ICollection<LeaveRequestDto> leaveRequests = await _client.AdminLeaveRequestAsync();
+
+        return new()
+        {
+            TotalRequests = leaveRequests.Count,
+            ApprovedRequests = leaveRequests.Count(request => request.IsApproved == true),
+            PendingRequests = leaveRequests.Count(request => request.IsApproved == null),
+            RejectedRequests = leaveRequests.Count(request => request.IsApproved == false),
+            LeaveRequests = _mapper.Map<List<LeaveRequestVM>>(leaveRequests)
+        };
+    }
+
+    public async Task<LeaveRequestVM> GetLeaveRequestAsync(int id)
+    {
+        LeaveRequestDetailsDto leaveRequest = await _client.LeaveRequestGETAsync(id);
+        return _mapper.Map<LeaveRequestVM>(leaveRequest);
+    }
+
+    public async Task<Response<Guid>> ApprovedLeaveRequestAsync(int id, bool status)
+    {
+        ChangeLeaveRequestApprovalCommand command = new()
+        {
+            Approved = status
+        };
+
         try
         {
-            ICollection<LeaveRequestDto> leaveRequests = await _client.AdminLeaveRequestAsync();
-
-            AdminLeaveRequestVM model = new()
-            {
-                TotalRequests = leaveRequests.Count,
-                ApprovedRequests = leaveRequests.Count(request => request.IsApproved == true),
-                PendingRequests = leaveRequests.Count(request => request.IsApproved == null),
-                RejectedRequests = leaveRequests.Count(request => request.IsApproved == false),
-                LeaveRequests = _mapper.Map<List<LeaveRequestVM>>(leaveRequests)
-            };
-
-            return new Response<AdminLeaveRequestVM> { Data = model };
+            await _client.UpdateApprovalAsync(id, command);
+            return new Response<Guid>() { Success = true };
         }
-        catch (ApiException ex)
+        catch(ApiException ex)
         {
-            return ConvertApiExceptions<AdminLeaveRequestVM>(ex);
+            return ConvertApiExceptions<Guid>(ex);
         }
     }
 }

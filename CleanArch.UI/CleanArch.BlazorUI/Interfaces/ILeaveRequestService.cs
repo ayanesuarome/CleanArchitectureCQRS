@@ -6,5 +6,7 @@ namespace CleanArch.BlazorUI.Interfaces;
 public interface ILeaveRequestService
 {
     Task<Response<Guid>> CreateLeaveRequestAsync(LeaveRequestVM model);
-    Task<Response<AdminLeaveRequestVM>> GetAdminLeaveRequestListAsync();
+    Task<AdminLeaveRequestVM> GetAdminLeaveRequestListAsync();
+    Task<LeaveRequestVM> GetLeaveRequestAsync(int id);
+    Task<Response<Guid>> ApprovedLeaveRequestAsync(int id, bool status);
 }

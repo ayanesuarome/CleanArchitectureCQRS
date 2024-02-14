@@ -12,9 +12,8 @@ public class FieldResolverEmployee(IUserService service) : IValueResolver<LeaveR
 
     public Employee Resolve(LeaveRequest source, LeaveRequestDto destination, Employee destMember, ResolutionContext context)
     {
-        string employeeId = _service.UserId;
         return _service
-            .GetEmployee(employeeId)
+            .GetEmployee(source.RequestingEmployeeId)
             .GetAwaiter()
             .GetResult();
     }

@@ -14,8 +14,9 @@ public partial class Create
     private string? Message { get; set; }
     private LeaveTypeVM Model { get; set; }
 
-    protected override async Task OnInitializedAsync()
+    protected override void OnInitialized()
     {
+        // TODO: initialize prop instead
         Model = new();
     }
 

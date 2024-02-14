@@ -1,5 +1,5 @@
 ﻿@page "/leaverequests"
-@attribute [Authorize(Roles = "Administrator")]
+@* @attribute [Authorize(Roles = "Administrator")] *@
 
 <h3>Leave Requests</h3>
 
@@ -80,7 +80,7 @@
         {
             <tr>
                 <td>
-                    @item.Employee.FirstName @item.Employee.LastName
+                    @item.Employee.FullName()
                 </td>
                 <td>
                     @item.StartDate.Value.ToString("yyyy-MM-dd")
