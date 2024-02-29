@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using CleanArch.Application.Features.LeaveRequests.Queries.Shared;
 using CleanArch.Application.Interfaces.Identity;
+using CleanArch.Application.Models.Identity;
 using CleanArch.Domain.Entities;
 using CleanArch.Domain.Interfaces.Persistence;
 using MediatR;
@@ -15,7 +16,7 @@ public class GetLeaveRequestListQueryHandler(IMapper mapper, ILeaveRequestReposi
     private readonly IUserService _userService = userService;
 
     public async Task<List<LeaveRequestDto>> Handle(GetLeaveRequestListQuery request, CancellationToken cancellationToken)
-    {
+    {        
         string userId = _userService.UserId;
         List<LeaveRequest> leaveRequests = await _repository.GetLeaveRequestsWithDetailsAsync(userId);
         return _mapper.Map<List<LeaveRequestDto>>(leaveRequests);

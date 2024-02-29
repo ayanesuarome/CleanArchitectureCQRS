@@ -1,6 +1,6 @@
 ﻿namespace CleanArch.Application.Models.Emails;
 
-public class EmailSettings
+public record EmailSettings
 {
     public string ApiKey { get; set; } = null!;
     public string FromAddress { get; set; } = null!;

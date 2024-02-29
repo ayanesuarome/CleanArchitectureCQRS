@@ -1,6 +1,6 @@
 ﻿namespace CleanArch.Application.Features.LeaveRequests.Shared;
 
-public abstract class BaseLeaveRequestCommand
+public abstract record BaseLeaveRequestCommand
 {
     public DateTimeOffset StartDate { get; set; }
     public DateTimeOffset EndDate { get; set; }

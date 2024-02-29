@@ -1,6 +1,6 @@
 ﻿namespace CleanArch.Application.Features.LeaveRequests.Commands.CreateLeaveRequest;
 
-public class EmailMessageCreateDto
+public record EmailMessageCreateDto
 {
     public string? RecipientName { get; set; }
     public DateTimeOffset Start { get; set; }

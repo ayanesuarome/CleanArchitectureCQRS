@@ -1,6 +1,6 @@
 ﻿namespace CleanArch.Application.Models.Emails;
 
-public class EmailTemplateIds
+public record EmailTemplateIds
 {
     public string LeaveRequestApproval { get; set; } = null!;
     public string LeaveRequestCancelation { get; set; } = null!;

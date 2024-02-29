@@ -3,7 +3,7 @@ using MediatR;
 
 namespace CleanArch.Application.Features.LeaveRequests.Commands.UpdateLeaveRequest;
 
-public class UpdateLeaveRequestCommand : BaseLeaveRequestCommand, IRequest
+public record UpdateLeaveRequestCommand : BaseLeaveRequestCommand, IRequest
 {
     public int Id { get; set; }
     public string? RequestComments { get; set; }

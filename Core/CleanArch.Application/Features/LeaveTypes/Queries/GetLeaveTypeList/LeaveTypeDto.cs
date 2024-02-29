@@ -1,6 +1,6 @@
 ﻿namespace CleanArch.Application.Features.LeaveTypes.Queries.GetLeaveTypeList;
 
-public class LeaveTypeDto
+public record LeaveTypeDto
 {
     public int Id { get; set; }
     public string Name { get; set; } = null!;

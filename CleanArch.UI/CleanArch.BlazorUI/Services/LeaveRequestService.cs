@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using CleanArch.BlazorUI.Interfaces;
+using CleanArch.BlazorUI.Models.LeaveAllocations;
 using CleanArch.BlazorUI.Models.LeaveRequests;
 using CleanArch.BlazorUI.Services.Base;
 
@@ -28,7 +29,7 @@ public class LeaveRequestService(IClient client, IMapper mapper) : BaseHttpServi
     {
         ICollection<LeaveRequestDto> leaveRequests = await _client.AdminLeaveRequestAsync();
 
-        return new()
+        AdminLeaveRequestVM model = new()
         {
             TotalRequests = leaveRequests.Count,
             ApprovedRequests = leaveRequests.Count(request => request.IsApproved == true),
@@ -36,6 +37,22 @@ public class LeaveRequestService(IClient client, IMapper mapper) : BaseHttpServi
             RejectedRequests = leaveRequests.Count(request => request.IsApproved == false),
             LeaveRequests = _mapper.Map<List<LeaveRequestVM>>(leaveRequests)
         };
+
+        return model;
+    }
+
+    public async Task<EmployeeLeaveRequestVM> GetEmployeeLeaveRequestListAsync()
+    {
+        ICollection<LeaveRequestDto> leaveRequests = await _client.LeaveRequestAllAsync();
+        ICollection<LeaveAllocationDto> allocations = await _client.LeaveAllocationAllAsync();
+
+        EmployeeLeaveRequestVM model = new()
+        {
+            LeaveAllocations = _mapper.Map<List<LeaveAllocationVM>>(leaveRequests),
+            LeaveRequests = _mapper.Map<List<LeaveRequestVM>>(leaveRequests)
+        };
+
+        return model;
     }
 
     public async Task<LeaveRequestVM> GetLeaveRequestAsync(int id)
@@ -54,9 +71,22 @@ public class LeaveRequestService(IClient client, IMapper mapper) : BaseHttpServi
         try
         {
             await _client.UpdateApprovalAsync(id, command);
-            return new Response<Guid>() { Success = true };
+            return new Response<Guid>();
         }
         catch(ApiException ex)
+        {
+            return ConvertApiExceptions<Guid>(ex);
+        }
+    }
+
+    public async Task<Response<Guid>> CancelLeaveRequestAsync(int id)
+    {
+        try
+        {
+            await _client.CancelRequestAsync(id);
+            return new Response<Guid>();
+        }
+        catch (ApiException ex)
         {
             return ConvertApiExceptions<Guid>(ex);
         }

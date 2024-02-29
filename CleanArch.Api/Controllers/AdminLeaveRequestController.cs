@@ -1,5 +1,4 @@
-﻿using CleanArch.Application.Features.LeaveRequests.Commands.CancelLeaveRequest;
-using CleanArch.Application.Features.LeaveRequests.Commands.ChangeLeaveRequestApproval;
+﻿using CleanArch.Application.Features.LeaveRequests.Commands.ChangeLeaveRequestApproval;
 using CleanArch.Application.Features.LeaveRequests.Queries.AdminGetLeaveRequestList;
 using CleanArch.Application.Features.LeaveRequests.Queries.Shared;
 using MediatR;
@@ -19,17 +18,6 @@ public class AdminLeaveRequestController(IMediator mediator) : BaseAdminControll
     public async Task<ActionResult<List<LeaveRequestDto>>> Get()
     {
         return Ok(await _mediator.Send(new AdminGetLeaveRequestListQuery()));
-    }
-
-    // PUT api/admin/<v>/<AdminLeaveRequestController>/5/CancelRequest
-    [HttpPut("{id}/CancelRequest")]
-    [ProducesResponseType(StatusCodes.Status204NoContent)]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
-    [ProducesDefaultResponseType]
-    public async Task<ActionResult> CancelRequest(int id)
-    {
-        await _mediator.Send(new CancelLeaveRequestCommand(id));
-        return NoContent();
     }
 
     // PUT api/admin/<v>/<AdminLeaveRequestController>/5/UpdateApproval

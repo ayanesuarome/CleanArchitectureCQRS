@@ -1,6 +1,6 @@
 ﻿namespace CleanArch.Application.Features.LeaveRequests.Commands.ChangeLeaveRequestApproval;
 
-public class EmailMessageChangeApprovalDto
+public record EmailMessageChangeApprovalDto
 {
     public string? RecipientName { get; set; }
     public DateTimeOffset Start { get; set; }

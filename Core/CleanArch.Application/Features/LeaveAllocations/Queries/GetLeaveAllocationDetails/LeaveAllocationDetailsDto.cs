@@ -3,7 +3,7 @@ using CleanArch.Application.Features.Shared;
 
 namespace CleanArch.Application.Features.LeaveAllocations.Queries.GetLeaveAllocationDetails;
 
-public class LeaveAllocationDetailsDto : BaseDto
+public record LeaveAllocationDetailsDto : BaseDto
 {
     public int NumberOfDays { get; set; }
     public int Period { get; set; }

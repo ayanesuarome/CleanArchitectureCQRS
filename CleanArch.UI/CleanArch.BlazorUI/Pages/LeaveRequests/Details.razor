@@ -1,4 +1,4 @@
-﻿@page "/leaverequests/details/{int:id}"
+﻿@page "/leaverequests/details/{id:int}"
 <h3>Details</h3>
 
 <div class="alert alert-@ClassName" role="alert">
@@ -17,8 +17,6 @@
         <dd class="col-sm-10">@Model.StartDate</dd>
         <dt class="col-sm-2">End Date</dt>
         <dd class="col-sm-10">@Model.EndDate</dd>
-        <dt class="col-sm-2">End Date</dt>
-        <dd class="col-sm-10">@Model.EndDate</dd>
         <dt class="col-sm-2">Leave Type</dt>
         <dd class="col-sm-10">@Model.LeaveType.Name</dd>
         <dt class="col-sm-2">Request Comments</dt>
@@ -35,4 +33,6 @@
             Reject
         </button>
     }
+
+    @* <BackToList Target/> *@
 </div>

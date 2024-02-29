@@ -1,6 +1,6 @@
 ﻿namespace CleanArch.BlazorUI.Services.Base;
 
-public class Response<T>
+public record Response<T>
 {
     public string Message { get; set; } = null!;
     public string ValidationErrors { get; set; } = null!;

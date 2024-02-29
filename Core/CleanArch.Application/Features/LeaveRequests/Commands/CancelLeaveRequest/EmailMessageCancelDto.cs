@@ -1,6 +1,6 @@
 ﻿namespace CleanArch.Application.Features.LeaveRequests.Commands.CancelLeaveRequest;
 
-public class EmailMessageCancelDto
+public record EmailMessageCancelDto
 {
     public string? RecipientName { get; set; }
     public DateTimeOffset Start { get; set; }

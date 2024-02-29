@@ -2,7 +2,7 @@
 
 namespace CleanArch.Application.Features.LeaveAllocations.Queries.GetLeaveAllocationList;
 
-public class LeaveAllocationDto
+public record LeaveAllocationDto
 {
     public int Id { get; set; }
     public int NumberOfDays { get; set; }

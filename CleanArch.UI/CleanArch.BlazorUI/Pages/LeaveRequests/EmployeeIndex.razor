@@ -1,0 +1,87 @@
+﻿@page "/employee-leaverequests"
+@* @attribute [Authorize(Roles = "Administrator")] *@
+
+<h3>Leave Requests</h3>
+
+@if (!string.IsNullOrEmpty(Message))
+{
+    <div class="alert alert-danger">@Message</div>
+}
+
+<div class="m-2 d-flex justify-content-end">
+    <a href="@Paths.LeaveRequest.CreateLeaveRequest" class="btn btn-success">Add Leave Request</a>
+</div>
+
+<p>
+    <strong>Employee name: </strong>@Model.Employee.FullName()
+</p>
+
+<table id="tblData" class="table">
+    <thead>
+        <tr>
+            <th>
+                Start Date
+            </th>
+            <th>
+                End Date
+            </th>
+            <th>
+                Leave Type
+            </th>
+            <th>
+                Date Requested
+            </th>
+
+            <th>
+                Approval Status
+            </th>
+
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.LeaveRequests)
+        {
+            <tr>
+                <td>
+                    @item.StartDate.Value.ToString("yyyy-MM-dd")
+                </td>
+                <td>
+                    @item.EndDate.Value.ToString("yyyy-MM-dd")
+                </td>
+                <td>
+                    @item.LeaveType.Name
+                </td>
+                <td>
+                    @item.DateRequested.ToString("yyyy-MM-dd")
+                </td>
+                <td>
+                    @if (item.IsCancelled)
+                    {
+                        <span class="badge bg-secondary">Cancelled</span>
+                    }
+                    else if (item.IsApproved == true)
+                    {
+                        <span class="badge bg-success">Approved</span>
+                    }
+                    else if (item.IsApproved == false)
+                    {
+                        <span class="badge bg-danger">Rejected</span>
+                    }
+                    else
+                    {
+                        <span class="badge bg-warning">Pending</span>
+                    }
+                </td>
+                <td>
+                    @if (!item.IsCancelled && item.StartDate > DateTime.Now)
+                    {
+                        <button class="btn btn-danger" @onclick="(() => CancelRequestAsync(item.Id))">
+                            <i class="fa fa-file"></i>Cancel Request
+                        </button>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -1,6 +1,6 @@
 ﻿namespace CleanArch.Application.Models.Identity;
 
-public class RegistrationRequest
+public record RegistrationRequest
 {
     public string FirstName { get; set; }
     public string LastName { get; set; }

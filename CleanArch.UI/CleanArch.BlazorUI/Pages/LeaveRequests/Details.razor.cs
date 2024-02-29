@@ -10,7 +10,7 @@ public partial class Details
 {
     [Inject] private ILeaveRequestService Service { get; set; } = null!;
     [Inject] private NavigationManager NavigationManager { get; set; } = null!;
-    [Parameter] public int Id { get; set; }
+    [Parameter] public int id { get; set; }
     
     private string ClassName;
     private string HeadingText;
@@ -20,7 +20,7 @@ public partial class Details
 
     protected override async Task OnParametersSetAsync()
     {
-        Model = await Service.GetLeaveRequestAsync(Id);
+        Model = await Service.GetLeaveRequestAsync(id);
     }
 
     protected override void OnInitialized()
@@ -44,7 +44,7 @@ public partial class Details
 
     private async Task ChangeApproval(bool status)
     {
-        Response<Guid> response = await Service.ApprovedLeaveRequestAsync(Id, status);
+        Response<Guid> response = await Service.ApprovedLeaveRequestAsync(id, status);
 
         if(response.Success)
         {

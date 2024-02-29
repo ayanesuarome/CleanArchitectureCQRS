@@ -28,7 +28,7 @@ public class LeaveTypeService(IClient client, IMapper mapper) : BaseHttpService(
             CreateLeaveTypeCommand command = _mapper.Map<CreateLeaveTypeCommand>(leaveType);
             await _client.LeaveTypesPOSTAsync(command);
 
-            return new Response<Guid> { Success = true };
+            return new Response<Guid>();
         }
         catch (ApiException ex)
         {
@@ -43,7 +43,7 @@ public class LeaveTypeService(IClient client, IMapper mapper) : BaseHttpService(
             UpdateLeaveTypeCommand command = _mapper.Map<UpdateLeaveTypeCommand>(leaveType);
             await _client.LeaveTypesPUTAsync(leaveType.Id, command);
 
-            return new Response<Guid> { Success = true };
+            return new Response<Guid>();
         }
         catch(ApiException ex)
         {
@@ -56,7 +56,7 @@ public class LeaveTypeService(IClient client, IMapper mapper) : BaseHttpService(
         try
         {
             await _client.LeaveTypesDELETEAsync(id);
-            return new Response<Guid> { Success = true };
+            return new Response<Guid>();
         }
         catch(ApiException ex)
         {

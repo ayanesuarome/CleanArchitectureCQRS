@@ -10,6 +10,5 @@ public partial class Client : IClient
     {
         _httpClientFactory = httpClientFactory;
         _httpClient = _httpClientFactory.CreateClient();
-        //_httpClient = new HttpClient();
     }
 }

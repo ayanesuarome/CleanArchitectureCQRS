@@ -1,4 +1,5 @@
-﻿using CleanArch.Application.Features.LeaveRequests.Commands.CreateLeaveRequest;
+﻿using CleanArch.Application.Features.LeaveRequests.Commands.CancelLeaveRequest;
+using CleanArch.Application.Features.LeaveRequests.Commands.CreateLeaveRequest;
 using CleanArch.Application.Features.LeaveRequests.Commands.DeleteLeaveRequest;
 using CleanArch.Application.Features.LeaveRequests.Commands.UpdateLeaveRequest;
 using CleanArch.Application.Features.LeaveRequests.Queries.GetLeaveRequestDetails;
@@ -64,6 +65,17 @@ public class LeaveRequestController(IMediator mediator) : ControllerBase
     public async Task<ActionResult> Delete(int id)
     {
         await _mediator.Send(new DeleteLeaveRequestCommand(id));
+        return NoContent();
+    }
+
+    // PUT api/<v>/<LeaveRequestController>/5/CancelRequest
+    [HttpPut("{id}/CancelRequest")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesDefaultResponseType]
+    public async Task<ActionResult> CancelRequest(int id)
+    {
+        await _mediator.Send(new CancelLeaveRequestCommand(id));
         return NoContent();
     }
 }

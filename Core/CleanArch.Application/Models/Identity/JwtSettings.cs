@@ -1,6 +1,6 @@
 ﻿namespace CleanArch.Application.Models.Identity;
 
-public class JwtSettings
+public record JwtSettings
 {
     public string Key { get; set; }
     public string Issuer { get; set; }

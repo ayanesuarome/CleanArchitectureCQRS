@@ -1,6 +1,6 @@
 ﻿namespace CleanArch.Application.Models.Emails;
 
-public class EmailMessage
+public record EmailMessage
 {
     public string To { get; set; } = null!;
     public string Subject { get; set; } = null!;

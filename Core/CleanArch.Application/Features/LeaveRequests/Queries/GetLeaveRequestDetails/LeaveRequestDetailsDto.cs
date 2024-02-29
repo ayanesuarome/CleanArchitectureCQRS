@@ -4,7 +4,7 @@ using CleanArch.Application.Models.Identity;
 
 namespace CleanArch.Application.Features.LeaveRequests.Queries.GetLeaveRequestDetails;
 
-public class LeaveRequestDetailsDto : BaseDto
+public record LeaveRequestDetailsDto : BaseDto
 {
     public DateTimeOffset StartDate { get; set; }
     public DateTimeOffset EndDate { get; set; }

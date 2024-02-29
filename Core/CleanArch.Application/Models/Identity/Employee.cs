@@ -2,7 +2,7 @@
 
 namespace CleanArch.Application.Models.Identity;
 
-public class Employee
+public struct Employee
 {
     public string Id { get; set; }
     public string Email { get; set; }
@@ -14,7 +14,7 @@ public class Employee
 
         if (LastName != null)
         {
-            name.Append(" ")
+            name.Append(' ')
                 .Append(LastName);
         }
 
