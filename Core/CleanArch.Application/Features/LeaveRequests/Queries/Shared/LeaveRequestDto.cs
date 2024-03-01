@@ -9,6 +9,7 @@ public record LeaveRequestDto
     public DateTimeOffset StartDate { get; set; }
     public DateTimeOffset EndDate { get; set; }
     public bool? IsApproved { get; set; }
+    public bool IsCancelled { get; set; }
     public DateTimeOffset DateRequested { get; set; }
     public LeaveTypeDto? LeaveType { get; set; }
     public Employee Employee { get; set; }

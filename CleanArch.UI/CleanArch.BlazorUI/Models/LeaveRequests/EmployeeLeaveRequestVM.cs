@@ -7,5 +7,5 @@ public class EmployeeLeaveRequestVM
 {
     public List<LeaveAllocationVM> LeaveAllocations { get; set; } = [];
     public List<LeaveRequestVM> LeaveRequests { get; set; } = [];
-    public EmployeeVM Employee => LeaveRequests.FirstOrDefault().Employee;
+    public EmployeeVM? Employee => LeaveRequests.FirstOrDefault()?.Employee;
 }

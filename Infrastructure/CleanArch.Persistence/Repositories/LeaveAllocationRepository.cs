@@ -33,7 +33,7 @@ public class LeaveAllocationRepository : GenericRepository<LeaveAllocation>, ILe
         
         if(!string.IsNullOrEmpty(employeeId))
         {
-            query.Where(e => e.EmployeeId == employeeId);
+            query = query.Where(e => e.EmployeeId == employeeId);
         }
 
         return await query

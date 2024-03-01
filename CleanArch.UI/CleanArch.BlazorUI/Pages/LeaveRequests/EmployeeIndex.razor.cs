@@ -3,6 +3,7 @@ using CleanArch.BlazorUI.Interfaces;
 using CleanArch.BlazorUI.Models.LeaveRequests;
 using CleanArch.BlazorUI.Services.Base;
 using Microsoft.AspNetCore.Components;
+using Microsoft.JSInterop;
 
 namespace CleanArch.BlazorUI.Pages.LeaveRequests;
 
@@ -10,6 +11,7 @@ public partial class EmployeeIndex
 {
     [Inject] private ILeaveRequestService Service { get; set; } = null!;
     [Inject] private NavigationManager NavigationManager { get; set; } = null!;
+    [Inject] private IJSRuntime Js { get; set; } = null!;
     private EmployeeLeaveRequestVM Model { get; set; } = new();
     private string? Message { get; set; }
 
@@ -25,15 +27,20 @@ public partial class EmployeeIndex
 
     private async Task CancelRequestAsync(int leaveRequestId)
     {
-        Response<Guid> response = await Service.CancelLeaveRequestAsync(leaveRequestId);
+        bool confirm = await Js.InvokeAsync<bool>("confirm", "Do you want to cancel this request?");
 
-        if (response.Success)
+        if(confirm)
         {
-            StateHasChanged();
-        }
-        else
-        {
-            Message = response.Message;
+            Response<Guid> response = await Service.CancelLeaveRequestAsync(leaveRequestId);
+
+            if (response.Success)
+            {
+                StateHasChanged();
+            }
+            else
+            {
+                Message = response.Message;
+            }
         }
     }
 }

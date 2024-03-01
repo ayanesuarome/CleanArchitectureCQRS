@@ -14,7 +14,7 @@ public class LeaveAllocationService(IClient client): BaseHttpService(client), IL
                 LeaveTypeId = leaveTypeId
             };
 
-            await _client.LeaveAllocationPOSTAsync(body);
+            await _client.AdminLeaveAllocationPOSTAsync(body);
 
             return new Response<Guid>();
         }

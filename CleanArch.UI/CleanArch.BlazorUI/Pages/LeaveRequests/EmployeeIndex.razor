@@ -1,5 +1,4 @@
 ﻿@page "/employee-leaverequests"
-@* @attribute [Authorize(Roles = "Administrator")] *@
 
 <h3>Leave Requests</h3>
 
@@ -13,7 +12,7 @@
 </div>
 
 <p>
-    <strong>Employee name: </strong>@Model.Employee.FullName()
+    <strong>Employee name: </strong>@Model.Employee?.FullName()
 </p>
 
 <table id="tblData" class="table">

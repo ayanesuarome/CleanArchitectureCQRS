@@ -13,19 +13,23 @@ namespace CleanArch.Application.Features.LeaveRequests.Commands.CancelLeaveReque
 
 public class CancelLeaveRequestCommandHandler : IRequestHandler<CancelLeaveRequestCommand>
 {
-    private readonly ILeaveRequestRepository _repository;
+    private readonly ILeaveRequestRepository _leaveRequestRepository;
+    private readonly ILeaveAllocationRepository _leaveAllocationRepository;
     private readonly IUserService _userService;
     private readonly IEmailSender _emailSender;
     private readonly EmailTemplateIds _emailTemplateSettings;
     private readonly IAppLogger<CancelLeaveRequestCommandHandler> _logger;
 
-    public CancelLeaveRequestCommandHandler(ILeaveRequestRepository repository,
+    public CancelLeaveRequestCommandHandler(
+        ILeaveRequestRepository leaveRequestRepository,
+        ILeaveAllocationRepository leaveAllocationRepository,
         IUserService userService,
         IEmailSender emailSender,
         IOptions<EmailTemplateIds> emailTemplateSettings,
         IAppLogger<CancelLeaveRequestCommandHandler> logger)
     {
-        _repository = repository;
+        _leaveRequestRepository = leaveRequestRepository;
+        _leaveAllocationRepository = leaveAllocationRepository;
         _userService = userService;
         _emailSender = emailSender;
         _emailTemplateSettings = emailTemplateSettings.Value;
@@ -34,7 +38,7 @@ public class CancelLeaveRequestCommandHandler : IRequestHandler<CancelLeaveReque
 
     public async Task Handle(CancelLeaveRequestCommand request, CancellationToken cancellationToken)
     {
-        LeaveRequest leaveRequest = await _repository.GetByIdAsync(request.Id);
+        LeaveRequest leaveRequest = await _leaveRequestRepository.GetByIdAsync(request.Id);
 
         if (leaveRequest == null)
         {
@@ -42,7 +46,19 @@ public class CancelLeaveRequestCommandHandler : IRequestHandler<CancelLeaveReque
         }
 
         leaveRequest.IsCancelled = true;
-        await _repository.UpdateAsync(leaveRequest);
+        await _leaveRequestRepository.UpdateAsync(leaveRequest);
+
+        // if already approved, re-evaluate the employee's allocations for the leave type
+        if(leaveRequest.IsApproved == true)
+        {
+            LeaveAllocation allocation = await _leaveAllocationRepository.GetEmployeeAllocation(
+                leaveRequest.RequestingEmployeeId,
+                leaveRequest.LeaveTypeId);
+            // TODO: use command patter
+            allocation.NumberOfDays += leaveRequest.GetDaysRequested();
+
+            await _leaveAllocationRepository.UpdateAsync(allocation);
+        }
 
         try
         {

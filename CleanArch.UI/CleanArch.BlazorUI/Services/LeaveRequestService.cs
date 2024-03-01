@@ -48,7 +48,7 @@ public class LeaveRequestService(IClient client, IMapper mapper) : BaseHttpServi
 
         EmployeeLeaveRequestVM model = new()
         {
-            LeaveAllocations = _mapper.Map<List<LeaveAllocationVM>>(leaveRequests),
+            LeaveAllocations = _mapper.Map<List<LeaveAllocationVM>>(allocations),
             LeaveRequests = _mapper.Map<List<LeaveRequestVM>>(leaveRequests)
         };
 

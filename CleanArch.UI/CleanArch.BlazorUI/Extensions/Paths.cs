@@ -22,6 +22,7 @@ public static class Paths
     public static class LeaveRequest
     {
         public const string LeaveRequests = "leaverequests/";
+        public const string EmployeeLeaveRequests = "employee-leaverequests/";
         public const string CreateLeaveRequest = "/leaverequests/create/";
         public const string DetailsLeaveRequest = "/leaverequests/details/{0}";
     }
