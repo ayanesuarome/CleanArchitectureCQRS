@@ -50,6 +50,10 @@ public static class NavigationManagerExtension
     {
         navigationManager.NavigateTo(Paths.LeaveRequest.LeaveRequests);
     }
+    public static void NavigateToEmployeeIndexLeaveRequest(this NavigationManager navigationManager)
+    {
+        navigationManager.NavigateTo(Paths.LeaveRequest.EmployeeLeaveRequests);
+    }
     public static void NavigateToDetailsLeaveRequest(this NavigationManager navigationManager, int id)
     {
         navigationManager.NavigateTo(String.Format(Paths.LeaveRequest.DetailsLeaveRequest, id));

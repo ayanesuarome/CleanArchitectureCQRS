@@ -1,6 +1,6 @@
 ﻿namespace CleanArch.Domain.Entities;
 
-public class LeaveAllocation : BaseEntity
+public class LeaveAllocation : BaseEntity<int>
 {
     public int NumberOfDays { get; set; }
     public int Period { get; set; }

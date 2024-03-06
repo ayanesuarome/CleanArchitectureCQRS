@@ -20,7 +20,7 @@ public sealed partial class CleanArchEFDbContext : DbContext
 
     public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
     {
-        foreach (var entry in base.ChangeTracker.Entries<BaseEntity>()
+        foreach (var entry in base.ChangeTracker.Entries<BaseEntity<int>>()
             .Where(e => e.State == EntityState.Added || e.State == EntityState.Modified))
         {
             DateTimeOffset now = DateTimeOffset.Now;

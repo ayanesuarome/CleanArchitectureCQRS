@@ -1,4 +1,5 @@
 using Blazored.LocalStorage;
+using Blazored.Toast;
 using CleanArch.BlazorUI;
 using CleanArch.BlazorUI.Handlers;
 using CleanArch.BlazorUI.Interfaces;
@@ -26,6 +27,7 @@ builder.Services.AddHttpClient<IClient, Client>(
     })
     .AddHttpMessageHandler<JwtAuthorizationMessageHandler>();
 
+builder.Services.AddBlazoredToast();
 builder.Services.AddBlazoredLocalStorage();
 builder.Services.AddAuthorizationCore();
 

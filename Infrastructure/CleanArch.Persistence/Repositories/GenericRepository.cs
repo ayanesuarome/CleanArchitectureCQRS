@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 namespace CleanArch.Persistence.Repositories;
 
 public class GenericRepository<TEntity>(CleanArchEFDbContext dbContext) : IGenericRepository<TEntity>
-    where TEntity : BaseEntity
+    where TEntity : BaseEntity<int>
 {
     protected readonly CleanArchEFDbContext _dbContext = dbContext;
     protected virtual DbSet<TEntity> Entities => _dbContext.Set<TEntity>();

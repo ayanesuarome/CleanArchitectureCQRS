@@ -1,11 +1,7 @@
 ﻿@page "/leaverequests"
-@* @attribute [Authorize(Roles = "Administrator")] *@
+@attribute [Authorize(Roles = "Administrator")]
 
 <h3>Leave Requests</h3>
-
-<div class="m-2 d-flex justify-content-end">
-    <a href="@Paths.LeaveRequest.CreateLeaveRequest" class="btn btn-success">Add Leave Request</a>
-</div>
 
 <div class="row">
     <div class="col-md-3">

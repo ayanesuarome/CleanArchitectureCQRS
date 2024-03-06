@@ -3,7 +3,7 @@
 namespace CleanArch.Domain.Interfaces.Persistence;
 
 public interface IGenericRepository<TEntity>
-    where TEntity : BaseEntity
+    where TEntity : BaseEntity<int>
 {
     Task<IReadOnlyList<TEntity>> GetAsync();
     Task<TEntity> GetByIdAsync(int id);

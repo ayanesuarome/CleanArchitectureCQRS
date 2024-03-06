@@ -1,6 +1,6 @@
 ﻿namespace CleanArch.Domain.Entities;
 
-public class LeaveRequest : BaseEntity
+public class LeaveRequest : BaseEntity<int>
 {
     public DateTimeOffset StartDate { get; set; }
     public DateTimeOffset EndDate { get; set; }

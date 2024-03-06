@@ -1,3 +1,4 @@
+using Blazored.Toast.Services;
 using CleanArch.BlazorUI.Extensions;
 using CleanArch.BlazorUI.Interfaces;
 using CleanArch.BlazorUI.Models.LeaveRequests;
@@ -9,12 +10,14 @@ namespace CleanArch.BlazorUI.Pages.LeaveRequests;
 
 public partial class Create
 {
-    private LeaveRequestVM LeaveRequestModel { get; set; } = new();
-    private List<LeaveTypeVM> LeaveTypesModel { get; set; } = [];
-
     [Inject] private NavigationManager NavigationManager { get; set; } = null!;
     [Inject] private ILeaveTypeService LeaveTypeService { get; set; } = null!;
     [Inject] private ILeaveRequestService LeaveRequestService { get; set; } = null!;
+    [Inject] private IToastService ToastService { get; set; } = null!;
+
+    private LeaveRequestVM LeaveRequestModel { get; set; } = new();
+    private List<LeaveTypeVM> LeaveTypesModel { get; set; } = [];
+    private string? Message { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
@@ -24,6 +27,15 @@ public partial class Create
     private async Task HandleValidSubmitAsync()
     {
         Response<Guid> response = await LeaveRequestService.CreateLeaveRequestAsync(LeaveRequestModel);
-        NavigationManager.NavigateToIndexLeaveRequest();
+        
+        if (response.Success)
+        {
+            ToastService.ShowSuccess("Leave request created successfully");
+            NavigationManager.NavigateToEmployeeIndexLeaveRequest();
+        }
+        else
+        {
+            Message = response.Message;
+        }
     }
 }

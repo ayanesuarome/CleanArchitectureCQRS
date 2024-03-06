@@ -1,8 +1,8 @@
 ﻿namespace CleanArch.Domain.Entities;
 
-public abstract class BaseEntity
+public abstract class BaseEntity<T>
 {
-    public int Id { get; set; }
+    public T Id { get; set; }
     public DateTimeOffset? DateCreated { get; set; }
     public string? CreatedBy { get; set; }
     public DateTimeOffset? DateModified { get; set; }

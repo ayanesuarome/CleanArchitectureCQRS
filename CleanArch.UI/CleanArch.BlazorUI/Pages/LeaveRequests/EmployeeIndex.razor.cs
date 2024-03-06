@@ -1,3 +1,4 @@
+using Blazored.Toast.Services;
 using CleanArch.BlazorUI.Extensions;
 using CleanArch.BlazorUI.Interfaces;
 using CleanArch.BlazorUI.Models.LeaveRequests;
@@ -12,6 +13,8 @@ public partial class EmployeeIndex
     [Inject] private ILeaveRequestService Service { get; set; } = null!;
     [Inject] private NavigationManager NavigationManager { get; set; } = null!;
     [Inject] private IJSRuntime Js { get; set; } = null!;
+    [Inject] private IToastService ToastService { get; set; } = null!;
+
     private EmployeeLeaveRequestVM Model { get; set; } = new();
     private string? Message { get; set; }
 
@@ -35,7 +38,8 @@ public partial class EmployeeIndex
 
             if (response.Success)
             {
-                StateHasChanged();
+                ToastService.ShowSuccess("Leave request canceled successfully");
+                await OnInitializedAsync();
             }
             else
             {

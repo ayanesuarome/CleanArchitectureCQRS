@@ -7,8 +7,7 @@ using System.Net;
 namespace CleanArch.Api.Middlewares;
 
 // Middleware activated by MiddlewareFactory.
-public class ExceptionMiddleware(IAppLogger<ExceptionMiddleware> logger)
-    : IMiddleware
+public class ExceptionMiddleware(IAppLogger<ExceptionMiddleware> logger) : IMiddleware
 {
     private readonly IAppLogger<ExceptionMiddleware> _logger = logger;
 
@@ -20,13 +19,12 @@ public class ExceptionMiddleware(IAppLogger<ExceptionMiddleware> logger)
         }
         catch (Exception ex)
         {
-            await HandleExceptionAsync(context, ex, _logger);
+            await HandleExceptionAsync(context, ex);
         }
     }
 
     private async Task HandleExceptionAsync(HttpContext httpContext,
-        Exception exception,
-        IAppLogger<ExceptionMiddleware> logger)
+        Exception exception)
     {
         HttpStatusCode statusCode = HttpStatusCode.InternalServerError;
         CustomProblemDetails errorDetails;
@@ -66,7 +64,7 @@ public class ExceptionMiddleware(IAppLogger<ExceptionMiddleware> logger)
         }
 
         string logMessage = JsonConvert.SerializeObject(errorDetails, Formatting.None);
-        logger.LogError(message: logMessage);
+        _logger.LogError(message: logMessage);
 
         httpContext.Response.StatusCode = (int)statusCode;
         await httpContext.Response.WriteAsJsonAsync(errorDetails);

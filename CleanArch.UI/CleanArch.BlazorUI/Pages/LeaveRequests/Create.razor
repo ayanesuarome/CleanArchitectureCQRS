@@ -2,6 +2,11 @@
 
 <h3>Apply for leave</h3>
 
+@if (!string.IsNullOrEmpty(Message))
+{
+    <div class="alert alert-danger">@Message</div>
+}
+
 <EditForm Model="@LeaveRequestModel" OnValidSubmit="HandleValidSubmitAsync">
     <DataAnnotationsValidator />
     <ValidationSummary />

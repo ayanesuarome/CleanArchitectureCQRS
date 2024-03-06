@@ -1,3 +1,4 @@
+using Blazored.Toast.Services;
 using CleanArch.BlazorUI.Extensions;
 using CleanArch.BlazorUI.Interfaces;
 using CleanArch.BlazorUI.Models.LeaveRequests;
@@ -10,6 +11,7 @@ public partial class Details
 {
     [Inject] private ILeaveRequestService Service { get; set; } = null!;
     [Inject] private NavigationManager NavigationManager { get; set; } = null!;
+    [Inject] private IToastService ToastService { get; set; } = null!;
     [Parameter] public int id { get; set; }
     
     private string ClassName;
@@ -48,6 +50,7 @@ public partial class Details
 
         if(response.Success)
         {
+            ToastService.ShowSuccess("Leave request approval updated");
             NavigationManager.NavigateToIndexLeaveRequest();
         }
         else
