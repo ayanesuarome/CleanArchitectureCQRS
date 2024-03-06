@@ -1,4 +1,4 @@
-﻿@page "/leaverequests/details/{id:int}"
+﻿@page "/leaverequests/details/{Id:int}"
 <h3>Details</h3>
 
 <div class="alert alert-@ClassName" role="alert">
@@ -7,16 +7,16 @@
         <strong>Employee name: </strong>@Model.Employee.FullName()
     </p>
     <hr />
-    <p>Date Requested - @Model.DateRequested</p>
+    <p>Date Requested - @Model.DateRequested.LocalDateTime</p>
 </div>
 
 <div>
     <hr />
     <dl class="row">
         <dt class="col-sm-2">Start Date</dt>
-        <dd class="col-sm-10">@Model.StartDate</dd>
+        <dd class="col-sm-10">@Model.StartDate?.ToString("yyyy-MM-dd")</dd>
         <dt class="col-sm-2">End Date</dt>
-        <dd class="col-sm-10">@Model.EndDate</dd>
+        <dd class="col-sm-10">@Model.EndDate?.ToString("yyyy-MM-dd")</dd>
         <dt class="col-sm-2">Leave Type</dt>
         <dd class="col-sm-10">@Model.LeaveType.Name</dd>
         <dt class="col-sm-2">Request Comments</dt>
@@ -34,5 +34,5 @@
         </button>
     }
 
-    @* <BackToList Target/> *@
+    <BackToList Target="@Paths.LeaveRequest.LeaveRequests" />
 </div>

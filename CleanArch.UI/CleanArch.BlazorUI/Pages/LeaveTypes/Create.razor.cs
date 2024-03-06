@@ -16,7 +16,7 @@ public partial class Create
     private string? Message { get; set; }
     private LeaveTypeVM Model { get; set; } = new();
 
-    private async Task CreateLeaveType()
+    private async Task CreateLeaveTypeAsync()
     {
         Response<Guid> response = await LeaveTypeService.CreateLeaveType(Model);
 

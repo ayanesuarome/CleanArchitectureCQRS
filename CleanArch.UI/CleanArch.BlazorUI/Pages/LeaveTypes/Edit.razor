@@ -1,0 +1,11 @@
+﻿@page "/leavetypes/edit/{Id:int}"
+@attribute [Authorize(Roles = "Administrator")]
+
+<h3>Edit Leave Type</h3>
+
+@if (!string.IsNullOrEmpty(Message))
+{
+    <div class="alert alert-danger">@Message</div>
+}
+
+<FormComponent ButtonText="Edit" LeaveType="Model" OnValidSubmit="@EditLeaveTypeAsync" />

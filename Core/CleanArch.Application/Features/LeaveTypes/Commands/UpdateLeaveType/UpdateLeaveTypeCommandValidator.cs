@@ -1,4 +1,5 @@
-﻿using CleanArch.Domain.Interfaces.Persistence;
+﻿using CleanArch.Domain.Entities;
+using CleanArch.Domain.Interfaces.Persistence;
 using FluentValidation;
 
 namespace CleanArch.Application.Features.LeaveTypes.Commands.UpdateLeaveType;
@@ -27,14 +28,15 @@ public class UpdateLeaveTypeCommandValidator : AbstractValidator<UpdateLeaveType
                 .WithMessage("{PropertyName} must be between 1 - 100");
     }
 
-    private async Task<bool> LeaveTypeUniqueName(string name, CancellationToken cancellation)
+    private async Task<bool> LeaveTypeUniqueName(UpdateLeaveTypeCommand command, string name, CancellationToken cancellation)
     {
-        if(!string.IsNullOrWhiteSpace(name))
+        LeaveType leaveType = await _repository.GetByIdAsync(command.Id);
+
+        if(leaveType.Name != name)
         {
             return await _repository.IsUniqueAsync(name, cancellation);
         }
 
-        // No name is provided to update
         return true;
     }
 }

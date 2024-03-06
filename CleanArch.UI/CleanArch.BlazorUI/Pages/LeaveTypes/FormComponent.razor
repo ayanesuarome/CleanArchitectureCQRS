@@ -1,0 +1,26 @@
+﻿<EditForm Model="@LeaveType" OnValidSubmit="OnValidSubmit">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <fieldset disabled="@Disabled">
+        <div class="form-group">
+            <label class="control-label">Name</label>
+            <InputText id="name" class="form-control" @bind-Value="@LeaveType.Name" required></InputText>
+            <ValidationMessage For="@(() => LeaveType.Name)" />
+        </div>
+        <div class="form-group">
+            <label class="control-label">Default Days</label>
+            <InputNumber id="defaultDays" class="form-control" @bind-Value="@LeaveType.DefaultDays" required></InputNumber>
+            <ValidationMessage For="@(() => LeaveType.DefaultDays)" />
+        </div>
+    </fieldset>
+
+    @if (!Disabled)
+    {
+        <button type="submit" class="btn btn-success btn-block">
+            @ButtonText
+        </button>
+    }
+</EditForm>
+
+<BackToList Target="@Paths.LeaveType.LeaveTypes" />
