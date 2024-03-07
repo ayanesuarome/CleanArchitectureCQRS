@@ -3,19 +3,19 @@ using System.Net.Http.Headers;
 
 namespace CleanArch.BlazorUI.Handlers;
 
-public class JwtAuthorizationMessageHandler(ILocalStorageService localStorage) : DelegatingHandler
+public class JwtAuthorizationMessageHandler(ILocalStorageService localStorage, IConfiguration configuration) : DelegatingHandler
 {
     private readonly ILocalStorageService _localStorage = localStorage;
-    // TODO: move to static class
-    protected const string StorageKey = "token";
+    private readonly string _storageKey = configuration.GetValue<string>("StorageKey")
+                                          ?? throw new ArgumentNullException("configuration['StorageKey']");
 
     protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
     {
-        bool isTokenInLocalStorage = await _localStorage.ContainKeyAsync(StorageKey);
+        bool isTokenInLocalStorage = await _localStorage.ContainKeyAsync(_storageKey);
 
         if (isTokenInLocalStorage)
         {
-            string token = await _localStorage.GetItemAsync<string>(StorageKey);
+            string token = await _localStorage.GetItemAsync<string>(_storageKey);
             request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token);
         }
 

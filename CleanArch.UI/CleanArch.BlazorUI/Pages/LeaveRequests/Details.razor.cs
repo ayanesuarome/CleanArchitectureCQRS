@@ -12,10 +12,12 @@ public partial class Details
     [Inject] private ILeaveRequestService Service { get; set; } = null!;
     [Inject] private NavigationManager NavigationManager { get; set; } = null!;
     [Inject] private IToastService ToastService { get; set; } = null!;
+    [Inject] private IConfiguration Configuration { get; set; } = null!;
+
     [Parameter] public int Id { get; set; }
     
-    private string ClassName;
-    private string HeadingText;
+    private string? ClassName;
+    private string? HeadingText;
 
     private LeaveRequestVM Model { get; set; } = new();
     private string? Message { get; set; }
@@ -30,15 +32,15 @@ public partial class Details
         switch (Model.IsApproved)
         {
             case true:
-                ClassName = "success";
+                ClassName = Configuration.GetValue<string>("ApprovedClassName");
                 HeadingText = "Approved";
                 break;
             case false:
-                ClassName = "danger";
+                ClassName = Configuration.GetValue<string>("RejectedClassName");
                 HeadingText = "Rejected";
                 break;
             default:
-                ClassName = "warning";
+                ClassName = Configuration.GetValue<string>("PendingClassName");
                 HeadingText = "Pending Approval";
                 break;
         }
