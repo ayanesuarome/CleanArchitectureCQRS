@@ -24,4 +24,6 @@ public class CleanArchEFDbContextTest(CleanArchEFDbContextFixture fixture)
         leaveType.DateCreated.ShouldNotBeNull();
         leaveType.DateModified.ShouldNotBeNull();
     }
+
+
 }

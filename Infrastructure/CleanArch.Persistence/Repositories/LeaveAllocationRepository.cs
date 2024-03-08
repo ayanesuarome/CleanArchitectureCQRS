@@ -27,6 +27,13 @@ public class LeaveAllocationRepository : GenericRepository<LeaveAllocation>, ILe
                 && e.LeaveTypeId == leaveTypeId);
     }
 
+    public async Task<bool> HasEmployeeAllocation(string employeeId, int leaveTypeId)
+    {
+        return await TableNoTracking
+            .AnyAsync(e => e.EmployeeId == employeeId
+                && e.LeaveTypeId == leaveTypeId);
+    }
+
     public async Task<List<LeaveAllocation>> GetLeaveAllocationsWithDetails(string? employeeId)
     {
         IQueryable<LeaveAllocation> query = TableNoTracking;

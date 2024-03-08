@@ -1,10 +1,12 @@
-﻿using CleanArch.Application.Features.LeaveRequests.Commands.CancelLeaveRequest;
+﻿using CleanArch.Application.Events;
+using CleanArch.Application.Features.LeaveRequests.Commands.CancelLeaveRequest;
 using CleanArch.Application.Features.LeaveRequests.Commands.CreateLeaveRequest;
 using CleanArch.Application.Features.LeaveRequests.Commands.DeleteLeaveRequest;
 using CleanArch.Application.Features.LeaveRequests.Commands.UpdateLeaveRequest;
 using CleanArch.Application.Features.LeaveRequests.Queries.GetLeaveRequestDetails;
 using CleanArch.Application.Features.LeaveRequests.Queries.GetLeaveRequestList;
 using CleanArch.Application.Features.LeaveRequests.Queries.Shared;
+using CleanArch.Domain.Entities;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -42,8 +44,10 @@ public class LeaveRequestController(IMediator mediator) : ControllerBase
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<ActionResult> Post([FromBody] CreateLeaveRequestCommand model)
     {
-        int id = await _mediator.Send(model);
-        return CreatedAtAction(nameof(Get), new { id });
+        LeaveRequest leaveRequest = await _mediator.Send(model);
+        await _mediator.Publish(new LeaveRequestCreated(leaveRequest));
+
+        return CreatedAtAction(nameof(Get), new { leaveRequest.Id });
     }
 
     // PUT api/<v>/<LeaveRequestController>/5
