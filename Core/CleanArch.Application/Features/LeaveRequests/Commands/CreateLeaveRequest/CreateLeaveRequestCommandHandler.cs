@@ -14,21 +14,18 @@ public class CreateLeaveRequestCommandHandler : IRequestHandler<CreateLeaveReque
 {
     private readonly IMapper _mapper;
     private readonly ILeaveRequestRepository _leaveRequestRepository;
-    private readonly ILeaveTypeRepository _leaveTypeRepository;
     private readonly ILeaveAllocationRepository _allocationRepository;
     private readonly IUserService _userService;
     private readonly IValidator<CreateLeaveRequestCommand> _validator;
 
     public CreateLeaveRequestCommandHandler(IMapper mapper,
         ILeaveRequestRepository leaveRequestRepository,
-        ILeaveTypeRepository leaveTypeRepository,
         ILeaveAllocationRepository allocationRepository,
         IUserService userService,
         IValidator<CreateLeaveRequestCommand> validator)
     {
         _mapper = mapper;
         _leaveRequestRepository = leaveRequestRepository;
-        _leaveTypeRepository = leaveTypeRepository;
         _allocationRepository = allocationRepository;
         _userService = userService;
         _validator = validator;

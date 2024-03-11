@@ -45,7 +45,7 @@ public class LeaveRequestController(IMediator mediator) : ControllerBase
     public async Task<ActionResult> Post([FromBody] CreateLeaveRequestCommand model)
     {
         LeaveRequest leaveRequest = await _mediator.Send(model);
-        await _mediator.Publish(new LeaveRequestCreated(leaveRequest));
+        await _mediator.Publish(new LeaveRequestEvent(leaveRequest, LeaveRequestAction.Created));
 
         return CreatedAtAction(nameof(Get), new { leaveRequest.Id });
     }
@@ -58,7 +58,9 @@ public class LeaveRequestController(IMediator mediator) : ControllerBase
     public async Task<ActionResult> Put(int id, [FromBody] UpdateLeaveRequestCommand model)
     {
         model.Id = id;
-        await _mediator.Send(model);
+        LeaveRequest leaveRequest = await _mediator.Send(model);
+        await _mediator.Publish(new LeaveRequestEvent(leaveRequest, LeaveRequestAction.Updated));
+
         return NoContent();
     }
 
@@ -79,7 +81,9 @@ public class LeaveRequestController(IMediator mediator) : ControllerBase
     [ProducesDefaultResponseType]
     public async Task<ActionResult> CancelRequest(int id)
     {
-        await _mediator.Send(new CancelLeaveRequestCommand(id));
+        LeaveRequest leaveRequest = await _mediator.Send(new CancelLeaveRequestCommand(id));
+        await _mediator.Publish(new LeaveRequestEvent(leaveRequest, LeaveRequestAction.Canceled));
+
         return NoContent();
     }
 }

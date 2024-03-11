@@ -7,7 +7,7 @@ using System.Net;
 namespace CleanArch.Api.Middlewares;
 
 // Middleware activated by MiddlewareFactory.
-public class ExceptionMiddleware(IAppLogger<ExceptionMiddleware> logger) : IMiddleware
+public class ExceptionMiddleware(IAppLogger<ExceptionMiddleware> logger) : IMiddleware//, IExceptionHandler
 {
     private readonly IAppLogger<ExceptionMiddleware> _logger = logger;
 

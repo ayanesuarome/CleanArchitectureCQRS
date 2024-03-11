@@ -1,6 +1,8 @@
-﻿using CleanArch.Application.Features.LeaveRequests.Commands.ChangeLeaveRequestApproval;
+﻿using CleanArch.Application.Events;
+using CleanArch.Application.Features.LeaveRequests.Commands.ChangeLeaveRequestApproval;
 using CleanArch.Application.Features.LeaveRequests.Queries.AdminGetLeaveRequestList;
 using CleanArch.Application.Features.LeaveRequests.Queries.Shared;
+using CleanArch.Domain.Entities;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -29,7 +31,9 @@ public class AdminLeaveRequestController(IMediator mediator) : BaseAdminControll
     public async Task<ActionResult> UpdateApproval(int id, [FromBody] ChangeLeaveRequestApprovalCommand model)
     {
         model.Id = id;
-        await _mediator.Send(model);
+        LeaveRequest leaveRequest = await _mediator.Send(model);
+        await _mediator.Publish(new LeaveRequestEvent(leaveRequest, LeaveRequestAction.UpdateApproval));
+
         return NoContent();
     }
 }
