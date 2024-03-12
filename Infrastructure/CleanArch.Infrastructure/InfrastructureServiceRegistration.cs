@@ -15,7 +15,10 @@ public static class InfrastructureServiceRegistration
         services.Configure<EmailSettings>(configuration.GetSection(nameof(EmailSettings)));
         services.Configure<EmailTemplateIds>(configuration.GetSection(nameof(EmailTemplateIds)));
         services.AddTransient<IEmailSender, EmailSender>();
-        services.AddScoped(typeof(IAppLogger<>), typeof(LoggerAdapter<>));
+        
+        // it depends on the way of using ExceptionMiddleware registered as scoped or the new feature in .NET8 of IExceptionHandler as singleton
+        //services.AddScoped(typeof(IAppLogger<>), typeof(LoggerAdapter<>));
+        services.AddSingleton(typeof(IAppLogger<>), typeof(LoggerAdapter<>));
 
         return services;
     }

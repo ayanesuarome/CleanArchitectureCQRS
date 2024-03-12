@@ -14,9 +14,6 @@ public class UserService(UserManager<ApplicationUser> userManager, IHttpContextA
 
     public string? UserId => _httpContextAccessor.HttpContext?.User?.FindFirst("uid")?.Value;
 
-    // TODO: move to a static class
-    private const string EmployeeRole = "Employee";
-
     public async Task<Employee> GetEmployee(string userId)
     {
         ApplicationUser employee = await _userManager.FindByIdAsync(userId);
@@ -32,7 +29,7 @@ public class UserService(UserManager<ApplicationUser> userManager, IHttpContextA
 
     public async Task<List<Employee>> GetEmployees()
     {
-        IList<ApplicationUser> employees = await _userManager.GetUsersInRoleAsync(EmployeeRole);
+        IList<ApplicationUser> employees = await _userManager.GetUsersInRoleAsync(Roles.Employee);
 
         return employees.Select(e => new Employee
         {

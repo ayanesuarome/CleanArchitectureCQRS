@@ -41,7 +41,6 @@ public class CreateLeaveRequestCommandHandler : IRequestHandler<CreateLeaveReque
         }
 
         // check on employee's allocation
-        // TODO: measure whether a get or a bool makes improvements
         LeaveAllocation leaveAllocation = await _allocationRepository.GetEmployeeAllocation(_userService.UserId, request.LeaveTypeId);
         bool result = await _allocationRepository.HasEmployeeAllocation(_userService.UserId, request.LeaveTypeId);
 

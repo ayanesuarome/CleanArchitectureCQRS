@@ -1,12 +1,10 @@
 ﻿using CleanArch.Application.Features.LeaveTypes.Commands.CreateLeaveType;
-using CleanArch.Application.Features.LeaveTypes.Commands.DeleteLeaveType;
 using CleanArch.Application.Features.LeaveTypes.Commands.UpdateLeaveType;
 using CleanArch.Application.Features.LeaveTypes.Queries.GetLeaveTypeList;
 using CleanArch.Application.Features.LeaveTypeDetails.Queries.GetLeaveTypesDetails;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
-using Asp.Versioning;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -56,17 +54,6 @@ public class LeaveTypesController(IMediator mediator) : ControllerBase
     {
         leaveType.Id = id;
         await _mediator.Send(leaveType);
-        return NoContent();
-    }
-
-    // DELETE api/<v>/<LeaveTypesController>/5
-    [HttpDelete("{id}")]
-    [Authorize(Roles = "Administrator")]
-    [ProducesResponseType(StatusCodes.Status204NoContent)]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<ActionResult> Delete(int id)
-    {
-        await _mediator.Send(new DeleteLeaveTypeCommand(id));
         return NoContent();
     }
 }

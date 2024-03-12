@@ -7,7 +7,8 @@ using System.Net;
 namespace CleanArch.Api.Middlewares;
 
 // Middleware activated by MiddlewareFactory.
-public class ExceptionMiddleware(IAppLogger<ExceptionMiddleware> logger) : IMiddleware//, IExceptionHandler
+// Use instead the new feature introduced by .NET8, the IExceptionHandler. see folder ExceptionHandlers
+public class ExceptionMiddleware(IAppLogger<ExceptionMiddleware> logger) : IMiddleware
 {
     private readonly IAppLogger<ExceptionMiddleware> _logger = logger;
 

@@ -17,9 +17,6 @@ public class AuthService : IAuthService
     private readonly IJwtTokenGenerator _jwtTokenGenerator;
     private readonly IValidator<RegistrationRequest> _validator;
 
-    // TODO: move to a static class
-    private const string EmployeeRole = "Employee";
-
     public AuthService(
         UserManager<ApplicationUser> userManager,
         SignInManager<ApplicationUser> signInManager,
@@ -90,7 +87,7 @@ public class AuthService : IAuthService
             throw new BadRequestException(result.Errors.ToString());
         }
 
-        await _userManager.AddToRoleAsync(user, EmployeeRole);
+        await _userManager.AddToRoleAsync(user, Roles.Employee);
 
         return new RegistrationResponse(user.Id);
     }
