@@ -1,10 +1,10 @@
 using CleanArch.Domain.Entities;
+using Microsoft.EntityFrameworkCore;
 using Shouldly;
 
 namespace CleanArch.Persistence.Tests;
 
-public class CleanArchEFDbContextTest(CleanArchEFDbContextFixture fixture)
-    : IClassFixture<CleanArchEFDbContextFixture>
+public class CleanArchEFDbContextTest(CleanArchEFDbContextFixture fixture) : IClassFixture<CleanArchEFDbContextFixture>
 {
     private readonly CleanArchEFDbContextFixture _fixture = fixture;
 
@@ -13,7 +13,6 @@ public class CleanArchEFDbContextTest(CleanArchEFDbContextFixture fixture)
     {
         LeaveType leaveType = new()
         {
-            Id = 1,
             DefaultDays = 10,
             Name = "Test Vacation"
         };
@@ -25,5 +24,22 @@ public class CleanArchEFDbContextTest(CleanArchEFDbContextFixture fixture)
         leaveType.DateModified.ShouldNotBeNull();
     }
 
+    [Fact]
+    public async Task Save_AnyAsync()
+    {
+        LeaveType entity = new()
+        {
+            DefaultDays = 15,
+            Name = "Test Get Leave Type"
+        };
 
+        await _fixture.context.LeaveTypes.AddAsync(entity);
+        await _fixture.context.SaveChangesAsync();
+
+        bool exist = await _fixture.context.LeaveTypes
+            .AsNoTracking()
+            .AnyAsync(e => e.Id == entity.Id);
+
+        exist.ShouldBeTrue();
+    }
 }

@@ -1,5 +1,4 @@
-﻿using CleanArch.Domain.Entities;
-using CleanArch.Domain.Interfaces.Persistence;
+﻿using CleanArch.Domain.Interfaces.Persistence;
 using FluentValidation;
 
 namespace CleanArch.Application.Features.LeaveAllocations.Commands.CreateLeaveAllocation;
@@ -21,8 +20,6 @@ public class CreateLeaveAllocationCommandValidator : AbstractValidator<CreateLea
 
     private async Task<bool> LeaveTypeMustExist(int id, CancellationToken token)
     {
-        // TODO: measure with benchmark whether getting the entity or using bool has better performance
-        LeaveType leaveType = await _repository.GetByIdAsync(id);
-        return leaveType != null;
+        return await _repository.AnyAsync(id, token);
     }
 }

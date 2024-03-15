@@ -12,5 +12,5 @@ public class LeaveRequest : BaseEntity<int>
     public bool IsCancelled { get; set; }
     public string RequestingEmployeeId { get; set; } = null!;
 
-    public int GetDaysRequested() => (int)(EndDate - StartDate).TotalDays;
+    public int GetDaysRequested() => (int)(EndDate - StartDate).TotalDays + 1;
 }

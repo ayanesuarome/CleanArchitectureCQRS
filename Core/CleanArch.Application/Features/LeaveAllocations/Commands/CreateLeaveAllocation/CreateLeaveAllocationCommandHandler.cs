@@ -55,13 +55,16 @@ public class CreateLeaveAllocationCommandHandler : IRequestHandler<CreateLeaveAl
 
             if(!allocationExist)
             {
-                allocations.Add(new LeaveAllocation
+                LeaveAllocation allocation = new()
                 {
                     EmployeeId = employee.Id,
                     LeaveTypeId = leaveType.Id,
-                    NumberOfDays = leaveType.DefaultDays,
                     Period = period
-                });
+                };
+                
+                allocation.UpdateNumberOfDays(leaveType.DefaultDays);
+                
+                allocations.Add(allocation);
             }
         }
 
