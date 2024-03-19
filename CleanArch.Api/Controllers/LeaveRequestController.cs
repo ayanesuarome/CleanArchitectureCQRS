@@ -6,6 +6,7 @@ using CleanArch.Application.Features.LeaveRequests.Commands.UpdateLeaveRequest;
 using CleanArch.Application.Features.LeaveRequests.Queries.GetLeaveRequestDetails;
 using CleanArch.Application.Features.LeaveRequests.Queries.GetLeaveRequestList;
 using CleanArch.Application.Features.LeaveRequests.Queries.Shared;
+using CleanArch.Application.Models;
 using CleanArch.Domain.Entities;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -58,8 +59,8 @@ public class LeaveRequestController(IMediator mediator) : ControllerBase
     public async Task<ActionResult> Put(int id, [FromBody] UpdateLeaveRequestCommand model)
     {
         model.Id = id;
-        LeaveRequest leaveRequest = await _mediator.Send(model);
-        await _mediator.Publish(new LeaveRequestEvent(leaveRequest, LeaveRequestAction.Updated));
+        Result<LeaveRequest> result = await _mediator.Send(model);
+        await _mediator.Publish(new LeaveRequestEvent(result.Data, LeaveRequestAction.Updated));
 
         return NoContent();
     }

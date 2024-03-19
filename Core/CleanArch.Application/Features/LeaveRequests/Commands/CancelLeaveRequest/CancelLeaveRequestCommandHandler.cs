@@ -36,7 +36,8 @@ public class CancelLeaveRequestCommandHandler : IRequestHandler<CancelLeaveReque
             LeaveAllocation allocation = await _leaveAllocationRepository.GetEmployeeAllocation(
                 leaveRequest.RequestingEmployeeId,
                 leaveRequest.LeaveTypeId);
-            allocation.UpdateNumberOfDays(allocation.NumberOfDays + leaveRequest.GetDaysRequested());
+
+            bool canUpdate = allocation.UpdateNumberOfDays(allocation.NumberOfDays + leaveRequest.GetDaysRequested());
 
             await _leaveAllocationRepository.UpdateAsync(allocation);
         }

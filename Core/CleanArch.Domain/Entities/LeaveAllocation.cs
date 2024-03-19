@@ -15,13 +15,14 @@ public class LeaveAllocation : BaseEntity<int>
         return (int)(end - start).TotalDays < NumberOfDays;
     }
 
-    public void UpdateNumberOfDays(int numberOfDays)
+    public bool UpdateNumberOfDays(int numberOfDays)
     {
         if(numberOfDays < 0)
         {
-            throw new ArgumentOutOfRangeException(nameof(NumberOfDays), $"Not enough number of days to take");
+            return false;
         }
 
-        NumberOfDays = numberOfDays;        
+        NumberOfDays = numberOfDays;
+        return true;
     }
 }

@@ -1,5 +1,7 @@
 ﻿using CleanArch.Application.Exceptions;
 using CleanArch.Application.Extensions;
+using CleanArch.Application.Models;
+using CleanArch.Application.Models.Errors;
 using CleanArch.Domain.Entities;
 using CleanArch.Domain.Interfaces.Persistence;
 using FluentValidation;
@@ -8,7 +10,7 @@ using MediatR;
 
 namespace CleanArch.Application.Features.LeaveRequests.Commands.ChangeLeaveRequestApproval;
 
-public class ChangeLeaveRequestApprovalCommandHandler : IRequestHandler<ChangeLeaveRequestApprovalCommand, LeaveRequest>
+public class ChangeLeaveRequestApprovalCommandHandler : IRequestHandler<ChangeLeaveRequestApprovalCommand, Result<LeaveRequest>>
 {
     private readonly ILeaveRequestRepository _leaveRequestRepository;
     private readonly ILeaveAllocationRepository _leaveAllocationRepository;
@@ -24,7 +26,7 @@ public class ChangeLeaveRequestApprovalCommandHandler : IRequestHandler<ChangeLe
         _validator = validator;
     }
 
-    public async Task<LeaveRequest> Handle(ChangeLeaveRequestApprovalCommand request, CancellationToken cancellationToken)
+    public async Task<Result<LeaveRequest>> Handle(ChangeLeaveRequestApprovalCommand request, CancellationToken cancellationToken)
     {
         LeaveRequest leaveRequest = await _leaveRequestRepository.GetByIdAsync(request.Id);
 
@@ -37,7 +39,9 @@ public class ChangeLeaveRequestApprovalCommandHandler : IRequestHandler<ChangeLe
 
         if(!validationResult.IsValid)
         {
-            throw new BadRequestException("Invalid approval request", validationResult);
+            // TODO: to remove throw
+            return Result<LeaveRequest>.Failure(LeaveRequestErrors.InvalidApprovalRequest(validationResult));
+            //throw new BadRequestException("Invalid approval request", validationResult);
         }
 
         if(leaveRequest.IsCancelled)
@@ -50,7 +54,6 @@ public class ChangeLeaveRequestApprovalCommandHandler : IRequestHandler<ChangeLe
         }
         
         leaveRequest.IsApproved = request.Approved;
-        await _leaveRequestRepository.UpdateAsync(leaveRequest);
 
         // if request is approved, get and update the employee's allocation
         if(leaveRequest.IsApproved == true)
@@ -58,11 +61,19 @@ public class ChangeLeaveRequestApprovalCommandHandler : IRequestHandler<ChangeLe
             LeaveAllocation allocation = await _leaveAllocationRepository.GetEmployeeAllocation(
                 leaveRequest.RequestingEmployeeId,
                 leaveRequest.LeaveTypeId);
-            allocation.UpdateNumberOfDays(allocation.NumberOfDays - leaveRequest.GetDaysRequested());
+            
+            bool canUpdate = allocation.UpdateNumberOfDays(allocation.NumberOfDays - leaveRequest.GetDaysRequested());
+
+            if(!canUpdate)
+            {
+                return Result<LeaveRequest>.Failure(new Error("as","as"));
+            }
 
             await _leaveAllocationRepository.UpdateAsync(allocation);
         }
 
-        return leaveRequest;
+        await _leaveRequestRepository.UpdateAsync(leaveRequest);
+
+        return Result<LeaveRequest>.Success(leaveRequest);
     }
 }
