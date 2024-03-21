@@ -1,5 +1,6 @@
-﻿using MediatR;
+﻿using CleanArch.Application.Models;
+using MediatR;
 
 namespace CleanArch.Application.Features.LeaveTypes.Queries.GetLeaveTypeList;
 
-public record GetLeaveTypeListQuery : IRequest<List<LeaveTypeDto>>;
+public record GetLeaveTypeListQuery : IRequest<Result<List<LeaveTypeDto>>>;

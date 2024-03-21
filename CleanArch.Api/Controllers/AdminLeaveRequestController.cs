@@ -23,7 +23,8 @@ public class AdminLeaveRequestController(IMediator mediator) : BaseAdminControll
     public async Task<ActionResult<List<LeaveRequestDto>>> Get()
     {
         Result<List<LeaveRequestDto>> result = await _mediator.Send(new AdminGetLeaveRequestListQuery());
-        return Ok(result.Data);
+        //return Ok(result.Data);
+        return Ok();
     }
 
     // PUT api/admin/<v>/<AdminLeaveRequestController>/5/UpdateApproval
@@ -37,10 +38,11 @@ public class AdminLeaveRequestController(IMediator mediator) : BaseAdminControll
         model.Id = id;
         Result<LeaveRequest> result = await _mediator.Send(model);
         
-        if(result.IsSuccess)
-        {
-            await _mediator.Publish(new LeaveRequestEvent(result.Data, LeaveRequestAction.UpdateApproval));
-        }
+        // TODO:
+        //if(result.IsSuccess)
+        //{
+        //    await _mediator.Publish(new LeaveRequestEvent(result.Data, LeaveRequestAction.UpdateApproval));
+        //}
 
         return result.Match<ActionResult, LeaveRequest>(
             onSuccess: () => NoContent(),

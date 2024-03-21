@@ -1,5 +1,6 @@
 ﻿using CleanArch.Application.Exceptions;
 using CleanArch.Application.Interfaces.Identity;
+using CleanArch.Application.Models;
 using CleanArch.Application.Models.Identity;
 using CleanArch.Domain.Entities;
 using CleanArch.Domain.Interfaces.Persistence;
@@ -9,7 +10,7 @@ using MediatR;
 
 namespace CleanArch.Application.Features.LeaveAllocations.Commands.CreateLeaveAllocation;
 
-public class CreateLeaveAllocationCommandHandler : IRequestHandler<CreateLeaveAllocationCommand, int>
+public class CreateLeaveAllocationCommandHandler : IRequestHandler<CreateLeaveAllocationCommand, Result<int>>
 {
     private readonly ILeaveAllocationRepository _allocationRepository;
     private readonly ILeaveTypeRepository _leaveTypeRepository;
@@ -28,7 +29,7 @@ public class CreateLeaveAllocationCommandHandler : IRequestHandler<CreateLeaveAl
         _userService = userService;
     }
 
-    public async Task<int> Handle(CreateLeaveAllocationCommand request, CancellationToken cancellationToken)
+    public async Task<Result<int>> Handle(CreateLeaveAllocationCommand request, CancellationToken cancellationToken)
     {
         ValidationResult validationResult = await _validator.ValidateAsync(request, cancellationToken);
 
@@ -75,6 +76,6 @@ public class CreateLeaveAllocationCommandHandler : IRequestHandler<CreateLeaveAl
             rowsAffected = await _allocationRepository.CreateListAsync(allocations);
         }
 
-        return rowsAffected;
+        return new SuccessResult<int>(rowsAffected);
     }
 }

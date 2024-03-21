@@ -1,7 +1,8 @@
-﻿using MediatR;
+﻿using CleanArch.Application.Models;
+using MediatR;
 
 namespace CleanArch.Application.Features.LeaveAllocations.Queries.GetLeaveAllocationList;
 
-public record GetLeaveAllocationListQuery : IRequest<List<LeaveAllocationDto>>
+public record GetLeaveAllocationListQuery : IRequest<Result<List<LeaveAllocationDto>>>
 {
 }

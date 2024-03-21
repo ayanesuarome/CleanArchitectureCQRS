@@ -1,7 +1,8 @@
-﻿using MediatR;
+﻿using CleanArch.Application.Models;
+using MediatR;
 
 namespace CleanArch.Application.Features.LeaveRequests.Queries.GetLeaveRequestDetails;
 
-public record GetLeaveRequestDetailsQuery(int Id) : IRequest<LeaveRequestDetailsDto>
+public record GetLeaveRequestDetailsQuery(int Id) : IRequest<Result<LeaveRequestDetailsDto>>
 {
 }

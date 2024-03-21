@@ -1,8 +1,9 @@
-﻿using MediatR;
+﻿using CleanArch.Application.Models;
+using MediatR;
 
 namespace CleanArch.Application.Features.LeaveTypes.Commands.UpdateLeaveType;
 
-public record UpdateLeaveTypeCommand : IRequest<Unit>
+public record UpdateLeaveTypeCommand : IRequest<Result<Unit>>
 {
     public int Id { get; set; }
     public string? Name { get; set; }

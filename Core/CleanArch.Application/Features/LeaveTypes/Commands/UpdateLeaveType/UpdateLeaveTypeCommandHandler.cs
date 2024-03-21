@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
 using CleanArch.Application.Exceptions;
+using CleanArch.Application.Features.LeaveTypes.Shared;
+using CleanArch.Application.Models;
 using CleanArch.Domain.Entities;
 using CleanArch.Domain.Interfaces.Persistence;
 using FluentValidation;
@@ -12,19 +14,19 @@ public class UpdateLeaveTypeCommandHandler(
     IMapper mapper,
     ILeaveTypeRepository repository,
     IValidator<UpdateLeaveTypeCommand> validator)
-    : IRequestHandler<UpdateLeaveTypeCommand, Unit>
+    : IRequestHandler<UpdateLeaveTypeCommand, Result<Unit>>
 {
     private readonly IMapper _mapper = mapper;
     private readonly ILeaveTypeRepository _repository = repository;
     private readonly IValidator<UpdateLeaveTypeCommand> _validator = validator;
 
-    public async Task<Unit> Handle(UpdateLeaveTypeCommand request, CancellationToken cancellationToken)
+    public async Task<Result<Unit>> Handle(UpdateLeaveTypeCommand request, CancellationToken cancellationToken)
     {
         LeaveType leaveType = await _repository.GetByIdAsync(request.Id);
 
         if (leaveType == null)
         {
-            throw new NotFoundException(nameof(LeaveType), request.Id);
+            return new NotFoundResult<Unit>(LeaveTypeErrors.NotFound(request.Id));
         }
 
         ValidationResult validationResult = await _validator.ValidateAsync(request, cancellationToken);
@@ -36,6 +38,7 @@ public class UpdateLeaveTypeCommandHandler(
 
         _mapper.Map(request, leaveType);
         await _repository.UpdateAsync(leaveType);
-        return Unit.Value;
+
+        return new SuccessResult<Unit>(Unit.Value);
     }
 }

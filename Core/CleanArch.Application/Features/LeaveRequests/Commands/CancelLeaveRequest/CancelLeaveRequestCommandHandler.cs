@@ -1,11 +1,12 @@
-﻿using CleanArch.Application.Exceptions;
+﻿using CleanArch.Application.Models;
 using CleanArch.Domain.Entities;
 using CleanArch.Domain.Interfaces.Persistence;
 using MediatR;
+using CleanArch.Application.Features.LeaveRequests.Shared;
 
 namespace CleanArch.Application.Features.LeaveRequests.Commands.CancelLeaveRequest;
 
-public class CancelLeaveRequestCommandHandler : IRequestHandler<CancelLeaveRequestCommand, LeaveRequest>
+public class CancelLeaveRequestCommandHandler : IRequestHandler<CancelLeaveRequestCommand, Result<LeaveRequest>>
 {
     private readonly ILeaveRequestRepository _leaveRequestRepository;
     private readonly ILeaveAllocationRepository _leaveAllocationRepository;
@@ -18,13 +19,13 @@ public class CancelLeaveRequestCommandHandler : IRequestHandler<CancelLeaveReque
         _leaveAllocationRepository = leaveAllocationRepository;
     }
 
-    public async Task<LeaveRequest> Handle(CancelLeaveRequestCommand request, CancellationToken cancellationToken)
+    public async Task<Result<LeaveRequest>> Handle(CancelLeaveRequestCommand request, CancellationToken cancellationToken)
     {
         LeaveRequest leaveRequest = await _leaveRequestRepository.GetByIdAsync(request.Id);
 
         if (leaveRequest == null)
         {
-            throw new NotFoundException(nameof(LeaveRequest), request.Id);
+            return new NotFoundResult<LeaveRequest>(LeaveRequestErrors.NotFound(request.Id));
         }
 
         leaveRequest.IsCancelled = true;
@@ -42,6 +43,6 @@ public class CancelLeaveRequestCommandHandler : IRequestHandler<CancelLeaveReque
             await _leaveAllocationRepository.UpdateAsync(allocation);
         }
 
-        return leaveRequest;
+        return new SuccessResult<LeaveRequest>(leaveRequest);
     }
 }

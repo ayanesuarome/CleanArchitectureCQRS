@@ -1,5 +1,8 @@
-﻿using MediatR;
+﻿using CleanArch.Application.Models;
+using MediatR;
 
 namespace CleanArch.Application.Features.LeaveAllocations.Commands.CreateLeaveAllocation;
 
-public record CreateLeaveAllocationCommand(int LeaveTypeId) : IRequest<int> { }
+public record CreateLeaveAllocationCommand(int LeaveTypeId) : IRequest<Result<int>>
+{
+}

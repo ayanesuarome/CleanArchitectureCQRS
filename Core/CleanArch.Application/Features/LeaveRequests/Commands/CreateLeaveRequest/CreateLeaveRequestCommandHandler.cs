@@ -2,6 +2,7 @@
 using CleanArch.Application.Exceptions;
 using CleanArch.Application.Extensions;
 using CleanArch.Application.Interfaces.Identity;
+using CleanArch.Application.Models;
 using CleanArch.Domain.Entities;
 using CleanArch.Domain.Interfaces.Persistence;
 using FluentValidation;
@@ -10,7 +11,7 @@ using MediatR;
 
 namespace CleanArch.Application.Features.LeaveRequests.Commands.CreateLeaveRequest;
 
-public class CreateLeaveRequestCommandHandler : IRequestHandler<CreateLeaveRequestCommand, LeaveRequest>
+public class CreateLeaveRequestCommandHandler : IRequestHandler<CreateLeaveRequestCommand, Result<LeaveRequest>>
 {
     private readonly IMapper _mapper;
     private readonly ILeaveRequestRepository _leaveRequestRepository;
@@ -31,12 +32,13 @@ public class CreateLeaveRequestCommandHandler : IRequestHandler<CreateLeaveReque
         _validator = validator;
     }
 
-    public async Task<LeaveRequest> Handle(CreateLeaveRequestCommand request, CancellationToken cancellationToken)
+    public async Task<Result<LeaveRequest>> Handle(CreateLeaveRequestCommand request, CancellationToken cancellationToken)
     {
         ValidationResult validationResult = await _validator.ValidateAsync(request, cancellationToken);
 
         if(!validationResult.IsValid)
         {
+            //return new BadRequestResult<LeaveRequest>($"Invalid {nameof(LeaveRequest)}", validationResult.Errors.Select(x => new  x.PropertyName, x.Erro));
             throw new BadRequestException($"Invalid {nameof(LeaveRequest)}", validationResult);
         }
 
@@ -63,6 +65,6 @@ public class CreateLeaveRequestCommandHandler : IRequestHandler<CreateLeaveReque
         LeaveRequest leaveRequest = _mapper.Map<LeaveRequest>(request);
         await _leaveRequestRepository.CreateAsync(leaveRequest);
 
-        return leaveRequest;
+        return new SuccessResult<LeaveRequest>(leaveRequest);
     }
 }

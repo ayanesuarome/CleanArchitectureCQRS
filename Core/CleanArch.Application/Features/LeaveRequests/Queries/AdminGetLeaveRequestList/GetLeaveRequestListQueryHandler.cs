@@ -18,6 +18,6 @@ public class GetLeaveRequestListQueryHandler(IMapper mapper, ILeaveRequestReposi
         List<LeaveRequest> leaveRequests = await _repository.GetLeaveRequestsWithDetailsAsync();
         List<LeaveRequestDto> dtos = _mapper.Map<List<LeaveRequestDto>>(leaveRequests);
 
-        return Result<List<LeaveRequestDto>>.Success(dtos);
+        return new SuccessResult<List<LeaveRequestDto>>(dtos);
     }
 }

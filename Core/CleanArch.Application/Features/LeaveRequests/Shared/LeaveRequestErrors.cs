@@ -1,8 +1,8 @@
-﻿using CleanArch.Domain.Entities;
+﻿using CleanArch.Application.Models.Errors;
+using CleanArch.Domain.Entities;
 using FluentValidation.Results;
-using System.Net;
 
-namespace CleanArch.Application.Models.Errors;
+namespace CleanArch.Application.Features.LeaveRequests.Shared;
 
 public static class LeaveRequestErrors
 {

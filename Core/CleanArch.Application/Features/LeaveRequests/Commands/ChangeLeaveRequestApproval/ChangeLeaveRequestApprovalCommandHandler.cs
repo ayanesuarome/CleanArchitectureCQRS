@@ -1,7 +1,7 @@
 ﻿using CleanArch.Application.Exceptions;
 using CleanArch.Application.Extensions;
+using CleanArch.Application.Features.LeaveRequests.Shared;
 using CleanArch.Application.Models;
-using CleanArch.Application.Models.Errors;
 using CleanArch.Domain.Entities;
 using CleanArch.Domain.Interfaces.Persistence;
 using FluentValidation;
@@ -32,7 +32,9 @@ public class ChangeLeaveRequestApprovalCommandHandler : IRequestHandler<ChangeLe
 
         if (leaveRequest == null)
         {
-            throw new NotFoundException(nameof(LeaveRequest), request.Id);
+            // TODO: remove throw
+            return new NotFoundResult<LeaveRequest>(LeaveRequestErrors.NotFound(request.Id));
+            //throw new NotFoundException(nameof(LeaveRequest), request.Id);
         }
 
         ValidationResult validationResult = await _validator.ValidateAsync(request, cancellationToken);
@@ -40,8 +42,8 @@ public class ChangeLeaveRequestApprovalCommandHandler : IRequestHandler<ChangeLe
         if(!validationResult.IsValid)
         {
             // TODO: to remove throw
-            return Result<LeaveRequest>.Failure(LeaveRequestErrors.InvalidApprovalRequest(validationResult));
-            //throw new BadRequestException("Invalid approval request", validationResult);
+            //return Result<LeaveRequest>.Failure(LeaveRequestErrors.InvalidApprovalRequest(validationResult));
+            throw new BadRequestException("Invalid approval request", validationResult);
         }
 
         if(leaveRequest.IsCancelled)
@@ -66,7 +68,8 @@ public class ChangeLeaveRequestApprovalCommandHandler : IRequestHandler<ChangeLe
 
             if(!canUpdate)
             {
-                return Result<LeaveRequest>.Failure(new Error("as","as"));
+                // TODO:
+                //return Result<LeaveRequest>.Failure(new Error("as","as"));
             }
 
             await _leaveAllocationRepository.UpdateAsync(allocation);
@@ -74,6 +77,6 @@ public class ChangeLeaveRequestApprovalCommandHandler : IRequestHandler<ChangeLe
 
         await _leaveRequestRepository.UpdateAsync(leaveRequest);
 
-        return Result<LeaveRequest>.Success(leaveRequest);
+        return new SuccessResult<LeaveRequest>(leaveRequest);
     }
 }

@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using CleanArch.Application.Exceptions;
+using CleanArch.Application.Models;
 using CleanArch.Domain.Entities;
 using CleanArch.Domain.Interfaces.Persistence;
 using FluentValidation;
@@ -11,13 +12,13 @@ namespace CleanArch.Application.Features.LeaveTypes.Commands.CreateLeaveType;
 public class CreateLeaveTypeCommandHandler(IMapper mapper,
     ILeaveTypeRepository repository,
     IValidator<CreateLeaveTypeCommand> validator)
-    : IRequestHandler<CreateLeaveTypeCommand, int>
+    : IRequestHandler<CreateLeaveTypeCommand, Result<int>>
 {
     private readonly IMapper _mapper = mapper;
     private readonly ILeaveTypeRepository _repository = repository;
     private readonly IValidator<CreateLeaveTypeCommand> _validator = validator;
 
-    public async Task<int> Handle(CreateLeaveTypeCommand request, CancellationToken cancellationToken)
+    public async Task<Result<int>> Handle(CreateLeaveTypeCommand request, CancellationToken cancellationToken)
     {
         ValidationResult validationResult = await _validator.ValidateAsync(request, cancellationToken);
 
@@ -29,6 +30,6 @@ public class CreateLeaveTypeCommandHandler(IMapper mapper,
         LeaveType leaveTypeToCreate = _mapper.Map<LeaveType>(request);
         await _repository.CreateAsync(leaveTypeToCreate);
 
-        return leaveTypeToCreate.Id;
+        return new SuccessResult<int>(leaveTypeToCreate.Id);
     }
 }

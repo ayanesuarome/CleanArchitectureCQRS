@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using CleanArch.Application.Exceptions;
+using CleanArch.Application.Features.LeaveRequests.Shared;
 using CleanArch.Application.Models;
-using CleanArch.Application.Models.Errors;
 using CleanArch.Domain.Entities;
 using CleanArch.Domain.Interfaces.Persistence;
 using FluentValidation;
@@ -31,7 +31,7 @@ public class UpdateLeaveRequestCommandHandler : IRequestHandler<UpdateLeaveReque
 
         if(leaveRequest == null)
         {
-            return Result<LeaveRequest>.Failure(LeaveRequestErrors.NotFound(request.Id));
+            //return Result<LeaveRequest>.Failure(LeaveRequestErrors.NotFound(request.Id));
             // TODO: to remove
             //throw new NotFoundException(nameof(LeaveRequest), request.Id);
         }
@@ -46,6 +46,6 @@ public class UpdateLeaveRequestCommandHandler : IRequestHandler<UpdateLeaveReque
         _mapper.Map(request, leaveRequest);
         await _repository.UpdateAsync(leaveRequest);
 
-        return Result<LeaveRequest>.Success(leaveRequest);
+        return new SuccessResult<LeaveRequest>(leaveRequest);
     }
 }

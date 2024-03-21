@@ -1,7 +1,8 @@
-﻿using MediatR;
+﻿using CleanArch.Application.Models;
+using MediatR;
 
 namespace CleanArch.Application.Features.LeaveAllocations.Commands.DeleteLeaveAllocation;
 
-public record DeleteLeaveAllocationCommand(int Id) : IRequest
+public record DeleteLeaveAllocationCommand(int Id) : IRequest<Result>
 {
 }
