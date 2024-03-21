@@ -5,6 +5,7 @@ using CleanArch.Application.Features.LeaveTypeDetails.Queries.GetLeaveTypesDetai
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
+using CleanArch.Application.Models;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -41,8 +42,8 @@ public class LeaveTypesController(IMediator mediator) : ControllerBase
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<ActionResult> Post([FromBody] CreateLeaveTypeCommand leaveType)
     {
-        int id = await _mediator.Send(leaveType);
-        return CreatedAtAction(nameof(Get), id);
+        Result<int> result = await _mediator.Send(leaveType);
+        return CreatedAtAction(nameof(Get), result.Data);
     }
 
     // PUT api/<v>/<LeaveTypesController>/5

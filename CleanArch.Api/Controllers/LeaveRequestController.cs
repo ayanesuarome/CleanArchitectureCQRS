@@ -1,5 +1,4 @@
 ﻿using CleanArch.Application.Events;
-using CleanArch.Application.Extensions;
 using CleanArch.Application.Features.LeaveRequests.Commands.CancelLeaveRequest;
 using CleanArch.Application.Features.LeaveRequests.Commands.CreateLeaveRequest;
 using CleanArch.Application.Features.LeaveRequests.Commands.DeleteLeaveRequest;
@@ -11,7 +10,6 @@ using CleanArch.Application.Models;
 using CleanArch.Domain.Entities;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -47,10 +45,14 @@ public class LeaveRequestController(IMediator mediator) : ControllerBase
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<ActionResult> Post([FromBody] CreateLeaveRequestCommand model)
     {
-        LeaveRequest leaveRequest = await _mediator.Send(model);
-        await _mediator.Publish(new LeaveRequestEvent(leaveRequest, LeaveRequestAction.Created));
+        Result<LeaveRequest> result = await _mediator.Send(model);
 
-        return CreatedAtAction(nameof(Get), new { leaveRequest.Id });
+        if(result.IsSuccess)
+        {
+            await _mediator.Publish(new LeaveRequestEvent(result.Data, LeaveRequestAction.Created));
+        }
+
+        return CreatedAtAction(nameof(Get), new { result.Data.Id });
     }
 
     // PUT api/<v>/<LeaveRequestController>/5

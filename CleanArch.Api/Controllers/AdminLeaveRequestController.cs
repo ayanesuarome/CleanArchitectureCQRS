@@ -37,15 +37,16 @@ public class AdminLeaveRequestController(IMediator mediator) : BaseAdminControll
     {
         model.Id = id;
         Result<LeaveRequest> result = await _mediator.Send(model);
-        
-        // TODO:
-        //if(result.IsSuccess)
-        //{
-        //    await _mediator.Publish(new LeaveRequestEvent(result.Data, LeaveRequestAction.UpdateApproval));
-        //}
 
-        return result.Match<ActionResult, LeaveRequest>(
-            onSuccess: () => NoContent(),
-            onFailure: error => BadRequest(error));
+        if (result.IsSuccess)
+        {
+            await _mediator.Publish(new LeaveRequestEvent(result.Data, LeaveRequestAction.UpdateApproval));
+        }
+
+        //return result.Match<ActionResult, LeaveRequest>(
+        //    onSuccess: () => NoContent(),
+        //    onFailure: error => BadRequest(error));
+
+        return NoContent();
     }
 }

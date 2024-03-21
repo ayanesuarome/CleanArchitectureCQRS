@@ -1,6 +1,7 @@
 ﻿using CleanArch.Application.Features.LeaveAllocations.Commands.CreateLeaveAllocation;
 using CleanArch.Application.Features.LeaveAllocations.Commands.DeleteLeaveAllocation;
 using CleanArch.Application.Features.LeaveAllocations.Commands.UpdateLeaveAllocation;
+using CleanArch.Application.Models;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -20,9 +21,9 @@ public class AdminLeaveAllocationController(IMediator mediator) : BaseAdminContr
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<ActionResult> Post([FromBody] CreateLeaveAllocationCommand leaveAllocation)
     {
-        int rowsAffected = await _mediator.Send(leaveAllocation);
+        Result<int> rowsAffectedResult = await _mediator.Send(leaveAllocation);
 
-        return rowsAffected > 0 ? Created() : NoContent();
+        return rowsAffectedResult.Data > 0 ? Created() : NoContent();
     }
 
     // PUT api/admin/<v>/<LeaveAllocationController>/5
