@@ -36,7 +36,13 @@ public class LeaveRequestController(IMediator mediator) : ControllerBase
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<LeaveRequestDetailsDto>> Get(int id)
     {
-        return Ok(await _mediator.Send(new GetLeaveRequestDetailsQuery(id)));
+        Result<LeaveRequestDetailsDto> result = await _mediator.Send(new GetLeaveRequestDetailsQuery(id));
+        
+        return result switch
+        {
+            SuccessResult<LeaveRequestDetailsDto> success => Ok(success.Data),
+            NotFoundResult<LeaveRequestDetailsDto> notfound => NotFound(notfound.Error)
+        };
     }
 
     // POST api/<v>/<LeaveRequestController>

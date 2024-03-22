@@ -29,15 +29,23 @@ public abstract class Result
 
 public abstract class Result<T> : Result
 {
-    public T Data { get; }
+    private T _data;
+
+    public T Data {
+        get
+        {
+            if(IsFailure)
+            {
+                throw new Exception($"You cannot access {nameof(Data)} when {nameof(IsFailure)} is true");
+            }
+
+            return _data;
+        }
+        set => _data = value;
+    }
 
     protected Result(T data)
     {
-        if (!IsSuccess)
-        {
-            throw new Exception($"You cannot access {nameof(Data)} when {nameof(IsSuccess)} is false");
-        }
-
         Data = data;
     }
 }

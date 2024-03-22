@@ -1,7 +1,9 @@
-﻿namespace CleanArch.Application.Models.Errors
+﻿namespace CleanArch.Application.Models.Errors;
+
+public class Error(string code, string message)
 {
-    public class Error(string Code, string Message)
-    {
-        public static readonly Error None = new(string.Empty, string.Empty);
-    }
+    public readonly string Code = code;
+    public readonly string Message = message;
+
+    public static readonly Error None = new(string.Empty, string.Empty);
 }
