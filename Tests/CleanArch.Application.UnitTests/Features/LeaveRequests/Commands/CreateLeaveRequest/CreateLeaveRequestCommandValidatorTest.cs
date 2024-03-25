@@ -37,8 +37,11 @@ public class CreateLeaveRequestCommandValidatorTest(CreateLeaveRequestCommandVal
         };
 
         _fixture.repositoryMock
-            .Setup(m => m.GetByIdAsync(It.IsAny<int>()))
+            .Setup(m => m.GetByIdAsync(command.LeaveTypeId))
             .ReturnsAsync(() => null);
+        _fixture.repositoryMock
+            .Setup(m => m.AnyAsync(command.LeaveTypeId, default))
+            .ReturnsAsync(false);
 
         var result = await _fixture.validator.TestValidateAsync(command);
 
@@ -78,8 +81,11 @@ public class CreateLeaveRequestCommandValidatorTest(CreateLeaveRequestCommandVal
         };
 
         _fixture.repositoryMock
-            .Setup(m => m.GetByIdAsync(It.IsAny<int>()))
+            .Setup(m => m.GetByIdAsync(command.LeaveTypeId))
             .ReturnsAsync(new LeaveType());
+        _fixture.repositoryMock
+            .Setup(m => m.AnyAsync(command.LeaveTypeId, default))
+            .ReturnsAsync(true);
 
         var result = await _fixture.validator.TestValidateAsync(command);
 

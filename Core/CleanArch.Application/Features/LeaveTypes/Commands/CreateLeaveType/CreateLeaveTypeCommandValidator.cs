@@ -14,13 +14,13 @@ public class CreateLeaveTypeCommandValidator : AbstractValidator<CreateLeaveType
             .NotEmpty()
                 .WithMessage("{PropertyName} is required")
             .MaximumLength(70)
-                .WithMessage("{PropertyName} must be up to {ComparisonValue} characters")
+                .WithMessage("{PropertyName} must be up to {MaxLength} characters")
             .MustAsync(LeaveTypeUniqueName)
                 .WithMessage("Leave type already exist");
 
         RuleFor(m => m.DefaultDays)
             .InclusiveBetween(1, 100)
-                .WithMessage("{PropertyName} must be between 1 - 100");
+                .WithMessage("{PropertyName} must be between {From} - {To}");
 
         _repository = repository;
     }

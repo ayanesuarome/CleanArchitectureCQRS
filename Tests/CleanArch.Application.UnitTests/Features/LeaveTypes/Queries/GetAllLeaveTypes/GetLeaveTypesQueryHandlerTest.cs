@@ -23,7 +23,7 @@ public class GetLeaveTypesQueryHandlerTest : IDisposable
 
     public GetLeaveTypesQueryHandlerTest()
     {
-        _repositoryMock = MockListTypeRepository.GetLeaveTypeRepositoryMock();
+        _repositoryMock = MockLeaveTypeRepository.GetLeaveTypeRepositoryMock();
         MapperConfiguration mapperConfig = new(cfg => cfg.AddProfile<LeaveTypeProfile>());
         _mapper = mapperConfig.CreateMapper();
 

@@ -1,4 +1,5 @@
 ﻿using CleanArch.Application.Features.LeaveTypes.Commands.UpdateLeaveType;
+using CleanArch.Application.Tests.Features.Mocks;
 using CleanArch.Domain.Interfaces.Persistence;
 using Moq;
 
@@ -11,7 +12,7 @@ public class UpdateLeaveTypeCommandValidatorFixture : IDisposable
 
     public UpdateLeaveTypeCommandValidatorFixture()
     {
-        repositoryMock = new Mock<ILeaveTypeRepository>();
+        repositoryMock = MockLeaveTypeRepository.GetLeaveTypeRepositoryMock();
         validator = new UpdateLeaveTypeCommandValidator(repositoryMock.Object);
     }
 

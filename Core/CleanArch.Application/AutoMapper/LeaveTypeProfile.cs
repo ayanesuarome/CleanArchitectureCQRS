@@ -13,7 +13,9 @@ public class LeaveTypeProfile : Profile
     {
         CreateMap<LeaveTypeDto, LeaveType>()
             .ForMember(dest => dest.DateCreated, opt => opt.Ignore())
+            .ForMember(dest => dest.CreatedBy, opt => opt.Ignore())
             .ForMember(dest => dest.DateModified, opt => opt.Ignore())
+            .ForMember(dest => dest.ModifiedBy, opt => opt.Ignore())
             .ReverseMap();
 
         CreateMap<LeaveType, LeaveTypeDetailsDto>();
@@ -21,11 +23,15 @@ public class LeaveTypeProfile : Profile
         CreateMap<CreateLeaveTypeCommand, LeaveType>()
             .ForMember(dest => dest.Id, opt => opt.Ignore())
             .ForMember(dest => dest.DateCreated, opt => opt.Ignore())
-            .ForMember(dest => dest.DateModified, opt => opt.Ignore());
+            .ForMember(dest => dest.CreatedBy, opt => opt.Ignore())
+            .ForMember(dest => dest.DateModified, opt => opt.Ignore())
+            .ForMember(dest => dest.ModifiedBy, opt => opt.Ignore());
 
         CreateMap<UpdateLeaveTypeCommand, LeaveType>()
             .ForMember(dest => dest.Id, opt => opt.Ignore())
             .ForMember(dest => dest.DateCreated, opt => opt.Ignore())
-            .ForMember(dest => dest.DateModified, opt => opt.Ignore());
+            .ForMember(dest => dest.CreatedBy, opt => opt.Ignore())
+            .ForMember(dest => dest.DateModified, opt => opt.Ignore())
+            .ForMember(dest => dest.ModifiedBy, opt => opt.Ignore());
     }
 }

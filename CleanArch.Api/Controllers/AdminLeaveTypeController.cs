@@ -1,4 +1,5 @@
 ﻿using CleanArch.Application.Features.LeaveTypes.Commands.DeleteLeaveType;
+using CleanArch.Application.Models;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -15,8 +16,13 @@ namespace CleanArch.Api.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult> Delete(int id)
         {
-            await _mediator.Send(new DeleteLeaveTypeCommand(id));
-            return NoContent();
+            Result<Unit> result = await _mediator.Send(new DeleteLeaveTypeCommand(id));
+            
+            return result switch
+            {
+                SuccessResult<Unit> => NoContent(),
+                NotFoundResult<Unit> notFoundResult => NotFound()
+            };
         }
     }
 }

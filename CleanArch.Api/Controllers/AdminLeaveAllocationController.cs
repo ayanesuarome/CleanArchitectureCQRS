@@ -4,6 +4,7 @@ using CleanArch.Application.Features.LeaveAllocations.Commands.UpdateLeaveAlloca
 using CleanArch.Application.Models;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using NotFoundResult = CleanArch.Application.Models.NotFoundResult;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -34,8 +35,14 @@ public class AdminLeaveAllocationController(IMediator mediator) : BaseAdminContr
     public async Task<ActionResult> Put(int id, [FromBody] UpdateLeaveAllocationCommand leaveAllocation)
     {
         leaveAllocation.Id = id;
-        await _mediator.Send(leaveAllocation);
-        return NoContent();
+        Result result = await _mediator.Send(leaveAllocation);
+
+        return result switch
+        {
+            SuccessResult => NoContent(),
+            NotFoundResult notFoundResult => NotFound(notFoundResult.Error),
+            ErrorResult errorResult => BadRequest(errorResult.Errors)
+        };
     }
 
     // DELETE api/admin/<v>/<LeaveAllocationController>/5
@@ -44,7 +51,13 @@ public class AdminLeaveAllocationController(IMediator mediator) : BaseAdminContr
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult> Delete(int id)
     {
-        await _mediator.Send(new DeleteLeaveAllocationCommand(id));
-        return NoContent();
+        Result result = await _mediator.Send(new DeleteLeaveAllocationCommand(id));
+
+        return result switch
+        {
+            SuccessResult => NoContent(),
+            NotFoundResult notFoundResult => NotFound(notFoundResult.Error),
+            ErrorResult errorResult => BadRequest(errorResult.Errors)
+        };
     }
 }

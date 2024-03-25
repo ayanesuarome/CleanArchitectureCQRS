@@ -24,7 +24,8 @@ public class LeaveTypesController(IMediator mediator) : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<ActionResult<List<LeaveTypeDto>>> Get()
     {
-        return Ok(await _mediator.Send(new GetLeaveTypeListQuery()));
+        Result<List<LeaveTypeDto>> result = await _mediator.Send(new GetLeaveTypeListQuery());
+        return Ok(result.Data);
     }
 
     // GET api/<v>/<LeaveTypesController>/5
@@ -33,7 +34,13 @@ public class LeaveTypesController(IMediator mediator) : ControllerBase
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<LeaveTypeDetailsDto>> Get(int id)
     {
-        return Ok(await _mediator.Send(new GetLeaveTypeDetailsQuery(id)));
+        Result<LeaveTypeDetailsDto> result = await _mediator.Send(new GetLeaveTypeDetailsQuery(id));
+
+        return result switch
+        {
+            SuccessResult<LeaveTypeDetailsDto> success => Ok(success.Data),
+            NotFoundResult<LeaveTypeDetailsDto> notfound => NotFound(notfound.Error)
+        };
     }
 
     // POST api/<v>/<LeaveTypesController>
@@ -43,7 +50,12 @@ public class LeaveTypesController(IMediator mediator) : ControllerBase
     public async Task<ActionResult> Post([FromBody] CreateLeaveTypeCommand leaveType)
     {
         Result<int> result = await _mediator.Send(leaveType);
-        return CreatedAtAction(nameof(Get), result.Data);
+
+        return result switch
+        {
+            SuccessResult<int> successResult => CreatedAtAction(nameof(Get), new { successResult.Data }),
+            ErrorResult<int> errorResult => BadRequest(errorResult.Errors)
+        };
     }
 
     // PUT api/<v>/<LeaveTypesController>/5
@@ -54,7 +66,13 @@ public class LeaveTypesController(IMediator mediator) : ControllerBase
     public async Task<ActionResult> Put(int id, [FromBody] UpdateLeaveTypeCommand leaveType)
     {
         leaveType.Id = id;
-        await _mediator.Send(leaveType);
-        return NoContent();
+        Result<Unit> result = await _mediator.Send(leaveType);
+
+        return result switch
+        {
+            SuccessResult<Unit> => NoContent(),
+            NotFoundResult<Unit> notFoundResult => NotFound(notFoundResult.Error),
+            ErrorResult<Unit> errorResult => BadRequest(errorResult.Errors)
+        };
     }
 }

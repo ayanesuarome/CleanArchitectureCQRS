@@ -24,7 +24,9 @@ public class LeaveRequestProfile : Profile
             .ForMember(dest => dest.IsApproved, opt => opt.Ignore())
             .ForMember(dest => dest.IsCancelled, opt => opt.Ignore())
             .ForMember(dest => dest.DateCreated, opt => opt.Ignore())
+            .ForMember(dest => dest.CreatedBy, opt => opt.Ignore())
             .ForMember(dest => dest.DateModified, opt => opt.Ignore())
+            .ForMember(dest => dest.ModifiedBy, opt => opt.Ignore())
             .ForMember(dest => dest.DateRequested, opt => opt.MapFrom(s => DateTimeOffset.Now))
             .ForMember(dest => dest.RequestingEmployeeId, opt => opt.MapFrom<FieldResolverUserId>());
 
@@ -35,7 +37,9 @@ public class LeaveRequestProfile : Profile
             .ForMember(dest => dest.IsApproved, opt => opt.Ignore())
             .ForMember(dest => dest.DateRequested, opt => opt.Ignore())
             .ForMember(dest => dest.DateCreated, opt => opt.Ignore())
+            .ForMember(dest => dest.CreatedBy, opt => opt.Ignore())
             .ForMember(dest => dest.DateModified, opt => opt.Ignore())
+            .ForMember(dest => dest.ModifiedBy, opt => opt.Ignore())
             .ForMember(dest => dest.RequestingEmployeeId, opt => opt.Ignore());
     }
 }

@@ -1,4 +1,5 @@
 ﻿using CleanArch.Application.Features.LeaveTypes.Commands.UpdateLeaveType;
+using CleanArch.Domain.Entities;
 using FluentValidation.TestHelper;
 using Moq;
 
@@ -41,12 +42,13 @@ public class UpdateLeaveTypeCommandValidatorTest(UpdateLeaveTypeCommandValidator
     {
         UpdateLeaveTypeCommand command = new()
         {
+            Id = 1,
             Name = "somename"
         };
 
         _fixture.repositoryMock
-            .Setup(m => m.IsUniqueAsync(It.IsAny<string>(), default))
-        .ReturnsAsync(false);
+            .Setup(m => m.IsUniqueAsync(command.Name, default))
+            .ReturnsAsync(false);
 
         var result = await _fixture.validator.TestValidateAsync(command);
 
@@ -74,13 +76,9 @@ public class UpdateLeaveTypeCommandValidatorTest(UpdateLeaveTypeCommandValidator
         UpdateLeaveTypeCommand command = new()
         {
             Id = 1,
-            Name = "somename",
+            Name = "Test Vacation",
             DefaultDays = 100
         };
-
-        _fixture.repositoryMock
-            .Setup(m => m.IsUniqueAsync(It.IsAny<string>(), default))
-        .ReturnsAsync(true);
 
         var result = await _fixture.validator.TestValidateAsync(command);
 
@@ -94,13 +92,10 @@ public class UpdateLeaveTypeCommandValidatorTest(UpdateLeaveTypeCommandValidator
     {
         UpdateLeaveTypeCommand command = new()
         {
-            Name = "somename",
+            Id = 1,
+            Name = "Test Vacation",
             DefaultDays = defaultDays
         };
-
-        _fixture.repositoryMock
-            .Setup(m => m.IsUniqueAsync(It.IsAny<string>(), default))
-        .ReturnsAsync(true);
 
         var result = await _fixture.validator.TestValidateAsync(command);
 

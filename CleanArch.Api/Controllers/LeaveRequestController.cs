@@ -1,4 +1,5 @@
 ﻿using CleanArch.Application.Events;
+using CleanArch.Application.Extensions;
 using CleanArch.Application.Features.LeaveRequests.Commands.CancelLeaveRequest;
 using CleanArch.Application.Features.LeaveRequests.Commands.CreateLeaveRequest;
 using CleanArch.Application.Features.LeaveRequests.Commands.DeleteLeaveRequest;
@@ -7,10 +8,12 @@ using CleanArch.Application.Features.LeaveRequests.Queries.GetLeaveRequestDetail
 using CleanArch.Application.Features.LeaveRequests.Queries.GetLeaveRequestList;
 using CleanArch.Application.Features.LeaveRequests.Queries.Shared;
 using CleanArch.Application.Models;
+using CleanArch.Application.Models.Errors;
 using CleanArch.Domain.Entities;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using NotFoundResult = CleanArch.Application.Models.NotFoundResult;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -27,7 +30,8 @@ public class LeaveRequestController(IMediator mediator) : ControllerBase
     [HttpGet]
     public async Task<ActionResult<List<LeaveRequestDto>>> Get()
     {
-        return Ok(await _mediator.Send(new GetLeaveRequestListQuery()));
+        Result<List<LeaveRequestDto>> result = await _mediator.Send(new GetLeaveRequestListQuery());
+        return Ok(result.Data);
     }
 
     // GET api/<v>/<LeaveRequestController>/5
@@ -58,7 +62,11 @@ public class LeaveRequestController(IMediator mediator) : ControllerBase
             await _mediator.Publish(new LeaveRequestEvent(result.Data, LeaveRequestAction.Created));
         }
 
-        return CreatedAtAction(nameof(Get), new { result.Data.Id });
+        return result switch
+        {
+            SuccessResult<LeaveRequest> successResult => CreatedAtAction(nameof(Get), new { successResult.Data.Id }),
+            ErrorResult<LeaveRequest> errorResult => BadRequest(errorResult.Errors)
+        };
     }
 
     // PUT api/<v>/<LeaveRequestController>/5
@@ -70,9 +78,18 @@ public class LeaveRequestController(IMediator mediator) : ControllerBase
     {
         model.Id = id;
         Result<LeaveRequest> result = await _mediator.Send(model);
-        await _mediator.Publish(new LeaveRequestEvent(result.Data, LeaveRequestAction.Updated));
+        
+        if(result.IsSuccess)
+        {
+            await _mediator.Publish(new LeaveRequestEvent(result.Data, LeaveRequestAction.Updated));
+        }
 
-        return NoContent();
+        return result switch
+        {
+            SuccessResult<LeaveRequest> => NoContent(),
+            NotFoundResult<LeaveRequest> notFoundResult => NotFound(notFoundResult.Error),
+            ErrorResult<LeaveRequest> errorResult => BadRequest(errorResult.Errors)
+        };
     }
 
     // DELETE api/<v>/<LeaveRequestController>/5
@@ -81,8 +98,13 @@ public class LeaveRequestController(IMediator mediator) : ControllerBase
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult> Delete(int id)
     {
-        await _mediator.Send(new DeleteLeaveRequestCommand(id));
-        return NoContent();
+        Result result = await _mediator.Send(new DeleteLeaveRequestCommand(id));
+
+        return result switch
+        {
+            SuccessResult => NoContent(),
+            NotFoundResult notFoundResult => NotFound(notFoundResult.Error)
+        };
     }
 
     // PUT api/<v>/<LeaveRequestController>/5/CancelRequest
@@ -97,8 +119,8 @@ public class LeaveRequestController(IMediator mediator) : ControllerBase
 
         return result switch
         {
-            SuccessResult<LeaveRequest> successResult => NoContent(),
-            NotFoundResult<LeaveRequest> notFoundResult => NotFound(),
+            SuccessResult<LeaveRequest> => NoContent(),
+            NotFoundResult<LeaveRequest> notFoundResult => NotFound(notFoundResult.Error),
             ErrorResult<LeaveRequest> errorResult => BadRequest(errorResult.Errors)
         };
     }

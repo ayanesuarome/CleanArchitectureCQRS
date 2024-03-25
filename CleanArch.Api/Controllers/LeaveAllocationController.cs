@@ -1,5 +1,6 @@
 ﻿using CleanArch.Application.Features.LeaveAllocations.Queries.GetLeaveAllocationDetails;
 using CleanArch.Application.Features.LeaveAllocations.Queries.GetLeaveAllocationList;
+using CleanArch.Application.Models;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -19,7 +20,9 @@ public class LeaveAllocationController(IMediator mediator) : ControllerBase
     [HttpGet]
     public async Task<ActionResult<List<LeaveAllocationDto>>> Get()
     {
-        return Ok(await _mediator.Send(new GetLeaveAllocationListQuery()));
+        Result<List<LeaveAllocationDto>> result = await _mediator.Send(new GetLeaveAllocationListQuery());
+        
+        return Ok(result.Data);
     }
 
     // GET api/<v>/<LeaveAllocationController>/5
@@ -28,6 +31,12 @@ public class LeaveAllocationController(IMediator mediator) : ControllerBase
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<LeaveAllocationDetailsDto>> Get(int id)
     {
-        return Ok(await _mediator.Send(new GetLeaveAllocationDetailsQuery(id)));
+        Result<LeaveAllocationDetailsDto> result = await _mediator.Send(new GetLeaveAllocationDetailsQuery(id));
+        
+        return result switch
+        {
+            SuccessResult<LeaveAllocationDetailsDto> successResult => Ok(successResult.Data),
+            NotFoundResult<LeaveAllocationDetailsDto> notFoundResult => NotFound(notFoundResult.Error)
+        };
     }
 }

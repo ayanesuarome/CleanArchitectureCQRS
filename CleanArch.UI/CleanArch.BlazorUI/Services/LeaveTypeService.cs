@@ -55,7 +55,7 @@ public class LeaveTypeService(IClient client, IMapper mapper) : BaseHttpService(
     {
         try
         {
-            await _client.AdminLeaveTypeAsync(id);
+            await _client.AdminLeaveTypeAsync(50);
             return new Response<Guid>();
         }
         catch(ApiException ex)

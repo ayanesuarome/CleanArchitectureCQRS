@@ -19,13 +19,13 @@ public class UpdateLeaveTypeCommandValidator : AbstractValidator<UpdateLeaveType
         RuleFor(m => m.Name)
             .Cascade(CascadeMode.Stop)
             .MaximumLength(70)
-                .WithMessage("{PropertyName} must be up to 70 characters")
+                .WithMessage("{PropertyName} must be up to {MaxLength} characters")
             .MustAsync(LeaveTypeUniqueName)
                 .WithMessage("Leave type already exist");
 
         RuleFor(m => m.DefaultDays)
             .InclusiveBetween(1, 100)
-                .WithMessage("{PropertyName} must be between 1 - 100");
+                .WithMessage("{PropertyName} must be between {From} - {To}");
     }
 
     private async Task<bool> LeaveTypeUniqueName(UpdateLeaveTypeCommand command, string name, CancellationToken cancellation)

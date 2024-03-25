@@ -4,7 +4,7 @@ using Moq;
 
 namespace CleanArch.Application.Tests.Features.Mocks;
 
-public static class MockListTypeRepository
+public static class MockLeaveTypeRepository
 {
     public static Mock<ILeaveTypeRepository> GetLeaveTypeRepositoryMock()
     {
@@ -35,6 +35,10 @@ public static class MockListTypeRepository
         repositoryMock
             .Setup(m => m.GetAsync())
             .ReturnsAsync(leaveTypes);
+
+        repositoryMock
+            .Setup(m => m.GetByIdAsync(It.IsAny<int>()))
+            .ReturnsAsync(leaveTypes[0]);
 
         repositoryMock
             .Setup(m => m.CreateAsync(It.IsAny<LeaveType>()))

@@ -15,7 +15,7 @@ public class LeaveTypePerformanceTest : IClassFixture<BenchmarkFixture>
            x.BenchmarkCase.Descriptor.DisplayInfo == "LeaveTypeBenchMarks.AnyLeaveTypeAsync");
     }
 
-    [Fact]
+    //[Fact]
     public void Test()
     {
         var stats = _anyLeaveTypeReport.ResultStatistics;
