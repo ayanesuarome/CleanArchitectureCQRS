@@ -2,8 +2,8 @@
 
 public record EmailTemplateIds
 {
-    public string LeaveRequestApproval { get; set; } = null!;
-    public string LeaveRequestCancelation { get; set; } = null!;
-    public string LeaveRequestCreate { get; set; } = null!;
-    public string LeaveRequestUpdate { get; set; } = null!;
+    public string LeaveRequestApproval { get; init; } = null!;
+    public string LeaveRequestCancelation { get; init; } = null!;
+    public string LeaveRequestCreate { get; init; } = null!;
+    public string LeaveRequestUpdate { get; init; } = null!;
 }
