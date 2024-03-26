@@ -1,5 +1,6 @@
 ﻿using CleanArch.Application.Interfaces.Identity;
 using CleanArch.Application.Models.Identity;
+using CleanArch.Identity.ConfigureOptions;
 using CleanArch.Identity.DatabaseContext;
 using CleanArch.Identity.Interfaces;
 using CleanArch.Identity.Models;
@@ -34,7 +35,7 @@ public static class IdentityServiceRegistration
         services.AddTransient<IUserService, UserService>();
         services.AddTransient<IJwtTokenGenerator, JwtTokenGenerator>();
 
-        services.Configure<JwtSettings>(configuration.GetSection(nameof(JwtSettings)));
+        services.ConfigureOptions<JwtSettingSetup>();
         IServiceProvider serviceProvider = services.BuildServiceProvider();
 
         JwtSettings jwtSettings = serviceProvider
