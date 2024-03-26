@@ -40,7 +40,7 @@ public class AdminLeaveAllocationController(IMediator mediator) : BaseAdminContr
         return result switch
         {
             SuccessResult => NoContent(),
-            NotFoundResult notFoundResult => NotFound(notFoundResult.Error),
+            NotFoundResult => NotFound(),
             ErrorResult errorResult => BadRequest(errorResult.Errors)
         };
     }
@@ -56,7 +56,7 @@ public class AdminLeaveAllocationController(IMediator mediator) : BaseAdminContr
         return result switch
         {
             SuccessResult => NoContent(),
-            NotFoundResult notFoundResult => NotFound(notFoundResult.Error),
+            NotFoundResult => NotFound(),
             ErrorResult errorResult => BadRequest(errorResult.Errors)
         };
     }

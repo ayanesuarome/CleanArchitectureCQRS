@@ -36,7 +36,7 @@ public class LeaveAllocationController(IMediator mediator) : ControllerBase
         return result switch
         {
             SuccessResult<LeaveAllocationDetailsDto> successResult => Ok(successResult.Data),
-            NotFoundResult<LeaveAllocationDetailsDto> notFoundResult => NotFound(notFoundResult.Error)
+            NotFoundResult<LeaveAllocationDetailsDto> => NotFound()
         };
     }
 }

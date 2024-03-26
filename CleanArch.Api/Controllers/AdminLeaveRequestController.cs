@@ -45,12 +45,8 @@ public class AdminLeaveRequestController(IMediator mediator) : BaseAdminControll
         return result switch
         {
             SuccessResult<LeaveRequest> => NoContent(),
-            NotFoundResult<LeaveRequest> notFoundResult => NotFound(notFoundResult.Error),
+            NotFoundResult<LeaveRequest> => NotFound(),
             ErrorResult<LeaveRequest> errorResult => BadRequest(errorResult.Errors)
         };
-
-        //return result.Match<ActionResult, LeaveRequest>(
-        //    onSuccess: () => NoContent(),
-        //    onFailure: error => BadRequest(error));
     }
 }

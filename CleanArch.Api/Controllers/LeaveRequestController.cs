@@ -45,7 +45,7 @@ public class LeaveRequestController(IMediator mediator) : ControllerBase
         return result switch
         {
             SuccessResult<LeaveRequestDetailsDto> success => Ok(success.Data),
-            NotFoundResult<LeaveRequestDetailsDto> notfound => NotFound(notfound.Error)
+            NotFoundResult<LeaveRequestDetailsDto> => NotFound()
         };
     }
 
@@ -87,7 +87,7 @@ public class LeaveRequestController(IMediator mediator) : ControllerBase
         return result switch
         {
             SuccessResult<LeaveRequest> => NoContent(),
-            NotFoundResult<LeaveRequest> notFoundResult => NotFound(notFoundResult.Error),
+            NotFoundResult<LeaveRequest> => NotFound(),
             ErrorResult<LeaveRequest> errorResult => BadRequest(errorResult.Errors)
         };
     }
@@ -103,7 +103,7 @@ public class LeaveRequestController(IMediator mediator) : ControllerBase
         return result switch
         {
             SuccessResult => NoContent(),
-            NotFoundResult notFoundResult => NotFound(notFoundResult.Error)
+            NotFoundResult => NotFound()
         };
     }
 
@@ -120,7 +120,7 @@ public class LeaveRequestController(IMediator mediator) : ControllerBase
         return result switch
         {
             SuccessResult<LeaveRequest> => NoContent(),
-            NotFoundResult<LeaveRequest> notFoundResult => NotFound(notFoundResult.Error),
+            NotFoundResult<LeaveRequest> => NotFound(),
             ErrorResult<LeaveRequest> errorResult => BadRequest(errorResult.Errors)
         };
     }

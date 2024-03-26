@@ -39,7 +39,7 @@ public class LeaveTypesController(IMediator mediator) : ControllerBase
         return result switch
         {
             SuccessResult<LeaveTypeDetailsDto> success => Ok(success.Data),
-            NotFoundResult<LeaveTypeDetailsDto> notfound => NotFound(notfound.Error)
+            NotFoundResult<LeaveTypeDetailsDto> => NotFound()
         };
     }
 
@@ -71,7 +71,7 @@ public class LeaveTypesController(IMediator mediator) : ControllerBase
         return result switch
         {
             SuccessResult<Unit> => NoContent(),
-            NotFoundResult<Unit> notFoundResult => NotFound(notFoundResult.Error),
+            NotFoundResult<Unit> => NotFound(),
             ErrorResult<Unit> errorResult => BadRequest(errorResult.Errors)
         };
     }
