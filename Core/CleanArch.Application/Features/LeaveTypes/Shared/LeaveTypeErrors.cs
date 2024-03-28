@@ -5,7 +5,7 @@ namespace CleanArch.Application.Features.LeaveTypes.Shared;
 
 public static class LeaveTypeErrors
 {
-    public static Error NotFound(int id) => new Error("LeaveType.NotFound", $"{nameof(LeaveType)} with Id '{id}' not found");
+    public static Error NotFound(int id) => new Error($"{nameof(LeaveType)}.NotFound", $"{nameof(LeaveType)} with Id '{id}' not found");
 
     public static Error InvalidLeaveType(IDictionary<string, string[]> errors)
     {
