@@ -1,6 +1,4 @@
 ﻿using AutoMapper;
-using CleanArch.Application.Exceptions;
-using CleanArch.Application.Extensions;
 using CleanArch.Application.Features.LeaveRequests.Shared;
 using CleanArch.Application.Interfaces.Identity;
 using CleanArch.Application.ResultPattern;
@@ -49,17 +47,12 @@ public class CreateLeaveRequestCommandHandler : IRequestHandler<CreateLeaveReque
         // if allocations aren't enough, return validation error
         if (leaveAllocation == null)
         {
-            validationResult.AddError(
-                nameof(request.LeaveTypeId),
-                "You do not have any allocation for this leave type");
-
-            throw new BadRequestException($"Invalid {nameof(LeaveRequest)}", validationResult);
+            return new FailureResult<LeaveRequest>(LeaveRequestErrors.NotEnoughDays());
         }
 
         if(!leaveAllocation.HasEnoughDays(request.StartDate, request.EndDate))
         {
-            validationResult.AddError(nameof(request.EndDate), "You do not have enough days for this request");
-            throw new BadRequestException($"Invalid {nameof(LeaveRequest)}", validationResult);
+            return new FailureResult<LeaveRequest>(LeaveRequestErrors.NoAllocationsForLeaveType(request.LeaveTypeId));
         }
 
         LeaveRequest leaveRequest = _mapper.Map<LeaveRequest>(request);
