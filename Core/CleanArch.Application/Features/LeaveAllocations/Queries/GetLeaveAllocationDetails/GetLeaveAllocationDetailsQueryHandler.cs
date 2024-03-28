@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using CleanArch.Application.Features.LeaveAllocations.Shared;
-using CleanArch.Application.Models;
+using CleanArch.Application.ResultPattern;
 using CleanArch.Domain.Entities;
 using CleanArch.Domain.Interfaces.Persistence;
 using MediatR;

@@ -1,6 +1,6 @@
 ﻿using CleanArch.Application.Features.LeaveAllocations.Queries.GetLeaveAllocationDetails;
 using CleanArch.Application.Features.LeaveAllocations.Queries.GetLeaveAllocationList;
-using CleanArch.Application.Models;
+using CleanArch.Application.ResultPattern;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -21,7 +21,6 @@ public class LeaveAllocationController(IMediator mediator) : ControllerBase
     public async Task<ActionResult<List<LeaveAllocationDto>>> Get()
     {
         Result<List<LeaveAllocationDto>> result = await _mediator.Send(new GetLeaveAllocationListQuery());
-        
         return Ok(result.Data);
     }
 

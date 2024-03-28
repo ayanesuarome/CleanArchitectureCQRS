@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
-using CleanArch.Application.Exceptions;
 using CleanArch.Application.Features.LeaveTypes.Shared;
-using CleanArch.Application.Models;
+using CleanArch.Application.ResultPattern;
 using CleanArch.Domain.Entities;
 using CleanArch.Domain.Interfaces.Persistence;
 using FluentValidation;
@@ -33,7 +32,7 @@ public class UpdateLeaveTypeCommandHandler(
 
         if(!validationResult.IsValid)
         {
-            throw new BadRequestException($"Invalid {nameof(LeaveType)}", validationResult);
+            return new FailureResult<Unit>(LeaveTypeErrors.InvalidLeaveType(validationResult.ToDictionary()));
         }
 
         _mapper.Map(request, leaveType);

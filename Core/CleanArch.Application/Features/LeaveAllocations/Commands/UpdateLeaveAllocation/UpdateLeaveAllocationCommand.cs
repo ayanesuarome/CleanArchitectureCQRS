@@ -1,5 +1,5 @@
 ﻿using CleanArch.Application.Features.LeaveAllocations.Shared;
-using CleanArch.Application.Models;
+using CleanArch.Application.ResultPattern;
 using MediatR;
 
 namespace CleanArch.Application.Features.LeaveAllocations.Commands.UpdateLeaveAllocation;

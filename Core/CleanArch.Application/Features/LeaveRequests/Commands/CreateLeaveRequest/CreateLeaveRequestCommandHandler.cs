@@ -1,8 +1,9 @@
 ﻿using AutoMapper;
 using CleanArch.Application.Exceptions;
 using CleanArch.Application.Extensions;
+using CleanArch.Application.Features.LeaveRequests.Shared;
 using CleanArch.Application.Interfaces.Identity;
-using CleanArch.Application.Models;
+using CleanArch.Application.ResultPattern;
 using CleanArch.Domain.Entities;
 using CleanArch.Domain.Interfaces.Persistence;
 using FluentValidation;
@@ -38,8 +39,7 @@ public class CreateLeaveRequestCommandHandler : IRequestHandler<CreateLeaveReque
 
         if(!validationResult.IsValid)
         {
-            //return new BadRequestResult<LeaveRequest>($"Invalid {nameof(LeaveRequest)}", validationResult.Errors.Select(x => new  x.PropertyName, x.Erro));
-            throw new BadRequestException($"Invalid {nameof(LeaveRequest)}", validationResult);
+            return new FailureResult<LeaveRequest>(LeaveRequestErrors.InvalidLeaveRequest(validationResult.ToDictionary()));
         }
 
         // check on employee's allocation

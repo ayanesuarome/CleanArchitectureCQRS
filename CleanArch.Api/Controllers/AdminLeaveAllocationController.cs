@@ -1,10 +1,9 @@
 ﻿using CleanArch.Application.Features.LeaveAllocations.Commands.CreateLeaveAllocation;
 using CleanArch.Application.Features.LeaveAllocations.Commands.DeleteLeaveAllocation;
 using CleanArch.Application.Features.LeaveAllocations.Commands.UpdateLeaveAllocation;
-using CleanArch.Application.Models;
+using CleanArch.Application.ResultPattern;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using NotFoundResult = CleanArch.Application.Models.NotFoundResult;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -24,7 +23,14 @@ public class AdminLeaveAllocationController(IMediator mediator) : BaseAdminContr
     {
         Result<int> rowsAffectedResult = await _mediator.Send(leaveAllocation);
 
-        return rowsAffectedResult.Data > 0 ? Created() : NoContent();
+        if(rowsAffectedResult.IsFailure)
+        {
+            return BadRequest(rowsAffectedResult.Error);
+        }
+
+        return rowsAffectedResult.Data > 0 ?
+            Created() :
+            NoContent();
     }
 
     // PUT api/admin/<v>/<LeaveAllocationController>/5
@@ -40,8 +46,8 @@ public class AdminLeaveAllocationController(IMediator mediator) : BaseAdminContr
         return result switch
         {
             SuccessResult => NoContent(),
-            NotFoundResult => NotFound(),
-            ErrorResult errorResult => BadRequest(errorResult.Errors)
+            Application.ResultPattern.NotFoundResult => NotFound(),
+            FailureResult errorResult => BadRequest(errorResult.Error)
         };
     }
 
@@ -56,8 +62,8 @@ public class AdminLeaveAllocationController(IMediator mediator) : BaseAdminContr
         return result switch
         {
             SuccessResult => NoContent(),
-            NotFoundResult => NotFound(),
-            ErrorResult errorResult => BadRequest(errorResult.Errors)
+            Application.ResultPattern.NotFoundResult => NotFound(),
+            FailureResult errorResult => BadRequest(errorResult.Error)
         };
     }
 }

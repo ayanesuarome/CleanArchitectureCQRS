@@ -1,5 +1,4 @@
 ﻿using CleanArch.Application.Models;
-using CleanArch.Application.Models.Errors;
 
 namespace CleanArch.Application.Extensions;
 

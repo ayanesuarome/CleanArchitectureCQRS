@@ -1,7 +1,5 @@
-﻿using CleanArch.Application.Exceptions;
-using CleanArch.Application.Extensions;
-using CleanArch.Application.Features.LeaveRequests.Shared;
-using CleanArch.Application.Models;
+﻿using CleanArch.Application.Features.LeaveRequests.Shared;
+using CleanArch.Application.ResultPattern;
 using CleanArch.Domain.Entities;
 using CleanArch.Domain.Interfaces.Persistence;
 using FluentValidation;
@@ -32,27 +30,19 @@ public class ChangeLeaveRequestApprovalCommandHandler : IRequestHandler<ChangeLe
 
         if (leaveRequest == null)
         {
-            // TODO: remove throw
             return new NotFoundResult<LeaveRequest>(LeaveRequestErrors.NotFound(request.Id));
-            //throw new NotFoundException(nameof(LeaveRequest), request.Id);
         }
 
         ValidationResult validationResult = await _validator.ValidateAsync(request, cancellationToken);
 
         if(!validationResult.IsValid)
         {
-            // TODO: to remove throw
-            //return Result<LeaveRequest>.Failure(LeaveRequestErrors.InvalidApprovalRequest(validationResult));
-            throw new BadRequestException("Invalid approval request", validationResult);
+            return new FailureResult<LeaveRequest>(LeaveRequestErrors.InvalidApprovalRequest(validationResult.ToDictionary()));
         }
 
         if(leaveRequest.IsCancelled)
         {
-            validationResult.AddError(
-                nameof(leaveRequest.IsCancelled),
-                "This leave request has been cancelled and its approval state cannot be updated");
-
-            throw new BadRequestException($"Invalid {nameof(LeaveRequest)}", validationResult);
+            return new FailureResult<LeaveRequest>(LeaveRequestErrors.InvalidApprovalStateIsCanceled());
         }
         
         leaveRequest.IsApproved = request.Approved;
@@ -68,8 +58,7 @@ public class ChangeLeaveRequestApprovalCommandHandler : IRequestHandler<ChangeLe
 
             if(!canUpdate)
             {
-                // TODO:
-                //return Result<LeaveRequest>.Failure(new Error("as","as"));
+                return new FailureResult<LeaveRequest>(LeaveRequestErrors.InvalidNumberOfDays(leaveRequest.GetDaysRequested()));
             }
 
             await _leaveAllocationRepository.UpdateAsync(allocation);

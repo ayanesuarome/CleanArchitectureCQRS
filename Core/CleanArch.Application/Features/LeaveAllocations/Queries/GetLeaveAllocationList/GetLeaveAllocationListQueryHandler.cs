@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using CleanArch.Application.Interfaces.Identity;
-using CleanArch.Application.Models;
+using CleanArch.Application.ResultPattern;
 using CleanArch.Domain.Entities;
 using CleanArch.Domain.Interfaces.Persistence;
 using MediatR;
@@ -20,6 +20,6 @@ public class GetLeaveAllocationListQueryHandler(IMapper mapper, ILeaveAllocation
         List<LeaveAllocation> leaveAllocations = await _repository.GetLeaveAllocationsWithDetails(userId);
         List<LeaveAllocationDto> leaveAllocationDtos = _mapper.Map<List<LeaveAllocationDto>>(leaveAllocations);
 
-        return new SuccessResult<List<LeaveAllocationDto>>(leaveAllocationDtos);
+        return Result.Success<List<LeaveAllocationDto>>(leaveAllocationDtos);
     }
 }

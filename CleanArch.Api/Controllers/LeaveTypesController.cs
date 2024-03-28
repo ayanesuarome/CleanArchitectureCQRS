@@ -5,7 +5,7 @@ using CleanArch.Application.Features.LeaveTypeDetails.Queries.GetLeaveTypesDetai
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
-using CleanArch.Application.Models;
+using CleanArch.Application.ResultPattern;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -54,7 +54,7 @@ public class LeaveTypesController(IMediator mediator) : ControllerBase
         return result switch
         {
             SuccessResult<int> successResult => CreatedAtAction(nameof(Get), new { successResult.Data }),
-            ErrorResult<int> errorResult => BadRequest(errorResult.Errors)
+            FailureResult<int> errorResult => BadRequest(errorResult.Error)
         };
     }
 
@@ -72,7 +72,7 @@ public class LeaveTypesController(IMediator mediator) : ControllerBase
         {
             SuccessResult<Unit> => NoContent(),
             NotFoundResult<Unit> => NotFound(),
-            ErrorResult<Unit> errorResult => BadRequest(errorResult.Errors)
+            FailureResult<Unit> errorResult => BadRequest(errorResult.Error)
         };
     }
 }

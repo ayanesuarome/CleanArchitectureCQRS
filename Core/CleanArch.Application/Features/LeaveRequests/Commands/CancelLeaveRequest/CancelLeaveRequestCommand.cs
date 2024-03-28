@@ -1,4 +1,4 @@
-﻿using CleanArch.Application.Models;
+﻿using CleanArch.Application.ResultPattern;
 using CleanArch.Domain.Entities;
 using MediatR;
 

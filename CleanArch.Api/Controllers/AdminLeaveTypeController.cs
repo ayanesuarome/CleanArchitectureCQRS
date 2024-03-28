@@ -1,5 +1,5 @@
 ﻿using CleanArch.Application.Features.LeaveTypes.Commands.DeleteLeaveType;
-using CleanArch.Application.Models;
+using CleanArch.Application.ResultPattern;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 

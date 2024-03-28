@@ -1,5 +1,5 @@
 ﻿using CleanArch.Application.Features.LeaveRequests.Shared;
-using CleanArch.Application.Models;
+using CleanArch.Application.ResultPattern;
 using CleanArch.Domain.Entities;
 using MediatR;
 

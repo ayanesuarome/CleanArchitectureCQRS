@@ -1,4 +1,4 @@
-﻿using CleanArch.Application.Models;
+﻿using CleanArch.Application.ResultPattern;
 using MediatR;
 
 namespace CleanArch.Application.Features.LeaveTypes.Commands.UpdateLeaveType;

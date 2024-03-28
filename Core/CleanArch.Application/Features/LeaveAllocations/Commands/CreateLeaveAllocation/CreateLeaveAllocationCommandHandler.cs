@@ -1,12 +1,12 @@
-﻿using CleanArch.Application.Exceptions;
-using CleanArch.Application.Interfaces.Identity;
-using CleanArch.Application.Models;
+﻿using CleanArch.Application.Interfaces.Identity;
+using CleanArch.Application.ResultPattern;
 using CleanArch.Application.Models.Identity;
 using CleanArch.Domain.Entities;
 using CleanArch.Domain.Interfaces.Persistence;
 using FluentValidation;
 using FluentValidation.Results;
 using MediatR;
+using CleanArch.Application.Features.LeaveAllocations.Shared;
 
 namespace CleanArch.Application.Features.LeaveAllocations.Commands.CreateLeaveAllocation;
 
@@ -35,7 +35,7 @@ public class CreateLeaveAllocationCommandHandler : IRequestHandler<CreateLeaveAl
 
         if(!validationResult.IsValid)
         {
-            throw new BadRequestException($"Invalid {nameof(LeaveAllocation)}", validationResult);
+            return Result.Failure<int>(LeaveAllocationErrors.InvalidLeaveAllocation(validationResult.ToDictionary()));
         }
 
         // get leave types for allocations
@@ -76,6 +76,6 @@ public class CreateLeaveAllocationCommandHandler : IRequestHandler<CreateLeaveAl
             rowsAffected = await _allocationRepository.CreateListAsync(allocations);
         }
 
-        return new SuccessResult<int>(rowsAffected);
+        return Result.Success<int>(rowsAffected);
     }
 }

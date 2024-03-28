@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using CleanArch.Application.Features.LeaveTypeDetails.Queries.GetLeaveTypesDetails;
 using CleanArch.Application.Features.LeaveTypes.Shared;
-using CleanArch.Application.Models;
+using CleanArch.Application.ResultPattern;
 using CleanArch.Domain.Entities;
 using CleanArch.Domain.Interfaces.Persistence;
 using MediatR;

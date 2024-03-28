@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
-using CleanArch.Application.Exceptions;
 using CleanArch.Application.Features.LeaveRequests.Shared;
-using CleanArch.Application.Models;
+using CleanArch.Application.ResultPattern;
 using CleanArch.Domain.Entities;
 using CleanArch.Domain.Interfaces.Persistence;
 using FluentValidation;
@@ -31,16 +30,14 @@ public class UpdateLeaveRequestCommandHandler : IRequestHandler<UpdateLeaveReque
 
         if(leaveRequest == null)
         {
-            //return Result<LeaveRequest>.Failure(LeaveRequestErrors.NotFound(request.Id));
-            // TODO: to remove
-            //throw new NotFoundException(nameof(LeaveRequest), request.Id);
+            return new NotFoundResult<LeaveRequest>(LeaveRequestErrors.NotFound(request.Id));
         }
 
         ValidationResult validationResult = await _validator.ValidateAsync(request, cancellationToken);
 
         if(!validationResult.IsValid)
         {
-            throw new BadRequestException($"Invalid {nameof(LeaveRequest)}", validationResult);
+            return new FailureResult<LeaveRequest>(LeaveRequestErrors.InvalidLeaveRequest(validationResult.ToDictionary()));
         }
 
         _mapper.Map(request, leaveRequest);

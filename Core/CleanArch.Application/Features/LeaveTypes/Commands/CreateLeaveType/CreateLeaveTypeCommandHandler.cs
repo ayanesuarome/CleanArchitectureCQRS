@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using CleanArch.Application.Exceptions;
-using CleanArch.Application.Models;
+using CleanArch.Application.Features.LeaveTypes.Shared;
+using CleanArch.Application.ResultPattern;
 using CleanArch.Domain.Entities;
 using CleanArch.Domain.Interfaces.Persistence;
 using FluentValidation;
@@ -24,7 +24,7 @@ public class CreateLeaveTypeCommandHandler(IMapper mapper,
 
         if(!validationResult.IsValid)
         {
-            throw new BadRequestException($"Invalid {nameof(LeaveType)}", validationResult);
+            return new FailureResult<int>(LeaveTypeErrors.InvalidLeaveType(validationResult.ToDictionary()));
         }
 
         LeaveType leaveTypeToCreate = _mapper.Map<LeaveType>(request);

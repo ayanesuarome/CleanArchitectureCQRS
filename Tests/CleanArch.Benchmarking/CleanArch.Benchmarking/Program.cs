@@ -1,5 +1,4 @@
-﻿// See https://aka.ms/new-console-template for more information
-using BenchmarkDotNet.Configs;
+﻿using BenchmarkDotNet.Configs;
 using BenchmarkDotNet.Order;
 using BenchmarkDotNet.Reports;
 using BenchmarkDotNet.Running;
@@ -12,4 +11,5 @@ ManualConfig config = new()
     Options = ConfigOptions.Default
 };
 
-BenchmarkRunner.Run<LeaveTypeBenchMarks>();
+//BenchmarkRunner.Run<LeaveTypeBenchMarks>();
+BenchmarkRunner.Run<StringBenchMarks>();

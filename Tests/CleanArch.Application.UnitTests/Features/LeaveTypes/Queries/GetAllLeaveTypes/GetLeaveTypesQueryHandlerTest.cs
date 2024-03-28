@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using CleanArch.Application.AutoMapper;
 using CleanArch.Application.Features.LeaveTypes.Queries.GetLeaveTypeList;
-using CleanArch.Application.Models;
+using CleanArch.Application.ResultPattern;
 using CleanArch.Application.Tests.Features.Mocks;
 using CleanArch.Domain.Interfaces.Persistence;
 using Moq;

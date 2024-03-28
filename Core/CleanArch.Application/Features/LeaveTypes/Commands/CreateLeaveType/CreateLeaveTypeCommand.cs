@@ -1,10 +1,8 @@
-﻿using CleanArch.Application.Models;
+﻿using CleanArch.Application.ResultPattern;
 using MediatR;
 
 namespace CleanArch.Application.Features.LeaveTypes.Commands.CreateLeaveType;
 
-public record CreateLeaveTypeCommand : IRequest<Result<int>>
+public record CreateLeaveTypeCommand(string Name, int DefaultDays) : IRequest<Result<int>>
 {
-    public string Name { get; set; } = null!;
-    public int DefaultDays { get; set; }
 }

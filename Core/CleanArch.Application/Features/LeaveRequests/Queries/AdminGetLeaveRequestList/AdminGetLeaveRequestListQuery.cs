@@ -1,5 +1,5 @@
 ﻿using CleanArch.Application.Features.LeaveRequests.Queries.Shared;
-using CleanArch.Application.Models;
+using CleanArch.Application.ResultPattern;
 using MediatR;
 
 namespace CleanArch.Application.Features.LeaveRequests.Queries.AdminGetLeaveRequestList;

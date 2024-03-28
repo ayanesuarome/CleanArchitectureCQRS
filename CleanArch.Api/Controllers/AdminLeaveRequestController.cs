@@ -1,13 +1,11 @@
 ﻿using CleanArch.Application.Events;
-using CleanArch.Application.Extensions;
 using CleanArch.Application.Features.LeaveRequests.Commands.ChangeLeaveRequestApproval;
 using CleanArch.Application.Features.LeaveRequests.Queries.AdminGetLeaveRequestList;
 using CleanArch.Application.Features.LeaveRequests.Queries.Shared;
-using CleanArch.Application.Models;
+using CleanArch.Application.ResultPattern;
 using CleanArch.Domain.Entities;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -46,7 +44,7 @@ public class AdminLeaveRequestController(IMediator mediator) : BaseAdminControll
         {
             SuccessResult<LeaveRequest> => NoContent(),
             NotFoundResult<LeaveRequest> => NotFound(),
-            ErrorResult<LeaveRequest> errorResult => BadRequest(errorResult.Errors)
+            FailureResult<LeaveRequest> errorResult => BadRequest(errorResult.Error)
         };
     }
 }

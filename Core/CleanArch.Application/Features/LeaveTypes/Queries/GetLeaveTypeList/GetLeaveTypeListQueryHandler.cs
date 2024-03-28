@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using CleanArch.Application.Models;
+using CleanArch.Application.ResultPattern;
 using CleanArch.Domain.Entities;
 using CleanArch.Domain.Interfaces.Persistence;
 using MediatR;
@@ -17,6 +17,6 @@ public class GetLeaveTypeListQueryHandler(IMapper mapper, ILeaveTypeRepository r
         IReadOnlyList<LeaveType> leaveTypes = await _repository.GetAsync();
         List<LeaveTypeDto> leaveTypeDtos = _mapper.Map<List<LeaveTypeDto>>(leaveTypes);
 
-        return new SuccessResult<List<LeaveTypeDto>>(leaveTypeDtos);
+        return Result.Success<List<LeaveTypeDto>>(leaveTypeDtos);
     }
 }

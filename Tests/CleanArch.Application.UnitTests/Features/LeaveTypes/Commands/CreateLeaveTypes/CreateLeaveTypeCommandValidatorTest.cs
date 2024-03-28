@@ -16,10 +16,7 @@ public class CreateLeaveTypeCommandValidatorTest(CreateLeaveTypeCommandValidator
     [ClassData(typeof(InvalidStringClassData))]
     public async Task TestValidatorShouldFailWithNullOrEmptyName(string name)
     {
-        CreateLeaveTypeCommand command = new()
-        {
-            Name = name
-        };
+        CreateLeaveTypeCommand command = new(name, 1);
 
         var result = await _fixture.validator.TestValidateAsync(command);
 
@@ -30,10 +27,7 @@ public class CreateLeaveTypeCommandValidatorTest(CreateLeaveTypeCommandValidator
     [Fact]
     public async Task TestValidatorShouldFailWithNameLengthGreaterThan70()
     {
-        CreateLeaveTypeCommand command = new()
-        {
-            Name = "somenamesomenamesomenamesomenamesomenamesomenamesomenamesomenamesomename"
-        };
+        CreateLeaveTypeCommand command = new("somenamesomenamesomenamesomenamesomenamesomenamesomenamesomenamesomename", 1);
 
         var result = await _fixture.validator.TestValidateAsync(command);
 
@@ -44,10 +38,7 @@ public class CreateLeaveTypeCommandValidatorTest(CreateLeaveTypeCommandValidator
     [Fact]
     public async Task TestValidatorShouldFailWithNameNotUnique()
     {
-        CreateLeaveTypeCommand command = new()
-        {
-            Name = "somename"
-        };
+        CreateLeaveTypeCommand command = new("somename", 1);
 
         _fixture.repositoryMock
             .Setup(m => m.IsUniqueAsync(It.IsAny<string>(), default))
@@ -64,11 +55,7 @@ public class CreateLeaveTypeCommandValidatorTest(CreateLeaveTypeCommandValidator
     [InlineData(101)]
     public async Task TestValidatorShouldFailWithDefaultDaysNotInRange1_100(int defaultDays)
     {
-        CreateLeaveTypeCommand command = new()
-        {
-            Name = "somename",
-            DefaultDays = defaultDays
-        };
+        CreateLeaveTypeCommand command = new("somename", defaultDays);
 
         _fixture.repositoryMock
             .Setup(m => m.IsUniqueAsync(It.IsAny<string>(), default))
@@ -83,11 +70,7 @@ public class CreateLeaveTypeCommandValidatorTest(CreateLeaveTypeCommandValidator
     [Fact]
     public async Task TestValidatorShouldNotFail()
     {
-        CreateLeaveTypeCommand command = new()
-        {
-            Name = "somename",
-            DefaultDays = 100
-        };
+        CreateLeaveTypeCommand command = new("somename", 100);
 
         _fixture.repositoryMock
             .Setup(m => m.IsUniqueAsync(It.IsAny<string>(), default))
