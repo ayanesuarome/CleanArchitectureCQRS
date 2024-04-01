@@ -1,6 +1,8 @@
-﻿namespace CleanArch.Domain.Entities;
+﻿using CleanArch.Domain.Interfaces;
 
-public class LeaveRequest : BaseEntity<int>
+namespace CleanArch.Domain.Entities;
+
+public class LeaveRequest : BaseEntity<int>, ISoftDeletable
 {
     public DateTimeOffset StartDate { get; set; }
     public DateTimeOffset EndDate { get; set; }
@@ -11,6 +13,8 @@ public class LeaveRequest : BaseEntity<int>
     public bool? IsApproved { get; set; }
     public bool IsCancelled { get; set; }
     public string RequestingEmployeeId { get; set; } = null!;
+    public bool IsDeleted {  get; set; }
+    public DateTimeOffset? DeletedOn { get; set; }
 
     public int GetDaysRequested() => (int)(EndDate - StartDate).TotalDays + 1;
 }

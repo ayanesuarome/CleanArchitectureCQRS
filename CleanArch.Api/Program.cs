@@ -19,9 +19,9 @@ builder.Host.UseSerilog((context, config) => config
 
 builder.Services.AddApplicationServices();
 builder.Services.AddValidators();
+builder.Services.AddPersistenceServices();
 builder.Services.AddCleanArchEFDbContext(builder.Configuration);
 builder.Services.AddInfrastructureServices(builder.Configuration);
-builder.Services.AddPersistenceServices();
 builder.Services.AddIdentityServices(builder.Configuration);
 
 // The factory-activated middleware is added to the built-in container

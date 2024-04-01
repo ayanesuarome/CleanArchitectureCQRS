@@ -40,6 +40,7 @@ public sealed partial class CleanArchEFDbContext : DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(CleanArchEFDbContext).Assembly);
+        
         base.OnModelCreating(modelBuilder);
     }
 }
