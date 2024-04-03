@@ -1,5 +1,5 @@
 ﻿using CleanArch.Domain.Entities;
-using CleanArch.Domain.Interfaces.Persistence;
+using CleanArch.Domain.Repositories;
 using FluentValidation;
 
 namespace CleanArch.Application.Features.LeaveTypes.Commands.UpdateLeaveType;

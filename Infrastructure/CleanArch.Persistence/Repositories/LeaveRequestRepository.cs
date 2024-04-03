@@ -1,5 +1,5 @@
 ﻿using CleanArch.Domain.Entities;
-using CleanArch.Domain.Interfaces.Persistence;
+using CleanArch.Domain.Repositories;
 using CleanArch.Persistence.DatabaseContext;
 using Microsoft.EntityFrameworkCore;
 
@@ -18,7 +18,7 @@ public class LeaveRequestRepository : GenericRepository<LeaveRequest>, ILeaveReq
 
         if(!string.IsNullOrEmpty(employeeId))
         {
-            query = query.Where(e => e.RequestingEmployeeId == employeeId);
+            query = query.Where(e => e.RequestingEmployeeId == employeeId && e.IsCancelled == false);
         }
         
         return await query

@@ -2,7 +2,7 @@
 using CleanArch.Application.Exceptions;
 using CleanArch.Application.Features.LeaveTypeDetails.Queries.GetLeaveTypesDetails;
 using CleanArch.Domain.Entities;
-using CleanArch.Domain.Interfaces.Persistence;
+using CleanArch.Domain.Repositories;
 using MediatR;
 
 namespace CleanArch.Application.Features.LeaveTypesdetail.Queries.GetLeaveTypesDetails;
@@ -17,7 +17,7 @@ public class GetLeaveTypesDetailQueryHandler(IMapper mapper, ILeaveTypeRepositor
     {
         LeaveType leaveType = await _repository.GetByIdAsync(request.Id);
 
-        if (leaveType == null)
+        if (leaveType is null)
         {
             throw new NotFoundException(nameof(LeaveType), request.Id);
         }

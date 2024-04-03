@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using CleanArch.Application.Exceptions;
 using CleanArch.Domain.Entities;
-using CleanArch.Domain.Interfaces.Persistence;
+using CleanArch.Domain.Repositories;
 using FluentValidation;
 using FluentValidation.Results;
 using MediatR;
@@ -22,7 +22,7 @@ namespace CleanArch.Application.Features.LeaveAllocations.Commands.UpdateLeaveAl
         {
             LeaveAllocation leaveAllocation = await _repository.GetByIdAsync(request.Id);
 
-            if(leaveAllocation == null)
+            if(leaveAllocation is null)
             {
                 throw new NotFoundException(nameof(LeaveAllocation), request.Id);
             }

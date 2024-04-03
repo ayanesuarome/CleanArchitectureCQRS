@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using CleanArch.Application.Exceptions;
 using CleanArch.Domain.Entities;
-using CleanArch.Domain.Interfaces.Persistence;
+using CleanArch.Domain.Repositories;
 using FluentValidation;
 using FluentValidation.Results;
 using MediatR;
@@ -27,7 +27,7 @@ public class UpdateLeaveRequestCommandHandler : IRequestHandler<UpdateLeaveReque
     {
         LeaveRequest leaveRequest = await _repository.GetByIdAsync(request.Id);
 
-        if(leaveRequest == null)
+        if(leaveRequest is null)
         {
             throw new NotFoundException(nameof(LeaveRequest), request.Id);
         }

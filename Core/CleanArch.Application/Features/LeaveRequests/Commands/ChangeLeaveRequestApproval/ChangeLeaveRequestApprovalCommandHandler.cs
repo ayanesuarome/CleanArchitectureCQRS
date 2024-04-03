@@ -1,7 +1,7 @@
 ﻿using CleanArch.Application.Exceptions;
 using CleanArch.Application.Extensions;
 using CleanArch.Domain.Entities;
-using CleanArch.Domain.Interfaces.Persistence;
+using CleanArch.Domain.Repositories;
 using FluentValidation;
 using FluentValidation.Results;
 using MediatR;
@@ -28,7 +28,7 @@ public class ChangeLeaveRequestApprovalCommandHandler : IRequestHandler<ChangeLe
     {
         LeaveRequest leaveRequest = await _leaveRequestRepository.GetByIdAsync(request.Id);
 
-        if (leaveRequest == null)
+        if (leaveRequest is null)
         {
             throw new NotFoundException(nameof(LeaveRequest), request.Id);
         }
@@ -53,7 +53,7 @@ public class ChangeLeaveRequestApprovalCommandHandler : IRequestHandler<ChangeLe
         await _leaveRequestRepository.UpdateAsync(leaveRequest);
 
         // if request is approved, get and update the employee's allocation
-        if(leaveRequest.IsApproved == true)
+        if(leaveRequest.IsApproved is true)
         {
             LeaveAllocation allocation = await _leaveAllocationRepository.GetEmployeeAllocation(
                 leaveRequest.RequestingEmployeeId,

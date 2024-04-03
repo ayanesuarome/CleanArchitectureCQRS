@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using CleanArch.Application.Interfaces.Identity;
 using CleanArch.Domain.Entities;
-using CleanArch.Domain.Interfaces.Persistence;
+using CleanArch.Domain.Repositories;
 using MediatR;
 
 namespace CleanArch.Application.Features.LeaveAllocations.Queries.GetLeaveAllocationList;

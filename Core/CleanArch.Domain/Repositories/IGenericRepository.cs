@@ -1,6 +1,6 @@
 ﻿using CleanArch.Domain.Entities;
 
-namespace CleanArch.Domain.Interfaces.Persistence;
+namespace CleanArch.Domain.Repositories;
 
 public interface IGenericRepository<TEntity>
     where TEntity : BaseEntity<int>

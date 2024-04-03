@@ -24,7 +24,7 @@
     </dl>
 </div>
 <div>
-    @if(Model.IsApproved == null)
+    @if(Model.IsApproved is null)
     {
         <button class="btn btn-success" @onclick="(() => ChangeApproval(true))">
             Approved

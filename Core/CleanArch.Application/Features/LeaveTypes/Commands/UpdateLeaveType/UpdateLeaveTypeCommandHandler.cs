@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using CleanArch.Application.Exceptions;
 using CleanArch.Domain.Entities;
-using CleanArch.Domain.Interfaces.Persistence;
+using CleanArch.Domain.Repositories;
 using FluentValidation;
 using FluentValidation.Results;
 using MediatR;
@@ -22,7 +22,7 @@ public class UpdateLeaveTypeCommandHandler(
     {
         LeaveType leaveType = await _repository.GetByIdAsync(request.Id);
 
-        if (leaveType == null)
+        if (leaveType is null)
         {
             throw new NotFoundException(nameof(LeaveType), request.Id);
         }

@@ -1,9 +1,9 @@
-﻿namespace CleanArch.Domain.Interfaces;
+﻿namespace CleanArch.Domain.Primitives;
 
 /// <summary>
 /// Represents soft-deletable entities.
 /// </summary>
-public interface ISoftDeletable
+public interface ISoftDeletableEntity
 {
     bool IsDeleted { get; set; }
     DateTimeOffset? DeletedOn { get; set; }

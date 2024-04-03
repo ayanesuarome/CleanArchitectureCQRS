@@ -1,6 +1,6 @@
 ﻿using CleanArch.Application.Exceptions;
 using CleanArch.Domain.Entities;
-using CleanArch.Domain.Interfaces.Persistence;
+using CleanArch.Domain.Repositories;
 using MediatR;
 
 namespace CleanArch.Application.Features.LeaveTypes.Commands.DeleteLeaveType;
@@ -14,7 +14,7 @@ public class DeleteLeaveTypeCommandHandler(ILeaveTypeRepository repository)
     {
         LeaveType leaveTypeToDelete = await _repository.GetByIdAsync(request.Id);
 
-        if(leaveTypeToDelete == null)
+        if(leaveTypeToDelete is null)
         {
             throw new NotFoundException(nameof(LeaveType), request.Id);
         }

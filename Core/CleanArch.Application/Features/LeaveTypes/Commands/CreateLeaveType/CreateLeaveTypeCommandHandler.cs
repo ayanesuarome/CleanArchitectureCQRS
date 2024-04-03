@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using CleanArch.Application.Exceptions;
 using CleanArch.Domain.Entities;
-using CleanArch.Domain.Interfaces.Persistence;
+using CleanArch.Domain.Repositories;
 using FluentValidation;
 using FluentValidation.Results;
 using MediatR;

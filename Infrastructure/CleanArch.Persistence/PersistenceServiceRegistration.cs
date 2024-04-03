@@ -4,8 +4,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using CleanArch.Persistence.Repositories;
-using CleanArch.Domain.Interfaces.Persistence;
 using CleanArch.Persistence.Interceptors;
+using CleanArch.Domain.Repositories;
 
 namespace CleanArch.Persistence;
 
@@ -20,7 +20,8 @@ public static class PersistenceServiceRegistration
             options.UseSqlServer(configuration.GetConnectionString(CleanArchSqlServerDbContext));
             options.LogTo(Console.WriteLine, new[] { RelationalEventId.CommandExecuting });
             options.AddInterceptors(
-                sp.GetRequiredService<SoftDeleteInterceptor>());
+                sp.GetRequiredService<SoftDeleteEntitiesInterceptor>(),
+                sp.GetRequiredService<UpdateAuditableEntitiesInterceptor>());
         });
 
         return services;
@@ -32,7 +33,8 @@ public static class PersistenceServiceRegistration
         services.AddScoped<ILeaveTypeRepository, LeaveTypeRepository>();
         services.AddScoped<ILeaveRequestRepository, LeaveRequestRepository>();
         services.AddScoped<ILeaveAllocationRepository, LeaveAllocationRepository>();
-        services.AddSingleton<SoftDeleteInterceptor>();
+        services.AddSingleton<SoftDeleteEntitiesInterceptor>();
+        services.AddSingleton<UpdateAuditableEntitiesInterceptor>();
 
         return services;
     }

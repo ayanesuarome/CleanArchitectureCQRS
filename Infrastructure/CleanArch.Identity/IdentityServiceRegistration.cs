@@ -36,10 +36,9 @@ public static class IdentityServiceRegistration
         services.AddTransient<IJwtTokenGenerator, JwtTokenGenerator>();
 
         services.ConfigureOptions<JwtSettingSetup>();
-        services.AddSingleton<IValidateOptions<JwtSettingValidation>>();
+        services.AddSingleton<IValidateOptions<JwtSettings>, JwtSettingValidation>();
 
         IServiceProvider serviceProvider = services.BuildServiceProvider();
-
         JwtSettings jwtSettings = serviceProvider
             .GetRequiredService<IOptions<JwtSettings>>()
             .Value;

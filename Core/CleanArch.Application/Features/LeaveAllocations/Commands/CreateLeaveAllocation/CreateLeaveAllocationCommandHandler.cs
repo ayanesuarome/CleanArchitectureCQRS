@@ -2,7 +2,7 @@
 using CleanArch.Application.Interfaces.Identity;
 using CleanArch.Application.Models.Identity;
 using CleanArch.Domain.Entities;
-using CleanArch.Domain.Interfaces.Persistence;
+using CleanArch.Domain.Repositories;
 using FluentValidation;
 using FluentValidation.Results;
 using MediatR;

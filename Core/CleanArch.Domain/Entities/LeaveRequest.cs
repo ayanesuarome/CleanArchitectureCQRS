@@ -1,8 +1,8 @@
-﻿using CleanArch.Domain.Interfaces;
+﻿using CleanArch.Domain.Primitives;
 
 namespace CleanArch.Domain.Entities;
 
-public class LeaveRequest : BaseEntity<int>, ISoftDeletable
+public class LeaveRequest : BaseEntity<int>, ISoftDeletableEntity
 {
     public DateTimeOffset StartDate { get; set; }
     public DateTimeOffset EndDate { get; set; }

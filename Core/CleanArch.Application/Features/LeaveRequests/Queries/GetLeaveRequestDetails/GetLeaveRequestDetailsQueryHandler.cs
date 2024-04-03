@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using CleanArch.Application.Exceptions;
 using CleanArch.Domain.Entities;
-using CleanArch.Domain.Interfaces.Persistence;
+using CleanArch.Domain.Repositories;
 using MediatR;
 
 namespace CleanArch.Application.Features.LeaveRequests.Queries.GetLeaveRequestDetails;
@@ -16,7 +16,7 @@ public class GetLeaveRequestDetailsQueryHandler(IMapper mapper, ILeaveRequestRep
     {
         LeaveRequest leaveRequest = await _repository.GetLeaveRequestWithDetailsAsync(request.Id);
 
-        if (leaveRequest == null)
+        if (leaveRequest is null)
         {
             throw new NotFoundException(nameof(LeaveRequest), request.Id);
         }

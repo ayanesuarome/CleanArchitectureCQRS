@@ -1,33 +1,35 @@
-﻿using CleanArch.Domain.Interfaces;
+﻿using CleanArch.Domain.Primitives;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 
 namespace CleanArch.Persistence.Interceptors;
 
-public sealed class SoftDeleteInterceptor : SaveChangesInterceptor
+internal sealed class SoftDeleteEntitiesInterceptor : SaveChangesInterceptor
 {
     public override ValueTask<InterceptionResult<int>> SavingChangesAsync(
         DbContextEventData eventData,
         InterceptionResult<int> result,
         CancellationToken cancellationToken = default)
     {
-        if(eventData is null)
+        if(eventData.Context is null)
         {
             return base.SavingChangesAsync(eventData, result, cancellationToken);
         }
 
-        IEnumerable<EntityEntry<ISoftDeletable>> entries = eventData
+        IEnumerable<EntityEntry<ISoftDeletableEntity>> entries = eventData
             .Context
             .ChangeTracker
-            .Entries<ISoftDeletable>()
+            .Entries<ISoftDeletableEntity>()
             .Where(e => e.State == EntityState.Deleted);
+
+        DateTimeOffset now = DateTimeOffset.Now;
 
         foreach (var softDeletable in entries)
         {
             softDeletable.State = EntityState.Modified;
-            softDeletable.Entity.IsDeleted = true;
-            softDeletable.Entity.DeletedOn = DateTimeOffset.Now;
+            softDeletable.Property(property => property.IsDeleted).CurrentValue = true;
+            softDeletable.Property(property => property.DeletedOn).CurrentValue = now;
         }
 
         return base.SavingChangesAsync(eventData, result, cancellationToken);

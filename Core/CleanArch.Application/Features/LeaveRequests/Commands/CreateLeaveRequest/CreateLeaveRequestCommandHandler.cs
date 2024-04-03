@@ -3,7 +3,7 @@ using CleanArch.Application.Exceptions;
 using CleanArch.Application.Extensions;
 using CleanArch.Application.Interfaces.Identity;
 using CleanArch.Domain.Entities;
-using CleanArch.Domain.Interfaces.Persistence;
+using CleanArch.Domain.Repositories;
 using FluentValidation;
 using FluentValidation.Results;
 using MediatR;
@@ -45,7 +45,7 @@ public class CreateLeaveRequestCommandHandler : IRequestHandler<CreateLeaveReque
         bool result = await _allocationRepository.HasEmployeeAllocation(_userService.UserId, request.LeaveTypeId);
 
         // if allocations aren't enough, return validation error
-        if (leaveAllocation == null)
+        if (leaveAllocation is null)
         {
             validationResult.AddError(
                 nameof(request.LeaveTypeId),
