@@ -1,14 +1,11 @@
 ﻿using CleanArch.Api.Models;
 using CleanArch.Application.Exceptions;
-using CleanArch.Application.Interfaces.Logging;
 using Microsoft.AspNetCore.Diagnostics;
 
 namespace CleanArch.Api.ExceptionHandlers;
 
-internal sealed class BadRequestExceptionHandler(IAppLogger<BadRequestExceptionHandler> logger) : IExceptionHandler
+internal sealed class BadRequestExceptionHandler(IServiceScopeFactory serviceScopeFactory) : IExceptionHandler
 {
-    private readonly IAppLogger<BadRequestExceptionHandler> _logger = logger;
-
     /// <summary>
     /// TryHandleAsync attempts to handle the specified exception within the ASP.NET Core pipeline.
     /// </summary>
@@ -26,7 +23,12 @@ internal sealed class BadRequestExceptionHandler(IAppLogger<BadRequestExceptionH
             return false;
         }
 
-        _logger.LogError(badRequestException, "Exception ocurred: {Message}", exception.Message);
+        using IServiceScope scope = serviceScopeFactory.CreateScope();
+        ILogger<BadRequestExceptionHandler> logger = scope
+            .ServiceProvider
+            .GetRequiredService<ILogger<BadRequestExceptionHandler>>();
+
+        logger.LogError(badRequestException, "Exception ocurred: {Message}", exception.Message);
 
         CustomProblemDetails errorDetails = new()
         {
