@@ -5,10 +5,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CleanArch.Api.ExceptionHandlers;
 
-internal sealed class NotFoundExceptionHandler(IAppLogger<NotFoundExceptionHandler> logger) : IExceptionHandler
+internal sealed class NotFoundExceptionHandler(IServiceScopeFactory serviceScopeFactory) : IExceptionHandler
 {
-    private readonly IAppLogger<NotFoundExceptionHandler> _logger = logger;
-
     /// <summary>
     /// TryHandleAsync attempts to handle the specified exception within the ASP.NET Core pipeline.
     /// </summary>
@@ -26,7 +24,12 @@ internal sealed class NotFoundExceptionHandler(IAppLogger<NotFoundExceptionHandl
             return false;
         }
 
-        _logger.LogError(notFoundException, "Exception ocurred: {Message}", exception.Message);
+        using IServiceScope scope = serviceScopeFactory.CreateScope();
+        IAppLogger<GlobalExceptionHandler> logger = scope
+            .ServiceProvider
+            .GetRequiredService<IAppLogger<GlobalExceptionHandler>>();
+
+        logger.LogError(exception, "Exception ocurred: {Message}", exception.Message);
 
         ProblemDetails errorDetails = new()
         {

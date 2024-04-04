@@ -33,6 +33,7 @@ public class CreateLeaveRequestCommandHandler : IRequestHandler<CreateLeaveReque
 
     public async Task<LeaveRequest> Handle(CreateLeaveRequestCommand request, CancellationToken cancellationToken)
     {
+        throw new ArgumentNullException(nameof(request));
         ValidationResult validationResult = await _validator.ValidateAsync(request, cancellationToken);
 
         if(!validationResult.IsValid)

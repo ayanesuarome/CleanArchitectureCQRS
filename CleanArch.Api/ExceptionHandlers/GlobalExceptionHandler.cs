@@ -5,10 +5,8 @@ using System.Net;
 
 namespace CleanArch.Api.ExceptionHandlers;
 
-internal sealed class GlobalExceptionHandler(IAppLogger<GlobalExceptionHandler> logger) : IExceptionHandler
+internal sealed class GlobalExceptionHandler(IServiceScopeFactory serviceScopeFactory) : IExceptionHandler
 {
-    private readonly IAppLogger<GlobalExceptionHandler> _logger = logger;
-
     /// <summary>
     /// TryHandleAsync attempts to handle the specified exception within the ASP.NET Core pipeline.
     /// </summary>
@@ -21,7 +19,12 @@ internal sealed class GlobalExceptionHandler(IAppLogger<GlobalExceptionHandler> 
         Exception exception,
         CancellationToken cancellationToken)
     {
-        _logger.LogError(exception, "Exception ocurred: {Message}", exception.Message);
+        using IServiceScope scope = serviceScopeFactory.CreateScope();
+        IAppLogger<GlobalExceptionHandler> logger = scope
+            .ServiceProvider
+            .GetRequiredService<IAppLogger<GlobalExceptionHandler>>();
+
+        logger.LogError(exception, "Exception ocurred: {Message}", exception.Message);
 
         ProblemDetails errorDetails = new()
         {
