@@ -28,7 +28,7 @@ public class UpdateLeaveRequestCommandHandler : IRequestHandler<UpdateLeaveReque
     {
         LeaveRequest leaveRequest = await _repository.GetByIdAsync(request.Id);
 
-        if(leaveRequest == null)
+        if(leaveRequest is null)
         {
             return new NotFoundResult<LeaveRequest>(LeaveRequestErrors.NotFound(request.Id));
         }

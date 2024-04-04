@@ -17,7 +17,7 @@ public class GetLeaveAllocationDetailsQueryHandler(IMapper mapper, ILeaveAllocat
     {
         LeaveAllocation leaveAllocation = await _repository.GetLeaveAllocationWithDetails(request.Id);
 
-        if(leaveAllocation == null)
+        if(leaveAllocation is null)
         {
             return new NotFoundResult<LeaveAllocationDetailsDto>(LeaveAllocationErrors.NotFound(request.Id));
         }

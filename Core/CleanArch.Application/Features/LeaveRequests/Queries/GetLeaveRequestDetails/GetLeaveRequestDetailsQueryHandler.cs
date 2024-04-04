@@ -17,7 +17,7 @@ public class GetLeaveRequestDetailsQueryHandler(IMapper mapper, ILeaveRequestRep
     {
         LeaveRequest leaveRequest = await _repository.GetLeaveRequestWithDetailsAsync(request.Id);
 
-        if (leaveRequest == null)
+        if (leaveRequest is null)
         {
             return new NotFoundResult<LeaveRequestDetailsDto>(LeaveRequestErrors.NotFound(request.Id));
         }

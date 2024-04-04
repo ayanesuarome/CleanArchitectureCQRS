@@ -32,9 +32,9 @@ public class LeaveRequestService(IClient client, IMapper mapper) : BaseHttpServi
         AdminLeaveRequestVM model = new()
         {
             TotalRequests = leaveRequests.Count,
-            ApprovedRequests = leaveRequests.Count(request => request.IsApproved == true),
-            PendingRequests = leaveRequests.Count(request => request.IsApproved == null),
-            RejectedRequests = leaveRequests.Count(request => request.IsApproved == false),
+            ApprovedRequests = leaveRequests.Count(request => request.IsApproved is true),
+            PendingRequests = leaveRequests.Count(request => request.IsApproved is null),
+            RejectedRequests = leaveRequests.Count(request => request.IsApproved is false),
             LeaveRequests = _mapper.Map<List<LeaveRequestVM>>(leaveRequests)
         };
 

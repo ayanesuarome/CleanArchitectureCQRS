@@ -45,7 +45,7 @@ public class CreateLeaveRequestCommandHandler : IRequestHandler<CreateLeaveReque
         bool result = await _allocationRepository.HasEmployeeAllocation(_userService.UserId, request.LeaveTypeId);
 
         // if allocations aren't enough, return validation error
-        if (leaveAllocation == null)
+        if (leaveAllocation is null)
         {
             return new FailureResult<LeaveRequest>(LeaveRequestErrors.NotEnoughDays());
         }

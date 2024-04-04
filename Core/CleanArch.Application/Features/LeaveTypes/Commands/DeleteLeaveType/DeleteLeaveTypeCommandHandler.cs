@@ -15,7 +15,7 @@ public class DeleteLeaveTypeCommandHandler(ILeaveTypeRepository repository)
     {
         LeaveType leaveTypeToDelete = await _repository.GetByIdAsync(request.Id);
 
-        if(leaveTypeToDelete == null)
+        if(leaveTypeToDelete is null)
         {
             return new NotFoundResult<Unit>(LeaveTypeErrors.NotFound(request.Id));
         }

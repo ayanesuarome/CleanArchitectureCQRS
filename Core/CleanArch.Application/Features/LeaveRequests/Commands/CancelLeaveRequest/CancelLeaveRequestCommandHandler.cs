@@ -23,7 +23,7 @@ public class CancelLeaveRequestCommandHandler : IRequestHandler<CancelLeaveReque
     {
         LeaveRequest leaveRequest = await _leaveRequestRepository.GetByIdAsync(request.Id);
 
-        if (leaveRequest == null)
+        if (leaveRequest is null)
         {
             return new NotFoundResult<LeaveRequest>(LeaveRequestErrors.NotFound(request.Id));
         }
@@ -32,7 +32,7 @@ public class CancelLeaveRequestCommandHandler : IRequestHandler<CancelLeaveReque
         await _leaveRequestRepository.UpdateAsync(leaveRequest);
 
         // if already approved, re-evaluate the employee's allocations for the leave type
-        if(leaveRequest.IsApproved == true)
+        if(leaveRequest.IsApproved is true)
         {
             LeaveAllocation allocation = await _leaveAllocationRepository.GetEmployeeAllocation(
                 leaveRequest.RequestingEmployeeId,

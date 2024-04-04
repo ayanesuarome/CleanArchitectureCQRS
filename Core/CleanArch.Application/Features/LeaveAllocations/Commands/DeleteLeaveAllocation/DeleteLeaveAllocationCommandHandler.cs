@@ -15,7 +15,7 @@ public class DeleteLeaveAllocationCommandHandler(ILeaveAllocationRepository repo
     {
         LeaveAllocation leaveAllocation = await _repository.GetByIdAsync(request.Id);
 
-        if (leaveAllocation == null)
+        if (leaveAllocation is null)
         {
             return new NotFoundResult(LeaveAllocationErrors.NotFound(request.Id));
         }

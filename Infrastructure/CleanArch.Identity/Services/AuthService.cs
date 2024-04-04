@@ -33,7 +33,7 @@ public class AuthService : IAuthService
     {
         ApplicationUser user = await _userManager.FindByEmailAsync(request.Email);
 
-        if(user == null)
+        if(user is null)
         {
             throw new BadRequestException("Invalid email or password");
         }

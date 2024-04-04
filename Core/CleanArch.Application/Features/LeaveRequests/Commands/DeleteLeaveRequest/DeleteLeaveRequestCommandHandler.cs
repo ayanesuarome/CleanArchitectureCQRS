@@ -15,7 +15,7 @@ public class DeleteLeaveRequestCommandHandler(ILeaveRequestRepository repository
     {
         LeaveRequest leaveRequest = await _repository.GetByIdAsync(request.Id);
 
-        if (leaveRequest == null)
+        if (leaveRequest is null)
         {
             return new NotFoundResult(LeaveRequestErrors.NotFound(request.Id));
         }

@@ -23,7 +23,7 @@ public class UpdateLeaveTypeCommandHandler(
     {
         LeaveType leaveType = await _repository.GetByIdAsync(request.Id);
 
-        if (leaveType == null)
+        if (leaveType is null)
         {
             return new NotFoundResult<Unit>(LeaveTypeErrors.NotFound(request.Id));
         }

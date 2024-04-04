@@ -28,7 +28,7 @@ public class ChangeLeaveRequestApprovalCommandHandler : IRequestHandler<ChangeLe
     {
         LeaveRequest leaveRequest = await _leaveRequestRepository.GetByIdAsync(request.Id);
 
-        if (leaveRequest == null)
+        if (leaveRequest is null)
         {
             return new NotFoundResult<LeaveRequest>(LeaveRequestErrors.NotFound(request.Id));
         }
@@ -48,7 +48,7 @@ public class ChangeLeaveRequestApprovalCommandHandler : IRequestHandler<ChangeLe
         leaveRequest.IsApproved = request.Approved;
 
         // if request is approved, get and update the employee's allocation
-        if(leaveRequest.IsApproved == true)
+        if(leaveRequest.IsApproved is true)
         {
             LeaveAllocation allocation = await _leaveAllocationRepository.GetEmployeeAllocation(
                 leaveRequest.RequestingEmployeeId,
