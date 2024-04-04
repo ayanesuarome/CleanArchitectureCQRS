@@ -1,4 +1,5 @@
 ﻿using CleanArch.Application.Exceptions;
+using CleanArch.Application.Interfaces.Logging;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 
@@ -24,9 +25,9 @@ internal sealed class NotFoundExceptionHandler(IServiceScopeFactory serviceScope
         }
 
         using IServiceScope scope = serviceScopeFactory.CreateScope();
-        ILogger<NotFoundExceptionHandler> logger = scope
+        IAppLogger<NotFoundExceptionHandler> logger = scope
             .ServiceProvider
-            .GetRequiredService<ILogger<NotFoundExceptionHandler>>();
+            .GetRequiredService<IAppLogger<NotFoundExceptionHandler>>();
 
         logger.LogError(notFoundException, "Exception ocurred: {Message}", exception.Message);
 

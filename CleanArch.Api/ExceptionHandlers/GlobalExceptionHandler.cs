@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Diagnostics;
+﻿using CleanArch.Application.Interfaces.Logging;
+using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
 
@@ -19,9 +20,9 @@ internal sealed class GlobalExceptionHandler(IServiceScopeFactory serviceScopeFa
         CancellationToken cancellationToken)
     {
         using IServiceScope scope = serviceScopeFactory.CreateScope();
-        ILogger<GlobalExceptionHandler> logger = scope
+        IAppLogger<GlobalExceptionHandler> logger = scope
             .ServiceProvider
-            .GetRequiredService<ILogger<GlobalExceptionHandler>>();
+            .GetRequiredService<IAppLogger<GlobalExceptionHandler>>();
 
         logger.LogError(exception, "Exception ocurred: {Message}", exception.Message);
 

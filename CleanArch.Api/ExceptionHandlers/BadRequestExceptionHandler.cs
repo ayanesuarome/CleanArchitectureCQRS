@@ -1,6 +1,8 @@
 ﻿using CleanArch.Api.Models;
 using CleanArch.Application.Exceptions;
+using CleanArch.Application.Interfaces.Logging;
 using Microsoft.AspNetCore.Diagnostics;
+using Newtonsoft.Json;
 
 namespace CleanArch.Api.ExceptionHandlers;
 
@@ -24,11 +26,9 @@ internal sealed class BadRequestExceptionHandler(IServiceScopeFactory serviceSco
         }
 
         using IServiceScope scope = serviceScopeFactory.CreateScope();
-        ILogger<BadRequestExceptionHandler> logger = scope
+        IAppLogger<BadRequestExceptionHandler> logger = scope
             .ServiceProvider
-            .GetRequiredService<ILogger<BadRequestExceptionHandler>>();
-
-        logger.LogError(badRequestException, "Exception ocurred: {Message}", exception.Message);
+            .GetRequiredService<IAppLogger<BadRequestExceptionHandler>>();
 
         CustomProblemDetails errorDetails = new()
         {
@@ -38,6 +38,9 @@ internal sealed class BadRequestExceptionHandler(IServiceScopeFactory serviceSco
             Detail = badRequestException.Message,
             Errors = badRequestException.ValidationErrors
         };
+
+        var logMessage = JsonConvert.SerializeObject(errorDetails);
+        logger.LogError(badRequestException, "Exception ocurred: {Message}", logMessage);
 
         httpContext.Response.StatusCode = errorDetails.Status.Value;
 
