@@ -20,8 +20,8 @@ public static class PersistenceServiceRegistration
             options.UseSqlServer(configuration.GetConnectionString(CleanArchSqlServerDbContext));
             options.LogTo(Console.WriteLine, new[] { RelationalEventId.CommandExecuting });
             options.AddInterceptors(
-                sp.GetRequiredService<SoftDeleteEntitiesInterceptor>(),
-                sp.GetRequiredService<UpdateAuditableEntitiesInterceptor>());
+                sp.GetRequiredService<UpdateAuditableEntitiesInterceptor>(),
+                sp.GetRequiredService<SoftDeleteEntitiesInterceptor>());
         });
 
         return services;
@@ -33,8 +33,8 @@ public static class PersistenceServiceRegistration
         services.AddScoped<ILeaveTypeRepository, LeaveTypeRepository>();
         services.AddScoped<ILeaveRequestRepository, LeaveRequestRepository>();
         services.AddScoped<ILeaveAllocationRepository, LeaveAllocationRepository>();
-        services.AddSingleton<SoftDeleteEntitiesInterceptor>();
         services.AddSingleton<UpdateAuditableEntitiesInterceptor>();
+        services.AddSingleton<SoftDeleteEntitiesInterceptor>();
 
         return services;
     }
