@@ -1,6 +1,8 @@
-﻿namespace CleanArch.Domain.Entities;
+﻿using CleanArch.Domain.Primitives;
 
-public abstract class BaseEntity<T>
+namespace CleanArch.Domain.Entities;
+
+public abstract class BaseEntity<T> : IAuditableEntity
 {
     public T Id { get; set; }
     public DateTimeOffset? DateCreated { get; set; }
