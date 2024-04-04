@@ -1,7 +1,7 @@
 ﻿using CleanArch.Application.Features.LeaveRequests.Shared;
 using CleanArch.Application.ResultPattern;
 using CleanArch.Domain.Entities;
-using CleanArch.Domain.Interfaces.Persistence;
+using CleanArch.Domain.Repositories;
 using FluentValidation;
 using FluentValidation.Results;
 using MediatR;

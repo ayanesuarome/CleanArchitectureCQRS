@@ -2,7 +2,7 @@
 using CleanArch.Application.Interfaces.Identity;
 using CleanArch.Application.ResultPattern;
 using CleanArch.Domain.Entities;
-using CleanArch.Domain.Interfaces.Persistence;
+using CleanArch.Domain.Repositories;
 using MediatR;
 
 namespace CleanArch.Application.Features.LeaveAllocations.Queries.GetLeaveAllocationList;

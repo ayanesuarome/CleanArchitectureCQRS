@@ -1,7 +1,7 @@
 ﻿using CleanArch.Application.Features.LeaveAllocations.Shared;
 using CleanArch.Application.ResultPattern;
 using CleanArch.Domain.Entities;
-using CleanArch.Domain.Interfaces.Persistence;
+using CleanArch.Domain.Repositories;
 using MediatR;
 
 namespace CleanArch.Application.Features.LeaveAllocations.Commands.DeleteLeaveAllocation;

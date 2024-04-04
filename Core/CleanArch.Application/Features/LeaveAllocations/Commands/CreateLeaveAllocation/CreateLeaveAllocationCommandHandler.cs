@@ -2,11 +2,11 @@
 using CleanArch.Application.ResultPattern;
 using CleanArch.Application.Models.Identity;
 using CleanArch.Domain.Entities;
-using CleanArch.Domain.Interfaces.Persistence;
 using FluentValidation;
 using FluentValidation.Results;
 using MediatR;
 using CleanArch.Application.Features.LeaveAllocations.Shared;
+using CleanArch.Domain.Repositories;
 
 namespace CleanArch.Application.Features.LeaveAllocations.Commands.CreateLeaveAllocation;
 

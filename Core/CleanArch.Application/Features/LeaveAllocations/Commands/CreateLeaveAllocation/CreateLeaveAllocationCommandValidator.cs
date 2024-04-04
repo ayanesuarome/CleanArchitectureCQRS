@@ -1,4 +1,4 @@
-﻿using CleanArch.Domain.Interfaces.Persistence;
+﻿using CleanArch.Domain.Repositories;
 using FluentValidation;
 
 namespace CleanArch.Application.Features.LeaveAllocations.Commands.CreateLeaveAllocation;

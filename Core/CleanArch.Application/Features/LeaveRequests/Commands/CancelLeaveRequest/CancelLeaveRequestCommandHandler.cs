@@ -1,8 +1,8 @@
 ﻿using CleanArch.Application.ResultPattern;
 using CleanArch.Domain.Entities;
-using CleanArch.Domain.Interfaces.Persistence;
 using MediatR;
 using CleanArch.Application.Features.LeaveRequests.Shared;
+using CleanArch.Domain.Repositories;
 
 namespace CleanArch.Application.Features.LeaveRequests.Commands.CancelLeaveRequest;
 

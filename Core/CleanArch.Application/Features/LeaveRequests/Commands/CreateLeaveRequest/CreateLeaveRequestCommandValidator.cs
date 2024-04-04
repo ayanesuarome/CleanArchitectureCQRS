@@ -1,5 +1,5 @@
 ﻿using CleanArch.Application.Features.LeaveRequests.Shared;
-using CleanArch.Domain.Interfaces.Persistence;
+using CleanArch.Domain.Repositories;
 using FluentValidation;
 
 namespace CleanArch.Application.Features.LeaveRequests.Commands.CreateLeaveRequest;

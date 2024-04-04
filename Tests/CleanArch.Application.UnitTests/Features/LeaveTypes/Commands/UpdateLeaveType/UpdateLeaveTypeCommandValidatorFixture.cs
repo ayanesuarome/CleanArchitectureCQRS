@@ -1,6 +1,6 @@
 ﻿using CleanArch.Application.Features.LeaveTypes.Commands.UpdateLeaveType;
 using CleanArch.Application.Tests.Features.Mocks;
-using CleanArch.Domain.Interfaces.Persistence;
+using CleanArch.Domain.Repositories;
 using Moq;
 
 namespace CleanArch.Application.UnitTests.Features.LeaveTypes.Commands.UpdateLeaveType;

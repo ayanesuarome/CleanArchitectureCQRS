@@ -1,5 +1,5 @@
 ﻿using CleanArch.Application.Features.LeaveRequests.Commands.CreateLeaveRequest;
-using CleanArch.Domain.Interfaces.Persistence;
+using CleanArch.Domain.Repositories;
 using Moq;
 
 namespace CleanArch.Application.Tests.Features.LeaveRequests.Commands.CreateLeaveRequest;
