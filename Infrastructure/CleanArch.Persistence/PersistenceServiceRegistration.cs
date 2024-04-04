@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using CleanArch.Persistence.Repositories;
 using CleanArch.Domain.Repositories;
+using CleanArch.Persistence.Interceptors;
 
 namespace CleanArch.Persistence;
 
@@ -18,6 +19,7 @@ public static class PersistenceServiceRegistration
         {
             options.UseSqlServer(configuration.GetConnectionString(CleanArchSqlServerDbContext));
             options.LogTo(Console.WriteLine, new[] { RelationalEventId.CommandExecuting });
+            options.AddInterceptors();
         });
 
         return services;
@@ -29,6 +31,8 @@ public static class PersistenceServiceRegistration
         services.AddScoped<ILeaveTypeRepository, LeaveTypeRepository>();
         services.AddScoped<ILeaveRequestRepository, LeaveRequestRepository>();
         services.AddScoped<ILeaveAllocationRepository, LeaveAllocationRepository>();
+        services.AddSingleton<SoftDeleteEntitiesInterceptor>();
+        services.AddSingleton<UpdateAuditableEntitiesInterceptor>();
 
         return services;
     }
