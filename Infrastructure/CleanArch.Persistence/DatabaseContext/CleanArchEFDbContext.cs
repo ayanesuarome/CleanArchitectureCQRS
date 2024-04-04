@@ -1,17 +1,13 @@
-﻿using CleanArch.Application.Interfaces.Identity;
-using CleanArch.Domain.Entities;
+﻿using CleanArch.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace CleanArch.Persistence.DatabaseContext;
 
 public sealed partial class CleanArchEFDbContext : DbContext
 {
-    private readonly IUserService _userService;
-
-    public CleanArchEFDbContext(DbContextOptions<CleanArchEFDbContext> options, IUserService userService)
+    public CleanArchEFDbContext(DbContextOptions<CleanArchEFDbContext> options)
         : base(options)
     {
-        _userService = userService;
     }
 
     public DbSet<LeaveType> LeaveTypes { get; set; }
