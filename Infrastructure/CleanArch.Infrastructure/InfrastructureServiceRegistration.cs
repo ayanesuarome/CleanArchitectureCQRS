@@ -1,5 +1,5 @@
-﻿using CleanArch.Application.Interfaces.Email;
-using CleanArch.Application.Interfaces.Logging;
+﻿using CleanArch.Application.Abstractions.Email;
+using CleanArch.Application.Abstractions.Logging;
 using CleanArch.Infrastructure.ConfigureOptions;
 using CleanArch.Infrastructure.EmailService;
 using CleanArch.Infrastructure.Logging;

@@ -1,5 +1,5 @@
 ﻿using CleanArch.Application.Exceptions;
-using CleanArch.Application.Interfaces.Identity;
+using CleanArch.Application.Abstractions.Identity;
 using CleanArch.Application.Models.Identity;
 using CleanArch.Identity.Interfaces;
 using CleanArch.Identity.Models;

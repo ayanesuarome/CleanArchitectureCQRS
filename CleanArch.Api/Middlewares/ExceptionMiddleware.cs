@@ -1,6 +1,6 @@
 ﻿using CleanArch.Api.Models;
 using CleanArch.Application.Exceptions;
-using CleanArch.Application.Interfaces.Logging;
+using CleanArch.Application.Abstractions.Logging;
 using Newtonsoft.Json;
 using System.Net;
 

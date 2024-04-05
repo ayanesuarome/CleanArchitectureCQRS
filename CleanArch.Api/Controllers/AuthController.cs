@@ -1,4 +1,4 @@
-﻿using CleanArch.Application.Interfaces.Identity;
+﻿using CleanArch.Application.Abstractions.Identity;
 using CleanArch.Application.Models.Identity;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;

@@ -1,4 +1,4 @@
-﻿using CleanArch.Application.Interfaces.Email;
+﻿using CleanArch.Application.Abstractions.Email;
 using CleanArch.Application.Models.Emails;
 using Microsoft.Extensions.Options;
 using SendGrid;

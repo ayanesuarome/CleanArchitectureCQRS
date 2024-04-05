@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using CleanArch.Application.Exceptions;
 using CleanArch.Application.Extensions;
-using CleanArch.Application.Interfaces.Identity;
+using CleanArch.Application.Abstractions.Identity;
 using CleanArch.Domain.Entities;
 using CleanArch.Domain.Repositories;
 using FluentValidation;

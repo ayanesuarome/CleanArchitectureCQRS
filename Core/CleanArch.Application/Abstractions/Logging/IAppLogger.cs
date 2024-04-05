@@ -1,4 +1,4 @@
-﻿namespace CleanArch.Application.Interfaces.Logging;
+﻿namespace CleanArch.Application.Abstractions.Logging;
 
 public interface IAppLogger<T>
 {

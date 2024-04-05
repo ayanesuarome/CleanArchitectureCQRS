@@ -1,4 +1,4 @@
-﻿using CleanArch.Application.Interfaces.Logging;
+﻿using CleanArch.Application.Abstractions.Logging;
 using Microsoft.Extensions.Logging;
 
 namespace CleanArch.Infrastructure.Logging;

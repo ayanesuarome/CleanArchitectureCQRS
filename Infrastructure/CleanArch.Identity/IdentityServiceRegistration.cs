@@ -1,4 +1,4 @@
-﻿using CleanArch.Application.Interfaces.Identity;
+﻿using CleanArch.Application.Abstractions.Identity;
 using CleanArch.Application.Models.Identity;
 using CleanArch.Identity.ConfigureOptions;
 using CleanArch.Identity.DatabaseContext;
