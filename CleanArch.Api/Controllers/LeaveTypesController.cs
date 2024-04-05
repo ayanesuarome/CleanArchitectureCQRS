@@ -9,13 +9,13 @@ using CleanArch.Application.ResultPattern;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
-namespace CleanArch.Api.Controllers;
+namespace CleanArch.Api.Features.LeaveTypes;
 
 [Route("api/v{version:apiVersion}/[controller]")]
 [ApiController]
 [Authorize]
 [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-public class LeaveTypesController(IMediator mediator) : ControllerBase
+public sealed partial class LeaveTypesController(IMediator mediator) : ControllerBase
 {
     private readonly IMediator _mediator = mediator;
 
@@ -40,21 +40,6 @@ public class LeaveTypesController(IMediator mediator) : ControllerBase
         {
             SuccessResult<LeaveTypeDetailsDto> success => Ok(success.Data),
             NotFoundResult<LeaveTypeDetailsDto> => NotFound()
-        };
-    }
-
-    // POST api/<v>/<LeaveTypesController>
-    [HttpPost]
-    [ProducesResponseType(StatusCodes.Status201Created)]
-    [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<ActionResult> Post([FromBody] CreateLeaveTypeCommand leaveType)
-    {
-        Result<int> result = await _mediator.Send(leaveType);
-
-        return result switch
-        {
-            SuccessResult<int> successResult => CreatedAtAction(nameof(Get), new { successResult.Data }),
-            FailureResult<int> errorResult => BadRequest(errorResult.Error)
         };
     }
 
