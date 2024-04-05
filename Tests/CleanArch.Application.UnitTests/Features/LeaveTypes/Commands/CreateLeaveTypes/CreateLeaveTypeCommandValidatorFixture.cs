@@ -6,7 +6,7 @@ namespace CleanArch.Application.Tests.Features.LeaveTypes.Commands.CreateLeaveTy
 
 public class CreateLeaveTypeCommandValidatorFixture : IDisposable
 {
-    public CreateLeaveTypeCommandValidator validator;
+    public CreateLeaveType.Validator validator;
     public Mock<ILeaveTypeRepository> repositoryMock;
 
     #region Setup and Cleanup
@@ -14,7 +14,7 @@ public class CreateLeaveTypeCommandValidatorFixture : IDisposable
     public CreateLeaveTypeCommandValidatorFixture()
     {
         repositoryMock = new Mock<ILeaveTypeRepository>();
-        validator = new CreateLeaveTypeCommandValidator(repositoryMock.Object);
+        validator = new CreateLeaveType.Validator(repositoryMock.Object);
     }
 
     public void Dispose()

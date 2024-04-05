@@ -39,7 +39,7 @@ public class LeaveTypesController(IMediator mediator) : ControllerBase
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<ActionResult> Post([FromBody] CreateLeaveTypeCommand leaveType)
+    public async Task<ActionResult> Post([FromBody] CreateLeaveType.Command leaveType)
     {
         int id = await _mediator.Send(leaveType);
         return CreatedAtAction(nameof(Get), id);

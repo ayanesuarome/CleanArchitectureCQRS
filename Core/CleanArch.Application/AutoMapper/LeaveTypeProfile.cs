@@ -18,7 +18,7 @@ public class LeaveTypeProfile : Profile
 
         CreateMap<LeaveType, LeaveTypeDetailsDto>();
 
-        CreateMap<CreateLeaveTypeCommand, LeaveType>()
+        CreateMap<CreateLeaveType.Command, LeaveType>()
             .ForMember(dest => dest.Id, opt => opt.Ignore())
             .ForMember(dest => dest.DateCreated, opt => opt.Ignore())
             .ForMember(dest => dest.DateModified, opt => opt.Ignore());

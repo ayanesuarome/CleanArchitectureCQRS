@@ -16,38 +16,29 @@ public class CreateLeaveTypeCommandValidatorTest(CreateLeaveTypeCommandValidator
     [ClassData(typeof(InvalidStringClassData))]
     public async Task TestValidatorShouldFailWithNullOrEmptyName(string name)
     {
-        CreateLeaveTypeCommand command = new()
-        {
-            Name = name
-        };
+        CreateLeaveType.Command command = new(name, 10);
 
         var result = await _fixture.validator.TestValidateAsync(command);
 
         result.ShouldHaveValidationErrorFor(x => x.Name)
-            .WithErrorMessage($"{nameof(CreateLeaveTypeCommand.Name)} is required");
+            .WithErrorMessage($"{nameof(CreateLeaveType.Command.Name)} is required");
     }
 
     [Fact]
     public async Task TestValidatorShouldFailWithNameLengthGreaterThan70()
     {
-        CreateLeaveTypeCommand command = new()
-        {
-            Name = "somenamesomenamesomenamesomenamesomenamesomenamesomenamesomenamesomename"
-        };
+        CreateLeaveType.Command command = new("somenamesomenamesomenamesomenamesomenamesomenamesomenamesomenamesomename", 10);
 
         var result = await _fixture.validator.TestValidateAsync(command);
 
         result.ShouldHaveValidationErrorFor(x => x.Name)
-            .WithErrorMessage($"{nameof(CreateLeaveTypeCommand.Name)} must be up to 70 characters");
+            .WithErrorMessage($"{nameof(CreateLeaveType.Command.Name)} must be up to 70 characters");
     }
 
     [Fact]
     public async Task TestValidatorShouldFailWithNameNotUnique()
     {
-        CreateLeaveTypeCommand command = new()
-        {
-            Name = "somename"
-        };
+        CreateLeaveType.Command command = new("somename", 10);
 
         _fixture.repositoryMock
             .Setup(m => m.IsUniqueAsync(It.IsAny<string>(), default))
@@ -64,11 +55,7 @@ public class CreateLeaveTypeCommandValidatorTest(CreateLeaveTypeCommandValidator
     [InlineData(101)]
     public async Task TestValidatorShouldFailWithDefaultDaysNotInRange1_100(int defaultDays)
     {
-        CreateLeaveTypeCommand command = new()
-        {
-            Name = "somename",
-            DefaultDays = defaultDays
-        };
+        CreateLeaveType.Command command = new("somename", defaultDays);
 
         _fixture.repositoryMock
             .Setup(m => m.IsUniqueAsync(It.IsAny<string>(), default))
@@ -83,11 +70,7 @@ public class CreateLeaveTypeCommandValidatorTest(CreateLeaveTypeCommandValidator
     [Fact]
     public async Task TestValidatorShouldNotFail()
     {
-        CreateLeaveTypeCommand command = new()
-        {
-            Name = "somename",
-            DefaultDays = 100
-        };
+        CreateLeaveType.Command command = new("somename", 100);
 
         _fixture.repositoryMock
             .Setup(m => m.IsUniqueAsync(It.IsAny<string>(), default))
