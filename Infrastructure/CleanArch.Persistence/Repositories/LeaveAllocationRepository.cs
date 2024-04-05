@@ -1,6 +1,5 @@
 ﻿using CleanArch.Domain.Entities;
 using CleanArch.Domain.Repositories;
-using CleanArch.Persistence.DatabaseContext;
 using Microsoft.EntityFrameworkCore;
 
 namespace CleanArch.Persistence.Repositories;

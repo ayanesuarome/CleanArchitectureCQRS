@@ -1,7 +1,7 @@
 ﻿using CleanArch.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace CleanArch.Persistence.DatabaseContext;
+namespace CleanArch.Persistence;
 
 public sealed partial class CleanArchEFDbContext : DbContext
 {
@@ -17,7 +17,7 @@ public sealed partial class CleanArchEFDbContext : DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(CleanArchEFDbContext).Assembly);
-        
+
         base.OnModelCreating(modelBuilder);
     }
 }

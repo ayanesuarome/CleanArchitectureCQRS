@@ -1,5 +1,4 @@
-﻿using CleanArch.Persistence.DatabaseContext;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace CleanArch.Persistence.Migrations;
