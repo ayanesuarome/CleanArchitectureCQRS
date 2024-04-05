@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using CleanArch.Application.Features.LeaveRequests.Queries.GetLeaveRequestDetails;
-using CleanArch.Application.Interfaces.Identity;
+using CleanArch.Application.Abstractions.Identity;
 using CleanArch.Application.Models.Identity;
 using CleanArch.Domain.Entities;
 

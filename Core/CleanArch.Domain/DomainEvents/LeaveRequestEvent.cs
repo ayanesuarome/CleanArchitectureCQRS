@@ -1,5 +1,5 @@
-﻿using CleanArch.Domain.Entities;
-using CleanArch.Domain.Events;
+﻿using CleanArch.Domain.DomainEvents;
+using CleanArch.Domain.Entities;
 
 namespace CleanArch.Application.Events;
 

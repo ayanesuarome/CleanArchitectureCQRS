@@ -22,8 +22,8 @@ public class AdminLeaveAllocationController(IMediator mediator) : BaseAdminContr
     public async Task<ActionResult> Post([FromBody] CreateLeaveAllocationCommand leaveAllocation)
     {
         Result<int> rowsAffectedResult = await _mediator.Send(leaveAllocation);
-
-        if(rowsAffectedResult.IsFailure)
+        
+        if (rowsAffectedResult.IsFailure)
         {
             return BadRequest(rowsAffectedResult.Error);
         }

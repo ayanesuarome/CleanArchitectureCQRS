@@ -1,4 +1,4 @@
-﻿using CleanArch.Persistence.DatabaseContext;
+﻿using CleanArch.Persistence;
 using Microsoft.EntityFrameworkCore;
 
 namespace CleanArch.Benchmarking

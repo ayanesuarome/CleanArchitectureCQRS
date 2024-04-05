@@ -1,8 +1,8 @@
 ﻿using CleanArch.Application.Events;
 using CleanArch.Application.Features.LeaveRequests.Shared;
-using CleanArch.Application.Interfaces.Email;
-using CleanArch.Application.Interfaces.Identity;
-using CleanArch.Application.Interfaces.Logging;
+using CleanArch.Application.Abstractions.Email;
+using CleanArch.Application.Abstractions.Identity;
+using CleanArch.Application.Abstractions.Logging;
 using CleanArch.Application.Models.Emails;
 using CleanArch.Application.Models.Identity;
 using MediatR;

@@ -1,7 +1,7 @@
 ﻿using CleanArch.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace CleanArch.Persistence.DatabaseContext;
+namespace CleanArch.Persistence;
 
 public sealed partial class CleanArchEFDbContext : DbContext
 {

@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using CleanArch.Application.Features.LeaveRequests.Commands.CreateLeaveRequest;
-using CleanArch.Application.Interfaces.Identity;
+using CleanArch.Application.Abstractions.Identity;
 using CleanArch.Domain.Entities;
 
 namespace CleanArch.Application.AutoMapper.LeaveRequests;

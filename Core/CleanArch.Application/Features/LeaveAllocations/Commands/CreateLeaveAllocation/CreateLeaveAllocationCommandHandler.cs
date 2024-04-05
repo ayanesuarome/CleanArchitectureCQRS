@@ -1,4 +1,4 @@
-﻿using CleanArch.Application.Interfaces.Identity;
+﻿using CleanArch.Application.Abstractions.Identity;
 using CleanArch.Application.ResultPattern;
 using CleanArch.Application.Models.Identity;
 using CleanArch.Domain.Entities;

@@ -1,6 +1,6 @@
 ﻿using CleanArch.Application.Models.Emails;
 
-namespace CleanArch.Application.Interfaces.Email;
+namespace CleanArch.Application.Abstractions.Email;
 
 public interface IEmailSender
 {

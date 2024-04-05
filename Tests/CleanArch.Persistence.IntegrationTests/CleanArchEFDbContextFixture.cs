@@ -1,5 +1,4 @@
-﻿using CleanArch.Persistence.DatabaseContext;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 
 namespace CleanArch.Persistence.Tests;
 

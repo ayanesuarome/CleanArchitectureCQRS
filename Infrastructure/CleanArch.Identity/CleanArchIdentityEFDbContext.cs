@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
-namespace CleanArch.Identity.DatabaseContext;
+namespace CleanArch.Identity;
 
 public sealed partial class CleanArchIdentityEFDbContext : IdentityDbContext<ApplicationUser>
 {
