@@ -1,4 +1,4 @@
-﻿using CleanArch.Domain.DomainEvents;
+﻿using CleanArch.Domain.Events;
 using CleanArch.Domain.Entities;
 
 namespace CleanArch.Application.Events;
