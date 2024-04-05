@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace CleanArch.Identity.Configurations;
+namespace CleanArch.Identity.EntityConfigurations;
 
 internal class UserConfiguration : IEntityTypeConfiguration<ApplicationUser>
 {
