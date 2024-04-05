@@ -4,7 +4,7 @@ using Microsoft.Extensions.Options;
 using SendGrid;
 using SendGrid.Helpers.Mail;
 
-namespace CleanArch.Infrastructure.EmailService;
+namespace CleanArch.Infrastructure.Services.Email;
 
 public class EmailSender : IEmailSender
 {
@@ -48,7 +48,7 @@ public class EmailSender : IEmailSender
 
         SendGridMessage message = MailHelper.CreateSingleTemplateEmail(from, to, email.TemplateId, email.TemplateData);
         message.AddReplyTo(replyTo);
-        
+
         var response = await _client.SendEmailAsync(message);
 
         return response.IsSuccessStatusCode;
