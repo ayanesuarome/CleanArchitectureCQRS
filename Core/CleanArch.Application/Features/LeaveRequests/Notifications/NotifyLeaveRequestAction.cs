@@ -1,5 +1,4 @@
-﻿using CleanArch.Application.Events;
-using CleanArch.Application.Features.LeaveRequests.Shared;
+﻿using CleanArch.Application.Features.LeaveRequests.Shared;
 using CleanArch.Application.Abstractions.Email;
 using CleanArch.Application.Abstractions.Identity;
 using CleanArch.Application.Abstractions.Logging;
@@ -7,6 +6,7 @@ using CleanArch.Application.Models.Emails;
 using CleanArch.Application.Models.Identity;
 using MediatR;
 using Microsoft.Extensions.Options;
+using CleanArch.Domain.Events;
 
 namespace CleanArch.Application.Features.LeaveRequests.Notifications;
 

@@ -1,4 +1,5 @@
-﻿using CleanArch.Application.Events;
+﻿using CleanArch.Api.Infrastructure;
+using CleanArch.Application.Events;
 using CleanArch.Application.Features.LeaveRequests.Commands.ChangeLeaveRequestApproval;
 using CleanArch.Application.Features.LeaveRequests.Queries.AdminGetLeaveRequestList;
 using CleanArch.Application.Features.LeaveRequests.Queries.Shared;
