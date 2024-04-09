@@ -10,7 +10,7 @@ public static class LeaveTypeErrors
     public static Error NameMaximumLength(int maxLength) => new Error("LeaveType.NameMaximumLengthIsOutOfRange", $"The {nameof(LeaveType.Name)} must be up to {maxLength} characters.");
     public static Error NameUnique() => new Error("LeaveType.NameIsUnique", "Leave type already exist.");
     public static Error DefaultDaysRange(string range) => new Error("LeaveType.DefaultDaysNotInRange", $"The {nameof(LeaveType.DefaultDays)} must be between {range}.");
-    public static Error NotFound(int id) => new Error($"LeaveType.NotFound", $"{nameof(LeaveType)} with Id '{id}' not found");
+    public static Error NotFound(int id) => new Error($"LeaveType.NotFound", $"Leave type with Id '{id}' not found.");
 
     public static Error InvalidLeaveType(IDictionary<string, string[]> errors)
     {
@@ -20,5 +20,10 @@ public static class LeaveTypeErrors
     public static Error CreateLeaveTypeValidation(string message)
     {
         return new Error($"CreateLeaveType.Validation", message);
+    }
+    
+    public static Error UpdateLeaveTypeValidation(string message)
+    {
+        return new Error($"UpdateLeaveType.Validation", message);
     }
 }

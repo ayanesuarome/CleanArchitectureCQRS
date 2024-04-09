@@ -11,7 +11,7 @@ public sealed partial class LeaveTypesController
     // PUT api/<v>/<LeaveTypesController>/5
     [HttpPut(ApiRoutes.LeaveTypes.Put)]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
-    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(FailureResult), StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult> Put(int id, [FromBody] UpdateLeaveTypeRequest request)
     {

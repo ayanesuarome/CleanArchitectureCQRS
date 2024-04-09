@@ -33,7 +33,7 @@ public static partial class UpdateLeaveType
 
             if (!validationResult.IsValid)
             {
-                return new FailureResult<Unit>(LeaveTypeErrors.InvalidLeaveType(validationResult.ToDictionary()));
+                return new FailureResult<Unit>(LeaveTypeErrors.UpdateLeaveTypeValidation(validationResult.ToString()));
             }
 
             _mapper.Map(request, leaveType);

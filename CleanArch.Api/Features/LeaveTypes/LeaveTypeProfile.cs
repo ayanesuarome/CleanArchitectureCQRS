@@ -24,6 +24,13 @@ public class LeaveTypeProfile : Profile
             .ForMember(dest => dest.DateModified, opt => opt.Ignore())
             .ForMember(dest => dest.ModifiedBy, opt => opt.Ignore());
 
+        CreateMap<UpdateLeaveTypes.UpdateLeaveType.Command, LeaveType>()
+            .ForMember(dest => dest.Id, opt => opt.Ignore())
+            .ForMember(dest => dest.DateCreated, opt => opt.Ignore())
+            .ForMember(dest => dest.CreatedBy, opt => opt.Ignore())
+            .ForMember(dest => dest.DateModified, opt => opt.Ignore())
+            .ForMember(dest => dest.ModifiedBy, opt => opt.Ignore());
+
         CreateMap<CreateLeaveTypeRequest, CreateLeaveTypes.CreateLeaveType.Command>();
     }
 }

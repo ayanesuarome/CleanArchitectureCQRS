@@ -13,8 +13,8 @@ public sealed partial class LeaveTypesController
     // POST api/<v>/<LeaveTypesController>
     [HttpPost(ApiRoutes.LeaveTypes.Post)]
     [ProducesResponseType(StatusCodes.Status201Created)]
-    [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<ActionResult> Post([FromBody] CreateLeaveTypeRequest request)
+    [ProducesResponseType(typeof(FailureResult), StatusCodes.Status400BadRequest)]
+    public async Task<IActionResult> Post([FromBody] CreateLeaveTypeRequest request)
     {
         CreateLeaveType.Command commnad = _mapper.Map<CreateLeaveType.Command>(request);
         Result<int> result = await _mediator.Send(commnad);

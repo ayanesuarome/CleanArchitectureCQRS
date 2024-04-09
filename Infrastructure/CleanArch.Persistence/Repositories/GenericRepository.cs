@@ -13,7 +13,7 @@ public class GenericRepository<TEntity>(CleanArchEFDbContext dbContext) : IGener
     public virtual IQueryable<TEntity> Table => Entities;
     public virtual IQueryable<TEntity> TableNoTracking => Entities.AsNoTracking();
 
-    public async Task<IReadOnlyList<TEntity>> GetAsync()
+    public async Task<IReadOnlyCollection<TEntity>> GetAsync()
     {
         return await TableNoTracking.ToListAsync();
     }

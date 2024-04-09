@@ -16,4 +16,16 @@ public static class ApiRoutes
         public const string Put = "leave-types/{id}";
         public const string Delete = "leave-types/{id}";
     }
+
+    /// <summary>
+    /// Contains the leave request routes.
+    /// </summary>
+    public static class LeaveRequests
+    {
+        public const string Get = "leave-requests";
+        public const string GetById = "leave-requests/{id}";
+        public const string Post = "leave-requests";
+        public const string Put = "leave-requests/{id}";
+        public const string Delete = "leave-requests/{id}";
+    }
 }
