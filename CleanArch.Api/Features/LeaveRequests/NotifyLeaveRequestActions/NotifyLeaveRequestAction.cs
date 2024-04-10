@@ -8,7 +8,7 @@ using MediatR;
 using Microsoft.Extensions.Options;
 using CleanArch.Domain.Events;
 
-namespace CleanArch.Application.Features.LeaveRequests.Notifications;
+namespace CleanArch.Api.Features.LeaveRequests.NotifyLeaveRequestActions;
 
 public class NotifyLeaveRequestAction : INotificationHandler<LeaveRequestEvent>
 {

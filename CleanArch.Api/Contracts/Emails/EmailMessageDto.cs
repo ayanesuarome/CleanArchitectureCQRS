@@ -1,4 +1,4 @@
-﻿namespace CleanArch.Application.Features.LeaveRequests.Shared;
+﻿namespace CleanArch.Api.Contracts.Emails;
 
 public record EmailMessageDto(string RecipientName, DateTimeOffset Start, DateTimeOffset End, DateTimeOffset Now)
 {
