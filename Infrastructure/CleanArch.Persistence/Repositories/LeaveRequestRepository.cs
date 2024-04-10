@@ -11,7 +11,7 @@ public class LeaveRequestRepository : GenericRepository<LeaveRequest>, ILeaveReq
     {
     }
 
-    public async Task<List<LeaveRequest>> GetLeaveRequestsWithDetailsAsync(string? employeeId)
+    public async Task<IReadOnlyCollection<LeaveRequest>> GetLeaveRequestsWithDetailsAsync(string? employeeId)
     {
         IQueryable<LeaveRequest> query = TableNoTracking;
 

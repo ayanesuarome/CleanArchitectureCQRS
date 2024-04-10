@@ -1,4 +1,5 @@
-﻿using CleanArch.Api.Contracts.LeaveRequests;
+﻿using CleanArch.Api.Contracts;
+using CleanArch.Api.Contracts.LeaveRequests;
 using CleanArch.Api.Features.LeaveRequests.ChangeLeaveRequestApprovals;
 using CleanArch.Application.ResultPattern;
 using CleanArch.Domain.Entities;
@@ -10,12 +11,12 @@ namespace CleanArch.Api.Features.LeaveRequests;
 public sealed partial class AdminLeaveRequestController
 {
     // PUT api/admin/<v>/<AdminLeaveRequestController>/5/UpdateApproval
-    [HttpPut("{id}/UpdateApproval")]
+    [HttpPut(ApiRoutes.LeaveRequests.AdminUpdateApproval)]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(typeof(FailureResult), StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesDefaultResponseType]
-    public async Task<ActionResult> UpdateApproval(int id, [FromBody] ChangeLeaveRequestApprovalRequest request)
+    public async Task<IActionResult> UpdateApproval(int id, [FromBody] ChangeLeaveRequestApprovalRequest request)
     {
         ChangeLeaveRequestApproval.Command command = _mapper.Map<ChangeLeaveRequestApproval.Command>(request);
         command.Id = id;

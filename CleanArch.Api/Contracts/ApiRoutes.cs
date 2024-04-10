@@ -23,10 +23,12 @@ public static class ApiRoutes
     public static class LeaveRequests
     {
         public const string Get = "leave-requests";
+        public const string AdminGet = "admin-leave-requests";
         public const string GetById = "leave-requests/{id}";
         public const string Post = "leave-requests";
         public const string Put = "leave-requests/{id}";
         public const string Delete = "leave-requests/{id}";
         public const string CancelRequest = "leave-requests/{id}/cancel-request";
+        public const string AdminUpdateApproval = "admin-leave-requests/{id}/update-approval";
     }
 }
