@@ -15,13 +15,13 @@ public static partial class GetLeaveTypeDetail
         private readonly IMapper _mapper = mapper;
         private readonly ILeaveTypeRepository _repository = repository;
 
-        public async Task<Result<LeaveTypeDetailDto>> Handle(Query request, CancellationToken cancellationToken)
+        public async Task<Result<LeaveTypeDetailDto>> Handle(Query query, CancellationToken cancellationToken)
         {
-            LeaveType leaveType = await _repository.GetByIdAsync(request.Id);
+            LeaveType leaveType = await _repository.GetByIdAsync(query.Id);
 
             if (leaveType is null)
             {
-                return new NotFoundResult<LeaveTypeDetailDto>(LeaveTypeErrors.NotFound(request.Id));
+                return new NotFoundResult<LeaveTypeDetailDto>(LeaveTypeErrors.NotFound(query.Id));
             }
 
             LeaveTypeDetailDto dto = _mapper.Map<LeaveTypeDetailDto>(leaveType);

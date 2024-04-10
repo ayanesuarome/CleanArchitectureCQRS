@@ -1,10 +1,10 @@
 ﻿using AutoMapper;
-using CleanArch.Application.Features.LeaveRequests.Queries.GetLeaveRequestDetails;
 using CleanArch.Application.Abstractions.Identity;
 using CleanArch.Application.Models.Identity;
 using CleanArch.Domain.Entities;
+using CleanArch.Api.Contracts.LeaveRequests;
 
-namespace CleanArch.Application.AutoMapper.LeaveRequests;
+namespace CleanArch.Api.Features.LeaveRequests;
 
 public class FieldResolverEmployeeForLeaveRequestDetailsDto(IUserService service) : IValueResolver<LeaveRequest, LeaveRequestDetailsDto, Employee>
 {

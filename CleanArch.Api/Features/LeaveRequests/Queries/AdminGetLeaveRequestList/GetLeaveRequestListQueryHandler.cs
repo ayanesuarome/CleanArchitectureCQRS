@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using CleanArch.Application.Features.LeaveRequests.Queries.Shared;
+using CleanArch.Api.Contracts.LeaveRequests;
 using CleanArch.Application.ResultPattern;
 using CleanArch.Domain.Entities;
 using CleanArch.Domain.Repositories;

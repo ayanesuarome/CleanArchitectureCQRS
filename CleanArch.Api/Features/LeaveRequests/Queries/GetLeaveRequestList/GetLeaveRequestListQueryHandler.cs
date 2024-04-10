@@ -1,10 +1,10 @@
 ﻿using AutoMapper;
-using CleanArch.Application.Features.LeaveRequests.Queries.Shared;
 using CleanArch.Application.Abstractions.Identity;
 using CleanArch.Application.ResultPattern;
 using CleanArch.Domain.Entities;
 using CleanArch.Domain.Repositories;
 using MediatR;
+using CleanArch.Api.Contracts.LeaveRequests;
 
 namespace CleanArch.Application.Features.LeaveRequests.Queries.GetLeaveRequestList;
 

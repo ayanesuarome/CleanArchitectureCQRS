@@ -1,5 +1,6 @@
 ﻿using CleanArch.Api.Contracts;
 using CleanArch.Application.ResultPattern;
+using CleanArch.Api.Features.LeaveTypes.DeleteLeaveTypes;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -11,9 +12,9 @@ namespace CleanArch.Api.Features.LeaveTypes
         [HttpDelete(ApiRoutes.LeaveTypes.Delete)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult> Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
-            Result<Unit> result = await _mediator.Send(new DeleteLeaveTypes.DeleteLeaveType.Command(id));
+            Result<Unit> result = await _mediator.Send(new DeleteLeaveType.Command(id));
 
             return result switch
             {

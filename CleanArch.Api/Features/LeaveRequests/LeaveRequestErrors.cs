@@ -9,8 +9,9 @@ public static class LeaveRequestErrors
     public static Error RequestCommentsMaximumLength(int length) => new Error("LeaveRequest.RequestCommentsMaximumLength", $"{nameof(LeaveRequest.RequestComments)} must be up to {length}.");
     public static Error StartDateLowerThanEndDate(string message) => new Error("LeaveRequest.StartDateMustBeLowerThanEndDate", message);
     public static Error EndDateGeatherThanStartDate(string message) => new Error("LeaveRequest.EndDateGeatherThanStartDate", message);
+    public static Error IdRequired() => new Error("LeaveRequest.IdRequired", $"{nameof(LeaveRequest.Id)} is required.");
 
-    public static Error NotFound(int id) => new Error("LeaveRequest.NotFound", $"Leave request with Id '{id}' not found");
+    public static Error NotFound(int id) => new Error("LeaveRequest.NotFound", $"Leave request with Id '{id}' not found.");
 
     public static Error InvalidLeaveRequest(IDictionary<string, string[]> errors)
     {
@@ -32,11 +33,11 @@ public static class LeaveRequestErrors
         return new Error($"UpdateLeaveRequest.Validation", message);
     }
 
-    public static Error InvalidApprovalStateIsCanceled() => new Error($"{nameof(LeaveRequest)}.InvalidApprovalStateIsCanceled", "This leave request has been cancelled and its approval state cannot be updated");
+    public static Error InvalidApprovalStateIsCanceled() => new Error("LeaveRequest.InvalidApprovalStateIsCanceled", "This leave request has been cancelled and its approval state cannot be updated.");
 
-    public static Error InvalidNumberOfDays(int daysRequested) => new Error($"{nameof(LeaveRequest)}.InvalidNumberOfDays", $"The employee's allocation does not have {daysRequested} available number of days");
+    public static Error InvalidNumberOfDays(int daysRequested) => new Error("LeaveRequest.InvalidNumberOfDays", $"The employee's allocation does not have {daysRequested} available number of days.");
 
-    public static Error NoAllocationsForLeaveType(int leaveTypeId) => new Error($"{nameof(LeaveRequest)}.NoAllocationsForLeaveType", $"You do not have any allocation for this leave type ID {leaveTypeId}");
+    public static Error NoAllocationsForLeaveType(int leaveTypeId) => new Error("LeaveRequest.NoAllocationsForLeaveType", $"You do not have any allocation for this leave type ID {leaveTypeId}.");
 
     public static Error NotEnoughDays() => new Error("LeaveRequest.NotEnoughDays", "You do not have enough available days for this request.");
 }

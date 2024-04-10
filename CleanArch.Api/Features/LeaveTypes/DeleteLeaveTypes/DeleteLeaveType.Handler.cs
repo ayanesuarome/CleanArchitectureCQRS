@@ -12,13 +12,13 @@ public static partial class DeleteLeaveType
     {
         private readonly ILeaveTypeRepository _repository = repository;
 
-        public async Task<Result<Unit>> Handle(Command request, CancellationToken cancellationToken)
+        public async Task<Result<Unit>> Handle(Command command, CancellationToken cancellationToken)
         {
-            LeaveType leaveTypeToDelete = await _repository.GetByIdAsync(request.Id);
+            LeaveType leaveTypeToDelete = await _repository.GetByIdAsync(command.Id);
 
             if (leaveTypeToDelete is null)
             {
-                return new NotFoundResult<Unit>(LeaveTypeErrors.NotFound(request.Id));
+                return new NotFoundResult<Unit>(LeaveTypeErrors.NotFound(command.Id));
             }
 
             await _repository.DeleteAsync(leaveTypeToDelete);

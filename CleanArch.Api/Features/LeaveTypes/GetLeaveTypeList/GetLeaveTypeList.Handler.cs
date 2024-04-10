@@ -15,9 +15,10 @@ public static partial class GetLeaveTypeList
         private readonly IMapper _mapper = mapper;
         private readonly ILeaveTypeRepository _repository = repository;
 
-        public async Task<Result<LeaveTypeListDto>> Handle(Query request, CancellationToken cancellationToken)
+        public async Task<Result<LeaveTypeListDto>> Handle(Query query, CancellationToken cancellationToken)
         {
             IReadOnlyCollection<LeaveType> leaveTypes = await _repository.GetAsync();
+
             LeaveTypeListDto leaveTypeDtos = new(
                 _mapper.Map<IReadOnlyCollection<LeaveTypeListDto.LeaveTypeModel>>(leaveTypes));
 

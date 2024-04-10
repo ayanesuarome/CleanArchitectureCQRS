@@ -1,5 +1,6 @@
 ﻿using CleanArch.Api.Contracts;
 using CleanArch.Api.Contracts.LeaveTypes;
+using CleanArch.Api.Features.LeaveTypes.UpdateLeaveTypes;
 using CleanArch.Application.ResultPattern;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -13,10 +14,12 @@ public sealed partial class LeaveTypesController
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(typeof(FailureResult), StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<ActionResult> Put(int id, [FromBody] UpdateLeaveTypeRequest request)
+    public async Task<IActionResult> Put(int id, [FromBody] UpdateLeaveTypeRequest request)
     {
-        UpdateLeaveTypes.UpdateLeaveType.Command commnand = _mapper.Map<UpdateLeaveTypes.UpdateLeaveType.Command>(request);
-        Result<Unit> result = await _mediator.Send(commnand);
+        UpdateLeaveType.Command command = _mapper.Map<UpdateLeaveType.Command>(request);
+        command.Id = id;
+
+        Result<Unit> result = await _mediator.Send(command);
 
         return result switch
         {

@@ -32,18 +32,19 @@ public static partial class CreateLeaveRequest
             _validator = validator;
         }
 
-        public async Task<Result<LeaveRequest>> Handle(Command request, CancellationToken cancellationToken)
+        public async Task<Result<LeaveRequest>> Handle(Command command, CancellationToken cancellationToken)
         {
-            ValidationResult validationResult = await _validator.ValidateAsync(request, cancellationToken);
+            ValidationResult validationResult = await _validator.ValidateAsync(command, cancellationToken);
 
             if (!validationResult.IsValid)
             {
-                return new FailureResult<LeaveRequest>(LeaveRequestErrors.CreateLeaveRequestValidation(validationResult.ToString()));
+                return new FailureResult<LeaveRequest>(
+                    LeaveRequestErrors.CreateLeaveRequestValidation(validationResult.ToString()));
             }
 
             // check on employee's allocation
-            LeaveAllocation leaveAllocation = await _allocationRepository.GetEmployeeAllocation(_userService.UserId, request.LeaveTypeId);
-            bool result = await _allocationRepository.HasEmployeeAllocation(_userService.UserId, request.LeaveTypeId);
+            LeaveAllocation leaveAllocation = await _allocationRepository.GetEmployeeAllocation(_userService.UserId, command.LeaveTypeId);
+            bool result = await _allocationRepository.HasEmployeeAllocation(_userService.UserId, command.LeaveTypeId);
 
             // if allocations aren't enough, return validation error
             if (leaveAllocation is null)
@@ -51,12 +52,13 @@ public static partial class CreateLeaveRequest
                 return new FailureResult<LeaveRequest>(LeaveRequestErrors.NotEnoughDays());
             }
 
-            if (!leaveAllocation.HasEnoughDays(request.StartDate, request.EndDate))
+            if (!leaveAllocation.HasEnoughDays(command.StartDate, command.EndDate))
             {
-                return new FailureResult<LeaveRequest>(LeaveRequestErrors.NoAllocationsForLeaveType(request.LeaveTypeId));
+                return new FailureResult<LeaveRequest>(
+                    LeaveRequestErrors.NoAllocationsForLeaveType(command.LeaveTypeId));
             }
 
-            LeaveRequest leaveRequest = _mapper.Map<LeaveRequest>(request);
+            LeaveRequest leaveRequest = _mapper.Map<LeaveRequest>(command);
             await _leaveRequestRepository.CreateAsync(leaveRequest);
 
             return new SuccessResult<LeaveRequest>(leaveRequest);

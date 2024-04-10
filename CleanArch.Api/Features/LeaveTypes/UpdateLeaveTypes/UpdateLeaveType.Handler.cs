@@ -20,23 +20,23 @@ public static partial class UpdateLeaveType
         private readonly ILeaveTypeRepository _repository = repository;
         private readonly IValidator<Command> _validator = validator;
 
-        public async Task<Result<Unit>> Handle(Command request, CancellationToken cancellationToken)
+        public async Task<Result<Unit>> Handle(Command command, CancellationToken cancellationToken)
         {
-            LeaveType leaveType = await _repository.GetByIdAsync(request.Id);
+            LeaveType leaveType = await _repository.GetByIdAsync(command.Id);
 
             if (leaveType is null)
             {
-                return new NotFoundResult<Unit>(LeaveTypeErrors.NotFound(request.Id));
+                return new NotFoundResult<Unit>(LeaveTypeErrors.NotFound(command.Id));
             }
 
-            ValidationResult validationResult = await _validator.ValidateAsync(request, cancellationToken);
+            ValidationResult validationResult = await _validator.ValidateAsync(command, cancellationToken);
 
             if (!validationResult.IsValid)
             {
                 return new FailureResult<Unit>(LeaveTypeErrors.UpdateLeaveTypeValidation(validationResult.ToString()));
             }
 
-            _mapper.Map(request, leaveType);
+            _mapper.Map(command, leaveType);
             await _repository.UpdateAsync(leaveType);
 
             return new SuccessResult<Unit>(Unit.Value);

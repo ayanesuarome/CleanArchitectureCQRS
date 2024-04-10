@@ -19,16 +19,16 @@ public static partial class CreateLeaveType
         private readonly ILeaveTypeRepository _repository = repository;
         private readonly IValidator<Command> _validator = validator;
 
-        public async Task<Result<int>> Handle(Command request, CancellationToken cancellationToken)
+        public async Task<Result<int>> Handle(Command commnad, CancellationToken cancellationToken)
         {
-            ValidationResult validationResult = await _validator.ValidateAsync(request, cancellationToken);
+            ValidationResult validationResult = await _validator.ValidateAsync(commnad, cancellationToken);
 
             if (!validationResult.IsValid)
             {
                 return new FailureResult<int>(LeaveTypeErrors.CreateLeaveTypeValidation(validationResult.ToString()));
             }
 
-            LeaveType leaveTypeToCreate = _mapper.Map<LeaveType>(request);
+            LeaveType leaveTypeToCreate = _mapper.Map<LeaveType>(commnad);
             await _repository.CreateAsync(leaveTypeToCreate);
 
             return new SuccessResult<int>(leaveTypeToCreate.Id);

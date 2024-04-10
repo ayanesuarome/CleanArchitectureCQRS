@@ -1,5 +1,6 @@
 ﻿using CleanArch.Api.Contracts;
 using CleanArch.Api.Contracts.LeaveTypes;
+using CleanArch.Api.Features.LeaveTypes.GetLeaveTypeDetails;
 using CleanArch.Application.ResultPattern;
 using Microsoft.AspNetCore.Mvc;
 
@@ -13,7 +14,7 @@ public sealed partial class LeaveTypesController
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> Get(int id)
     {
-        Result<LeaveTypeDetailDto> result = await _mediator.Send(new GetLeaveTypeDetails.GetLeaveTypeDetail.Query(id));
+        Result<LeaveTypeDetailDto> result = await _mediator.Send(new GetLeaveTypeDetail.Query(id));
 
         return result switch
         {
