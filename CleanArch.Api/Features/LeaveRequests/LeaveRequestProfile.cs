@@ -11,9 +11,6 @@ public class LeaveRequestProfile : Profile
 {
     public LeaveRequestProfile()
     {
-        CreateMap<LeaveRequest, LeaveRequestDto>()
-            .ForMember(dest => dest.Employee, opt => opt.MapFrom<FieldResolverEmployeeForLeaveRequestDto>());
-
         CreateMap<LeaveRequest, LeaveRequestDetailsDto>()
             .ForMember(dest => dest.DateActioned, opt => opt.Ignore())
             .ForMember(dest => dest.Employee, opt => opt.MapFrom<FieldResolverEmployeeForLeaveRequestDetailsDto>());
