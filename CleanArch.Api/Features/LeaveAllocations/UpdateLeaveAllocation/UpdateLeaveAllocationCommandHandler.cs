@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using CleanArch.Application.Features.LeaveAllocations.Shared;
+using CleanArch.Api.Features.LeaveAllocations;
 using CleanArch.Application.ResultPattern;
 using CleanArch.Domain.Entities;
 using CleanArch.Domain.Repositories;
@@ -7,7 +7,7 @@ using FluentValidation;
 using FluentValidation.Results;
 using MediatR;
 
-namespace CleanArch.Application.Features.LeaveAllocations.Commands.UpdateLeaveAllocation;
+namespace CleanArch.Api.Features.LeaveAllocations.UpdateLeaveAllocation;
 
 public class UpdateLeaveAllocationCommandHandler(
     IMapper mapper,
@@ -23,14 +23,14 @@ public class UpdateLeaveAllocationCommandHandler(
     {
         LeaveAllocation leaveAllocation = await _repository.GetByIdAsync(request.Id);
 
-        if(leaveAllocation is null)
+        if (leaveAllocation is null)
         {
             return new NotFoundResult(LeaveAllocationErrors.NotFound(request.Id));
         }
 
         ValidationResult validationResult = await _validator.ValidateAsync(request, cancellationToken);
 
-        if(!validationResult.IsValid)
+        if (!validationResult.IsValid)
         {
             return new FailureResult(LeaveAllocationErrors.InvalidLeaveAllocation(validationResult.ToDictionary()));
         }

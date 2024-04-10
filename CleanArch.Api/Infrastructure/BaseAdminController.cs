@@ -8,7 +8,7 @@ namespace CleanArch.Api.Infrastructure;
 
 [Route("api/admin/v{version:apiVersion}/[controller]")]
 [Authorize(Roles = Roles.Administrator)]
-public abstract class BaseAdminController : BaseApiController
+public abstract class BaseAdminController : BaseController
 {
     protected BaseAdminController(IMediator mediator, IMapper mapper)
         : base(mediator, mapper)

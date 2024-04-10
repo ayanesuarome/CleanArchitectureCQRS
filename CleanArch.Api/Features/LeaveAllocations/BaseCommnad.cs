@@ -1,6 +1,6 @@
-﻿namespace CleanArch.Application.Features.LeaveAllocations.Shared;
+﻿namespace CleanArch.Api.Features.LeaveAllocations;
 
-public abstract record BaseLeaveAllocationCommnad
+public abstract record BaseCommnad
 {
     public int LeaveTypeId { get; set; }
     public int NumberOfDays { get; set; }

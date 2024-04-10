@@ -2,9 +2,9 @@
 using CleanArch.Domain.Repositories;
 using FluentValidation;
 
-namespace CleanArch.Api.Features.LeaveRequests.CreateLeaveRequests;
+namespace CleanArch.Api.Features.LeaveAllocations.CreateLeaveAllocations;
 
-public static partial class CreateLeaveRequest
+public static partial class CreateLeaveAllocation
 {
     public sealed class Validator : AbstractValidator<Command>
     {
@@ -17,13 +17,7 @@ public static partial class CreateLeaveRequest
             RuleFor(m => m.LeaveTypeId)
                 .GreaterThan(0)
                 .MustAsync(LeaveTypeMustExist)
-                .WithError(LeaveRequestErrors.LeaveTypeMustExist());
-
-            RuleFor(m => m.RequestComments)
-                .MaximumLength(300)
-                .WithError(LeaveRequestErrors.RequestCommentsMaximumLength(300));
-
-            Include(new BaseCommandValidator());
+                .WithError(LeaveAllocationErrors.LeaveTypeMustExist());
         }
 
         private async Task<bool> LeaveTypeMustExist(int id, CancellationToken token)

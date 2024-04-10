@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using CleanArch.Application.Features.LeaveAllocations.Shared;
+using CleanArch.Api.Features.LeaveAllocations;
 using CleanArch.Application.ResultPattern;
 using CleanArch.Domain.Entities;
 using CleanArch.Domain.Repositories;

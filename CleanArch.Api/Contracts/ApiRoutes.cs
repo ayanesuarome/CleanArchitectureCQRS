@@ -31,4 +31,16 @@ public static class ApiRoutes
         public const string CancelRequest = "leave-requests/{id}/cancel-request";
         public const string AdminUpdateApproval = "admin-leave-requests/{id}/update-approval";
     }
+    
+    /// <summary>
+    /// Contains the leave request routes.
+    /// </summary>
+    public static class LeaveAllocations
+    {
+        public const string Get = "leave-allocations";
+        public const string GetById = "leave-allocations/{id}";
+        public const string Post = "leave-allocations";
+        public const string Put = "leave-allocations/{id}";
+        public const string Delete = "leave-allocations/{id}";
+    }
 }
