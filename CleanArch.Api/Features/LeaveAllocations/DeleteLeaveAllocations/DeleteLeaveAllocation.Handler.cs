@@ -12,13 +12,13 @@ public static partial class DeleteLeaveAllocation
     {
         private readonly ILeaveAllocationRepository _repository = repository;
 
-        public async Task<Result> Handle(Command request, CancellationToken cancellationToken)
+        public async Task<Result> Handle(Command command, CancellationToken cancellationToken)
         {
-            LeaveAllocation leaveAllocation = await _repository.GetByIdAsync(request.Id);
+            LeaveAllocation leaveAllocation = await _repository.GetByIdAsync(command.Id);
 
             if (leaveAllocation is null)
             {
-                return new NotFoundResult(LeaveAllocationErrors.NotFound(request.Id));
+                return new NotFoundResult(LeaveAllocationErrors.NotFound(command.Id));
             }
 
             await _repository.DeleteAsync(leaveAllocation);
