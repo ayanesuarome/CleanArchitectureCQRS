@@ -1,9 +1,8 @@
-﻿using CleanArch.Application.Features.LeaveTypes.Commands.UpdateLeaveType;
-using CleanArch.Domain.Entities;
+﻿using CleanArch.Api.Features.LeaveTypes.UpdateLeaveTypes;
 using FluentValidation.TestHelper;
 using Moq;
 
-namespace CleanArch.Application.UnitTests.Features.LeaveTypes.Commands.UpdateLeaveType;
+namespace CleanArch.Application.UnitTests.Features.LeaveTypes.Commands.UpdateLeaveTypes;
 
 public class UpdateLeaveTypeCommandValidatorTest(UpdateLeaveTypeCommandValidatorFixture fixture)
     : IClassFixture<UpdateLeaveTypeCommandValidatorFixture>
@@ -15,36 +14,31 @@ public class UpdateLeaveTypeCommandValidatorTest(UpdateLeaveTypeCommandValidator
     [Fact]
     public async Task TestValidatorShouldFailWithNullId()
     {
-        UpdateLeaveTypeCommand command = new();
+        UpdateLeaveType.Command command = new("name", 10);
 
         var result = await _fixture.validator.TestValidateAsync(command);
 
         result.ShouldHaveValidationErrorFor(x => x.Id)
-            .WithErrorMessage($"{nameof(UpdateLeaveTypeCommand.Id)} is required");
+            .WithErrorMessage($"The {nameof(UpdateLeaveType.Command.Id)} is required.");
     }
 
     [Fact]
     public async Task TestValidatorShouldFailWithNameLengthGreaterThan70()
     {
-        UpdateLeaveTypeCommand command = new()
-        {
-            Name = "somenamesomenamesomenamesomenamesomenamesomenamesomenamesomenamesomename"
-        };
+        UpdateLeaveType.Command command = new(
+            "somenamesomenamesomenamesomenamesomenamesomenamesomenamesomenamesomename",
+            10);
 
         var result = await _fixture.validator.TestValidateAsync(command);
 
         result.ShouldHaveValidationErrorFor(x => x.Name)
-            .WithErrorMessage($"{nameof(UpdateLeaveTypeCommand.Name)} must be up to 70 characters");
+            .WithErrorMessage($"The {nameof(UpdateLeaveType.Command.Name)} must be up to 70 characters.");
     }
 
     [Fact]
     public async Task TestValidatorShouldFailWithNameNotUnique()
     {
-        UpdateLeaveTypeCommand command = new()
-        {
-            Id = 1,
-            Name = "somename"
-        };
+        UpdateLeaveType.Command command = new("somename", 10);
 
         _fixture.repositoryMock
             .Setup(m => m.IsUniqueAsync(command.Name, default))
@@ -53,16 +47,15 @@ public class UpdateLeaveTypeCommandValidatorTest(UpdateLeaveTypeCommandValidator
         var result = await _fixture.validator.TestValidateAsync(command);
 
         result.ShouldHaveValidationErrorFor(x => x.Name)
-            .WithErrorMessage("Leave type already exist");
+            .WithErrorMessage("Leave type already exist.");
     }
 
     [Fact]
     public async Task TestValidatorShouldNotFailWithNoNameToUpdate()
     {
-        UpdateLeaveTypeCommand command = new()
+        UpdateLeaveType.Command command = new(null, 100)
         {
-            Id = 1,
-            DefaultDays = 100
+            Id = 100,
         };
 
         var result = await _fixture.validator.TestValidateAsync(command);
@@ -73,11 +66,9 @@ public class UpdateLeaveTypeCommandValidatorTest(UpdateLeaveTypeCommandValidator
     [Fact]
     public async Task TestValidatorShouldNotFail()
     {
-        UpdateLeaveTypeCommand command = new()
+        UpdateLeaveType.Command command = new("Test Vacation", 100)
         {
             Id = 1,
-            Name = "Test Vacation",
-            DefaultDays = 100
         };
 
         var result = await _fixture.validator.TestValidateAsync(command);
@@ -90,17 +81,15 @@ public class UpdateLeaveTypeCommandValidatorTest(UpdateLeaveTypeCommandValidator
     [InlineData(101)]
     public async Task TestValidatorShouldFailWithDefaultDaysNotInRange1_100(int defaultDays)
     {
-        UpdateLeaveTypeCommand command = new()
+        UpdateLeaveType.Command command = new("Test Vacation", defaultDays)
         {
             Id = 1,
-            Name = "Test Vacation",
-            DefaultDays = defaultDays
         };
 
         var result = await _fixture.validator.TestValidateAsync(command);
 
         result.ShouldHaveValidationErrorFor(x => x.DefaultDays)
-            .WithErrorMessage("Default Days must be between 1 - 100");
+            .WithErrorMessage("The DefaultDays must be between 1 - 100.");
     }
 
     #endregion

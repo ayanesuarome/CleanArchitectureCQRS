@@ -1,4 +1,4 @@
-﻿using CleanArch.Application.Features.LeaveTypes.Commands.CreateLeaveType;
+﻿using CleanArch.Api.Features.LeaveTypes.CreateLeaveTypes;
 using CleanArch.Application.Tests.Features.Mocks;
 using FluentValidation.TestHelper;
 using Moq;
@@ -16,29 +16,29 @@ public class CreateLeaveTypeCommandValidatorTest(CreateLeaveTypeCommandValidator
     [ClassData(typeof(InvalidStringClassData))]
     public async Task TestValidatorShouldFailWithNullOrEmptyName(string name)
     {
-        CreateLeaveTypeCommand command = new(name, 1);
+        CreateLeaveType.Command command = new(name, 1);
 
         var result = await _fixture.validator.TestValidateAsync(command);
 
         result.ShouldHaveValidationErrorFor(x => x.Name)
-            .WithErrorMessage($"{nameof(CreateLeaveTypeCommand.Name)} is required");
+            .WithErrorMessage($"The Name is required.");
     }
 
     [Fact]
     public async Task TestValidatorShouldFailWithNameLengthGreaterThan70()
     {
-        CreateLeaveTypeCommand command = new("somenamesomenamesomenamesomenamesomenamesomenamesomenamesomenamesomename", 1);
+        CreateLeaveType.Command command = new("somenamesomenamesomenamesomenamesomenamesomenamesomenamesomenamesomename", 1);
 
         var result = await _fixture.validator.TestValidateAsync(command);
 
         result.ShouldHaveValidationErrorFor(x => x.Name)
-            .WithErrorMessage($"{nameof(CreateLeaveTypeCommand.Name)} must be up to 70 characters");
+            .WithErrorMessage("The Name must be up to 70 characters.");
     }
 
     [Fact]
     public async Task TestValidatorShouldFailWithNameNotUnique()
     {
-        CreateLeaveTypeCommand command = new("somename", 1);
+        CreateLeaveType.Command command = new("somename", 1);
 
         _fixture.repositoryMock
             .Setup(m => m.IsUniqueAsync(It.IsAny<string>(), default))
@@ -47,7 +47,7 @@ public class CreateLeaveTypeCommandValidatorTest(CreateLeaveTypeCommandValidator
         var result = await _fixture.validator.TestValidateAsync(command);
 
         result.ShouldHaveValidationErrorFor(x => x.Name)
-            .WithErrorMessage("Leave type already exist");
+            .WithErrorMessage("The Leave type already exist.");
     }
 
     [Theory]
@@ -55,7 +55,7 @@ public class CreateLeaveTypeCommandValidatorTest(CreateLeaveTypeCommandValidator
     [InlineData(101)]
     public async Task TestValidatorShouldFailWithDefaultDaysNotInRange1_100(int defaultDays)
     {
-        CreateLeaveTypeCommand command = new("somename", defaultDays);
+        CreateLeaveType.Command command = new("somename", defaultDays);
 
         _fixture.repositoryMock
             .Setup(m => m.IsUniqueAsync(It.IsAny<string>(), default))
@@ -64,13 +64,13 @@ public class CreateLeaveTypeCommandValidatorTest(CreateLeaveTypeCommandValidator
         var result = await _fixture.validator.TestValidateAsync(command);
 
         result.ShouldHaveValidationErrorFor(x => x.DefaultDays)
-            .WithErrorMessage("Default Days must be between 1 - 100");
+            .WithErrorMessage("The DefaultDays must be between 1 - 100.");
     }
 
     [Fact]
     public async Task TestValidatorShouldNotFail()
     {
-        CreateLeaveTypeCommand command = new("somename", 100);
+        CreateLeaveType.Command command = new("somename", 100);
 
         _fixture.repositoryMock
             .Setup(m => m.IsUniqueAsync(It.IsAny<string>(), default))

@@ -1,9 +1,9 @@
-﻿using CleanArch.Application.Features.LeaveRequests.Commands.CreateLeaveRequest;
+﻿using CleanArch.Api.Features.LeaveRequests.CreateLeaveRequests;
 using CleanArch.Domain.Entities;
 using FluentValidation.TestHelper;
 using Moq;
 
-namespace CleanArch.Application.Tests.Features.LeaveRequests.Commands.CreateLeaveRequest;
+namespace CleanArch.Application.Tests.Features.LeaveRequests.Commands.CreateLeaveRequests;
 
 public class CreateLeaveRequestCommandValidatorTest(CreateLeaveRequestCommandValidatorFixture fixture)
     : IClassFixture<CreateLeaveRequestCommandValidatorFixture>
@@ -17,24 +17,18 @@ public class CreateLeaveRequestCommandValidatorTest(CreateLeaveRequestCommandVal
     [InlineData(-1)]
     public async Task TestValidatorShouldFailWithLeaveTypeIdLessThanOrEqualTo0(int leaveTypeId)
     {
-        CreateLeaveRequestCommand command = new()
-        {
-            LeaveTypeId = leaveTypeId
-        };
+        CreateLeaveRequest.Command command = new(leaveTypeId, null);
 
         var result = await _fixture.validator.TestValidateAsync(command);
 
         result.ShouldHaveValidationErrorFor(x => x.LeaveTypeId)
-            .WithErrorMessage("Leave Type Id should be greather than 0");
+            .WithErrorMessage("There must be an associated Leave type.");
     }
 
     [Fact]
     public async Task TestValidatorShouldFailWithLeaveTypeDoesNotExist()
     {
-        CreateLeaveRequestCommand command = new()
-        {
-            LeaveTypeId = 1
-        };
+        CreateLeaveRequest.Command command = new(1, null);
 
         _fixture.repositoryMock
             .Setup(m => m.GetByIdAsync(command.LeaveTypeId))
@@ -46,13 +40,13 @@ public class CreateLeaveRequestCommandValidatorTest(CreateLeaveRequestCommandVal
         var result = await _fixture.validator.TestValidateAsync(command);
 
         result.ShouldHaveValidationErrorFor(x => x.LeaveTypeId)
-            .WithErrorMessage("Leave Type Id does not exist");
+            .WithErrorMessage("There must be an associated Leave type.");
     }
 
     [Fact]
     public async Task TestValidatorShouldFailWhenStartDateIsGreaterThanEndDate()
     {
-        CreateLeaveRequestCommand command = new()
+        CreateLeaveRequest.Command command = new(1, null)
         {
             StartDate = DateTime.Now.AddDays(1),
             EndDate = DateTime.Now,
@@ -65,17 +59,16 @@ public class CreateLeaveRequestCommandValidatorTest(CreateLeaveRequestCommandVal
         var result = await _fixture.validator.TestValidateAsync(command);
 
         result.ShouldHaveValidationErrorFor(x => x.StartDate)
-            .WithoutErrorMessage("Start Date must be before End Date");
+            .WithErrorMessage("The StartDate must be before EndDate.");
         result.ShouldHaveValidationErrorFor(x => x.EndDate)
-            .WithoutErrorMessage("End Date must be after Start Date");
+            .WithErrorMessage("The EndDate must be after StartDate.");
     }
 
     [Fact]
     public async Task TestValidatorShouldNotFail()
     {
-        CreateLeaveRequestCommand command = new()
+        CreateLeaveRequest.Command command = new(1, null)
         {
-            LeaveTypeId = 1,
             StartDate = DateTime.Now,
             EndDate = DateTime.Now.AddDays(1)
         };

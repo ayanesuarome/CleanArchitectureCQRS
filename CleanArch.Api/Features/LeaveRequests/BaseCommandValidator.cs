@@ -9,10 +9,10 @@ public sealed class BaseCommandValidator : AbstractValidator<BaseCommand>
     {
         RuleFor(m => m.StartDate)
             .LessThan(m => m.EndDate)
-            .WithError(LeaveRequestErrors.StartDateLowerThanEndDate("{PropertyName} must be before {ComparisonValue}."));
+            .WithError(LeaveRequestErrors.StartDateLowerThanEndDate());
 
         RuleFor(m => m.EndDate)
             .GreaterThan(m => m.StartDate)
-            .WithError(LeaveRequestErrors.EndDateGeatherThanStartDate("{PropertyName} must be before {ComparisonValue}."));
+            .WithError(LeaveRequestErrors.EndDateGeatherThanStartDate());
     }
 }

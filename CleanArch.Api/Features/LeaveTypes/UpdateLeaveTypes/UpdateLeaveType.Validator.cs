@@ -22,7 +22,7 @@ public static partial class UpdateLeaveType
             RuleFor(m => m.Name)
                 .Cascade(CascadeMode.Stop)
                 .MaximumLength(70)
-                    .WithError(LeaveTypeErrors.NameMaximumLength(70))
+                    .WithError(LeaveTypeErrors.NameMaximumLength("{MaxLength}"))
                 .MustAsync(LeaveTypeUniqueName)
                     .WithError(LeaveTypeErrors.NameUnique());
 
@@ -33,12 +33,15 @@ public static partial class UpdateLeaveType
 
         private async Task<bool> LeaveTypeUniqueName(Command command, string name, CancellationToken cancellation)
         {
-            LeaveType leaveType = await _repository.GetByIdAsync(command.Id);
-
-            if (leaveType.Name != name)
+            if(!string.IsNullOrEmpty(name))
             {
-                return await _repository.IsUniqueAsync(name, cancellation);
-            }
+                LeaveType leaveType = await _repository.GetByIdAsync(command.Id);
+
+                if (leaveType.Name != name)
+                {
+                    return await _repository.IsUniqueAsync(name, cancellation);
+                }
+            }           
 
             return true;
         }

@@ -9,10 +9,6 @@ public class LeaveAllocationProfile : Profile
 {
     public LeaveAllocationProfile()
     {
-        CreateMap<LeaveAllocation, LeaveAllocationListDto>();
-
-        CreateMap<LeaveAllocation, LeaveAllocationDetailsDto>();
-
         CreateMap<UpdateLeaveAllocation.Command, LeaveAllocation>()
             .ForMember(dest => dest.Id, opt => opt.Ignore())
             .ForMember(dest => dest.LeaveType, opt => opt.Ignore())

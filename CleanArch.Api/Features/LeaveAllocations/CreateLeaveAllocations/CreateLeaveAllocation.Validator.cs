@@ -15,9 +15,11 @@ public static partial class CreateLeaveAllocation
             _repository = repository;
 
             RuleFor(m => m.LeaveTypeId)
+                .Cascade(CascadeMode.Stop)
                 .GreaterThan(0)
+                    .WithError(LeaveAllocationErrors.LeaveTypeMustExist())
                 .MustAsync(LeaveTypeMustExist)
-                .WithError(LeaveAllocationErrors.LeaveTypeMustExist());
+                    .WithError(LeaveAllocationErrors.LeaveTypeMustExist());
         }
 
         private async Task<bool> LeaveTypeMustExist(int id, CancellationToken token)

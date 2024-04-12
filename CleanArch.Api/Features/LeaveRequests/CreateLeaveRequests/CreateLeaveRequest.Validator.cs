@@ -15,13 +15,15 @@ public static partial class CreateLeaveRequest
             _repository = repository;
 
             RuleFor(m => m.LeaveTypeId)
+                .Cascade(CascadeMode.Stop)
                 .GreaterThan(0)
+                    .WithError(LeaveRequestErrors.LeaveTypeMustExist())
                 .MustAsync(LeaveTypeMustExist)
-                .WithError(LeaveRequestErrors.LeaveTypeMustExist());
+                    .WithError(LeaveRequestErrors.LeaveTypeMustExist());
 
             RuleFor(m => m.RequestComments)
                 .MaximumLength(300)
-                .WithError(LeaveRequestErrors.RequestCommentsMaximumLength(300));
+                .WithError(LeaveRequestErrors.RequestCommentsMaximumLength("{MaxLength}"));
 
             Include(new BaseCommandValidator());
         }

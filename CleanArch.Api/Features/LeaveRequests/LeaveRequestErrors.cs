@@ -1,15 +1,16 @@
 ﻿using CleanArch.Application.ResultPattern;
 using CleanArch.Domain.Entities;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace CleanArch.Api.Features.LeaveRequests;
 
 public static class LeaveRequestErrors
 {
     public static Error LeaveTypeMustExist() => new Error("LeaveRequest.LeaveTypeMustExist", "There must be an associated Leave type.");
-    public static Error RequestCommentsMaximumLength(int length) => new Error("LeaveRequest.RequestCommentsMaximumLength", $"{nameof(LeaveRequest.RequestComments)} must be up to {length}.");
-    public static Error StartDateLowerThanEndDate(string message) => new Error("LeaveRequest.StartDateMustBeLowerThanEndDate", message);
-    public static Error EndDateGeatherThanStartDate(string message) => new Error("LeaveRequest.EndDateGeatherThanStartDate", message);
-    public static Error IdRequired() => new Error("LeaveRequest.IdRequired", $"{nameof(LeaveRequest.Id)} is required.");
+    public static Error RequestCommentsMaximumLength(string length) => new Error("LeaveRequest.RequestCommentsMaximumLength", $"The {nameof(LeaveRequest.RequestComments)} must be up to {length}.");
+    public static Error StartDateLowerThanEndDate() => new Error("LeaveRequest.StartDateMustBeLowerThanEndDate", $"The {nameof(LeaveRequest.StartDate)} must be before {nameof(LeaveRequest.EndDate)}.");
+    public static Error EndDateGeatherThanStartDate() => new Error("LeaveRequest.EndDateGeatherThanStartDate", $"The {nameof(LeaveRequest.EndDate)} must be after {nameof(LeaveRequest.StartDate)}.");
+    public static Error IdRequired() => new Error("LeaveRequest.IdRequired", $"The {nameof(LeaveRequest.Id)} is required.");
 
     public static Error NotFound(int id) => new Error("LeaveRequest.NotFound", $"Leave request with Id '{id}' not found.");
 

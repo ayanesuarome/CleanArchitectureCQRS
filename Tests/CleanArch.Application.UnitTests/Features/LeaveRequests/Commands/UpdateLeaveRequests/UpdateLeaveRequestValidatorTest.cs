@@ -1,7 +1,7 @@
-﻿using CleanArch.Application.Features.LeaveRequests.Commands.UpdateLeaveRequest;
+﻿using CleanArch.Api.Features.LeaveRequests.UpdateLeaveRequests;
 using FluentValidation.TestHelper;
 
-namespace CleanArch.Application.UnitTests.Features.LeaveRequests.Commands.UpdateLeaveRequest;
+namespace CleanArch.Application.UnitTests.Features.LeaveRequests.Commands.UpdateLeaveRequests;
 
 public class UpdateLeaveRequestValidatorTest(UpdateLeaveRequestValidatorFixture fixture)
     : IClassFixture<UpdateLeaveRequestValidatorFixture>
@@ -11,9 +11,8 @@ public class UpdateLeaveRequestValidatorTest(UpdateLeaveRequestValidatorFixture 
     [Fact]
     public async Task TestValidatorShouldFailWithInvalidId()
     {
-        UpdateLeaveRequestCommand command = new()
+        UpdateLeaveRequest.Command command = new()
         {
-            Id = 0,
             StartDate = DateTime.Now,
             EndDate = DateTime.Now.AddDays(1)
         };
@@ -21,13 +20,13 @@ public class UpdateLeaveRequestValidatorTest(UpdateLeaveRequestValidatorFixture 
         var result = await _fixture.validator.TestValidateAsync(command);
 
         result.ShouldHaveValidationErrorFor(x => x.Id)
-            .WithErrorMessage($"{nameof(UpdateLeaveRequestCommand.Id)} is required");
+            .WithErrorMessage($"The Id is required.");
     }
     
     [Fact]
     public async Task TestValidatorShouldNotFail()
     {
-        UpdateLeaveRequestCommand command = new()
+        UpdateLeaveRequest.Command command = new()
         {
             Id = 1,
             StartDate = DateTime.Now,

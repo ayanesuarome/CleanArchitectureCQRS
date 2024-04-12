@@ -1,12 +1,12 @@
-﻿using CleanArch.Application.Features.LeaveRequests.Commands.CreateLeaveRequest;
+﻿using CleanArch.Api.Features.LeaveRequests.CreateLeaveRequests;
 using CleanArch.Domain.Repositories;
 using Moq;
 
-namespace CleanArch.Application.Tests.Features.LeaveRequests.Commands.CreateLeaveRequest;
+namespace CleanArch.Application.Tests.Features.LeaveRequests.Commands.CreateLeaveRequests;
 
 public class CreateLeaveRequestCommandValidatorFixture : IDisposable
 {
-    public CreateLeaveRequestCommandValidator validator;
+    public CreateLeaveRequest.Validator validator;
     public Mock<ILeaveTypeRepository> repositoryMock;
 
     #region Setup and Cleanup
@@ -14,7 +14,7 @@ public class CreateLeaveRequestCommandValidatorFixture : IDisposable
     public CreateLeaveRequestCommandValidatorFixture()
     {
         repositoryMock = new Mock<ILeaveTypeRepository>();
-        validator = new CreateLeaveRequestCommandValidator(repositoryMock.Object);
+        validator = new CreateLeaveRequest.Validator(repositoryMock.Object);
     }
 
     public void Dispose()

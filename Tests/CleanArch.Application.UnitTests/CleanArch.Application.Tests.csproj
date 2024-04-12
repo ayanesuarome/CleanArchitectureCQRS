@@ -10,6 +10,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Features\LeaveAllocations\**" />
+    <Compile Remove="Features\LeaveRequests\Commands\CancelLeaveRequest\**" />
+    <EmbeddedResource Remove="Features\LeaveAllocations\**" />
+    <EmbeddedResource Remove="Features\LeaveRequests\Commands\CancelLeaveRequest\**" />
+    <None Remove="Features\LeaveAllocations\**" />
+    <None Remove="Features\LeaveRequests\Commands\CancelLeaveRequest\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="AutoMapper" Version="13.0.1" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.8.0" />
     <PackageReference Include="Moq" Version="4.20.70" />
@@ -28,12 +37,6 @@
   <ItemGroup>
     <ProjectReference Include="..\..\CleanArch.Api\CleanArch.Api.csproj" />
     <ProjectReference Include="..\..\Core\CleanArch.Application\CleanArch.Application.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Features\LeaveAllocations\Commands\CreateLeaveAllocation\" />
-    <Folder Include="Features\LeaveAllocations\Commands\UpdateLeaveAllocation\" />
-    <Folder Include="Features\LeaveRequests\Commands\CancelLeaveRequest\" />
   </ItemGroup>
 
   <ItemGroup>

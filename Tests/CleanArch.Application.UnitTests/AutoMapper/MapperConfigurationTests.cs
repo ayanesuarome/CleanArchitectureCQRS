@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
-using CleanArch.Application.AutoMapper;
-using CleanArch.Application.AutoMapper.LeaveRequests;
+using CleanArch.Api.Features.LeaveAllocations;
+using CleanArch.Api.Features.LeaveRequests;
+using CleanArch.Api.Features.LeaveTypes;
 
 namespace CleanArch.Application.Tests.AutoMapper;
 

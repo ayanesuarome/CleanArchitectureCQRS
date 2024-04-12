@@ -1,25 +1,25 @@
-﻿using CleanArch.Application.Features.LeaveRequests.Commands.CreateLeaveRequest;
-using CleanArch.Application.Features.LeaveRequests.Commands.UpdateLeaveRequest;
-using CleanArch.Application.Features.LeaveRequests.Shared;
-using CleanArch.Application.Tests.Features.Mocks;
+﻿using CleanArch.Api.Features.LeaveRequests;
+using CleanArch.Api.Features.LeaveRequests.CreateLeaveRequests;
+using CleanArch.Api.Features.LeaveRequests.UpdateLeaveRequests;
 using FluentValidation.TestHelper;
 
 namespace CleanArch.Application.Tests.Features.LeaveRequests.Shared;
 
 public class BaseLeaveRequestCommandValidatorTest
 {
-    private readonly BaseLeaveRequestCommandValidator _validator;
+    private readonly BaseCommandValidator _validator;
 
     public BaseLeaveRequestCommandValidatorTest()
     {
-        _validator = new BaseLeaveRequestCommandValidator();
+        _validator = new BaseCommandValidator();
     }
 
     [Fact]
     public async Task TestValidatorShouldFailWhenStartDateIsGreaterThanEndDate()
     {
-        UpdateLeaveRequestCommand command = new()
+        UpdateLeaveRequest.Command command = new()
         {
+            Id = 1,
             StartDate = DateTime.Now.AddDays(1),
             EndDate = DateTime.Now,
         };
@@ -35,7 +35,7 @@ public class BaseLeaveRequestCommandValidatorTest
     [Fact]
     public async Task TestValidatorShouldNotFail()
     {
-        CreateLeaveRequestCommand command = new()
+        CreateLeaveRequest.Command command = new(1, null)
         {
             StartDate = DateTime.Now,
             EndDate = DateTime.Now.AddDays(1)

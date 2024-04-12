@@ -17,7 +17,7 @@ public static partial class CreateLeaveType
                 .NotEmpty()
                     .WithError(LeaveTypeErrors.NameRequired())
                 .MaximumLength(70)
-                    .WithError(LeaveTypeErrors.NameMaximumLength(70))
+                    .WithError(LeaveTypeErrors.NameMaximumLength("{MaxLength}"))
                 .MustAsync(LeaveTypeUniqueName)
                     .WithError(LeaveTypeErrors.NameUnique());
 
