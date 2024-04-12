@@ -33,7 +33,7 @@ public class LeaveAllocationRepository : GenericRepository<LeaveAllocation>, ILe
                 && e.LeaveTypeId == leaveTypeId);
     }
 
-    public async Task<List<LeaveAllocation>> GetLeaveAllocationsWithDetails(string? employeeId)
+    public async Task<IReadOnlyCollection<LeaveAllocation>> GetLeaveAllocationsWithDetails(string? employeeId)
     {
         IQueryable<LeaveAllocation> query = TableNoTracking;
         

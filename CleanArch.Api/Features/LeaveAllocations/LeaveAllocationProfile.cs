@@ -9,7 +9,7 @@ public class LeaveAllocationProfile : Profile
 {
     public LeaveAllocationProfile()
     {
-        CreateMap<LeaveAllocation, LeaveAllocationDto>();
+        CreateMap<LeaveAllocation, LeaveAllocationListDto>();
 
         CreateMap<LeaveAllocation, LeaveAllocationDetailsDto>();
 
@@ -24,5 +24,8 @@ public class LeaveAllocationProfile : Profile
 
         CreateMap<UpdateLeaveAllocationRequest, UpdateLeaveAllocation.Command>()
             .ForMember(dest => dest.Id, opt => opt.Ignore());
+
+        CreateMap<LeaveAllocation, LeaveAllocationListDto.LeaveAllocationModel>();
+        CreateMap<LeaveAllocation, LeaveAllocationDetailsDto>();
     }
 }

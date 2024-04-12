@@ -9,10 +9,10 @@ public sealed class BaseCommandValidtor : AbstractValidator<BaseCommnad>
     {
         RuleFor(m => m.NumberOfDays)
             .GreaterThan(0)
-            .WithError(LeaveAllocationErrors.NumberOfDaysGreatherThan("{PropertyName} must be greather than {ComparisonValue}");
+            .WithError(LeaveAllocationErrors.NumberOfDaysGreatherThan("{PropertyName} must be greather than {ComparisonValue}"));
 
         RuleFor(m => m.Period)
             .GreaterThanOrEqualTo(DateTime.Now.Year)
-            .WithError(LeaveAllocationErrors.PeriodGreaterThanOrEqualToOngoingYear("{PropertyName} must be after {ComparisonValue}");
+            .WithError(LeaveAllocationErrors.PeriodGreaterThanOrEqualToOngoingYear("{PropertyName} must be after {ComparisonValue}"));
     }
 }

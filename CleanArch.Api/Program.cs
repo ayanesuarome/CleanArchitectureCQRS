@@ -1,5 +1,5 @@
 using CleanArch.Api.ExceptionHandlers;
-using CleanArch.Api.Middlewares;
+using CleanArch.Api.Infrastructure;
 using CleanArch.Api.Swagger;
 using CleanArch.Application;
 using CleanArch.Identity;
@@ -17,8 +17,8 @@ builder.Host.UseSerilog((context, config) => config
     .WriteTo.Console()
     .ReadFrom.Configuration(context.Configuration));
 
-builder.Services.AddApplicationServices();
 builder.Services.AddValidators();
+builder.Services.AddApplicationServices();
 builder.Services.AddCleanArchEFDbContext(builder.Configuration);
 builder.Services.AddInfrastructureServices(builder.Configuration);
 builder.Services.AddPersistenceServices();

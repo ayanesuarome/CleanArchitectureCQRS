@@ -9,7 +9,7 @@ namespace CleanArch.Api.Features.LeaveTypes.GetLeaveTypeList;
 
 public static partial class GetLeaveTypeList
 {
-    internal sealed class Handler(IMapper mapper, ILeaveTypeRepository repository)
+    public sealed class Handler(IMapper mapper, ILeaveTypeRepository repository)
         : IRequestHandler<Query, Result<LeaveTypeListDto>>
     {
         private readonly IMapper _mapper = mapper;

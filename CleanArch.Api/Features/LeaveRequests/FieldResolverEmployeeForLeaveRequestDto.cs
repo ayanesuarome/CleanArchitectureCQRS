@@ -6,11 +6,11 @@ using CleanArch.Domain.Entities;
 
 namespace CleanArch.Api.Features.LeaveRequests;
 
-public class FieldResolverEmployeeForLeaveRequestDto(IUserService service) : IValueResolver<LeaveRequest, LeaveRequestDto, Employee>
+public class FieldResolverEmployeeForLeaveRequestDto(IUserService service) : IValueResolver<LeaveRequest, LeaveRequestDetailsDto, Employee>
 {
     private readonly IUserService _service = service;
 
-    public Employee Resolve(LeaveRequest source, LeaveRequestDto destination, Employee destMember, ResolutionContext context)
+    public Employee Resolve(LeaveRequest source, LeaveRequestDetailsDto destination, Employee destMember, ResolutionContext context)
     {
         return _service
             .GetEmployee(source.RequestingEmployeeId)

@@ -1,5 +1,7 @@
 ﻿namespace CleanArch.Api.Contracts.LeaveTypes;
 
-public sealed record LeaveTypeDetailDto(string Name, int DefaultDays) : BaseDto
+public sealed record LeaveTypeDetailDto : BaseDto
 {
+    public string Name { get; set; }
+    public int DefaultDays { get; set; }
 }
