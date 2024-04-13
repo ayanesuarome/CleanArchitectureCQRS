@@ -1,4 +1,4 @@
-﻿using CleanArch.Application.Models.Identity;
+﻿using CleanArch.Identity.Settings;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
 

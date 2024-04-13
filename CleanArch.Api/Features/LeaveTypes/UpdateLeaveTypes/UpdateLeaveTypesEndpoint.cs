@@ -1,7 +1,7 @@
 ﻿using CleanArch.Api.Contracts;
 using CleanArch.Api.Contracts.LeaveTypes;
 using CleanArch.Api.Features.LeaveTypes.UpdateLeaveTypes;
-using CleanArch.Application.ResultPattern;
+using CleanArch.Domain.Primitives.Result;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 

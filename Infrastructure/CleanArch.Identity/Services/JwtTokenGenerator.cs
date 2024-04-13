@@ -1,6 +1,6 @@
-﻿using CleanArch.Application.Models.Identity;
-using CleanArch.Identity.Interfaces;
+﻿using CleanArch.Identity.Interfaces;
 using CleanArch.Identity.Models;
+using CleanArch.Identity.Settings;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;

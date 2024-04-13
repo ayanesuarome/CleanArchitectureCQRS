@@ -1,7 +1,7 @@
 ﻿using CleanArch.Application.Abstractions.Identity;
 using CleanArch.Application.Models.Identity;
-using CleanArch.Application.ResultPattern;
 using CleanArch.Domain.Entities;
+using CleanArch.Domain.Primitives.Result;
 using CleanArch.Domain.Repositories;
 using FluentValidation;
 using FluentValidation.Results;

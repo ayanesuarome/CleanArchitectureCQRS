@@ -1,8 +1,8 @@
 ﻿using CleanArch.Api.Contracts;
-using CleanArch.Application.ResultPattern;
 using CleanArch.Api.Features.LeaveTypes.DeleteLeaveTypes;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using CleanArch.Domain.Primitives.Result;
 
 namespace CleanArch.Api.Features.LeaveTypes
 {

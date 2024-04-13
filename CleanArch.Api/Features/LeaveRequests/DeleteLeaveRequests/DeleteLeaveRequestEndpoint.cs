@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using CleanArch.Api.Contracts;
 using CleanArch.Api.Features.LeaveRequests.DeleteLeaveRequests;
-using CleanArch.Application.ResultPattern;
+using CleanArch.Domain.Primitives.Result;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -20,7 +20,7 @@ public sealed partial class LeaveRequestController
         return result switch
         {
             SuccessResult => NoContent(),
-            Application.ResultPattern.NotFoundResult => NotFound()
+            Domain.Primitives.Result.NotFoundResult => NotFound()
         };
     }
 }

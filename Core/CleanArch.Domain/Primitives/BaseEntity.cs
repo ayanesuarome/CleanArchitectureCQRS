@@ -1,6 +1,4 @@
-﻿using CleanArch.Domain.Primitives;
-
-namespace CleanArch.Domain.Entities;
+﻿namespace CleanArch.Domain.Primitives;
 
 public abstract class BaseEntity<T> : IAuditableEntity
 {

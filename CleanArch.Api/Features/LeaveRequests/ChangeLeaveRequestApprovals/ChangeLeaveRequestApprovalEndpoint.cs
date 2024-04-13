@@ -1,9 +1,9 @@
 ﻿using CleanArch.Api.Contracts;
 using CleanArch.Api.Contracts.LeaveRequests;
 using CleanArch.Api.Features.LeaveRequests.ChangeLeaveRequestApprovals;
-using CleanArch.Application.ResultPattern;
 using CleanArch.Domain.Entities;
 using CleanArch.Domain.Events;
+using CleanArch.Domain.Primitives.Result;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CleanArch.Api.Features.LeaveRequests;

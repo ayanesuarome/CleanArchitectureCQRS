@@ -1,6 +1,6 @@
 ﻿using CleanArch.Api.Contracts;
 using CleanArch.Api.Features.LeaveAllocations.DeleteLeaveAllocations;
-using CleanArch.Application.ResultPattern;
+using CleanArch.Domain.Primitives.Result;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CleanArch.Api.Features.LeaveAllocations;
@@ -19,7 +19,7 @@ public sealed partial class AdminLeaveAllocationController
         return result switch
         {
             SuccessResult => NoContent(),
-            Application.ResultPattern.NotFoundResult => NotFound(),
+            Domain.Primitives.Result.NotFoundResult => NotFound(),
             FailureResult errorResult => BadRequest(errorResult.Error)
         };
     }

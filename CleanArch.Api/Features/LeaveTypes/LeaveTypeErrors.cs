@@ -1,5 +1,5 @@
-﻿using CleanArch.Application.ResultPattern;
-using CleanArch.Domain.Entities;
+﻿using CleanArch.Domain.Entities;
+using CleanArch.Domain.Primitives.Result;
 
 namespace CleanArch.Api.Features.LeaveTypes;
 

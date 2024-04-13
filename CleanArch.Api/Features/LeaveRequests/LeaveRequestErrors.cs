@@ -1,5 +1,5 @@
-﻿using CleanArch.Application.ResultPattern;
-using CleanArch.Domain.Entities;
+﻿using CleanArch.Domain.Entities;
+using CleanArch.Domain.Primitives.Result;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace CleanArch.Api.Features.LeaveRequests;

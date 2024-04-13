@@ -1,4 +1,4 @@
-﻿using CleanArch.Application.ResultPattern;
+﻿using CleanArch.Domain.Primitives.Result;
 using MediatR;
 
 namespace CleanArch.Api.Features.LeaveTypes.CreateLeaveTypes;

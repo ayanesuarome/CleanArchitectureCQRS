@@ -1,5 +1,5 @@
 ﻿using CleanArch.Api.Contracts.LeaveRequests;
-using CleanArch.Application.ResultPattern;
+using CleanArch.Domain.Primitives.Result;
 using MediatR;
 
 namespace CleanArch.Api.Features.LeaveRequests.AdminGetLeaveRequestList;

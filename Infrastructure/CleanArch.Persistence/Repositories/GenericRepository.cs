@@ -1,4 +1,4 @@
-﻿using CleanArch.Domain.Entities;
+﻿using CleanArch.Domain.Primitives;
 using CleanArch.Domain.Repositories;
 using Microsoft.EntityFrameworkCore;
 

@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using CleanArch.Api.Features.LeaveTypes;
-using CleanArch.Application.ResultPattern;
+using CleanArch.Domain.Primitives.Result;
 using CleanArch.Application.Tests.Features.Mocks;
 using CleanArch.Domain.Repositories;
 using Moq;

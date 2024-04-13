@@ -1,4 +1,4 @@
-﻿namespace CleanArch.Application.ResultPattern;
+﻿namespace CleanArch.Domain.Primitives.Result;
 
 public sealed class NotFoundResult : Result
 {

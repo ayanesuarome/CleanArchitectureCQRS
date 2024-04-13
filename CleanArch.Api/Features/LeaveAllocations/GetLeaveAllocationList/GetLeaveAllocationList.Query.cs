@@ -1,5 +1,5 @@
 ﻿using CleanArch.Api.Contracts.LeaveAllocations;
-using CleanArch.Application.ResultPattern;
+using CleanArch.Domain.Primitives.Result;
 using MediatR;
 
 namespace CleanArch.Api.Features.LeaveAllocations.GetLeaveAllocationList;

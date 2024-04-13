@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using CleanArch.Application.ResultPattern;
+using CleanArch.Domain.Primitives.Result;
 using CleanArch.Domain.Entities;
 using CleanArch.Domain.Repositories;
 using FluentValidation;

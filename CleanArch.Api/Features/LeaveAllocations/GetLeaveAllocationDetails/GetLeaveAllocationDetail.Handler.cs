@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using CleanArch.Api.Contracts.LeaveAllocations;
-using CleanArch.Application.ResultPattern;
 using CleanArch.Domain.Entities;
+using CleanArch.Domain.Primitives.Result;
 using CleanArch.Domain.Repositories;
 using MediatR;
 

@@ -1,5 +1,5 @@
 ﻿using CleanArch.Api.Contracts.LeaveTypes;
-using CleanArch.Application.ResultPattern;
+using CleanArch.Domain.Primitives.Result;
 using MediatR;
 
 namespace CleanArch.Api.Features.LeaveTypes.GetLeaveTypeDetails;

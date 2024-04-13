@@ -1,10 +1,11 @@
 ﻿using CleanArch.Application.Abstractions.Email;
 using CleanArch.Application.Models.Emails;
+using CleanArch.Infrastructure.Services.Emails.Settings;
 using Microsoft.Extensions.Options;
 using SendGrid;
 using SendGrid.Helpers.Mail;
 
-namespace CleanArch.Infrastructure.Services.Email;
+namespace CleanArch.Infrastructure.Services.Emails;
 
 public class EmailSender : IEmailSender
 {

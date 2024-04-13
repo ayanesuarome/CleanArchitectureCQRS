@@ -1,4 +1,4 @@
-﻿using CleanArch.Domain.Entities;
+﻿using CleanArch.Domain.Primitives;
 
 namespace CleanArch.Domain.Repositories;
 

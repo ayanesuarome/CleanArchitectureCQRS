@@ -4,6 +4,7 @@ using CleanArch.Identity.ConfigureOptions;
 using CleanArch.Identity.Interfaces;
 using CleanArch.Identity.Models;
 using CleanArch.Identity.Services;
+using CleanArch.Identity.Settings;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;

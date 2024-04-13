@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using CleanArch.Domain.Primitives;
 
 namespace CleanArch.Domain.Entities;
 

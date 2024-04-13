@@ -2,7 +2,7 @@
 using CleanArch.Application.Abstractions.Logging;
 using CleanArch.Infrastructure.ConfigureOptions;
 using CleanArch.Infrastructure.Logging;
-using CleanArch.Infrastructure.Services.Email;
+using CleanArch.Infrastructure.Services.Emails;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 

@@ -1,4 +1,6 @@
-﻿namespace CleanArch.Domain.Entities;
+﻿using CleanArch.Domain.Primitives;
+
+namespace CleanArch.Domain.Entities;
 
 public class LeaveType : BaseEntity<int>
 {
