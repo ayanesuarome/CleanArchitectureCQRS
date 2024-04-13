@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using CleanArch.Api.Contracts.LeaveAllocations;
 using CleanArch.Application.Abstractions.Identity;
+using CleanArch.Contracts.LeaveAllocations;
 using CleanArch.Domain.Entities;
 using CleanArch.Domain.Primitives.Result;
 using CleanArch.Domain.Repositories;

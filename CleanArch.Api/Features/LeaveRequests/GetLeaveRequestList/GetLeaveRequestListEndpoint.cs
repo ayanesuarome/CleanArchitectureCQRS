@@ -1,7 +1,7 @@
-﻿using CleanArch.Api.Contracts.LeaveRequests;
-using CleanArch.Api.Contracts;
-using CleanArch.Domain.Primitives.Result;
+﻿using CleanArch.Domain.Primitives.Result;
 using Microsoft.AspNetCore.Mvc;
+using CleanArch.Contracts;
+using CleanArch.Contracts.LeaveRequests;
 
 namespace CleanArch.Api.Features.LeaveRequests;
 

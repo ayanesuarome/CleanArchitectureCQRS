@@ -1,6 +1,6 @@
-﻿using CleanArch.Api.Contracts;
-using CleanArch.Api.Contracts.LeaveRequests;
-using CleanArch.Api.Features.LeaveRequests.ChangeLeaveRequestApprovals;
+﻿using CleanArch.Api.Features.LeaveRequests.ChangeLeaveRequestApprovals;
+using CleanArch.Contracts;
+using CleanArch.Contracts.LeaveRequests;
 using CleanArch.Domain.Entities;
 using CleanArch.Domain.Events;
 using CleanArch.Domain.Primitives.Result;

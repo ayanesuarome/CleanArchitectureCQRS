@@ -1,4 +1,4 @@
-﻿using CleanArch.Application.Models.Identity;
+﻿using CleanArch.Contracts.Identity;
 
 namespace CleanArch.Application.Abstractions.Identity;
 

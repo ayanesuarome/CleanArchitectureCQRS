@@ -1,4 +1,4 @@
-﻿using CleanArch.Api.Contracts.LeaveAllocations;
+﻿using CleanArch.Contracts.LeaveAllocations;
 using CleanArch.Domain.Primitives.Result;
 using MediatR;
 

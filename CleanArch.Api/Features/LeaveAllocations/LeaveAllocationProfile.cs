@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using CleanArch.Api.Contracts.LeaveAllocations;
 using CleanArch.Api.Features.LeaveAllocations.UpdateLeaveAllocations;
+using CleanArch.Contracts.LeaveAllocations;
 using CleanArch.Domain.Entities;
 
 namespace CleanArch.Api.Features.LeaveAllocations;

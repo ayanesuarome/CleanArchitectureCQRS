@@ -1,8 +1,6 @@
-﻿using AutoMapper;
-using CleanArch.Api.Contracts;
-using CleanArch.Api.Features.LeaveRequests.DeleteLeaveRequests;
+﻿using CleanArch.Api.Features.LeaveRequests.DeleteLeaveRequests;
+using CleanArch.Contracts;
 using CleanArch.Domain.Primitives.Result;
-using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CleanArch.Api.Features.LeaveRequests;
