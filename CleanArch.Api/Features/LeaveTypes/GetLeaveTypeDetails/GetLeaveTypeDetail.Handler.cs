@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using CleanArch.Api.Contracts.LeaveTypes;
+using CleanArch.Contracts.LeaveTypes;
 using CleanArch.Domain.Entities;
 using CleanArch.Domain.Primitives.Result;
 using CleanArch.Domain.Repositories;

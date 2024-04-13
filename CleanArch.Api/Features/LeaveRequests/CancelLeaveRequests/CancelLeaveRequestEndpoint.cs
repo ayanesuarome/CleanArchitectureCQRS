@@ -1,5 +1,5 @@
-﻿using CleanArch.Api.Contracts;
-using CleanArch.Api.Features.LeaveRequests.CancelLeaveRequests;
+﻿using CleanArch.Api.Features.LeaveRequests.CancelLeaveRequests;
+using CleanArch.Contracts;
 using CleanArch.Domain.Entities;
 using CleanArch.Domain.Events;
 using CleanArch.Domain.Primitives.Result;

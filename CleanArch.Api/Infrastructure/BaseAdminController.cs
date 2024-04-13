@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using CleanArch.Application.Models.Identity;
+using CleanArch.Contracts.Identity;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

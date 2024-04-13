@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
-using CleanArch.Api.Contracts.LeaveTypes;
-using CleanArch.Api.Features.LeaveTypes.CreateLeaveTypes;
 using CleanArch.Api.Features.LeaveTypes.UpdateLeaveTypes;
+using CleanArch.Contracts.LeaveTypes;
 using CleanArch.Domain.Entities;
 
 namespace CleanArch.Api.Features.LeaveTypes;

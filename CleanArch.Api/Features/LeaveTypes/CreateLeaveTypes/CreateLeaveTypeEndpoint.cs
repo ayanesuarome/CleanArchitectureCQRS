@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using CleanArch.Api.Contracts;
 using CleanArch.Api.Features.LeaveTypes.CreateLeaveTypes;
-using CleanArch.Api.Contracts.LeaveTypes;
 using CleanArch.Domain.Primitives.Result;
+using CleanArch.Contracts;
+using CleanArch.Contracts.LeaveTypes;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 

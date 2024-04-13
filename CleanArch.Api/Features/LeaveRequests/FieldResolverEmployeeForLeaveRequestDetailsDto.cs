@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
 using CleanArch.Application.Abstractions.Identity;
-using CleanArch.Application.Models.Identity;
 using CleanArch.Domain.Entities;
-using CleanArch.Api.Contracts.LeaveRequests;
+using CleanArch.Contracts.LeaveRequests;
+using CleanArch.Contracts.Identity;
 
 namespace CleanArch.Api.Features.LeaveRequests;
 

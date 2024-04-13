@@ -1,12 +1,12 @@
 ﻿using CleanArch.Application.Exceptions;
 using CleanArch.Application.Abstractions.Identity;
-using CleanArch.Application.Models.Identity;
 using CleanArch.Identity.Interfaces;
 using CleanArch.Identity.Models;
 using FluentValidation;
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Identity;
 using System.Text;
+using CleanArch.Contracts.Identity;
 
 namespace CleanArch.Identity.Services;
 

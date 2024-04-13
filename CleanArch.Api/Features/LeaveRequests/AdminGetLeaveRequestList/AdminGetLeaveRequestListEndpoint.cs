@@ -1,5 +1,5 @@
-﻿using CleanArch.Api.Contracts;
-using CleanArch.Api.Contracts.LeaveRequests;
+﻿using CleanArch.Contracts;
+using CleanArch.Contracts.LeaveRequests;
 using CleanArch.Domain.Primitives.Result;
 using Microsoft.AspNetCore.Mvc;
 

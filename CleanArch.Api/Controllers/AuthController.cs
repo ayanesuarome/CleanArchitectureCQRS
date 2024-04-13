@@ -1,8 +1,6 @@
 ﻿using CleanArch.Application.Abstractions.Identity;
-using CleanArch.Application.Models.Identity;
-using Microsoft.AspNetCore.Http;
+using CleanArch.Contracts.Identity;
 using Microsoft.AspNetCore.Mvc;
-using System.Net;
 
 namespace CleanArch.Api.Controllers
 {

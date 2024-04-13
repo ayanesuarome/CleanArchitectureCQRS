@@ -1,5 +1,4 @@
 ﻿using CleanArch.Application.Abstractions.Identity;
-using CleanArch.Application.Models.Identity;
 using CleanArch.Identity.ConfigureOptions;
 using CleanArch.Identity.Interfaces;
 using CleanArch.Identity.Models;

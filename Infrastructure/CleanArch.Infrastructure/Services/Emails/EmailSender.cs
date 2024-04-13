@@ -1,5 +1,5 @@
-﻿using CleanArch.Application.Abstractions.Email;
-using CleanArch.Application.Models.Emails;
+﻿using CleanArch.Api.Contracts.Emails;
+using CleanArch.Application.Abstractions.Email;
 using CleanArch.Infrastructure.Services.Emails.Settings;
 using Microsoft.Extensions.Options;
 using SendGrid;

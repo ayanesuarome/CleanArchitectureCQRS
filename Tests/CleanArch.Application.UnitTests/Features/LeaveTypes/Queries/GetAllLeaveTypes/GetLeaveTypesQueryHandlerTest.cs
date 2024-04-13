@@ -6,7 +6,7 @@ using CleanArch.Domain.Repositories;
 using Moq;
 using Shouldly;
 using CleanArch.Api.Features.LeaveTypes.GetLeaveTypeList;
-using CleanArch.Api.Contracts.LeaveTypes;
+using CleanArch.Contracts.LeaveTypes;
 
 namespace CleanArch.Application.Tests.Features.LeaveTypes.Queries.GetAllLeaveTypes;
 

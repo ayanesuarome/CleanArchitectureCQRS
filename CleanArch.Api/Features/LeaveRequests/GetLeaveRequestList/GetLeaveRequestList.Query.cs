@@ -1,4 +1,4 @@
-﻿using CleanArch.Api.Contracts.LeaveRequests;
+﻿using CleanArch.Contracts.LeaveRequests;
 using CleanArch.Domain.Primitives.Result;
 using MediatR;
 

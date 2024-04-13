@@ -1,6 +1,4 @@
-﻿using CleanArch.Application.Models;
-
-namespace CleanArch.Application.Extensions;
+﻿namespace CleanArch.Application.Extensions;
 
 public static class ResultExtensions
 {

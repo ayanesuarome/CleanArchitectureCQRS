@@ -1,10 +1,10 @@
 ﻿using AutoMapper;
-using CleanArch.Api.Contracts.LeaveRequests;
 using CleanArch.Api.Features.LeaveRequests.CreateLeaveRequests;
 using CleanArch.Api.Features.LeaveRequests.UpdateLeaveRequests;
 using CleanArch.Api.Features.LeaveRequests.CancelLeaveRequests;
 using CleanArch.Api.Features.LeaveRequests.ChangeLeaveRequestApprovals;
 using CleanArch.Domain.Entities;
+using CleanArch.Contracts.LeaveRequests;
 
 namespace CleanArch.Api.Features.LeaveRequests;
 
