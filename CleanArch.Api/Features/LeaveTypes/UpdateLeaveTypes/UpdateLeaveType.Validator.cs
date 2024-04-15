@@ -17,14 +17,14 @@ public static partial class UpdateLeaveType
 
             RuleFor(m => m.Id)
                 .NotEmpty()
-                .WithError(LeaveTypeErrors.IdRequired());
+                .WithError(LeaveTypeErrors.IdIsRequired());
 
             RuleFor(m => m.Name)
                 .Cascade(CascadeMode.Stop)
                 .MaximumLength(70)
                     .WithError(LeaveTypeErrors.NameMaximumLength("{MaxLength}"))
                 .MustAsync(LeaveTypeUniqueName)
-                    .WithError(LeaveTypeErrors.NameUnique());
+                    .WithError(LeaveTypeErrors.NameIsUnique());
 
             RuleFor(m => m.DefaultDays)
                 .InclusiveBetween(1, 100)

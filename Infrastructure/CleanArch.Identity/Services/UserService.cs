@@ -1,6 +1,6 @@
 ﻿using CleanArch.Application.Abstractions.Identity;
 using CleanArch.Contracts.Identity;
-using CleanArch.Identity.Models;
+using CleanArch.Domain.Entities;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 

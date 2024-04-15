@@ -11,7 +11,7 @@ public static partial class UpdateLeaveRequest
         {
             RuleFor(m => m.Id)
                 .NotEmpty()
-                .WithError(LeaveRequestErrors.IdRequired());
+                .WithError(LeaveRequestErrors.IdIsRequired());
 
             Include(new BaseCommandValidator());
         }

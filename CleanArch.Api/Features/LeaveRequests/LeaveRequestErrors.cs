@@ -1,44 +1,32 @@
-﻿using CleanArch.Domain.Entities;
-using CleanArch.Domain.Primitives.Result;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
+﻿using CleanArch.Domain.Primitives.Result;
 
 namespace CleanArch.Api.Features.LeaveRequests;
 
-public static class LeaveRequestErrors
+internal static class LeaveRequestErrors
 {
-    public static Error LeaveTypeMustExist() => new Error("LeaveRequest.LeaveTypeMustExist", "There must be an associated Leave type.");
-    public static Error RequestCommentsMaximumLength(string length) => new Error("LeaveRequest.RequestCommentsMaximumLength", $"The {nameof(LeaveRequest.RequestComments)} must be up to {length}.");
-    public static Error StartDateLowerThanEndDate() => new Error("LeaveRequest.StartDateMustBeLowerThanEndDate", $"The {nameof(LeaveRequest.StartDate)} must be before {nameof(LeaveRequest.EndDate)}.");
-    public static Error EndDateGeatherThanStartDate() => new Error("LeaveRequest.EndDateGeatherThanStartDate", $"The {nameof(LeaveRequest.EndDate)} must be after {nameof(LeaveRequest.StartDate)}.");
-    public static Error IdRequired() => new Error("LeaveRequest.IdRequired", $"The {nameof(LeaveRequest.Id)} is required.");
+    internal static Error RequestCommentsMaximumLength(string length) => new Error(
+        "LeaveRequest.RequestCommentsMaximumLength",
+        $"The RequestComments must be up to {length}.");
 
-    public static Error NotFound(int id) => new Error("LeaveRequest.NotFound", $"Leave request with Id '{id}' not found.");
+    internal static Error StartDateLowerThanEndDate => new Error(
+        "LeaveRequest.StartDateMustBeLowerThanEndDate",
+        "The StartDate must be before EndDate.");
 
-    public static Error InvalidLeaveRequest(IDictionary<string, string[]> errors)
-    {
-        return new Error("LeaveRequest.InvalidLeaveRequest", "Invalid Leave request", errors);
-    }
+    internal static Error EndDateGeatherThanStartDate => new Error(
+        "LeaveRequest.EndDateGeatherThanStartDate",
+        "The EndDate must be after StartDate.");
 
-    public static Error InvalidApprovalRequest(IDictionary<string, string[]> errors)
-    {
-        return new Error("LeaveRequest.InvalidApprovalRequest", "Invalid approval request", errors);
-    }
+    internal static Error IdIsRequired => new Error("LeaveRequest.IdIsRequired", "The Id is required.");
 
-    public static Error CreateLeaveRequestValidation(string message)
-    {
-        return new Error($"CreateLeaveRequest.Validation", message);
-    }
-    
-    public static Error UpdateLeaveRequestValidation(string message)
-    {
-        return new Error($"UpdateLeaveRequest.Validation", message);
-    }
+    internal static Error InvalidLeaveRequest(IDictionary<string, string[]> errors) => new Error(
+        "LeaveRequest.InvalidLeaveRequest",
+        "Invalid Leave request", errors);
 
-    public static Error InvalidApprovalStateIsCanceled() => new Error("LeaveRequest.InvalidApprovalStateIsCanceled", "This leave request has been cancelled and its approval state cannot be updated.");
+    internal static Error InvalidApprovalRequest(IDictionary<string, string[]> errors) => new Error(
+        "LeaveRequest.InvalidApprovalRequest",
+        "Invalid approval request", errors);
 
-    public static Error InvalidNumberOfDays(int daysRequested) => new Error("LeaveRequest.InvalidNumberOfDays", $"The employee's allocation does not have {daysRequested} available number of days.");
+    internal static Error CreateLeaveRequestValidation(string message) => new Error($"CreateLeaveRequest.Validation", message);
 
-    public static Error NoAllocationsForLeaveType(int leaveTypeId) => new Error("LeaveRequest.NoAllocationsForLeaveType", $"You do not have any allocation for this leave type ID {leaveTypeId}.");
-
-    public static Error NotEnoughDays() => new Error("LeaveRequest.NotEnoughDays", "You do not have enough available days for this request.");
+    internal static Error UpdateLeaveRequestValidation(string message) => new Error($"UpdateLeaveRequest.Validation", message);
 }

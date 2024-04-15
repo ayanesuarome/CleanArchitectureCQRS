@@ -1,9 +1,5 @@
 ﻿namespace CleanArch.Contracts.Identity;
 
-public record RegistrationRequest
+public sealed record RegistrationRequest(string FirstName, string LastName, string Email, string Password)
 {
-    public string FirstName { get; set; }
-    public string LastName { get; set; }
-    public string Email { get; set; }
-    public string Password { get; set; }
 }

@@ -1,5 +1,5 @@
-﻿using CleanArch.Identity.Interfaces;
-using CleanArch.Identity.Models;
+﻿using CleanArch.Application.Abstractions.Identity;
+using CleanArch.Domain.Entities;
 using CleanArch.Identity.Settings;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Options;
@@ -10,12 +10,13 @@ using System.Text;
 
 namespace CleanArch.Identity.Services;
 
-public class JwtTokenGenerator(UserManager<ApplicationUser> userManager, IOptions<JwtSettings> jwtSettings)
-    : IJwtTokenGenerator
+internal sealed class JwtProvider(UserManager<ApplicationUser> userManager, IOptions<JwtSettings> jwtSettings)
+    : IJwtProvider
 {
     private readonly UserManager<ApplicationUser> _userManager = userManager;
     private readonly JwtSettings _jwtSettings = jwtSettings.Value;
 
+    /// <inheritdoc />
     public async Task<string> GenerateToken(ApplicationUser user)
     {
         IList<Claim> userClaims = await _userManager.GetClaimsAsync(user);

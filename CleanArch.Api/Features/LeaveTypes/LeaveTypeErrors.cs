@@ -1,29 +1,16 @@
-﻿using CleanArch.Domain.Entities;
-using CleanArch.Domain.Primitives.Result;
+﻿using CleanArch.Domain.Primitives.Result;
 
 namespace CleanArch.Api.Features.LeaveTypes;
 
-public static class LeaveTypeErrors
+internal static class LeaveTypeErrors
 {
-    public static Error IdRequired() => new Error("LeaveType.IdIsRequired", $"The {nameof(LeaveType.Id)} is required.");
-    public static Error NameRequired() => new Error("LeaveType.NameIsRequired", $"The {nameof(LeaveType.Name)} is required.");
-    public static Error NameMaximumLength(string maxLength) => new Error("LeaveType.NameMaximumLengthIsOutOfRange", $"The {nameof(LeaveType.Name)} must be up to {maxLength} characters.");
-    public static Error NameUnique() => new Error("LeaveType.NameIsUnique", "The Leave type already exist.");
-    public static Error DefaultDaysRange(string range) => new Error("LeaveType.DefaultDaysNotInRange", $"The {nameof(LeaveType.DefaultDays)} must be between {range}.");
-    public static Error NotFound(int id) => new Error($"LeaveType.NotFound", $"Leave type with Id '{id}' not found.");
+    internal static Error IdIsRequired => new Error("LeaveType.IdIsRequired", "The Id is required.");
+    internal static Error NameIsRequired => new Error("LeaveType.NameIsRequired", "The Name is required.");
+    internal static Error NameMaximumLength(string maxLength) => new Error("LeaveType.NameMaximumLengthIsOutOfRange", $"The Name must be up to {maxLength} characters.");
 
-    public static Error InvalidLeaveType(IDictionary<string, string[]> errors)
-    {
-        return new Error($"LeaveType.InvalidLeaveType", $"Invalid LeaveType", errors);
-    }
-    
-    public static Error CreateLeaveTypeValidation(string message)
-    {
-        return new Error($"CreateLeaveType.Validation", message);
-    }
-    
-    public static Error UpdateLeaveTypeValidation(string message)
-    {
-        return new Error($"UpdateLeaveType.Validation", message);
-    }
+    internal static Error DefaultDaysRange(string range) => new Error("LeaveType.DefaultDaysNotInRange", $"The DefaultDays must be between {range}.");
+
+    internal static Error InvalidLeaveType(IDictionary<string, string[]> errors) => new Error("LeaveType.InvalidLeaveType", "Invalid LeaveType", errors);
+    internal static Error CreateLeaveTypeValidation(string message) => new Error("CreateLeaveType.Validation", message);
+    internal static Error UpdateLeaveTypeValidation(string message) => new Error("UpdateLeaveType.Validation", message);
 }

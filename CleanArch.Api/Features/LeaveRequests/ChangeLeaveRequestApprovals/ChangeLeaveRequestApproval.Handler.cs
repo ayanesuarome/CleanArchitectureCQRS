@@ -43,7 +43,7 @@ public static partial class ChangeLeaveRequestApproval
 
             if (leaveRequest.IsCancelled)
             {
-                return new FailureResult<LeaveRequest>(LeaveRequestErrors.InvalidApprovalStateIsCanceled());
+                return new FailureResult<LeaveRequest>(LeaveRequestErrors.InvalidApprovalStateIsCanceled);
             }
 
             leaveRequest.IsApproved = command.Approved;

@@ -19,7 +19,7 @@ public static partial class CreateLeaveType
                 .MaximumLength(70)
                     .WithError(LeaveTypeErrors.NameMaximumLength("{MaxLength}"))
                 .MustAsync(LeaveTypeUniqueName)
-                    .WithError(LeaveTypeErrors.NameUnique());
+                    .WithError(LeaveTypeErrors.NameIsUnique());
 
             RuleFor(m => m.DefaultDays)
                 .InclusiveBetween(1, 100)

@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using CleanArch.Api.Features.Authentication;
 using CleanArch.Api.Features.LeaveAllocations;
 using CleanArch.Api.Features.LeaveRequests;
 using CleanArch.Api.Features.LeaveTypes;
@@ -32,6 +33,7 @@ public class MapperConfigurationTests
         yield return new object[] { typeof(LeaveTypeProfile) };
         yield return new object[] { typeof(LeaveAllocationProfile) };
         yield return new object[] { typeof(LeaveRequestProfile) };
+        yield return new object[] { typeof(UserProfile) };
     }
 
     #endregion

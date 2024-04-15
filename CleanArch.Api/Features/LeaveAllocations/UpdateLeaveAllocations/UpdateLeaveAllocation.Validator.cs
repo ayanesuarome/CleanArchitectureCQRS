@@ -11,7 +11,7 @@ public static partial class UpdateLeaveAllocation
         {
             RuleFor(m => m.Id)
                 .NotNull()
-                .WithError(LeaveAllocationErrors.IdRequired());
+                .WithError(LeaveAllocationErrors.IdIsRequired());
 
             RuleFor(m => m.NumberOfDays)
                 .GreaterThan(0)

@@ -33,7 +33,7 @@ public static class ApiRoutes
     }
 
     /// <summary>
-    /// Contains the leave request routes.
+    /// Contains the leave allocation routes.
     /// </summary>
     public static class LeaveAllocations
     {
@@ -42,5 +42,14 @@ public static class ApiRoutes
         public const string Post = "leave-allocations";
         public const string Put = "leave-allocations/{id}";
         public const string Delete = "leave-allocations/{id}";
+    }
+
+    /// <summary>
+    /// Contains the authentication routes.
+    /// </summary>
+    public static class Authentication
+    {
+        public const string Login = "authentication/login";
+        public const string Register = "authentication/register";
     }
 }

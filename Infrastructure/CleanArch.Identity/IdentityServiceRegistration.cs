@@ -1,7 +1,6 @@
 ﻿using CleanArch.Application.Abstractions.Identity;
+using CleanArch.Domain.Entities;
 using CleanArch.Identity.ConfigureOptions;
-using CleanArch.Identity.Interfaces;
-using CleanArch.Identity.Models;
 using CleanArch.Identity.Services;
 using CleanArch.Identity.Settings;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -30,9 +29,8 @@ public static class IdentityServiceRegistration
             .AddEntityFrameworkStores<CleanArchIdentityEFDbContext>()
             .AddDefaultTokenProviders();
 
-        services.AddTransient<IAuthService, AuthService>();
         services.AddTransient<IUserService, UserService>();
-        services.AddTransient<IJwtTokenGenerator, JwtTokenGenerator>();
+        services.AddTransient<IJwtProvider, JwtProvider>();
 
         services.ConfigureOptions<JwtSettingSetup>();
         services.AddSingleton<IValidateOptions<JwtSettings>, JwtSettingValidation>();
