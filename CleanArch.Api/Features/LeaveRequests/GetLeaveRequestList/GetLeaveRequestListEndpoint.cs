@@ -7,7 +7,7 @@ namespace CleanArch.Api.Features.LeaveRequests;
 
 public sealed partial class LeaveRequestController
 {
-    // GET: api/<v>/<LeaveRequestController>
+    // GET: api/<v>/leave-requests
     [HttpGet(ApiRoutes.LeaveRequests.Get)]
     [ProducesResponseType(typeof(LeaveRequestListDto), StatusCodes.Status200OK)]
     public async Task<ActionResult> Get()

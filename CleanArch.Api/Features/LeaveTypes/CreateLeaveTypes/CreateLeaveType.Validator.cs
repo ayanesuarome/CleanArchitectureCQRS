@@ -1,4 +1,5 @@
 ﻿using CleanArch.Application.Extensions;
+using CleanArch.Domain.Errors;
 using CleanArch.Domain.Repositories;
 using FluentValidation;
 
@@ -15,15 +16,15 @@ public static partial class CreateLeaveType
             RuleFor(m => m.Name)
                 .Cascade(CascadeMode.Stop)
                 .NotEmpty()
-                    .WithError(LeaveTypeErrors.NameRequired())
+                    .WithError(ValidationErrors.CreateLeaveType.NameIsRequired)
                 .MaximumLength(70)
-                    .WithError(LeaveTypeErrors.NameMaximumLength("{MaxLength}"))
+                    .WithError(ValidationErrors.CreateLeaveType.NameMaximumLength("{MaxLength}"))
                 .MustAsync(LeaveTypeUniqueName)
-                    .WithError(LeaveTypeErrors.NameIsUnique());
+                    .WithError(DomainErrors.LeaveType.DuplicateName);
 
             RuleFor(m => m.DefaultDays)
                 .InclusiveBetween(1, 100)
-                    .WithError(LeaveTypeErrors.DefaultDaysRange("{From} - {To}"));
+                    .WithError(ValidationErrors.UpdateLeaveType.DefaultDaysRange("{From} - {To}"));
 
             _repository = repository;
         }

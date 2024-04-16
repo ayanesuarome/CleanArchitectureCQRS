@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using CleanArch.Application.Abstractions.Identity;
 using CleanArch.Domain.Entities;
+using CleanArch.Domain.Errors;
 using CleanArch.Domain.Primitives.Result;
 using CleanArch.Domain.Repositories;
 using FluentValidation;
@@ -39,7 +40,7 @@ public static partial class CreateLeaveRequest
             if (!validationResult.IsValid)
             {
                 return new FailureResult<LeaveRequest>(
-                    LeaveRequestErrors.CreateLeaveRequestValidation(validationResult.ToString()));
+                    ValidationErrors.CreateLeaveRequest.CreateLeaveRequestValidation(validationResult.ToString()));
             }
 
             // check on employee's allocation
@@ -49,13 +50,13 @@ public static partial class CreateLeaveRequest
             // if allocations aren't enough, return validation error
             if (leaveAllocation is null)
             {
-                return new FailureResult<LeaveRequest>(LeaveRequestErrors.NotEnoughDays());
+                return new FailureResult<LeaveRequest>(DomainErrors.LeaveRequest.NotEnoughDays);
             }
 
             if (!leaveAllocation.HasEnoughDays(command.StartDate, command.EndDate))
             {
                 return new FailureResult<LeaveRequest>(
-                    LeaveRequestErrors.NoAllocationsForLeaveType(command.LeaveTypeId));
+                    DomainErrors.LeaveRequest.NoAllocationsForLeaveType(command.LeaveTypeId));
             }
 
             LeaveRequest leaveRequest = _mapper.Map<LeaveRequest>(command);

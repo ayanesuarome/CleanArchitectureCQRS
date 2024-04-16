@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using CleanArch.Contracts.LeaveAllocations;
 using CleanArch.Domain.Entities;
+using CleanArch.Domain.Errors;
 using CleanArch.Domain.Primitives.Result;
 using CleanArch.Domain.Repositories;
 using MediatR;
@@ -21,7 +22,7 @@ public static partial class GetLeaveAllocationDetail
 
             if (leaveAllocation is null)
             {
-                return new NotFoundResult<LeaveAllocationDetailsDto>(LeaveAllocationErrors.NotFound(query.Id));
+                return new NotFoundResult<LeaveAllocationDetailsDto>(DomainErrors.LeaveAllocation.NotFound(query.Id));
             }
 
             LeaveAllocationDetailsDto dto = _mapper.Map<LeaveAllocationDetailsDto>(leaveAllocation);

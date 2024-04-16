@@ -1,6 +1,6 @@
 ﻿using CleanArch.Contracts;
 using CleanArch.Contracts.Identity;
-using CleanArch.Api.Features.Users.CreateUsers;
+using CleanArch.Api.Features.Authentication.CreateUsers;
 using Microsoft.AspNetCore.Mvc;
 using CleanArch.Domain.Primitives.Result;
 
@@ -8,10 +8,10 @@ namespace CleanArch.Api.Features.Authentication;
 
 public sealed partial class AuthenticationController
 {
-    // POST api/<v>/<AuthController>/register
+    // POST api/<v>/authentication/register
     [HttpPost(ApiRoutes.Authentication.Register)]
     [ProducesResponseType(typeof(RegistrationResponse), StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(FailureResult), StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> Register([FromBody] RegistrationRequest request)
     {
         CreateUser.Command command = _mapper.Map<CreateUser.Command>(request);

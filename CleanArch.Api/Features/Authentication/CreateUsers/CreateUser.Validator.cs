@@ -1,9 +1,8 @@
-﻿using CleanArch.Api.Features.Authentication;
-using CleanArch.Application.Extensions;
+﻿using CleanArch.Application.Extensions;
 using CleanArch.Contracts.Identity;
 using FluentValidation;
 
-namespace CleanArch.Api.Features.Users.CreateUsers;
+namespace CleanArch.Api.Features.Authentication.CreateUsers;
 
 public static partial class CreateUser
 {
@@ -13,18 +12,18 @@ public static partial class CreateUser
         {
             RuleFor(m => m.FirstName)
                 .NotEmpty()
-                .WithError(UserErrors.FirstNameIsRequired());
+                .WithError(ValidationErrors.CreateUser.FirstNameIsRequired);
 
             RuleFor(m => m.LastName)
                 .NotEmpty()
-                .WithError(UserErrors.LastNameIsRequired());
+                .WithError(ValidationErrors.CreateUser.LastNameIsRequired);
 
             RuleFor(m => m.Email)
                 .Cascade(CascadeMode.Stop)
                 .NotEmpty()
-                    .WithError(UserErrors.EmailIsRequired())
+                    .WithError(ValidationErrors.CreateUser.EmailIsRequired)
                 .EmailAddress()
-                    .WithError(UserErrors.EmailIsInvalid());
+                    .WithError(ValidationErrors.CreateUser.EmailIsInvalid);
         }
     }
 }

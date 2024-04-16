@@ -8,7 +8,7 @@ namespace CleanArch.Api.Features.LeaveAllocations;
 
 public sealed partial class AdminLeaveAllocationController
 {
-    // POST api/<v>/<LeaveAllocationController>
+    // POST api/<v>/leave-allocations
     [HttpPost(ApiRoutes.LeaveAllocations.Post)]
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status204NoContent)]

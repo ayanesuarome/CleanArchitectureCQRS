@@ -10,8 +10,8 @@ namespace CleanArch.Api.Features.LeaveRequests;
 
 public sealed partial class LeaveRequestController
 {
-    // POST api/<v>/<LeaveRequestController>
-    [HttpPost(ApiRoutes.LeaveRequests.Delete)]
+    // POST api/<v>/leave-requests
+    [HttpPost(ApiRoutes.LeaveRequests.Post)]
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(typeof(FailureResult), StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> Post([FromBody] CreateLeaveRequestRequest request)

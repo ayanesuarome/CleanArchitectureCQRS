@@ -11,15 +11,15 @@ public static partial class UpdateLeaveAllocation
         {
             RuleFor(m => m.Id)
                 .NotNull()
-                .WithError(LeaveAllocationErrors.IdIsRequired());
+                .WithError(ValidationErrors.UpdateLeaveAllocation.IdIsRequired);
 
             RuleFor(m => m.NumberOfDays)
                 .GreaterThan(0)
-                .WithError(LeaveAllocationErrors.NumberOfDaysGreatherThan("{ComparisonValue}"));
+                .WithError(ValidationErrors.UpdateLeaveAllocation.NumberOfDaysGreatherThan("{ComparisonValue}"));
 
             RuleFor(m => m.Period)
                 .GreaterThanOrEqualTo(DateTime.Now.Year)
-                .WithError(LeaveAllocationErrors.PeriodGreaterThanOrEqualToOngoingYear("{ComparisonValue}"));
+                .WithError(ValidationErrors.UpdateLeaveAllocation.PeriodGreaterThanOrEqualToOngoingYear("{ComparisonValue}"));
         }
     }
 }

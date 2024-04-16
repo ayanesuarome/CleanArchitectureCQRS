@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using CleanArch.Domain.Entities;
+using CleanArch.Domain.Errors;
 using CleanArch.Domain.Primitives.Result;
 using CleanArch.Domain.Repositories;
 using FluentValidation;
@@ -26,14 +27,14 @@ public static partial class UpdateLeaveType
 
             if (leaveType is null)
             {
-                return new NotFoundResult<Unit>(LeaveTypeErrors.NotFound(command.Id));
+                return new NotFoundResult<Unit>(DomainErrors.LeaveType.NotFound(command.Id));
             }
 
             ValidationResult validationResult = await _validator.ValidateAsync(command, cancellationToken);
 
             if (!validationResult.IsValid)
             {
-                return new FailureResult<Unit>(LeaveTypeErrors.UpdateLeaveTypeValidation(validationResult.ToString()));
+                return new FailureResult<Unit>(ValidationErrors.UpdateLeaveType.UpdateLeaveTypeValidation(validationResult.ToString()));
             }
 
             _mapper.Map(command, leaveType);

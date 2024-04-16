@@ -8,7 +8,7 @@ namespace CleanArch.Api.Features.LeaveAllocations;
 
 public sealed partial class LeaveAllocationController
 {
-    // GET api/<v>/<LeaveAllocationController>/5
+    // GET api/<v>/leave-allocations/5
     [HttpGet(ApiRoutes.LeaveAllocations.GetById)]
     [ProducesResponseType(typeof(LeaveAllocationDetailsDto), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]

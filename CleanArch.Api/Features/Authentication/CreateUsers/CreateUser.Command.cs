@@ -2,7 +2,7 @@
 using CleanArch.Domain.Primitives.Result;
 using MediatR;
 
-namespace CleanArch.Api.Features.Users.CreateUsers;
+namespace CleanArch.Api.Features.Authentication.CreateUsers;
 
 public static partial class CreateUser
 {

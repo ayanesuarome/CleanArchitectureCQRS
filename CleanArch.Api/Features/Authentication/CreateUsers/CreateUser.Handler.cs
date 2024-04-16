@@ -1,5 +1,4 @@
-﻿using CleanArch.Api.Features.Authentication;
-using CleanArch.Application.Abstractions.Identity;
+﻿using CleanArch.Application.Abstractions.Identity;
 using CleanArch.Contracts.Identity;
 using CleanArch.Domain.Entities;
 using CleanArch.Domain.Primitives.Result;
@@ -9,7 +8,7 @@ using MediatR;
 using Microsoft.AspNetCore.Identity;
 using System.Text;
 
-namespace CleanArch.Api.Features.Users.CreateUsers;
+namespace CleanArch.Api.Features.Authentication.CreateUsers;
 
 public static partial class CreateUser
 {
@@ -35,7 +34,7 @@ public static partial class CreateUser
 
             if (!validationResult.IsValid)
             {
-                return new FailureResult<RegistrationResponse>(UserErrors.CreateUserValidation(validationResult.ToString()));
+                return new FailureResult<RegistrationResponse>(ValidationErrors.CreateUser.CreateUserValidation(validationResult.ToString()));
             }
 
             ApplicationUser user = new()
@@ -57,7 +56,7 @@ public static partial class CreateUser
                 {
                     errors.AppendFormat("-{0}\n", error.Description);
                 }
-                return new FailureResult<RegistrationResponse>(UserErrors.CreateUserValidation(result.Errors.ToString()));
+                return new FailureResult<RegistrationResponse>(ValidationErrors.CreateUser.CreateUserValidation(result.Errors.ToString()));
             }
 
             await _userManager.AddToRoleAsync(user, Roles.Employee);

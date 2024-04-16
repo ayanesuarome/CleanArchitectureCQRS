@@ -5,6 +5,7 @@ using CleanArch.Domain.Repositories;
 using FluentValidation;
 using FluentValidation.Results;
 using MediatR;
+using CleanArch.Domain.Errors;
 
 namespace CleanArch.Api.Features.LeaveRequests.UpdateLeaveRequests;
 
@@ -31,7 +32,7 @@ public static partial class UpdateLeaveRequest
 
             if (leaveRequest is null)
             {
-                return new NotFoundResult<LeaveRequest>(LeaveRequestErrors.NotFound(command.Id));
+                return new NotFoundResult<LeaveRequest>(DomainErrors.LeaveRequest.NotFound(command.Id));
             }
 
             ValidationResult validationResult = await _validator.ValidateAsync(command, cancellationToken);
@@ -39,7 +40,7 @@ public static partial class UpdateLeaveRequest
             if (!validationResult.IsValid)
             {
                 return new FailureResult<LeaveRequest>(
-                    LeaveRequestErrors.UpdateLeaveRequestValidation(validationResult.ToString()));
+                    ValidationErrors.UpdateLeaveRequest.UpdateLeaveRequestValidation(validationResult.ToString()));
             }
 
             _mapper.Map(command, leaveRequest);

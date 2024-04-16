@@ -36,7 +36,7 @@ public static partial class CreateLeaveAllocation
 
             if (!validationResult.IsValid)
             {
-                return Result.Failure<int>(LeaveAllocationErrors.CreateLeaveAllocationValidation(validationResult.ToString()));
+                return Result.Failure<int>(ValidationErrors.CreateLeaveAllocation.CreateLeaveAllocationValidation(validationResult.ToString()));
             }
 
             // get leave types for allocations

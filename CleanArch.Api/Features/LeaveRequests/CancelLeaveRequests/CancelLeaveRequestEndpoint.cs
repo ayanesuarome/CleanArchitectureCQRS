@@ -9,7 +9,7 @@ namespace CleanArch.Api.Features.LeaveRequests;
 
 public sealed partial class LeaveRequestController
 {
-    // PUT api/<v>/<LeaveRequestController>/5/CancelRequest
+    // PUT api/<v>/leave-requests/5/cancel-request
     [HttpPut(ApiRoutes.LeaveRequests.CancelRequest)]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(typeof(FailureResult), StatusCodes.Status400BadRequest)]

@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CleanArch.Api.Infrastructure;
 
-[Route("api/admin/v{version:apiVersion}/[controller]")]
+[Route("api/admin/v{version:apiVersion}")]
 [Authorize(Roles = Roles.Administrator)]
 public abstract class BaseAdminController : BaseController
 {

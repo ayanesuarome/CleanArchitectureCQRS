@@ -1,4 +1,5 @@
 ﻿using CleanArch.Application.Extensions;
+using CleanArch.Domain.Errors;
 using CleanArch.Domain.Repositories;
 using FluentValidation;
 
@@ -17,15 +18,23 @@ public static partial class CreateLeaveRequest
             RuleFor(m => m.LeaveTypeId)
                 .Cascade(CascadeMode.Stop)
                 .GreaterThan(0)
-                    .WithError(LeaveRequestErrors.LeaveTypeMustExist())
+                    .WithError(ValidationErrors.CreateLeaveRequest.LeaveTypeIdIsRequired)
                 .MustAsync(LeaveTypeMustExist)
-                    .WithError(LeaveRequestErrors.LeaveTypeMustExist());
+                    .WithError(DomainErrors.LeaveRequest.LeaveTypeMustExist);
 
             RuleFor(m => m.RequestComments)
                 .MaximumLength(300)
-                .WithError(LeaveRequestErrors.RequestCommentsMaximumLength("{MaxLength}"));
+                .WithError(ValidationErrors.CreateLeaveRequest.RequestCommentsMaximumLength("{MaxLength}"));
 
-            Include(new BaseCommandValidator());
+            RuleFor(m => m.StartDate)
+                .LessThan(m => m.EndDate)
+                .WithError(ValidationErrors.CreateLeaveRequest.StartDateLowerThanEndDate);
+
+            RuleFor(m => m.EndDate)
+                .GreaterThan(m => m.StartDate)
+                .WithError(ValidationErrors.CreateLeaveRequest.EndDateGeatherThanStartDate);
+            
+            //Include(new BaseCommandValidator());
         }
 
         private async Task<bool> LeaveTypeMustExist(int id, CancellationToken token)

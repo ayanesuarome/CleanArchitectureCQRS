@@ -2,6 +2,7 @@
 using CleanArch.Domain.Entities;
 using CleanArch.Domain.Repositories;
 using MediatR;
+using CleanArch.Domain.Errors;
 
 namespace CleanArch.Api.Features.LeaveRequests.CancelLeaveRequests;
 
@@ -26,7 +27,7 @@ public static partial class CancelLeaveRequest
 
             if (leaveRequest is null)
             {
-                return new NotFoundResult<LeaveRequest>(LeaveRequestErrors.NotFound(command.Id));
+                return new NotFoundResult<LeaveRequest>(DomainErrors.LeaveRequest.NotFound(command.Id));
             }
 
             leaveRequest.IsCancelled = true;

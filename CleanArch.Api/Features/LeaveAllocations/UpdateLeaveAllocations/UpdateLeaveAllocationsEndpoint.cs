@@ -8,7 +8,7 @@ namespace CleanArch.Api.Features.LeaveAllocations;
 
 public sealed partial class AdminLeaveAllocationController
 {
-    // PUT api/admin/<v>/<LeaveAllocationController>/5
+    // PUT api/admin/<v>/leave-allocations/5
     [HttpPut(ApiRoutes.LeaveAllocations.Put)]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(typeof(FailureResult), StatusCodes.Status400BadRequest)]

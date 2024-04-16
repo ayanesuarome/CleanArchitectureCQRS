@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using CleanArch.Contracts.LeaveRequests;
 using CleanArch.Domain.Entities;
+using CleanArch.Domain.Errors;
 using CleanArch.Domain.Primitives.Result;
 using CleanArch.Domain.Repositories;
 using MediatR;
@@ -21,7 +22,7 @@ public static partial class GetLeaveRequestDetail
 
             if (leaveRequest is null)
             {
-                return new NotFoundResult<LeaveRequestDetailsDto>(LeaveRequestErrors.NotFound(query.Id));
+                return new NotFoundResult<LeaveRequestDetailsDto>(DomainErrors.LeaveRequest.NotFound(query.Id));
             }
 
             LeaveRequestDetailsDto dto = _mapper.Map<LeaveRequestDetailsDto>(leaveRequest);

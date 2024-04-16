@@ -1,5 +1,6 @@
 ﻿using CleanArch.Application.Extensions;
 using CleanArch.Domain.Entities;
+using CleanArch.Domain.Errors;
 using CleanArch.Domain.Repositories;
 using FluentValidation;
 
@@ -17,18 +18,18 @@ public static partial class UpdateLeaveType
 
             RuleFor(m => m.Id)
                 .NotEmpty()
-                .WithError(LeaveTypeErrors.IdIsRequired());
+                .WithError(ValidationErrors.UpdateLeaveType.IdIsRequired);
 
             RuleFor(m => m.Name)
                 .Cascade(CascadeMode.Stop)
                 .MaximumLength(70)
-                    .WithError(LeaveTypeErrors.NameMaximumLength("{MaxLength}"))
+                    .WithError(ValidationErrors.UpdateLeaveType.NameMaximumLength("{MaxLength}"))
                 .MustAsync(LeaveTypeUniqueName)
-                    .WithError(LeaveTypeErrors.NameIsUnique());
+                    .WithError(DomainErrors.LeaveType.DuplicateName);
 
             RuleFor(m => m.DefaultDays)
                 .InclusiveBetween(1, 100)
-                    .WithError(LeaveTypeErrors.DefaultDaysRange("{From} - {To}"));
+                    .WithError(ValidationErrors.UpdateLeaveType.DefaultDaysRange("{From} - {To}"));
         }
 
         private async Task<bool> LeaveTypeUniqueName(Command command, string name, CancellationToken cancellation)

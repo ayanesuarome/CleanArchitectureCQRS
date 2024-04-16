@@ -1,4 +1,5 @@
 ﻿using CleanArch.Domain.Entities;
+using CleanArch.Domain.Errors;
 using CleanArch.Domain.Primitives.Result;
 using CleanArch.Domain.Repositories;
 using MediatR;
@@ -18,7 +19,7 @@ public static partial class DeleteLeaveAllocation
 
             if (leaveAllocation is null)
             {
-                return new NotFoundResult(LeaveAllocationErrors.NotFound(command.Id));
+                return new NotFoundResult(DomainErrors.LeaveAllocation.NotFound(command.Id));
             }
 
             await _repository.DeleteAsync(leaveAllocation);

@@ -7,8 +7,8 @@ namespace CleanArch.Api.Features.LeaveRequests;
 
 public sealed partial class AdminLeaveRequestController
 {
-    // GET: api/admin/<v>/<AdminLeaveRequestController>
-    [HttpGet(ApiRoutes.LeaveRequests.AdminGet)]
+    // GET: api/admin/<v>/leave-requests
+    [HttpGet(ApiRoutes.LeaveRequests.Get)]
     [ProducesResponseType(typeof(LeaveRequestListDto), StatusCodes.Status200OK)]
     public async Task<IActionResult> Get()
     {

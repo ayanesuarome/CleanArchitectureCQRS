@@ -10,7 +10,7 @@ namespace CleanArch.Api.Features.LeaveRequests;
 
 public sealed partial class AdminLeaveRequestController
 {
-    // PUT api/admin/<v>/<AdminLeaveRequestController>/5/UpdateApproval
+    // PUT api/admin/<v>/leave-requests/5/update-approval
     [HttpPut(ApiRoutes.LeaveRequests.AdminUpdateApproval)]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(typeof(FailureResult), StatusCodes.Status400BadRequest)]

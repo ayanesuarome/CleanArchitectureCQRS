@@ -1,4 +1,5 @@
 ﻿using CleanArch.Domain.Entities;
+using CleanArch.Domain.Errors;
 using CleanArch.Domain.Primitives.Result;
 using CleanArch.Domain.Repositories;
 using FluentValidation;
@@ -31,19 +32,20 @@ public static partial class ChangeLeaveRequestApproval
 
             if (leaveRequest is null)
             {
-                return new NotFoundResult<LeaveRequest>(LeaveRequestErrors.NotFound(command.Id));
+                return new NotFoundResult<LeaveRequest>(DomainErrors.LeaveRequest.NotFound(command.Id));
             }
 
             ValidationResult validationResult = await _validator.ValidateAsync(command, cancellationToken);
 
             if (!validationResult.IsValid)
             {
-                return new FailureResult<LeaveRequest>(LeaveRequestErrors.InvalidApprovalRequest(validationResult.ToDictionary()));
+                return new FailureResult<LeaveRequest>(
+                    ValidationErrors.ChangeLeaveRequestApproval.ChangeLeaveRequestApprovalValidation(validationResult.ToString()));
             }
 
             if (leaveRequest.IsCancelled)
             {
-                return new FailureResult<LeaveRequest>(LeaveRequestErrors.InvalidApprovalStateIsCanceled);
+                return new FailureResult<LeaveRequest>(DomainErrors.LeaveRequest.InvalidApprovalStateIsCanceled);
             }
 
             leaveRequest.IsApproved = command.Approved;
@@ -59,7 +61,7 @@ public static partial class ChangeLeaveRequestApproval
 
                 if (!canUpdate)
                 {
-                    return new FailureResult<LeaveRequest>(LeaveRequestErrors.InvalidNumberOfDays(leaveRequest.GetDaysRequested()));
+                    return new FailureResult<LeaveRequest>(DomainErrors.LeaveRequest.InvalidNumberOfDays(leaveRequest.GetDaysRequested()));
                 }
 
                 await _leaveAllocationRepository.UpdateAsync(allocation);

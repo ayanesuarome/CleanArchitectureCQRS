@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using CleanArch.Contracts.LeaveTypes;
 using CleanArch.Domain.Entities;
+using CleanArch.Domain.Errors;
 using CleanArch.Domain.Primitives.Result;
 using CleanArch.Domain.Repositories;
 using MediatR;
@@ -21,7 +22,7 @@ public static partial class GetLeaveTypeDetail
 
             if (leaveType is null)
             {
-                return new NotFoundResult<LeaveTypeDetailDto>(LeaveTypeErrors.NotFound(query.Id));
+                return new NotFoundResult<LeaveTypeDetailDto>(DomainErrors.LeaveType.NotFound(query.Id));
             }
 
             LeaveTypeDetailDto dto = _mapper.Map<LeaveTypeDetailDto>(leaveType);

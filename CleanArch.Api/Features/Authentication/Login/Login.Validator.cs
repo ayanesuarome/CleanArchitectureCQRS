@@ -12,13 +12,13 @@ public static partial class Login
             RuleFor(x => x.Email)
                 .Cascade(CascadeMode.Stop)
                 .NotEmpty()
-                    .WithError(AuthenticationErrors.EmailIsRequired)
+                    .WithError(ValidationErrors.Login.EmailIsRequired)
                 .EmailAddress()
-                    .WithError(AuthenticationErrors.EmailIsInvalid)
+                    .WithError(ValidationErrors.Login.EmailIsInvalid);
 
             RuleFor(x => x.Password)
                 .NotEmpty()
-                .WithError(AuthenticationErrors.PasswordIsRequired);
+                .WithError(ValidationErrors.Login.PasswordIsRequired);
         }
     }
 }

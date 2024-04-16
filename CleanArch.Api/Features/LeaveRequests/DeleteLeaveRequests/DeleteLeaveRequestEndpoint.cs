@@ -7,7 +7,7 @@ namespace CleanArch.Api.Features.LeaveRequests;
 
 public sealed partial class LeaveRequestController
 {
-    // DELETE api/<v>/<LeaveRequestController>/5
+    // DELETE api/<v>/leave-requests/5
     [HttpDelete(ApiRoutes.LeaveRequests.Delete)]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]

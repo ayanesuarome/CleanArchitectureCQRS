@@ -25,7 +25,7 @@ public static partial class CreateLeaveType
 
             if (!validationResult.IsValid)
             {
-                return new FailureResult<int>(LeaveTypeErrors.CreateLeaveTypeValidation(validationResult.ToString()));
+                return new FailureResult<int>(ValidationErrors.CreateLeaveType.CreateLeaveTypeValidation(validationResult.ToString()));
             }
 
             LeaveType leaveTypeToCreate = _mapper.Map<LeaveType>(commnad);

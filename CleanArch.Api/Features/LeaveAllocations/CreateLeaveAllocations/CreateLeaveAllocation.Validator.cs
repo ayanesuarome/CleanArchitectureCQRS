@@ -1,4 +1,5 @@
 ﻿using CleanArch.Application.Extensions;
+using CleanArch.Domain.Errors;
 using CleanArch.Domain.Repositories;
 using FluentValidation;
 
@@ -17,9 +18,9 @@ public static partial class CreateLeaveAllocation
             RuleFor(m => m.LeaveTypeId)
                 .Cascade(CascadeMode.Stop)
                 .GreaterThan(0)
-                    .WithError(LeaveAllocationErrors.LeaveTypeMustExist())
+                    .WithError(ValidationErrors.CreateLeaveAllocation.LeaveTypeIdIsRequired)
                 .MustAsync(LeaveTypeMustExist)
-                    .WithError(LeaveAllocationErrors.LeaveTypeMustExist());
+                    .WithError(DomainErrors.LeaveAllocation.LeaveTypeMustExist);
         }
 
         private async Task<bool> LeaveTypeMustExist(int id, CancellationToken token)
