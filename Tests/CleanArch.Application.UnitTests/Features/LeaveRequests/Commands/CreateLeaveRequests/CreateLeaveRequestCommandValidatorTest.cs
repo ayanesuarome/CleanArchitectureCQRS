@@ -22,7 +22,7 @@ public class CreateLeaveRequestCommandValidatorTest(CreateLeaveRequestCommandVal
         var result = await _fixture.validator.TestValidateAsync(command);
 
         result.ShouldHaveValidationErrorFor(x => x.LeaveTypeId)
-            .WithErrorMessage("There must be an associated Leave type.");
+            .WithErrorMessage("The leave type ID is required.");
     }
 
     [Fact]

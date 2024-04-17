@@ -1,7 +1,6 @@
 using CleanArch.Api.ExceptionHandlers;
 using CleanArch.Api.Infrastructure;
 using CleanArch.Api.Swagger;
-using CleanArch.Application;
 using CleanArch.Identity;
 using CleanArch.Infrastructure;
 using CleanArch.Persistence;
@@ -17,12 +16,11 @@ builder.Host.UseSerilog((context, config) => config
     .WriteTo.Console()
     .ReadFrom.Configuration(context.Configuration));
 
-builder.Services.AddApplicationServices();
+builder.Services.AddApiServices();
+builder.Services.AddIdentityServices(builder.Configuration);
 builder.Services.AddCleanArchEFDbContext(builder.Configuration);
 builder.Services.AddInfrastructureServices(builder.Configuration);
 builder.Services.AddPersistenceServices();
-builder.Services.AddIdentityServices(builder.Configuration);
-builder.Services.AddValidators();
 
 // The factory-activated middleware is added to the built-in container
 //builder.Services.AddTransient<ExceptionMiddleware>();

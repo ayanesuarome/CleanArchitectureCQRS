@@ -16,7 +16,7 @@ public partial class Create
     [Inject] private IToastService ToastService { get; set; } = null!;
 
     private LeaveRequestVM LeaveRequestModel { get; set; } = new();
-    private List<LeaveTypeVM> LeaveTypesModel { get; set; } = [];
+    private IReadOnlyCollection<LeaveTypeVM> LeaveTypesModel { get; set; } = [];
     private string? Message { get; set; }
 
     protected override async Task OnInitializedAsync()

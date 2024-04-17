@@ -17,7 +17,7 @@ public partial class Index
     [Inject] private IToastService ToastService { get; set; } = null!;
     [Inject] private IJSRuntime Js { get; set; } = null!;
 
-    private List<LeaveTypeVM>? LeaveTypes { get; set; }
+    private IReadOnlyCollection<LeaveTypeVM>? LeaveTypes { get; set; }
     public string? Message { get; set; }
 
     protected override async Task OnInitializedAsync()

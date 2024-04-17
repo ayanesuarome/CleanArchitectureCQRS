@@ -40,7 +40,7 @@ public static partial class CreateLeaveRequest
             if (!validationResult.IsValid)
             {
                 return new FailureResult<LeaveRequest>(
-                    ValidationErrors.CreateLeaveRequest.CreateLeaveRequestValidation(validationResult.ToString()));
+                    ValidationErrors.CreateLeaveRequest.CreateLeaveRequestValidation(validationResult.ToDictionary()));
             }
 
             // check on employee's allocation

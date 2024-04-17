@@ -47,7 +47,7 @@ public class CreateLeaveTypeCommandValidatorTest(CreateLeaveTypeCommandValidator
         var result = await _fixture.validator.TestValidateAsync(command);
 
         result.ShouldHaveValidationErrorFor(x => x.Name)
-            .WithErrorMessage("The Leave type already exist.");
+            .WithErrorMessage("The Leave type is already in use.");
     }
 
     [Theory]

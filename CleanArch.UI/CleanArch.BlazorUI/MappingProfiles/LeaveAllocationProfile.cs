@@ -8,6 +8,7 @@ public class LeaveAllocationProfile : Profile
 {
     public LeaveAllocationProfile()
     {
-        CreateMap<LeaveAllocationDto, LeaveAllocationVM>();
+        CreateMap<LeaveAllocationDetailsDto, LeaveAllocationVM>();
+        CreateMap<LeaveAllocationModel, LeaveAllocationVM>();
     }
 }

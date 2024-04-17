@@ -21,8 +21,11 @@ public static partial class GetLeaveAllocationList
         {
             string userId = _userService.UserId;
             IReadOnlyCollection<LeaveAllocation> leaveAllocations = await _repository.GetLeaveAllocationsWithDetails(userId);
-            LeaveAllocationListDto leaveAllocationDtos = new(
-                _mapper.Map<IReadOnlyCollection<LeaveAllocationListDto.LeaveAllocationModel>>(leaveAllocations));
+
+            IReadOnlyCollection<LeaveAllocationListDto.LeaveAllocationModel> list = _mapper
+                .Map<IReadOnlyCollection<LeaveAllocationListDto.LeaveAllocationModel>>(leaveAllocations);
+
+            LeaveAllocationListDto leaveAllocationDtos = new(list);
 
             return Result.Success(leaveAllocationDtos);
         }

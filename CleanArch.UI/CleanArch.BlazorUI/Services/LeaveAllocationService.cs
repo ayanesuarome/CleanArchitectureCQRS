@@ -9,12 +9,12 @@ public class LeaveAllocationService(IClient client): BaseHttpService(client), IL
     {
         try
         {
-            CreateLeaveAllocationCommand body = new()
+            CreateLeaveAllocationRequest request = new()
             {
                 LeaveTypeId = leaveTypeId
             };
 
-            await _client.AdminLeaveAllocationPOSTAsync(body);
+            await _client.LeaveAllocationsPOSTAsync(request);
 
             return new Response<Guid>();
         }

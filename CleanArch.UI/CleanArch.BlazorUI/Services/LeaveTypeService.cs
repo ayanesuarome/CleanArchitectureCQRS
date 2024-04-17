@@ -9,15 +9,15 @@ public class LeaveTypeService(IClient client, IMapper mapper) : BaseHttpService(
 {
     private readonly IMapper _mapper = mapper;
 
-    public async Task<List<LeaveTypeVM>> GetLeaveTypeList()
+    public async Task<IReadOnlyCollection<LeaveTypeVM>> GetLeaveTypeList()
     {
-        ICollection<LeaveTypeDto> leaveTypes = await _client.LeaveTypesAllAsync();
-        return _mapper.Map<List<LeaveTypeVM>>(leaveTypes);
+        LeaveTypeListDto leaveTypes = await _client.LeaveTypesGETAsync();
+        return _mapper.Map<IReadOnlyCollection<LeaveTypeVM>>(leaveTypes.LeaveTypes);
     }
 
     public async Task<LeaveTypeVM> GetLeaveTypeDetails(int id)
     {
-        LeaveTypeDetailsDto leaveType = await _client.LeaveTypesGETAsync(id);
+        LeaveTypeDetailDto leaveType = await _client.LeaveTypesGET2Async(id);
         return _mapper.Map<LeaveTypeVM>(leaveType);
     }
 
@@ -25,8 +25,8 @@ public class LeaveTypeService(IClient client, IMapper mapper) : BaseHttpService(
     {
         try
         {
-            CreateLeaveTypeCommand command = _mapper.Map<CreateLeaveTypeCommand>(leaveType);
-            await _client.LeaveTypesPOSTAsync(command);
+            CreateLeaveTypeRequest request = _mapper.Map<CreateLeaveTypeRequest>(leaveType);
+            await _client.LeaveTypesPOSTAsync(request);
 
             return new Response<Guid>();
         }
@@ -40,8 +40,8 @@ public class LeaveTypeService(IClient client, IMapper mapper) : BaseHttpService(
     {
         try
         {
-            UpdateLeaveTypeCommand command = _mapper.Map<UpdateLeaveTypeCommand>(leaveType);
-            await _client.LeaveTypesPUTAsync(leaveType.Id, command);
+            UpdateLeaveTypeRequest request = _mapper.Map<UpdateLeaveTypeRequest>(leaveType);
+            await _client.LeaveTypesPUTAsync(leaveType.Id, request);
 
             return new Response<Guid>();
         }
@@ -55,7 +55,7 @@ public class LeaveTypeService(IClient client, IMapper mapper) : BaseHttpService(
     {
         try
         {
-            await _client.AdminLeaveTypeAsync(50);
+            await _client.LeaveTypesDELETEAsync(50);
             return new Response<Guid>();
         }
         catch(ApiException ex)

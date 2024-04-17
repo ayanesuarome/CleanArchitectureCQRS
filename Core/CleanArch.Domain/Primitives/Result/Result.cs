@@ -32,12 +32,12 @@ public class Result<T> : Result
     {
         get
         {
-            if (IsFailure)
-            {
-                throw new InvalidOperationException(
-                    $"You cannot access {nameof(Data)} when {nameof(IsFailure)} is true",
-                    new Exception(Error!.Message!));
-            }
+            //if (IsFailure)
+            //{
+            //    throw new InvalidOperationException(
+            //        $"You cannot access {nameof(Data)} when {nameof(IsFailure)} is true",
+            //        new Exception(Error!.Message!));
+            //}
 
             return _data;
         }

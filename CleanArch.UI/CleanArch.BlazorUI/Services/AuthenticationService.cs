@@ -23,11 +23,11 @@ public class AuthenticationService : BaseHttpService, IAuthenticationService
 
     public async Task<bool> AuthenticateAsync(LoginVM model)
     {
-        AuthRequest authRequest = _mapper.Map<AuthRequest>(model);
+        LoginRequest authRequest = _mapper.Map<LoginRequest>(model);
 
         try
         {
-            AuthResponse response = await _client.LoginAsync(authRequest);
+            TokenResponse response = await _client.LoginAsync(authRequest);
 
             if (string.IsNullOrEmpty(response?.Token))
             {

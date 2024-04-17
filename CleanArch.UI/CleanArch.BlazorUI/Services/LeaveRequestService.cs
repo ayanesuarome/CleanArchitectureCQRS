@@ -14,8 +14,8 @@ public class LeaveRequestService(IClient client, IMapper mapper) : BaseHttpServi
     {
         try
         {
-            CreateLeaveRequestCommand command = _mapper.Map<CreateLeaveRequestCommand>(model);
-            await _client.LeaveRequestPOSTAsync(command);
+            CreateLeaveRequestRequest request = _mapper.Map<CreateLeaveRequestRequest>(model);
+            await _client.LeaveRequestsPOSTAsync(request);
 
             return new Response<Guid>();
         }
@@ -27,15 +27,16 @@ public class LeaveRequestService(IClient client, IMapper mapper) : BaseHttpServi
 
     public async Task<AdminLeaveRequestVM> GetAdminLeaveRequestListAsync()
     {
-        ICollection<LeaveRequestDto> leaveRequests = await _client.AdminLeaveRequestAsync();
+        LeaveRequestListDto response = await _client.LeaveRequestsGETAsync();
+        IReadOnlyCollection<LeaveRequestVM> models = _mapper.Map<IReadOnlyCollection<LeaveRequestVM>>(response.LeaveRequests);
 
-        AdminLeaveRequestVM model = new()
+
+        AdminLeaveRequestVM model = new(models)
         {
-            TotalRequests = leaveRequests.Count,
-            ApprovedRequests = leaveRequests.Count(request => request.IsApproved is true),
-            PendingRequests = leaveRequests.Count(request => request.IsApproved is null),
-            RejectedRequests = leaveRequests.Count(request => request.IsApproved is false),
-            LeaveRequests = _mapper.Map<List<LeaveRequestVM>>(leaveRequests)
+            TotalRequests = response.LeaveRequests.Count,
+            ApprovedRequests = response.LeaveRequests.Count(request => request.IsApproved is true),
+            PendingRequests = response.LeaveRequests.Count(request => request.IsApproved is null),
+            RejectedRequests = response.LeaveRequests.Count(request => request.IsApproved is false)
         };
 
         return model;
@@ -43,34 +44,35 @@ public class LeaveRequestService(IClient client, IMapper mapper) : BaseHttpServi
 
     public async Task<EmployeeLeaveRequestVM> GetEmployeeLeaveRequestListAsync()
     {
-        ICollection<LeaveRequestDto> leaveRequests = await _client.LeaveRequestAllAsync();
-        ICollection<LeaveAllocationDto> allocations = await _client.LeaveAllocationAllAsync();
+        LeaveRequestListDto leaveRequestResponse = await _client.LeaveRequestsGET2Async();
+        LeaveAllocationListDto allocationResponse = await _client.LeaveAllocationsGET2Async();
 
-        EmployeeLeaveRequestVM model = new()
-        {
-            LeaveAllocations = _mapper.Map<List<LeaveAllocationVM>>(allocations),
-            LeaveRequests = _mapper.Map<List<LeaveRequestVM>>(leaveRequests)
-        };
+        //IReadOnlyCollection<LeaveAllocationVM> leaveAllocations = 
+        //    _mapper.Map<IReadOnlyCollection<LeaveAllocationVM>>(allocationResponse.LeaveAllocationList);
+        IReadOnlyCollection<LeaveRequestVM> leaveRequests = 
+            _mapper.Map<IReadOnlyCollection<LeaveRequestVM>>(leaveRequestResponse.LeaveRequests);
+
+        EmployeeLeaveRequestVM model = new(leaveRequests);
 
         return model;
     }
 
     public async Task<LeaveRequestVM> GetLeaveRequestAsync(int id)
     {
-        LeaveRequestDetailsDto leaveRequest = await _client.LeaveRequestGETAsync(id);
+        LeaveRequestDetailsDto leaveRequest = await _client.LeaveRequestsGET3Async(id);
         return _mapper.Map<LeaveRequestVM>(leaveRequest);
     }
 
     public async Task<Response<Guid>> ApprovedLeaveRequestAsync(int id, bool status)
     {
-        ChangeLeaveRequestApprovalCommand command = new()
+        ChangeLeaveRequestApprovalRequest request = new()
         {
             Approved = status
         };
 
         try
         {
-            await _client.UpdateApprovalAsync(id, command);
+            await _client.UpdateApprovalAsync(id, request);
             return new Response<Guid>();
         }
         catch(ApiException ex)

@@ -8,10 +8,7 @@ public class LeaveRequestProfile : Profile
 {
     public LeaveRequestProfile()
     {
-        CreateMap<LeaveRequestVM, CreateLeaveRequestCommand>();
-
-        CreateMap<LeaveRequestDto, LeaveRequestVM>();
-
+        CreateMap<LeaveRequestVM, CreateLeaveRequestRequest>();
         CreateMap<LeaveRequestDetailsDto, LeaveRequestVM>();
     }
 }

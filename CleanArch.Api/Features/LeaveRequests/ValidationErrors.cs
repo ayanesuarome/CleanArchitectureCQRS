@@ -12,7 +12,7 @@ internal static class ValidationErrors
 
     internal static class CreateLeaveRequest
     {
-        internal static Error LeaveTypeIdIsRequired => new Error("CreateLeaveRequest.LeaveTypeIdIsRequired", "The leave type ID is required");
+        internal static Error LeaveTypeIdIsRequired => new Error("CreateLeaveRequest.LeaveTypeIdIsRequired", "The leave type ID is required.");
         internal static Error RequestCommentsMaximumLength(string length) => new Error(
         "CreateLeaveRequest.RequestCommentsMaximumLength",
         $"The RequestComments must be up to {length}.");
@@ -26,6 +26,8 @@ internal static class ValidationErrors
             "The EndDate must be after StartDate.");
 
         internal static Error CreateLeaveRequestValidation(string message) => new Error("CreateLeaveRequest.Validation", message);
+        internal static Error CreateLeaveRequestValidation(IDictionary<string, string[]> errors) => new Error(
+        "CreateLeaveRequest.Validation", "Invalid Leave request", errors);
     }
 
     internal static class UpdateLeaveRequest
@@ -42,10 +44,6 @@ internal static class ValidationErrors
         internal static Error UpdateLeaveRequestValidation(string message) => new Error("UpdateLeaveRequest.Validation", message);
 
     }
-      
-    internal static Error InvalidLeaveRequest(IDictionary<string, string[]> errors) => new Error(
-        "LeaveRequest.InvalidLeaveRequest",
-        "Invalid Leave request", errors);
 
     internal static Error InvalidApprovalRequest(IDictionary<string, string[]> errors) => new Error(
         "LeaveRequest.InvalidApprovalRequest",

@@ -12,7 +12,7 @@ public sealed partial class AdminLeaveAllocationController
     [HttpPost(ApiRoutes.LeaveAllocations.Post)]
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
-    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(Error), StatusCodes.Status400BadRequest)]
     public async Task<ActionResult> Post([FromBody] CreateLeaveAllocationRequest request)
     {
         Result<int> rowsAffectedResult = await _mediator.Send(new CreateLeaveAllocation.Command(request.LeaveTypeId));

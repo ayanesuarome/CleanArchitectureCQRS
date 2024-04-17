@@ -13,7 +13,7 @@ public sealed partial class LeaveRequestController
     // POST api/<v>/leave-requests
     [HttpPost(ApiRoutes.LeaveRequests.Post)]
     [ProducesResponseType(StatusCodes.Status201Created)]
-    [ProducesResponseType(typeof(FailureResult), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(Error), StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> Post([FromBody] CreateLeaveRequestRequest request)
     {
         CreateLeaveRequest.Command command = _mapper.Map<CreateLeaveRequest.Command>(request);

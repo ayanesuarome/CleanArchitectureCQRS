@@ -5,7 +5,7 @@ namespace CleanArch.BlazorUI.Interfaces;
 
 public interface ILeaveTypeService
 {
-    Task<List<LeaveTypeVM>> GetLeaveTypeList();
+    Task<IReadOnlyCollection<LeaveTypeVM>> GetLeaveTypeList();
     Task<LeaveTypeVM> GetLeaveTypeDetails(int id);
     Task<Response<Guid>> CreateLeaveType(LeaveTypeVM leaveType);
     Task<Response<Guid>> UpdateLeaveType(LeaveTypeVM leaveType);
