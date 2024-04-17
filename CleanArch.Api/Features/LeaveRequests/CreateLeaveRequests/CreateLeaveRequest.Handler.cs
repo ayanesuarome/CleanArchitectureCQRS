@@ -45,18 +45,18 @@ public static partial class CreateLeaveRequest
 
             // check on employee's allocation
             LeaveAllocation leaveAllocation = await _allocationRepository.GetEmployeeAllocation(_userService.UserId, command.LeaveTypeId);
-            bool result = await _allocationRepository.HasEmployeeAllocation(_userService.UserId, command.LeaveTypeId);
 
             // if allocations aren't enough, return validation error
             if (leaveAllocation is null)
             {
-                return new FailureResult<LeaveRequest>(DomainErrors.LeaveRequest.NotEnoughDays);
+                return new FailureResult<LeaveRequest>(DomainErrors.LeaveRequest.NoAllocationsForLeaveType(command.LeaveTypeId));
             }
 
-            if (!leaveAllocation.HasEnoughDays(command.StartDate, command.EndDate))
+            Result hasEnoughDaysResult = leaveAllocation.ValidateHasEnoughDays(command.StartDate, command.EndDate);
+            
+            if (hasEnoughDaysResult.IsFailure)
             {
-                return new FailureResult<LeaveRequest>(
-                    DomainErrors.LeaveRequest.NoAllocationsForLeaveType(command.LeaveTypeId));
+                return new FailureResult<LeaveRequest>(hasEnoughDaysResult.Error);
             }
 
             LeaveRequest leaveRequest = _mapper.Map<LeaveRequest>(command);

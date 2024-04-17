@@ -57,15 +57,8 @@ public static partial class CreateLeaveAllocation
 
                 if (!allocationExist)
                 {
-                    LeaveAllocation allocation = new()
-                    {
-                        EmployeeId = employee.Id,
-                        LeaveTypeId = leaveType.Id,
-                        Period = period
-                    };
-
-                    allocation.UpdateNumberOfDays(leaveType.DefaultDays);
-
+                    LeaveAllocation allocation = new(period, leaveType, employee.Id);
+                    allocation.ChangeNumberOfDays(leaveType.DefaultDays);
                     allocations.Add(allocation);
                 }
             }

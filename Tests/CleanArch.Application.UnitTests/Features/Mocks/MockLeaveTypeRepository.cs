@@ -10,23 +10,17 @@ public static class MockLeaveTypeRepository
     {
         List<LeaveType> leaveTypes = new()
         {
-            new()
+            new("Test Vacation", 10)
             {
-                Id = 1,
-                DefaultDays = 10,
-                Name = "Test Vacation"
+                Id = 1
             },
-            new()
+            new("Test Sick", 15)
             {
                 Id = 2,
-                DefaultDays = 15,
-                Name = "Test Sick"
             },
-            new()
+            new("Test Maternity", 15)
             {
                 Id = 3,
-                DefaultDays = 15,
-                Name = "Test Maternity"
             }
         };
 

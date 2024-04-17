@@ -13,10 +13,6 @@ public static partial class DomainErrors
             "LeaveRequest.InvalidApprovalStateIsCanceled",
             "This leave request has been cancelled and its approval state cannot be updated.");
 
-        public static Error InvalidNumberOfDays(int daysRequested) => new Error(
-            "LeaveRequest.InvalidNumberOfDays",
-            $"The employee's allocation does not have {daysRequested} available number of days.");
-
         public static Error NoAllocationsForLeaveType(int leaveTypeId) => new Error(
             "LeaveRequest.NoAllocationsForLeaveType",
             $"You do not have any allocation for this leave type ID {leaveTypeId}.");
@@ -24,5 +20,9 @@ public static partial class DomainErrors
         public static Error NotEnoughDays => new Error(
             "LeaveRequest.NotEnoughDays",
             "You do not have enough available days for this request.");
+
+        public static Error AlreadyRejected => new Error("LeaveRequest.AlreadyRejected", "The leave request has already been rejected.");
+        public static Error AlreadyApproved => new Error("LeaveRequest.AlreadyApproved", "The leave request has already been approved.");
+        public static Error AlreadyCanceled => new Error("LeaveRequest.AlreadyCanceled", "The leave request has already been canceled.");
     }
 }

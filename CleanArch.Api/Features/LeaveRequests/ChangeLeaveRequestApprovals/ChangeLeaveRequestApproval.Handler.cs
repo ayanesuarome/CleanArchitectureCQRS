@@ -48,7 +48,14 @@ public static partial class ChangeLeaveRequestApproval
                 return new FailureResult<LeaveRequest>(DomainErrors.LeaveRequest.InvalidApprovalStateIsCanceled);
             }
 
-            leaveRequest.IsApproved = command.Approved;
+            if (command.Approved)
+            {
+                leaveRequest.Approve();
+            }
+            else
+            {
+                leaveRequest.Reject();
+            }
 
             // if request is approved, get and update the employee's allocation
             if (leaveRequest.IsApproved is true)
@@ -57,11 +64,11 @@ public static partial class ChangeLeaveRequestApproval
                     leaveRequest.RequestingEmployeeId,
                     leaveRequest.LeaveTypeId);
 
-                bool canUpdate = allocation.UpdateNumberOfDays(allocation.NumberOfDays - leaveRequest.GetDaysRequested());
+                Result updateNumberOfDaysResult = allocation.ChangeNumberOfDays(allocation.NumberOfDays - leaveRequest.DaysRequested());
 
-                if (!canUpdate)
+                if (updateNumberOfDaysResult.IsFailure)
                 {
-                    return new FailureResult<LeaveRequest>(DomainErrors.LeaveRequest.InvalidNumberOfDays(leaveRequest.GetDaysRequested()));
+                    return new FailureResult<LeaveRequest>(updateNumberOfDaysResult.Error);
                 }
 
                 await _leaveAllocationRepository.UpdateAsync(allocation);

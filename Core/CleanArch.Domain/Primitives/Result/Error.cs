@@ -8,8 +8,8 @@ public class Error
 
     public Error(string type, string message, IDictionary<string, string[]> errors)
     {
-        ArgumentNullException.ThrowIfNull(nameof(type));
-        ArgumentNullException.ThrowIfNull(nameof(message));
+        ArgumentNullException.ThrowIfNull(type);
+        ArgumentNullException.ThrowIfNull(message);
 
         Type = type;
         Message = message;

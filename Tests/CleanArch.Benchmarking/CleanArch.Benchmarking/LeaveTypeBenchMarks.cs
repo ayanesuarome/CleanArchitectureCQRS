@@ -10,10 +10,9 @@ namespace CleanArch.Benchmarking
         [Benchmark]
         public async Task AnyLeaveTypeAsync()
         {
-            LeaveType entity = new()
+            LeaveType entity = new("Test Get Leave Type", 15)
             {
-                DefaultDays = 15,
-                Name = "Test Get Leave Type"
+                Id = 1
             };
 
             await context.LeaveTypes.AddAsync(entity);
@@ -27,12 +26,11 @@ namespace CleanArch.Benchmarking
         [Benchmark]
         public async Task GetLeaveTypeAsync()
         {
-            LeaveType entity = new()
+            LeaveType entity = new("Test Get Leave Type", 15)
             {
-                DefaultDays = 15,
-                Name = "Test Get Leave Type"
+                Id = 2
             };
-
+            
             await context.LeaveTypes.AddAsync(entity);
             await context.SaveChangesAsync();
 

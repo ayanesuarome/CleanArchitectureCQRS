@@ -30,7 +30,7 @@ public static partial class CancelLeaveRequest
                 return new NotFoundResult<LeaveRequest>(DomainErrors.LeaveRequest.NotFound(command.Id));
             }
 
-            leaveRequest.IsCancelled = true;
+            leaveRequest.Cancel();
             await _leaveRequestRepository.UpdateAsync(leaveRequest);
 
             // if already approved, re-evaluate the employee's allocations for the leave type
@@ -40,7 +40,12 @@ public static partial class CancelLeaveRequest
                     leaveRequest.RequestingEmployeeId,
                     leaveRequest.LeaveTypeId);
 
-                bool canUpdate = allocation.UpdateNumberOfDays(allocation.NumberOfDays + leaveRequest.GetDaysRequested());
+                Result updateNumberOfDaysResult = allocation.ChangeNumberOfDays(allocation.NumberOfDays + leaveRequest.DaysRequested());
+
+                if(updateNumberOfDaysResult.IsFailure)
+                {
+                    return new FailureResult<LeaveRequest>(updateNumberOfDaysResult.Error);
+                }
 
                 await _leaveAllocationRepository.UpdateAsync(allocation);
             }
