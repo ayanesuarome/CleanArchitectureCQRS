@@ -1,11 +1,12 @@
 ﻿using CleanArch.Domain.Utilities;
+using CleanArch.Domain.ValueObjects;
 using Microsoft.AspNetCore.Identity;
 
 namespace CleanArch.Domain.Entities;
 
 public sealed class ApplicationUser : IdentityUser
 {
-    public ApplicationUser(string firstName, string lastName)
+    public ApplicationUser(FirstName firstName, LastName lastName)
         : base()
     {
         Ensure.NotNull(firstName, "The first name is required.", nameof(firstName));
@@ -25,8 +26,8 @@ public sealed class ApplicationUser : IdentityUser
     {
     }
 
-    public string FirstName { get; private set; }
-    public string LastName { get; set; }
+    public FirstName FirstName { get; private set; }
+    public LastName LastName { get; set; }
 
     /// <summary>
     /// Gets the user full name.

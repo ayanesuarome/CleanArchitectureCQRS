@@ -11,11 +11,13 @@ public sealed record Name
     /// <summary>
     /// The name maximum length.
     /// </summary>
-    public const int MaxLength = 100;
+    public const int MaxLength = 70;
 
     private Name(string value) => Value = value;
 
     public string Value { get; }
+
+    public static implicit operator string(Name value) => value.Value;
 
     public override string ToString() => Value;
 

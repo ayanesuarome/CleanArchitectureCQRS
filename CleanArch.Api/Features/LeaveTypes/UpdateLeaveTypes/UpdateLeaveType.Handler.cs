@@ -1,8 +1,8 @@
-﻿using AutoMapper;
-using CleanArch.Domain.Entities;
+﻿using CleanArch.Domain.Entities;
 using CleanArch.Domain.Errors;
 using CleanArch.Domain.Primitives.Result;
 using CleanArch.Domain.Repositories;
+using CleanArch.Domain.ValueObjects;
 using FluentValidation;
 using FluentValidation.Results;
 using MediatR;
@@ -11,13 +11,11 @@ namespace CleanArch.Api.Features.LeaveTypes.UpdateLeaveTypes;
 
 public static partial class UpdateLeaveType
 {
-    internal sealed class Handler(
-        IMapper mapper,
+    public sealed class Handler(
         ILeaveTypeRepository repository,
         IValidator<Command> validator)
         : IRequestHandler<Command, Result<Unit>>
     {
-        private readonly IMapper _mapper = mapper;
         private readonly ILeaveTypeRepository _repository = repository;
         private readonly IValidator<Command> _validator = validator;
 
@@ -37,7 +35,24 @@ public static partial class UpdateLeaveType
                 return new FailureResult<Unit>(ValidationErrors.UpdateLeaveType.UpdateLeaveTypeValidation(validationResult.ToString()));
             }
 
-            _mapper.Map(command, leaveType);
+            Result<Name> nameResult = Name.Create(command.Name);
+            Result<DefaultDays> defaultDaysResult = DefaultDays.Create(command.DefaultDays);
+
+            Result firstFailureOrSuccess = Result.FirstFailureOrSuccess(nameResult, defaultDaysResult);
+
+            if(firstFailureOrSuccess.IsFailure)
+            {
+                return new FailureResult<Unit>(firstFailureOrSuccess.Error);
+            }
+
+            if(!await _repository.IsUniqueAsync(nameResult.Value, cancellationToken))
+            {
+                return new FailureResult<Unit>(DomainErrors.LeaveType.DuplicateName);
+            }
+
+            leaveType.UpdateName(nameResult.Value);
+            leaveType.UpdateDefaultDays(defaultDaysResult.Value);
+
             await _repository.UpdateAsync(leaveType);
 
             return new SuccessResult<Unit>(Unit.Value);

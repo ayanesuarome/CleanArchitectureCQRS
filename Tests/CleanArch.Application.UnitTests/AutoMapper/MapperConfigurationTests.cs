@@ -2,7 +2,6 @@
 using CleanArch.Api.Features.Authentication;
 using CleanArch.Api.Features.LeaveAllocations;
 using CleanArch.Api.Features.LeaveRequests;
-using CleanArch.Api.Features.LeaveTypes;
 
 namespace CleanArch.Application.Tests.AutoMapper;
 
@@ -30,7 +29,6 @@ public class MapperConfigurationTests
 
     public static IEnumerable<object[]> GetMapperProfiles()
     {
-        yield return new object[] { typeof(LeaveTypeProfile) };
         yield return new object[] { typeof(LeaveAllocationProfile) };
         yield return new object[] { typeof(LeaveRequestProfile) };
         yield return new object[] { typeof(AuthenticationProfile) };

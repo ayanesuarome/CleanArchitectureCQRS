@@ -74,6 +74,27 @@ public class Result
     public static Result<T> Create<T>(T value, Error error)
         where T : class =>
         value is null ? Failure<T>(error) : Success(value);
+
+    public static Result<int> Create(int value, Error error) =>
+        value == default ? Failure<int>(error) : Success(value);
+
+    /// <summary>
+    /// Returns the first failure from the specified <paramref name="results"/>.
+    /// If there is no failure, a success is returned.
+    /// </summary>
+    /// <param name="results">The results array.</param>
+    /// <returns>
+    /// The first failure from the specified <paramref name="results"/> array, or a success it does not exist.
+    /// </returns>
+    public static Result FirstFailureOrSuccess(params Result[] results)
+    {
+        foreach (Result result in results.Where(result => result.IsFailure))
+        {
+            return result;
+        }
+
+        return Success();
+    }
 }
 
 public class Result<T> : Result

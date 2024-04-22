@@ -16,9 +16,7 @@ public sealed partial class LeaveTypesController
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> Put(int id, [FromBody] UpdateLeaveTypeRequest request)
     {
-        UpdateLeaveType.Command command = _mapper.Map<UpdateLeaveType.Command>(request);
-        command.Id = id;
-
+        UpdateLeaveType.Command command = new(id, request.Name, request.DefaultDays);
         Result<Unit> result = await _mediator.Send(command);
 
         return result switch

@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using CleanArch.Api.Features.LeaveTypes;
 using CleanArch.Domain.Primitives.Result;
 using CleanArch.Application.Tests.Features.Mocks;
 using CleanArch.Domain.Repositories;
@@ -25,16 +24,15 @@ public class GetLeaveTypesQueryHandlerTest : IDisposable
     public GetLeaveTypesQueryHandlerTest()
     {
         _repositoryMock = MockLeaveTypeRepository.GetLeaveTypeRepositoryMock();
-        MapperConfiguration mapperConfig = new(cfg => cfg.AddProfile<LeaveTypeProfile>());
-        _mapper = mapperConfig.CreateMapper();
+        //MapperConfiguration mapperConfig = new(cfg => cfg.AddProfile<LeaveTypeProfile>());
+        //_mapper = mapperConfig.CreateMapper();
 
-        _handler = new GetLeaveTypeList.Handler(_mapper, _repositoryMock.Object);
+        _handler = new GetLeaveTypeList.Handler(_repositoryMock.Object);
     }
 
     public void Dispose()
     {
         _repositoryMock = null;
-        _mapper = null;
         _handler = null;
     }
 

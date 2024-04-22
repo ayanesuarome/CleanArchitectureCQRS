@@ -15,7 +15,7 @@ public class GenericRepository<TEntity>(CleanArchEFDbContext dbContext) : IGener
 
     public async Task<IReadOnlyCollection<TEntity>> GetAsync()
     {
-        return await TableNoTracking.ToListAsync();
+        return await TableNoTracking.ToArrayAsync();
     }
 
     public async Task<TEntity> GetByIdAsync(int id)

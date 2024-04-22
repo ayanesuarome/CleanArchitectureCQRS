@@ -6,7 +6,7 @@ public sealed record LeaveTypeListDto
 
     public IReadOnlyCollection<LeaveTypeModel> LeaveTypes { get; }
 
-    public sealed record LeaveTypeModel(int Id, string Name, int DefaultDays)
+    public sealed class LeaveTypeModel(int Id, string Name, int DefaultDays)
     {
     }
 }

@@ -1,7 +1,8 @@
-﻿using AutoMapper;
-using CleanArch.Domain.Entities;
+﻿using CleanArch.Domain.Entities;
+using CleanArch.Domain.Errors;
 using CleanArch.Domain.Primitives.Result;
 using CleanArch.Domain.Repositories;
+using CleanArch.Domain.ValueObjects;
 using FluentValidation;
 using FluentValidation.Results;
 using MediatR;
@@ -10,25 +11,40 @@ namespace CleanArch.Api.Features.LeaveTypes.CreateLeaveTypes;
 
 public static partial class CreateLeaveType
 {
-    internal sealed class Handler(IMapper mapper,
-    ILeaveTypeRepository repository,
-    IValidator<Command> validator)
-    : IRequestHandler<Command, Result<int>>
+    internal sealed class Handler(
+        ILeaveTypeRepository repository,
+        IValidator<Command> validator)
+        : IRequestHandler<Command, Result<int>>
     {
-        private readonly IMapper _mapper = mapper;
         private readonly ILeaveTypeRepository _repository = repository;
         private readonly IValidator<Command> _validator = validator;
 
-        public async Task<Result<int>> Handle(Command commnad, CancellationToken cancellationToken)
+        public async Task<Result<int>> Handle(Command command, CancellationToken cancellationToken)
         {
-            ValidationResult validationResult = await _validator.ValidateAsync(commnad, cancellationToken);
+            ValidationResult validationResult = await _validator.ValidateAsync(command, cancellationToken);
 
             if (!validationResult.IsValid)
             {
                 return new FailureResult<int>(ValidationErrors.CreateLeaveType.CreateLeaveTypeValidation(validationResult.ToString()));
             }
 
-            LeaveType leaveTypeToCreate = _mapper.Map<LeaveType>(commnad);
+            Result<Name> nameResult = Name.Create(command.Name);
+            Result<DefaultDays> defaultDaysResult = DefaultDays.Create(command.DefaultDays);
+
+            Result firstFailureOrSuccess = Result.FirstFailureOrSuccess(nameResult, defaultDaysResult);
+
+            if (firstFailureOrSuccess.IsFailure)
+            {
+                return new FailureResult<int>(firstFailureOrSuccess.Error);
+            }
+
+            if (!await _repository.IsUniqueAsync(nameResult.Value, cancellationToken))
+            {
+                return new FailureResult<int>(DomainErrors.LeaveType.DuplicateName);
+            }
+
+            LeaveType leaveTypeToCreate = new(nameResult.Value, defaultDaysResult.Value);
+
             await _repository.CreateAsync(leaveTypeToCreate);
 
             return new SuccessResult<int>(leaveTypeToCreate.Id);

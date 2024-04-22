@@ -16,13 +16,13 @@ public sealed partial class LeaveTypesController
     [ProducesResponseType(typeof(FailureResult), StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> Post([FromBody] CreateLeaveTypeRequest request)
     {
-        CreateLeaveType.Command commnad = _mapper.Map<CreateLeaveType.Command>(request);
+        CreateLeaveType.Command commnad = new(request.Name, request.DefaultDays);
         Result<int> result = await _mediator.Send(commnad);
 
         return result switch
         {
             SuccessResult<int> successResult => CreatedAtAction(nameof(Get), new { successResult.Value }),
-            FailureResult<int> errorResult => BadRequest(errorResult.Error)
+            FailureResult<int> errorResult => BadRequest(errorResult)
         };
     }
 }
