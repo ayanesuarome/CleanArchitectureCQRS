@@ -5,14 +5,14 @@ namespace CleanArch.Benchmarking;
 
 public class StringBenchMarks
 {
-    [Benchmark]
+    //[Benchmark]
     public string StringConcatenation()
     {
         string type = "Type";
         return $"{nameof(StringBenchMarks)}.{type}";
     }
 
-    [Benchmark]
+    //[Benchmark]
     public string StringBuilder()
     {
         string type = "Type";
@@ -21,5 +21,26 @@ public class StringBenchMarks
         sb.Append(type);
         
         return sb.ToString();
+    }
+
+    [Benchmark]
+    public string FullNameStringConcatenation()
+    {
+        string firstName = "Name";
+        string lastName = "Last Name";
+
+        return $"{firstName} {lastName}";
+    }
+
+    [Benchmark]
+    public string FullNameStringBuilder()
+    {
+        string firstName = "Name";
+        string lastName = "Last Name";
+
+        StringBuilder name = new(firstName);
+        name.Append(' ').Append(lastName);
+
+        return name.ToString();
     }
 }

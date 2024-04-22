@@ -2,6 +2,21 @@
 
 public static class ResultExtensions
 {
+    public static Result<T> Ensure<T>(this Result<T> result, Func<T, bool> predicate, Error error)
+    {
+        if(result.IsFailure)
+        {
+            return result;
+        }
+
+        return predicate(result.Value) ? result : Result.Failure<T>(error);
+    }
+
+    public static Result<TOut> Map<TIn, TOut>(this Result<TIn> result, Func<TIn, TOut> func)
+    {
+        return result.IsSuccess ? func(result.Value) : Result.Failure<TOut>(result.Error);
+    }
+
     //public static T Match<T, R>(this Result<R> result, Func<T> onSuccess, Func<Error, T> onFailure)
     //{
     //    //return result.IsSuccess ? onSuccess() : onFailure((result as ErrorResult).);
@@ -23,14 +38,13 @@ public static class ResultExtensions
         Func<TIn, TOut> onSuccess,
         Func<Error, TOut> onFailure)
     {
-        return result.IsSuccess ? onSuccess(result.Data) : onFailure(result.Error);
+        return result.IsSuccess ? onSuccess(result.Value) : onFailure(result.Error);
     }
 
     /// <summary>
     /// Matches the success status of the result to the corresponding functions.
     /// </summary>
     /// <typeparam name="T">The result type.</typeparam>
-    /// <param name="resultTask">The result task.</param>
     /// <param name="onSuccess">The on-success function.</param>
     /// <param name="onFailure">The on-failure function.</param>
     /// <returns>

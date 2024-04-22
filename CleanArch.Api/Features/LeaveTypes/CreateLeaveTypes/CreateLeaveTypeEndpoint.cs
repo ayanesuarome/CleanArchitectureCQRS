@@ -21,7 +21,7 @@ public sealed partial class LeaveTypesController
 
         return result switch
         {
-            SuccessResult<int> successResult => CreatedAtAction(nameof(Get), new { successResult.Data }),
+            SuccessResult<int> successResult => CreatedAtAction(nameof(Get), new { successResult.Value }),
             FailureResult<int> errorResult => BadRequest(errorResult.Error)
         };
     }

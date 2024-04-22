@@ -19,7 +19,7 @@ public sealed partial class AuthenticationController
 
         return result switch
         {
-            SuccessResult<RegistrationResponse> successResult => Ok(successResult.Data),
+            SuccessResult<RegistrationResponse> successResult => Ok(successResult.Value),
             FailureResult<RegistrationResponse> errorResult => BadRequest(errorResult.Error)
         };
     }

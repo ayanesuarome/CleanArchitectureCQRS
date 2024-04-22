@@ -22,7 +22,7 @@ public sealed partial class AdminLeaveAllocationController
             return BadRequest(rowsAffectedResult.Error);
         }
 
-        return rowsAffectedResult.Data > 0 ?
+        return rowsAffectedResult.Value > 0 ?
             Created() :
             NoContent();
     }

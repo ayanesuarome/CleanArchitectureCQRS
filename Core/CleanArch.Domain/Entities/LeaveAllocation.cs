@@ -5,7 +5,7 @@ using CleanArch.Domain.Utilities;
 
 namespace CleanArch.Domain.Entities;
 
-public class LeaveAllocation : BaseEntity<int>
+public sealed class LeaveAllocation : BaseEntity<int>, IAuditableEntity
 {
     public LeaveAllocation(int period, LeaveType leaveType, string employeeId)
     {
@@ -35,9 +35,18 @@ public class LeaveAllocation : BaseEntity<int>
     public LeaveType? LeaveType { get; private set; }
     public string EmployeeId { get; private set; }
 
+    #region Auditable
+
+    public DateTimeOffset DateCreated { get; }
+    public string CreatedBy { get; }
+    public DateTimeOffset? DateModified { get; }
+    public string? ModifiedBy { get; }
+
+    #endregion
+
     public Result ValidateHasEnoughDays(DateTimeOffset start, DateTimeOffset end)
     {
-        if ((int)(end - start).TotalDays < NumberOfDays)
+        if ((int)(end - start).TotalDays > NumberOfDays)
         {
             return Result.Failure(DomainErrors.LeaveRequest.NotEnoughDays);
         }

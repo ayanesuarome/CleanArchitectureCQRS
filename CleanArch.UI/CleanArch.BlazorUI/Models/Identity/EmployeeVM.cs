@@ -8,17 +8,5 @@ public class EmployeeVM
     public string Email { get; set; } = null!;
     public string FirstName { get; set; } = null!;
     public string LastName { get; set; } = null!;
-
-    public string  FullName()
-    {
-        StringBuilder name = new(FirstName);
-        
-        if(LastName != null)
-        {
-            name.Append(' ')
-                .Append(LastName);
-        }
-
-        return name.ToString();
-    }
+    public string  FullName { get; set; } = null!;
 }

@@ -14,5 +14,18 @@ internal class LeaveRequestConfiguration : IEntityTypeConfiguration<LeaveRequest
             // Filtered Index
             .HasIndex(property => property.IsDeleted)
                 .HasFilter($"IsDeleted = 0");
+
+        // IAuditableEntity
+        builder.Property(property => property.DateCreated)
+            .IsRequired();
+        builder.Property(property => property.CreatedBy)
+            .IsRequired();
+        builder.Property(property => property.DateModified);
+        builder.Property(property => property.ModifiedBy);
+
+        // IDeletableEntity
+        builder.Property(property => property.DeletedOn);
+        builder.Property(property => property.IsDeleted)
+            .HasDefaultValue(false);
     }
 }

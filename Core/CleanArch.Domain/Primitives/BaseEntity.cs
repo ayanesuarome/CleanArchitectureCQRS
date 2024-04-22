@@ -2,16 +2,22 @@
 
 namespace CleanArch.Domain.Primitives;
 
-public abstract class BaseEntity<T> : IAuditableEntity
+public abstract class BaseEntity<T>
 {
-    //protected BaseEntity(T id)
-    //{
-    //    Id = id;
-    //}
+    protected BaseEntity(T id)
+    {
+        Id = id;
+    }
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="BaseEntity"/> class.
+    /// </summary>
+    /// <remarks>
+    /// Required by EF Core.
+    /// </remarks>
+    protected BaseEntity()
+    {
+    }
 
     public T Id { get; set; }
-    public DateTimeOffset DateCreated { get; }
-    public string CreatedBy { get; }
-    public DateTimeOffset? DateModified { get; }
-    public string? ModifiedBy { get; }
 }

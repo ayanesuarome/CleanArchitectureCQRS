@@ -17,7 +17,7 @@ public sealed partial class LeaveRequestController
     public async Task<IActionResult> CancelRequest(int id)
     {
         Result<LeaveRequest> result = await _mediator.Send(new CancelLeaveRequest.Command(id));
-        await _mediator.Publish(new LeaveRequestEvent(result.Data, LeaveRequestAction.Canceled));
+        await _mediator.Publish(new LeaveRequestEvent(result.Value, LeaveRequestAction.Canceled));
 
         return result switch
         {

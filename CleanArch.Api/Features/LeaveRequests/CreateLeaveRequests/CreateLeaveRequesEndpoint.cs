@@ -21,12 +21,12 @@ public sealed partial class LeaveRequestController
 
         if (result.IsSuccess)
         {
-            await _mediator.Publish(new LeaveRequestEvent(result.Data, LeaveRequestAction.Created));
+            await _mediator.Publish(new LeaveRequestEvent(result.Value, LeaveRequestAction.Created));
         }
 
         return result switch
         {
-            SuccessResult<LeaveRequest> successResult => CreatedAtAction(nameof(Get), new { successResult.Data.Id }),
+            SuccessResult<LeaveRequest> successResult => CreatedAtAction(nameof(Get), new { successResult.Value.Id }),
             FailureResult<LeaveRequest> errorResult => BadRequest(errorResult.Error)
         };
     }

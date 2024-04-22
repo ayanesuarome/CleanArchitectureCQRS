@@ -3,7 +3,7 @@ using CleanArch.Domain.Utilities;
 
 namespace CleanArch.Domain.Entities;
 
-public class LeaveType : BaseEntity<int>
+public sealed class LeaveType : BaseEntity<int>, IAuditableEntity
 {
     public LeaveType(string name, int defaultDays)
     {
@@ -24,6 +24,15 @@ public class LeaveType : BaseEntity<int>
     {
     }
 
-    public string Name { get; }
-    public int DefaultDays { get; }
+    public string Name { get; private set; }
+    public int DefaultDays { get; private set; }
+
+    #region Auditable
+
+    public DateTimeOffset DateCreated { get; }
+    public string CreatedBy { get; }
+    public DateTimeOffset? DateModified { get; }
+    public string? ModifiedBy { get; }
+
+    #endregion
 }

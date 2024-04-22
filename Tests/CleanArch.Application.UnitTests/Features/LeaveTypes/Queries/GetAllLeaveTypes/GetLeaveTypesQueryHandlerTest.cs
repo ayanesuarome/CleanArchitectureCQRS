@@ -53,8 +53,8 @@ public class GetLeaveTypesQueryHandlerTest : IDisposable
 
         _repositoryMock
             .Verify(m => m.GetAsync(), Times.Once);
-        result.Data.ShouldNotBeNull();
-        result.Data.LeaveTypes.Count.ShouldBe(3);
+        result.Value.ShouldNotBeNull();
+        result.Value.LeaveTypes.Count.ShouldBe(3);
     }
 
     #endregion

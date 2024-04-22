@@ -13,6 +13,6 @@ public sealed partial class LeaveRequestController
     public async Task<ActionResult> Get()
     {
         Result<LeaveRequestListDto> result = await _mediator.Send(new GetLeaveRequestList.GetLeaveRequestList.Query());
-        return Ok(result.Data);
+        return Ok(result.Value);
     }
 }

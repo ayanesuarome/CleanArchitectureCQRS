@@ -18,7 +18,7 @@ public sealed partial class AuthenticationController
 
         return response switch
         {
-            SuccessResult<TokenResponse> successResult => Ok(successResult.Data),
+            SuccessResult<TokenResponse> successResult => Ok(successResult.Value),
             FailureResult<TokenResponse> errorResult => BadRequest(errorResult)
         };
     }

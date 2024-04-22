@@ -22,7 +22,7 @@ public sealed partial class LeaveRequestController
 
         if (result.IsSuccess)
         {
-            await _mediator.Publish(new LeaveRequestEvent(result.Data, LeaveRequestAction.Updated));
+            await _mediator.Publish(new LeaveRequestEvent(result.Value, LeaveRequestAction.Updated));
         }
 
         return result switch

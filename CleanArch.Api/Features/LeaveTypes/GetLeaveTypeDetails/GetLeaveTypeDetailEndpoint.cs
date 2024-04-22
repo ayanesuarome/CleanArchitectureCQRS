@@ -18,7 +18,7 @@ public sealed partial class LeaveTypesController
 
         return result switch
         {
-            SuccessResult<LeaveTypeDetailDto> success => Ok(success.Data),
+            SuccessResult<LeaveTypeDetailDto> success => Ok(success.Value),
             NotFoundResult<LeaveTypeDetailDto> => NotFound()
         };
     }

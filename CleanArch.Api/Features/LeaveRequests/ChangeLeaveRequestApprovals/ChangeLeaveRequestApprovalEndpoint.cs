@@ -25,7 +25,7 @@ public sealed partial class AdminLeaveRequestController
 
         if (result.IsSuccess)
         {
-            await _mediator.Publish(new LeaveRequestEvent(result.Data, LeaveRequestAction.UpdateApproval));
+            await _mediator.Publish(new LeaveRequestEvent(result.Value, LeaveRequestAction.UpdateApproval));
         }
 
         return result switch

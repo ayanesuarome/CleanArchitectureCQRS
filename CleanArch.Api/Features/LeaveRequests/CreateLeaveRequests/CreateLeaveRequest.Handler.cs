@@ -4,6 +4,7 @@ using CleanArch.Domain.Entities;
 using CleanArch.Domain.Errors;
 using CleanArch.Domain.Primitives.Result;
 using CleanArch.Domain.Repositories;
+using CleanArch.Domain.ValueObjects;
 using FluentValidation;
 using FluentValidation.Results;
 using MediatR;

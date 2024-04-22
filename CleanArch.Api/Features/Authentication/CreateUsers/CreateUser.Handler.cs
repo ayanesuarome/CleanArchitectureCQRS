@@ -37,11 +37,9 @@ public static partial class CreateUser
                 return new FailureResult<RegistrationResponse>(ValidationErrors.CreateUser.CreateUserValidation(validationResult.ToString()));
             }
 
-            ApplicationUser user = new()
+            ApplicationUser user = new(command.FirstName, command.LastName)
             {
                 Email = command.Email,
-                FirstName = command.FirstName,
-                LastName = command.LastName,
                 UserName = command.Email,
                 EmailConfirmed = true
             };

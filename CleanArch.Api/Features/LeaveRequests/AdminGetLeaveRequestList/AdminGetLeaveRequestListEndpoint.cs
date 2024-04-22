@@ -13,6 +13,6 @@ public sealed partial class AdminLeaveRequestController
     public async Task<IActionResult> Get()
     {
         Result<LeaveRequestListDto> result = await _mediator.Send(new AdminGetLeaveRequestList.AdminGetLeaveRequestList.Query());
-        return Ok(result.Data);
+        return Ok(result.Value);
     }
 }

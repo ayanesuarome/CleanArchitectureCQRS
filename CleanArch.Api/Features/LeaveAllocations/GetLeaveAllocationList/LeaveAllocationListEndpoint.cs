@@ -13,6 +13,6 @@ public sealed partial class LeaveAllocationController
     public async Task<IActionResult> Get()
     {
         Result<LeaveAllocationListDto> result = await _mediator.Send(new GetLeaveAllocationList.GetLeaveAllocationList.Query());
-        return Ok(result.Data);
+        return Ok(result.Value);
     }
 }

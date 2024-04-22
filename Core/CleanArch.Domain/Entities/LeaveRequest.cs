@@ -2,27 +2,25 @@
 using CleanArch.Domain.Primitives;
 using CleanArch.Domain.Primitives.Result;
 using CleanArch.Domain.Utilities;
+using CleanArch.Domain.ValueObjects;
 
 namespace CleanArch.Domain.Entities;
 
-public class LeaveRequest : BaseEntity<int>, ISoftDeletableEntity
+public sealed class LeaveRequest : BaseEntity<int>, IAuditableEntity, ISoftDeletableEntity
 {
     public LeaveRequest(
-        DateTimeOffset startDate,
-        DateTimeOffset endDate,
+        DateRange range,
         LeaveType leaveType,
         DateTimeOffset dateRequested,
         string? requestComments,
         string employeeId
         )
     {
-        Ensure.NotEmpty(startDate, "The start date is required.", nameof(startDate));
-        Ensure.NotEmpty(endDate, "The end date is required.", nameof(endDate));
+        Ensure.NotNull(range, "The date range is required.", nameof(range));
         Ensure.NotNull(leaveType, "The leave type is required.", nameof(leaveType));
         Ensure.NotNull(employeeId, "The employee ID is required.", nameof(employeeId));
 
-        StartDate = startDate;
-        EndDate = endDate;
+        Range = range;
         LeaveTypeId = leaveType.Id;
         LeaveType = leaveType;
         DateRequested = dateRequested;
@@ -40,8 +38,7 @@ public class LeaveRequest : BaseEntity<int>, ISoftDeletableEntity
     {
     }
 
-    public DateTimeOffset StartDate { get; private set; }
-    public DateTimeOffset EndDate { get; private set; }
+    public DateRange Range { get; private set; }
     public int LeaveTypeId { get; private set; }
     public LeaveType? LeaveType { get; set; }
     public DateTimeOffset DateRequested { get; private set; }
@@ -49,10 +46,25 @@ public class LeaveRequest : BaseEntity<int>, ISoftDeletableEntity
     public bool? IsApproved { get; private set; }
     public bool IsCancelled { get; private set; }
     public string RequestingEmployeeId { get; private set; }
+
+
+    #region Soft Deletable
+
     public bool IsDeleted { get; }
     public DateTimeOffset? DeletedOn { get; }
 
-    public int DaysRequested() => (int)(EndDate - StartDate).TotalDays + 1;
+    #endregion
+
+    #region Auditable
+
+    public DateTimeOffset DateCreated { get; }
+    public string CreatedBy { get; }
+    public DateTimeOffset? DateModified { get; }
+    public string? ModifiedBy { get; }
+
+    #endregion
+
+    public int DaysRequested() => (int)(Range.EndDate.DayNumber - Range.StartDate.DayNumber) + 1;
 
     public Result Reject()
     {

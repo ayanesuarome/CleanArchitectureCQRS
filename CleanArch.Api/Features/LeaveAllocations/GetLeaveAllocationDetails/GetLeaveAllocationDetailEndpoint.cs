@@ -18,7 +18,7 @@ public sealed partial class LeaveAllocationController
 
         return result switch
         {
-            SuccessResult<LeaveAllocationDetailsDto> successResult => Ok(successResult.Data),
+            SuccessResult<LeaveAllocationDetailsDto> successResult => Ok(successResult.Value),
             NotFoundResult<LeaveAllocationDetailsDto> => NotFound()
         };
     }
