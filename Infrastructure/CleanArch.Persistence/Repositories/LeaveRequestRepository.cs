@@ -21,14 +21,13 @@ public class LeaveRequestRepository : GenericRepository<LeaveRequest>, ILeaveReq
         }
         
         return await query
-            .Include(e => e.LeaveType)
-            .ToListAsync();
+            .ToArrayAsync();
     }
 
     public async Task<LeaveRequest> GetLeaveRequestWithDetailsAsync(int id)
     {
         return await TableNoTracking
-            .Include(e => e.LeaveType)
+            //.Include(e => e.LeaveType)
             .FirstOrDefaultAsync(e => e.Id == id);
     }
 }

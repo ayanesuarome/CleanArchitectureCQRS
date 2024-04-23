@@ -11,10 +11,8 @@ public sealed class LeaveRequest : BaseEntity<int>, IAuditableEntity, ISoftDelet
     public LeaveRequest(
         DateRange range,
         LeaveType leaveType,
-        DateTimeOffset dateRequested,
-        string? requestComments,
-        string employeeId
-        )
+        Comment? comments,
+        string employeeId)
     {
         Ensure.NotNull(range, "The date range is required.", nameof(range));
         Ensure.NotNull(leaveType, "The leave type is required.", nameof(leaveType));
@@ -22,9 +20,8 @@ public sealed class LeaveRequest : BaseEntity<int>, IAuditableEntity, ISoftDelet
 
         Range = range;
         LeaveTypeId = leaveType.Id;
-        LeaveType = leaveType;
-        DateRequested = dateRequested;
-        RequestComments = requestComments;
+        LeaveTypeName = leaveType.Name;
+        Comments = comments;
         RequestingEmployeeId = employeeId;
     }
 
@@ -40,9 +37,8 @@ public sealed class LeaveRequest : BaseEntity<int>, IAuditableEntity, ISoftDelet
 
     public DateRange Range { get; private set; }
     public int LeaveTypeId { get; private set; }
-    public LeaveType? LeaveType { get; set; }
-    public DateTimeOffset DateRequested { get; private set; }
-    public string? RequestComments { get; private set; }
+    public Name LeaveTypeName { get; private set; }
+    public Comment? Comments { get; private set; }
     public bool? IsApproved { get; private set; }
     public bool IsCancelled { get; private set; }
     public string RequestingEmployeeId { get; private set; }
@@ -64,7 +60,7 @@ public sealed class LeaveRequest : BaseEntity<int>, IAuditableEntity, ISoftDelet
 
     #endregion
 
-    public int DaysRequested() => (int)(Range.EndDate.DayNumber - Range.StartDate.DayNumber) + 1;
+    public int DaysRequested() => (Range.EndDate.DayNumber - Range.StartDate.DayNumber) + 1;
 
     public Result Reject()
     {
@@ -100,5 +96,25 @@ public sealed class LeaveRequest : BaseEntity<int>, IAuditableEntity, ISoftDelet
         IsCancelled = true;
 
         return Result.Success();
+    }
+
+    public void UpdateDateRange(DateRange range)
+    {
+        if(range == Range)
+        {
+            return;
+        }
+
+        Range = range;
+    }
+
+    public void UpdateComments(Comment comments)
+    {
+        if(comments == Comments)
+        {
+            return;
+        }
+
+        Comments = comments;
     }
 }

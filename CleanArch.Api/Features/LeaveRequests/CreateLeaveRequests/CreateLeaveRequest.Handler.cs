@@ -13,24 +13,27 @@ namespace CleanArch.Api.Features.LeaveRequests.CreateLeaveRequests;
 
 public static partial class CreateLeaveRequest
 {
-    internal sealed class Handler : IRequestHandler<Command, Result<LeaveRequest>>
+    public sealed class Handler : IRequestHandler<Command, Result<LeaveRequest>>
     {
         private readonly IMapper _mapper;
         private readonly ILeaveRequestRepository _leaveRequestRepository;
         private readonly ILeaveAllocationRepository _allocationRepository;
-        private readonly IUserService _userService;
+        private readonly ILeaveTypeRepository _leaveTypeRepository;
+        private readonly IUserIdentifierProvider _userIdentifierProvider;
         private readonly IValidator<Command> _validator;
 
         public Handler(IMapper mapper,
             ILeaveRequestRepository leaveRequestRepository,
             ILeaveAllocationRepository allocationRepository,
-            IUserService userService,
+            ILeaveTypeRepository leaveTypeRepository,
+            IUserIdentifierProvider userIdentifierProvider,
             IValidator<Command> validator)
         {
             _mapper = mapper;
             _leaveRequestRepository = leaveRequestRepository;
             _allocationRepository = allocationRepository;
-            _userService = userService;
+            _leaveTypeRepository = leaveTypeRepository;
+            _userIdentifierProvider = userIdentifierProvider;
             _validator = validator;
         }
 
@@ -44,8 +47,32 @@ public static partial class CreateLeaveRequest
                     ValidationErrors.CreateLeaveRequest.CreateLeaveRequestValidation(validationResult.ToDictionary()));
             }
 
+            Result<DateRange> rangeResult = DateRange.Create(command.StartDate, command.EndDate);
+            Result<Comment>? commentResult = null;
+
+            if(command.Comments is not null)
+            {
+                commentResult = Comment.Create(command.Comments);
+            }
+
+            Result firstFailureOrSuccess = Result.FirstFailureOrSuccess(rangeResult, commentResult);
+            
+            if (firstFailureOrSuccess.IsFailure)
+            {
+                return new FailureResult<LeaveRequest>(firstFailureOrSuccess.Error);
+            }
+
+            LeaveType leaveType = await _leaveTypeRepository.GetByIdAsync(command.LeaveTypeId);
+
+            if(leaveType is null)
+            {
+                return new FailureResult<LeaveRequest>(DomainErrors.LeaveRequest.LeaveTypeMustExist);
+            }
+
             // check on employee's allocation
-            LeaveAllocation leaveAllocation = await _allocationRepository.GetEmployeeAllocation(_userService.UserId, command.LeaveTypeId);
+            LeaveAllocation leaveAllocation = await _allocationRepository.GetEmployeeAllocation(
+                _userIdentifierProvider.UserId.ToString(),
+                command.LeaveTypeId);
 
             // if allocations aren't enough, return validation error
             if (leaveAllocation is null)
@@ -60,7 +87,12 @@ public static partial class CreateLeaveRequest
                 return new FailureResult<LeaveRequest>(hasEnoughDaysResult.Error);
             }
 
-            LeaveRequest leaveRequest = _mapper.Map<LeaveRequest>(command);
+            LeaveRequest leaveRequest = new(
+                rangeResult.Value,
+                leaveType,
+                commentResult.Value,
+                _userIdentifierProvider.UserId.ToString());
+
             await _leaveRequestRepository.CreateAsync(leaveRequest);
 
             return new SuccessResult<LeaveRequest>(leaveRequest);

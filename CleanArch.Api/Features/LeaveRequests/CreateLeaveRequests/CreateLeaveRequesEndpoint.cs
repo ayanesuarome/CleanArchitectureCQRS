@@ -13,10 +13,15 @@ public sealed partial class LeaveRequestController
     // POST api/<v>/leave-requests
     [HttpPost(ApiRoutes.LeaveRequests.Post)]
     [ProducesResponseType(StatusCodes.Status201Created)]
-    [ProducesResponseType(typeof(Error), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(FailureResult), StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> Post([FromBody] CreateLeaveRequestRequest request)
     {
-        CreateLeaveRequest.Command command = _mapper.Map<CreateLeaveRequest.Command>(request);
+        CreateLeaveRequest.Command command = new CreateLeaveRequest.Command(
+            request.LeaveTypeId,
+            request.Comments,
+            request.StartDate,
+            request.EndDate);
+
         Result<LeaveRequest> result = await _mediator.Send(command);
 
         if (result.IsSuccess)
@@ -27,7 +32,7 @@ public sealed partial class LeaveRequestController
         return result switch
         {
             SuccessResult<LeaveRequest> successResult => CreatedAtAction(nameof(Get), new { successResult.Value.Id }),
-            FailureResult<LeaveRequest> errorResult => BadRequest(errorResult.Error)
+            FailureResult<LeaveRequest> errorResult => BadRequest(errorResult)
         };
     }
 }

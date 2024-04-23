@@ -2,11 +2,11 @@
 using CleanArch.Contracts.Identity;
 using CleanArch.Domain.Entities;
 using CleanArch.Domain.Primitives.Result;
+using CleanArch.Domain.ValueObjects;
 using FluentValidation;
 using FluentValidation.Results;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
-using System.Text;
 
 namespace CleanArch.Api.Features.Authentication.CreateUsers;
 
@@ -37,9 +37,20 @@ public static partial class CreateUser
                 return new FailureResult<RegistrationResponse>(ValidationErrors.CreateUser.CreateUserValidation(validationResult.ToString()));
             }
 
-            ApplicationUser user = new(command.FirstName, command.LastName)
+            Result<FirstName> firstNameResult = FirstName.Create(command.FirstName);
+            Result<LastName> lastNameResult = LastName.Create(command.LastName);
+            Result<Email> emailResult = Email.Create(command.Email);
+
+            Result firstFailureOrSuccess = Result.FirstFailureOrSuccess(firstNameResult, lastNameResult, emailResult);
+
+            if (firstFailureOrSuccess.IsFailure)
             {
-                Email = command.Email,
+                return new FailureResult<RegistrationResponse>(firstFailureOrSuccess.Error);
+            }
+
+            ApplicationUser user = new(firstNameResult.Value, lastNameResult.Value)
+            {
+                Email = emailResult.Value,
                 UserName = command.Email,
                 EmailConfirmed = true
             };
@@ -48,12 +59,6 @@ public static partial class CreateUser
 
             if (!result.Succeeded)
             {
-                StringBuilder errors = new();
-
-                foreach (IdentityError error in result.Errors)
-                {
-                    errors.AppendFormat("-{0}\n", error.Description);
-                }
                 return new FailureResult<RegistrationResponse>(ValidationErrors.CreateUser.CreateUserValidation(result.Errors.ToString()));
             }
 

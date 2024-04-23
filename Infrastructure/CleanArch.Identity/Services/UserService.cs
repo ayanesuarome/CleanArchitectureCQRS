@@ -1,18 +1,14 @@
 ﻿using CleanArch.Application.Abstractions.Identity;
 using CleanArch.Contracts.Identity;
 using CleanArch.Domain.Entities;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 
 namespace CleanArch.Identity.Services;
 
-public class UserService(UserManager<ApplicationUser> userManager, IHttpContextAccessor httpContextAccessor)
+public class UserService(UserManager<ApplicationUser> userManager)
     : IUserService
 {
     private readonly UserManager<ApplicationUser> _userManager = userManager;
-    private readonly IHttpContextAccessor _httpContextAccessor = httpContextAccessor;
-
-    public string? UserId => _httpContextAccessor.HttpContext?.User?.FindFirst("uid")?.Value;
 
     public async Task<Employee> GetEmployee(string userId)
     {
@@ -22,8 +18,8 @@ public class UserService(UserManager<ApplicationUser> userManager, IHttpContextA
         {
             Id = employee.Id,
             Email = employee.Email,
-            FirstName = employee.FirstName,
-            LastName = employee.LastName,
+            FirstName = employee.FirstName.Value,
+            LastName = employee.LastName.Value,
         };
     }
 
@@ -35,8 +31,8 @@ public class UserService(UserManager<ApplicationUser> userManager, IHttpContextA
         {
             Id = e.Id,
             Email = e.Email,
-            FirstName = e.FirstName,
-            LastName = e.LastName,
+            FirstName = e.FirstName.Value,
+            LastName = e.LastName.Value,
         }).ToList();
     }
 }

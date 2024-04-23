@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using CleanArch.Application.Abstractions.Identity;
+﻿using CleanArch.Application.Abstractions.Identity;
 using CleanArch.Contracts.LeaveRequests;
 using CleanArch.Domain.Entities;
 using CleanArch.Domain.Primitives.Result;
@@ -10,10 +9,9 @@ namespace CleanArch.Api.Features.LeaveRequests.GetLeaveRequestList;
 
 public static partial class GetLeaveRequestList
 {
-    internal sealed class Handler(IMapper mapper, ILeaveRequestRepository repository, IUserService userService)
+    internal sealed class Handler(ILeaveRequestRepository repository, IUserService userService)
     : IRequestHandler<Query, Result<LeaveRequestListDto>>
     {
-        private readonly IMapper _mapper = mapper;
         private readonly ILeaveRequestRepository _repository = repository;
         private readonly IUserService _userService = userService;
 
@@ -22,9 +20,22 @@ public static partial class GetLeaveRequestList
             string userId = _userService.UserId;
 
             IReadOnlyCollection<LeaveRequest> leaveRequests = await _repository.GetLeaveRequestsWithDetailsAsync(userId);
+            Task<LeaveRequestDetailsDto>[] tasks = leaveRequests.Select(async leaveRequest =>
+                new LeaveRequestDetailsDto(
+                    leaveRequest.Range.StartDate,
+                    leaveRequest.Range.EndDate,
+                    leaveRequest.RequestComments,
+                    leaveRequest.LeaveTypeId,
+                    leaveRequest.LeaveTypeName.Value,
+                    leaveRequest.RequestingEmployeeId,
+                    (await _userService.GetEmployee(userId)).GetName(),
+                    leaveRequest.IsApproved,
+                    leaveRequest.IsCancelled,
+                    leaveRequest.DateCreated)
+                ).ToArray();
 
-            LeaveRequestListDto requestListDto = new(
-                _mapper.Map<IReadOnlyCollection<LeaveRequestDetailsDto>>(leaveRequests));
+            LeaveRequestDetailsDto[] dtos = await Task.WhenAll(tasks);
+            LeaveRequestListDto requestListDto = new(dtos);
 
             return new SuccessResult<LeaveRequestListDto>(requestListDto);
         }

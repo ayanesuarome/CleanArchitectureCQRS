@@ -44,9 +44,9 @@ public sealed class LeaveAllocation : BaseEntity<int>, IAuditableEntity
 
     #endregion
 
-    public Result ValidateHasEnoughDays(DateTimeOffset start, DateTimeOffset end)
+    public Result ValidateHasEnoughDays(DateOnly start, DateOnly end)
     {
-        if ((int)(end - start).TotalDays > NumberOfDays)
+        if (end.DayNumber - start.DayNumber > NumberOfDays)
         {
             return Result.Failure(DomainErrors.LeaveRequest.NotEnoughDays);
         }

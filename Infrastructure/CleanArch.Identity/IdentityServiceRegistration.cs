@@ -29,8 +29,9 @@ public static class IdentityServiceRegistration
             .AddEntityFrameworkStores<CleanArchIdentityEFDbContext>()
             .AddDefaultTokenProviders();
 
-        services.AddTransient<IUserService, UserService>();
-        services.AddTransient<IJwtProvider, JwtProvider>();
+        services.AddScoped<IUserService, UserService>();
+        services.AddScoped<IJwtProvider, JwtProvider>();
+        services.AddScoped<IUserIdentifierProvider, UserIdentifierProvider>();
 
         services.ConfigureOptions<JwtSettingSetup>();
         services.AddSingleton<IValidateOptions<JwtSettings>, JwtSettingValidation>();

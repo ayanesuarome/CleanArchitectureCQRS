@@ -2,8 +2,8 @@
 
 public sealed record CreateLeaveRequestRequest(
     int LeaveTypeId,
-    string? RequestComments,
-    DateTimeOffset StartDate,
-    DateTimeOffset EndDate)
+    string? Comments,
+    DateOnly StartDate,
+    DateOnly EndDate)
 {
 }

@@ -31,7 +31,6 @@ public class MapperConfigurationTests
     {
         yield return new object[] { typeof(LeaveAllocationProfile) };
         yield return new object[] { typeof(LeaveRequestProfile) };
-        yield return new object[] { typeof(AuthenticationProfile) };
     }
 
     #endregion

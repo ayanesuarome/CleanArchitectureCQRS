@@ -86,9 +86,9 @@ public class Result
     /// <returns>
     /// The first failure from the specified <paramref name="results"/> array, or a success it does not exist.
     /// </returns>
-    public static Result FirstFailureOrSuccess(params Result[] results)
+    public static Result FirstFailureOrSuccess(params Result?[] results)
     {
-        foreach (Result result in results.Where(result => result.IsFailure))
+        foreach (Result result in results.Where(result => result is not null && result.IsFailure))
         {
             return result;
         }

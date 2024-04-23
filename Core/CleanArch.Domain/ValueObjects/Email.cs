@@ -24,6 +24,8 @@ public sealed record Email
 
     public string Value { get; }
 
+    public static implicit operator string(Email value) => value.Value;
+
     public override string ToString() => Value;
 
     /// <summary>

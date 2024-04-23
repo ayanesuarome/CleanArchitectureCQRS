@@ -13,6 +13,8 @@ internal static class ValidationErrors
     internal static class CreateLeaveRequest
     {
         internal static Error LeaveTypeIdIsRequired => new Error("CreateLeaveRequest.LeaveTypeIdIsRequired", "The leave type ID is required.");
+        internal static Error StartDateIsRequired => new Error("CreateLeaveRequest.StartDateIsRequired", "The StartDate is required.");
+        internal static Error EndDateIsRequired => new Error("CreateLeaveRequest.EndDateIsRequired", "The EndDate is required.");
         internal static Error RequestCommentsMaximumLength(string length) => new Error(
         "CreateLeaveRequest.RequestCommentsMaximumLength",
         $"The RequestComments must be up to {length}.");
