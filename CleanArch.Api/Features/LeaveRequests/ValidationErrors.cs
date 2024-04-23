@@ -35,14 +35,8 @@ internal static class ValidationErrors
     internal static class UpdateLeaveRequest
     {
         internal static Error IdIsRequired => new Error("UpdateLeaveRequest.IdIsRequired", "The Id is required.");
-        internal static Error StartDateLowerThanEndDate => new Error(
-        "UpdateLeaveRequest.StartDateMustBeLowerThanEndDate",
-        "The StartDate must be before EndDate.");
-
-        internal static Error EndDateGeatherThanStartDate => new Error(
-            "UpdateLeaveRequest.EndDateGeatherThanStartDate",
-            "The EndDate must be after StartDate.");
-
+        internal static Error StartDateIsRequired => new Error("UpdateLeaveRequest.StartDateIsRequired", "The StartDate is required.");
+        internal static Error EndDateIsRequired => new Error("UpdateLeaveRequest.EndDateIsRequired", "The EndDate is required.");
         internal static Error UpdateLeaveRequestValidation(string message) => new Error("UpdateLeaveRequest.Validation", message);
 
     }

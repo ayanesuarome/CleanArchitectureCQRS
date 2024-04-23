@@ -6,6 +6,7 @@ using FluentValidation;
 using FluentValidation.Results;
 using MediatR;
 using CleanArch.Domain.Errors;
+using CleanArch.Domain.ValueObjects;
 
 namespace CleanArch.Api.Features.LeaveRequests.UpdateLeaveRequests;
 
@@ -17,11 +18,10 @@ public static partial class UpdateLeaveRequest
         private readonly ILeaveRequestRepository _repository;
         private readonly IValidator<Command> _validator;
 
-        public Handler(IMapper mapper,
+        public Handler(
             ILeaveRequestRepository repository,
             IValidator<Command> validator)
         {
-            _mapper = mapper;
             _repository = repository;
             _validator = validator;
         }
@@ -43,7 +43,24 @@ public static partial class UpdateLeaveRequest
                     ValidationErrors.UpdateLeaveRequest.UpdateLeaveRequestValidation(validationResult.ToString()));
             }
 
-            _mapper.Map(command, leaveRequest);
+            Result<DateRange> rangeResult = DateRange.Create(command.StartDate, command.EndDate);
+            Result<Comment>? commentResult = null;
+
+            if (command.Comments is not null)
+            {
+                commentResult = Comment.Create(command.Comments);
+            }
+
+            Result firstFailureOrSuccess = Result.FirstFailureOrSuccess(rangeResult, commentResult);
+
+            if (firstFailureOrSuccess.IsFailure)
+            {
+                return new FailureResult<LeaveRequest>(firstFailureOrSuccess.Error);
+            }
+
+            leaveRequest.UpdateDateRange(rangeResult.Value);
+            leaveRequest.UpdateComments(commentResult.Value);
+
             await _repository.UpdateAsync(leaveRequest);
 
             return new SuccessResult<LeaveRequest>(leaveRequest);

@@ -28,7 +28,7 @@ public static partial class GetLeaveRequestDetail
             LeaveRequestDetailsDto dto = new(
                     leaveRequest.Range.StartDate,
                     leaveRequest.Range.EndDate,
-                    leaveRequest.RequestComments,
+                    leaveRequest.Comments.Value,
                     leaveRequest.LeaveTypeId,
                     leaveRequest.LeaveTypeName.Value,
                     leaveRequest.RequestingEmployeeId,

@@ -12,7 +12,7 @@ public sealed partial class LeaveRequestController
     [HttpGet(ApiRoutes.LeaveRequests.GetById)]
     [ProducesResponseType(typeof(LeaveRequestDetailsDto), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> Get(int id)
+    public async Task<IActionResult> Get([FromRoute] int id)
     {
         Result<LeaveRequestDetailsDto> result = await _mediator.Send(new GetLeaveRequestDetail.Query(id));
 

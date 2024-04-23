@@ -16,7 +16,7 @@ public sealed partial class LeaveRequestController
     [ProducesResponseType(typeof(FailureResult), StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> Post([FromBody] CreateLeaveRequestRequest request)
     {
-        CreateLeaveRequest.Command command = new CreateLeaveRequest.Command(
+        CreateLeaveRequest.Command command = new(
             request.LeaveTypeId,
             request.Comments,
             request.StartDate,

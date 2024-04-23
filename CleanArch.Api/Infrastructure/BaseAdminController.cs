@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using CleanArch.Contracts.Identity;
+﻿using CleanArch.Contracts.Identity;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -10,8 +9,8 @@ namespace CleanArch.Api.Infrastructure;
 [Authorize(Roles = Roles.Administrator)]
 public abstract class BaseAdminController : BaseController
 {
-    protected BaseAdminController(IMediator mediator, IMapper mapper)
-        : base(mediator, mapper)
+    protected BaseAdminController(IMediator mediator)
+        : base(mediator)
     {
     }
 }

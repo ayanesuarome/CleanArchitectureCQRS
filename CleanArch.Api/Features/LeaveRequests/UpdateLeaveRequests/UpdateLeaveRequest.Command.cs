@@ -6,11 +6,11 @@ namespace CleanArch.Api.Features.LeaveRequests.UpdateLeaveRequests;
 
 public static partial class UpdateLeaveRequest
 {
-    public sealed record Command
-        : BaseCommand, IRequest<Result<LeaveRequest>>
+    public sealed record Command(
+        int Id,
+        string? Comments,
+        DateOnly StartDate,
+        DateOnly EndDate) : IRequest<Result<LeaveRequest>>
     {
-        public int Id { get; set; }
-        public string? RequestComments { get; set; }
-        public bool IsCancelled { get; set; }
     }
 }

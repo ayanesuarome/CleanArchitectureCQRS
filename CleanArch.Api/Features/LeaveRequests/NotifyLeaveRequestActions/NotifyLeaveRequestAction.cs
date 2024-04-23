@@ -50,10 +50,9 @@ public class NotifyLeaveRequestAction : INotificationHandler<LeaveRequestEvent>
                 TemplateId = templateId,
                 TemplateData = new EmailMessageDto(
                     RecipientName: employee.GetName(),
-                    Start: notification.LeaveRequest.StartDate,
-                    End: notification.LeaveRequest.EndDate,
-                    Now: notification.ActionDate
-                    )
+                    Start: notification.LeaveRequest.Range.StartDate,
+                    End: notification.LeaveRequest.Range.EndDate,
+                    Now: notification.ActionDate)
                 {
                     IsApproved = notification.LeaveRequest.IsApproved
                 }

@@ -13,7 +13,13 @@ public static partial class UpdateLeaveRequest
                 .NotEmpty()
                 .WithError(ValidationErrors.UpdateLeaveRequest.IdIsRequired);
 
-            Include(new BaseCommandValidator());
+            RuleFor(m => m.StartDate)
+                .NotEmpty()
+                .WithError(ValidationErrors.UpdateLeaveRequest.StartDateIsRequired);
+
+            RuleFor(m => m.EndDate)
+                .NotEmpty()
+                .WithError(ValidationErrors.UpdateLeaveRequest.EndDateIsRequired);
         }
     }
 }

@@ -30,7 +30,13 @@ public static partial class CancelLeaveRequest
                 return new NotFoundResult<LeaveRequest>(DomainErrors.LeaveRequest.NotFound(command.Id));
             }
 
-            leaveRequest.Cancel();
+            Result cancelResult = leaveRequest.Cancel();
+
+            if(cancelResult.IsFailure)
+            {
+                return new FailureResult<LeaveRequest>(cancelResult.Error);
+            }
+
             await _leaveRequestRepository.UpdateAsync(leaveRequest);
 
             // if already approved, re-evaluate the employee's allocations for the leave type

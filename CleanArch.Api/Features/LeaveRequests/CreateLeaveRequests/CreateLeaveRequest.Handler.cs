@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using CleanArch.Application.Abstractions.Identity;
+﻿using CleanArch.Application.Abstractions.Identity;
 using CleanArch.Domain.Entities;
 using CleanArch.Domain.Errors;
 using CleanArch.Domain.Primitives.Result;
@@ -15,21 +14,19 @@ public static partial class CreateLeaveRequest
 {
     public sealed class Handler : IRequestHandler<Command, Result<LeaveRequest>>
     {
-        private readonly IMapper _mapper;
         private readonly ILeaveRequestRepository _leaveRequestRepository;
         private readonly ILeaveAllocationRepository _allocationRepository;
         private readonly ILeaveTypeRepository _leaveTypeRepository;
         private readonly IUserIdentifierProvider _userIdentifierProvider;
         private readonly IValidator<Command> _validator;
 
-        public Handler(IMapper mapper,
+        public Handler(
             ILeaveRequestRepository leaveRequestRepository,
             ILeaveAllocationRepository allocationRepository,
             ILeaveTypeRepository leaveTypeRepository,
             IUserIdentifierProvider userIdentifierProvider,
             IValidator<Command> validator)
         {
-            _mapper = mapper;
             _leaveRequestRepository = leaveRequestRepository;
             _allocationRepository = allocationRepository;
             _leaveTypeRepository = leaveTypeRepository;

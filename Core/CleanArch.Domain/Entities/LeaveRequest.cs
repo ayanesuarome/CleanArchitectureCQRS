@@ -78,7 +78,7 @@ public sealed class LeaveRequest : BaseEntity<int>, IAuditableEntity, ISoftDelet
     {
         if(IsApproved is true)
         {
-            return Result.Failure(DomainErrors.LeaveRequest.AlreadyRejected);
+            return Result.Failure(DomainErrors.LeaveRequest.AlreadyApproved);
         }
 
         IsApproved = true;
@@ -108,7 +108,7 @@ public sealed class LeaveRequest : BaseEntity<int>, IAuditableEntity, ISoftDelet
         Range = range;
     }
 
-    public void UpdateComments(Comment comments)
+    public void UpdateComments(Comment? comments)
     {
         if(comments == Comments)
         {

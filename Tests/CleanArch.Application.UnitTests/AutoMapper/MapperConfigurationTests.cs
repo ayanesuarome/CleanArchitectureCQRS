@@ -1,7 +1,5 @@
 ﻿using AutoMapper;
-using CleanArch.Api.Features.Authentication;
 using CleanArch.Api.Features.LeaveAllocations;
-using CleanArch.Api.Features.LeaveRequests;
 
 namespace CleanArch.Application.Tests.AutoMapper;
 
@@ -30,7 +28,6 @@ public class MapperConfigurationTests
     public static IEnumerable<object[]> GetMapperProfiles()
     {
         yield return new object[] { typeof(LeaveAllocationProfile) };
-        yield return new object[] { typeof(LeaveRequestProfile) };
     }
 
     #endregion

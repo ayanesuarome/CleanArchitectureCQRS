@@ -16,11 +16,9 @@ public sealed partial class AdminLeaveRequestController
     [ProducesResponseType(typeof(FailureResult), StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesDefaultResponseType]
-    public async Task<IActionResult> UpdateApproval(int id, [FromBody] ChangeLeaveRequestApprovalRequest request)
+    public async Task<IActionResult> UpdateApproval([FromRoute] int id, [FromBody] ChangeLeaveRequestApprovalRequest request)
     {
-        ChangeLeaveRequestApproval.Command command = _mapper.Map<ChangeLeaveRequestApproval.Command>(request);
-        command.Id = id;
-        
+        ChangeLeaveRequestApproval.Command command = new(id, request.Approved);
         Result<LeaveRequest> result = await _mediator.Send(command);
 
         if (result.IsSuccess)

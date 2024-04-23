@@ -9,8 +9,8 @@ public static partial class DomainErrors
         public static Error NotFound(int id) => new Error("LeaveRequest.NotFound", $"The leave request with Id '{id}' was not found.");
         public static Error LeaveTypeMustExist => new Error("LeaveRequest.LeaveTypeMustExist", "There must be an associated Leave type.");
         
-        public static Error InvalidApprovalStateIsCanceled => new Error(
-            "LeaveRequest.InvalidApprovalStateIsCanceled",
+        public static Error ApprovalStateIsAlreadyCanceled => new Error(
+            "LeaveRequest.ApprovalStateIsAlreadyCanceled",
             "This leave request has been cancelled and its approval state cannot be updated.");
 
         public static Error NoAllocationsForLeaveType(int leaveTypeId) => new Error(

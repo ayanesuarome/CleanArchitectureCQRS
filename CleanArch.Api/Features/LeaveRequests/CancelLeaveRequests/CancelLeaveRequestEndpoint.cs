@@ -14,7 +14,7 @@ public sealed partial class LeaveRequestController
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(typeof(FailureResult), StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> CancelRequest(int id)
+    public async Task<IActionResult> CancelRequest([FromRoute] int id)
     {
         Result<LeaveRequest> result = await _mediator.Send(new CancelLeaveRequest.Command(id));
         await _mediator.Publish(new LeaveRequestEvent(result.Value, LeaveRequestAction.Canceled));
@@ -23,7 +23,7 @@ public sealed partial class LeaveRequestController
         {
             SuccessResult<LeaveRequest> => NoContent(),
             NotFoundResult<LeaveRequest> => NotFound(),
-            FailureResult<LeaveRequest> errorResult => BadRequest(errorResult.Error)
+            FailureResult<LeaveRequest> errorResult => BadRequest(errorResult)
         };
     }
 }

@@ -16,13 +16,13 @@ namespace CleanArch.Api.Infrastructure
     public static class ApiServiceRegistration
     {
         /// <summary>
-        /// Adds and configures FluentValidation services to the service collection.
+        /// Adds and configures AutoMapper and MediatR services to the service collection.
         /// </summary>
         /// <param name="services">Collection of service descriptors</param>
         public static IServiceCollection AddApiServices(this IServiceCollection services)
         {
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
-            services.AddValidatorsFromAssemblyContaining<BaseCommandValidator>(ServiceLifetime.Transient);
+            services.AddValidatorsFromAssemblyContaining<BaseController>(ServiceLifetime.Transient);
             //services.AddScoped<IValidator<BaseCommand>, BaseCommandValidator>();
             //services.AddScoped<IValidator<Login.Command>, Login.Validator>();
             //services.AddScoped<IValidator<CreateUser.Command>, CreateUser.Validator>();

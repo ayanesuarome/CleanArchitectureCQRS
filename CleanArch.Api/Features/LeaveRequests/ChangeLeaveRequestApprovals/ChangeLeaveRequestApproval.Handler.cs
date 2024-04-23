@@ -45,16 +45,16 @@ public static partial class ChangeLeaveRequestApproval
 
             if (leaveRequest.IsCancelled)
             {
-                return new FailureResult<LeaveRequest>(DomainErrors.LeaveRequest.InvalidApprovalStateIsCanceled);
+                return new FailureResult<LeaveRequest>(DomainErrors.LeaveRequest.ApprovalStateIsAlreadyCanceled);
             }
 
-            if (command.Approved)
+            Result approvalResult = command.Approved
+                ? leaveRequest.Approve()
+                : leaveRequest.Reject();
+
+            if(approvalResult.IsFailure)
             {
-                leaveRequest.Approve();
-            }
-            else
-            {
-                leaveRequest.Reject();
+                return new FailureResult<LeaveRequest>(approvalResult.Error);
             }
 
             // if request is approved, get and update the employee's allocation
