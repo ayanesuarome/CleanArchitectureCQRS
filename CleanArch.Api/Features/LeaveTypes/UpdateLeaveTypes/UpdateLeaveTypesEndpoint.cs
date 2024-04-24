@@ -14,7 +14,7 @@ public sealed partial class LeaveTypesController
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(typeof(FailureResult), StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> Put(int id, [FromBody] UpdateLeaveTypeRequest request)
+    public async Task<IActionResult> Put([FromRoute] Guid id, [FromBody] UpdateLeaveTypeRequest request)
     {
         UpdateLeaveType.Command command = new(id, request.Name, request.DefaultDays);
         Result<Unit> result = await _mediator.Send(command);

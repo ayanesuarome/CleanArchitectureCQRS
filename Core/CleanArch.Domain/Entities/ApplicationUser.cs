@@ -27,7 +27,7 @@ public sealed class ApplicationUser : IdentityUser
     }
 
     public FirstName FirstName { get; private set; }
-    public LastName LastName { get; set; }
+    public LastName LastName { get; private set; }
 
     /// <summary>
     /// Gets the user full name.

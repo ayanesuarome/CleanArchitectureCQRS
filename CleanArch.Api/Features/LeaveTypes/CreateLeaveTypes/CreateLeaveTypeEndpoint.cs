@@ -17,12 +17,12 @@ public sealed partial class LeaveTypesController
     public async Task<IActionResult> Post([FromBody] CreateLeaveTypeRequest request)
     {
         CreateLeaveType.Command commnad = new(request.Name, request.DefaultDays);
-        Result<int> result = await _mediator.Send(commnad);
+        Result<Guid> result = await _mediator.Send(commnad);
 
         return result switch
         {
-            SuccessResult<int> successResult => CreatedAtAction(nameof(Get), new { successResult.Value }),
-            FailureResult<int> errorResult => BadRequest(errorResult)
+            SuccessResult<Guid> successResult => CreatedAtAction(nameof(Get), new { successResult.Value }),
+            FailureResult<Guid> errorResult => BadRequest(errorResult)
         };
     }
 }

@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using CleanArch.Contracts.LeaveAllocations;
+﻿using CleanArch.Contracts.LeaveAllocations;
 using CleanArch.Domain.Entities;
 using CleanArch.Domain.Errors;
 using CleanArch.Domain.Primitives.Result;
@@ -10,10 +9,9 @@ namespace CleanArch.Api.Features.LeaveAllocations.GetLeaveAllocationDetails;
 
 public static partial class GetLeaveAllocationDetail
 {
-    internal sealed class Handler(IMapper mapper, ILeaveAllocationRepository repository)
+    internal sealed class Handler(ILeaveAllocationRepository repository)
         : IRequestHandler<Query, Result<LeaveAllocationDetailsDto>>
     {
-        private readonly IMapper _mapper = mapper;
         private readonly ILeaveAllocationRepository _repository = repository;
 
         public async Task<Result<LeaveAllocationDetailsDto>> Handle(Query query, CancellationToken cancellationToken)
@@ -25,7 +23,10 @@ public static partial class GetLeaveAllocationDetail
                 return new NotFoundResult<LeaveAllocationDetailsDto>(DomainErrors.LeaveAllocation.NotFound(query.Id));
             }
 
-            LeaveAllocationDetailsDto dto = _mapper.Map<LeaveAllocationDetailsDto>(leaveAllocation);
+            LeaveAllocationDetailsDto dto = new(
+                leaveAllocation.NumberOfDays,
+                leaveAllocation.Period,
+                leaveAllocation.Id);
 
             return new SuccessResult<LeaveAllocationDetailsDto>(dto);
         }

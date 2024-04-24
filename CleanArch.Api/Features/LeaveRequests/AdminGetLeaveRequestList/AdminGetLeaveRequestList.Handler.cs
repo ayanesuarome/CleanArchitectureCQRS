@@ -22,7 +22,7 @@ public static partial class AdminGetLeaveRequestList
                 new LeaveRequestDetailsDto(
                     leaveRequest.Range.StartDate,
                     leaveRequest.Range.EndDate,
-                    leaveRequest.RequestComments,
+                    leaveRequest.Comments.Value,
                     leaveRequest.LeaveTypeId,
                     leaveRequest.LeaveTypeName.Value,
                     leaveRequest.RequestingEmployeeId,

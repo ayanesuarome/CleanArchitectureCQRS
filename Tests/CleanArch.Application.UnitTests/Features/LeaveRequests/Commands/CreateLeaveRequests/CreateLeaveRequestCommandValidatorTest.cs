@@ -10,12 +10,14 @@ public class CreateLeaveRequestCommandValidatorTest(CreateLeaveRequestCommandVal
     
     #region Tests
 
-    [Theory]
-    [InlineData(0)]
-    [InlineData(-1)]
-    public async Task TestValidatorShouldFailWithLeaveTypeIdLessThanOrEqualTo0(int leaveTypeId)
+    [Fact]
+    public async Task TestValidatorShouldFailWithLeaveTypeIdLessThanOrEqualToEmpty()
     {
-        CreateLeaveRequest.Command command = new(leaveTypeId, null);
+        CreateLeaveRequest.Command command = new(
+            Guid.Empty,
+            DateOnly.MinValue,
+            DateOnly.MaxValue,
+            null);
 
         var result = await _fixture.validator.TestValidateAsync(command);
 
@@ -65,11 +67,11 @@ public class CreateLeaveRequestCommandValidatorTest(CreateLeaveRequestCommandVal
     [Fact]
     public async Task TestValidatorShouldNotFail()
     {
-        CreateLeaveRequest.Command command = new(1, null)
-        {
-            StartDate = DateTime.Now,
-            EndDate = DateTime.Now.AddDays(1)
-        };
+        CreateLeaveRequest.Command command = new(
+            Guid.NewGuid(),
+            DateOnly.FromDateTime(DateTime.Now),
+            DateOnly.FromDateTime(DateTime.Now).AddDays(1),
+            null);
 
         var result = await _fixture.validator.TestValidateAsync(command);
 

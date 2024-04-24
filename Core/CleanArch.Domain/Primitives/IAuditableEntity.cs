@@ -6,7 +6,7 @@
 public interface IAuditableEntity
 {
     public DateTimeOffset DateCreated { get; }
-    public string CreatedBy { get; }
+    public Guid CreatedBy { get; }
     public DateTimeOffset? DateModified { get; }
-    public string? ModifiedBy { get; }
+    public Guid? ModifiedBy { get; }
 }

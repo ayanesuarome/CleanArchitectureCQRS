@@ -4,9 +4,10 @@ using CleanArch.Domain.ValueObjects;
 
 namespace CleanArch.Domain.Entities;
 
-public sealed class LeaveType : BaseEntity<int>, IAuditableEntity
+public sealed class LeaveType : Entity<Guid>, IAuditableEntity
 {
     public LeaveType(Name name, DefaultDays defaultDays)
+        : base(Guid.NewGuid())
     {
         Ensure.NotNull(name, "The name is required", nameof(name));
         Ensure.NotNull(defaultDays, "The default days is required", nameof(defaultDays));
@@ -31,9 +32,9 @@ public sealed class LeaveType : BaseEntity<int>, IAuditableEntity
     #region Auditable
 
     public DateTimeOffset DateCreated { get; }
-    public string CreatedBy { get; }
+    public Guid CreatedBy { get; }
     public DateTimeOffset? DateModified { get; }
-    public string? ModifiedBy { get; }
+    public Guid? ModifiedBy { get; }
 
     #endregion
 

@@ -19,18 +19,9 @@ public static class MockLeaveTypeRepository
 
         List<LeaveType> leaveTypes = new()
         {
-            new(nameResult1.Value, defaultDaysResult1.Value)
-            {
-                Id = 1
-            },
-            new(nameResult2.Value, defaultDaysResult1.Value)
-            {
-                Id = 2,
-            },
+            new(nameResult1.Value, defaultDaysResult1.Value),
+            new(nameResult2.Value, defaultDaysResult1.Value),
             new(nameResult3.Value, defaultDaysResult1.Value)
-            {
-                Id = 3,
-            }
         };
 
         Mock<ILeaveTypeRepository> repositoryMock = new Mock<ILeaveTypeRepository>();
@@ -40,7 +31,7 @@ public static class MockLeaveTypeRepository
             .ReturnsAsync(leaveTypes);
 
         repositoryMock
-            .Setup(m => m.GetByIdAsync(It.IsAny<int>()))
+            .Setup(m => m.GetByIdAsync(It.IsAny<Guid>()))
             .ReturnsAsync(leaveTypes[0]);
 
         repositoryMock

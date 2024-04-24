@@ -20,9 +20,9 @@ internal sealed class UpdateAuditableEntitiesInterceptor(IServiceScopeFactory se
         }
 
         using IServiceScope scope = serviceScopeFactory.CreateScope();
-        IUserService userService = scope
+        IUserIdentifierProvider userIdentifierProvider = scope
             .ServiceProvider
-            .GetRequiredService<IUserService>();
+            .GetRequiredService<IUserIdentifierProvider>();
 
         IEnumerable<EntityEntry<IAuditableEntity>> entries = eventData
             .Context
@@ -37,12 +37,12 @@ internal sealed class UpdateAuditableEntitiesInterceptor(IServiceScopeFactory se
             if (entry.State == EntityState.Added)
             {
                 SetCurrentPropertyValue(entry, nameof(IAuditableEntity.DateCreated), now);
-                SetCurrentPropertyValue(entry, nameof(IAuditableEntity.CreatedBy), userService.UserId);
+                SetCurrentPropertyValue(entry, nameof(IAuditableEntity.CreatedBy), userIdentifierProvider.UserId);
             }
             else
             {
                 SetCurrentPropertyValue(entry, nameof(IAuditableEntity.DateModified), now);
-                SetCurrentPropertyValue(entry, nameof(IAuditableEntity.ModifiedBy), userService.UserId);
+                SetCurrentPropertyValue(entry, nameof(IAuditableEntity.ModifiedBy), userIdentifierProvider.UserId);
             }
         }
 
@@ -58,6 +58,6 @@ internal sealed class UpdateAuditableEntitiesInterceptor(IServiceScopeFactory se
     private static void SetCurrentPropertyValue(
         EntityEntry entry,
         string propertyName,
-        string userId) =>
+        Guid userId) =>
         entry.Property(propertyName).CurrentValue = userId;
 }

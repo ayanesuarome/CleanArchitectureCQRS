@@ -14,7 +14,12 @@ public sealed partial class AuthenticationController
     [ProducesResponseType(typeof(FailureResult), StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> Register([FromBody] RegistrationRequest request)
     {
-        CreateUser.Command command = new CreateUser.Command(request.FirstName, request.LastName, request.Email, request.Password);
+        CreateUser.Command command = new(
+            request.FirstName,
+            request.LastName,
+            request.Email,
+            request.Password);
+
         Result<RegistrationResponse> result = await _mediator.Send(command);
 
         return result switch

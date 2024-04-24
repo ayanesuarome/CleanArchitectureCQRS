@@ -3,12 +3,12 @@
 namespace CleanArch.Domain.Repositories;
 
 public interface IGenericRepository<TEntity>
-    where TEntity : BaseEntity<int>
+    where TEntity : Entity<Guid>
 {
     Task<IReadOnlyCollection<TEntity>> GetAsync();
-    Task<TEntity> GetByIdAsync(int id);
+    Task<TEntity> GetByIdAsync(Guid id);
     Task CreateAsync(TEntity entity);
-    Task<int> CreateListAsync(List<TEntity> entities);
+    Task<int> CreateListAsync(IEnumerable<TEntity> entities);
     Task UpdateAsync(TEntity entity);
     Task DeleteAsync(TEntity entity);
 }

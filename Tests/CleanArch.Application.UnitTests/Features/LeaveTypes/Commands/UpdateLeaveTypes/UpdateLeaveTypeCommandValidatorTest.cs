@@ -13,7 +13,7 @@ public class UpdateLeaveTypeCommandValidatorTest(UpdateLeaveTypeCommandValidator
     [Fact]
     public async Task TestValidatorShouldFailWithNullId()
     {
-        UpdateLeaveType.Command command = new(0, "name", 10);
+        UpdateLeaveType.Command command = new(Guid.Empty, "name", 10);
 
         var result = await _fixture.validator.TestValidateAsync(command);
 
@@ -24,7 +24,7 @@ public class UpdateLeaveTypeCommandValidatorTest(UpdateLeaveTypeCommandValidator
     [Fact]
     public async Task TestValidatorShouldNotFail()
     {
-        UpdateLeaveType.Command command = new(1, "Test Vacation", 100);
+        UpdateLeaveType.Command command = new(Guid.NewGuid(), "Test Vacation", 100);
 
         var result = await _fixture.validator.TestValidateAsync(command);
 

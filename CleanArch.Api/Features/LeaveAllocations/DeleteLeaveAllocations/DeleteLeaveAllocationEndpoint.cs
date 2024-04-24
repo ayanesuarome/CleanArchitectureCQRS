@@ -12,7 +12,7 @@ public sealed partial class AdminLeaveAllocationController
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(typeof(FailureResult), StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<ActionResult> Delete(int id)
+    public async Task<ActionResult> Delete([FromRoute] Guid id)
     {
         Result result = await _mediator.Send(new DeleteLeaveAllocation.Command(id));
 
@@ -20,7 +20,7 @@ public sealed partial class AdminLeaveAllocationController
         {
             SuccessResult => NoContent(),
             Domain.Primitives.Result.NotFoundResult => NotFound(),
-            FailureResult errorResult => BadRequest(errorResult.Error)
+            FailureResult errorResult => BadRequest(errorResult)
         };
     }
 }

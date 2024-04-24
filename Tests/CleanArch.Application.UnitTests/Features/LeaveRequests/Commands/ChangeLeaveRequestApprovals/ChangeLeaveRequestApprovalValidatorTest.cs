@@ -15,11 +15,8 @@ public class ChangeLeaveRequestApprovalValidatorTest
     [Fact]
     public async Task TestValidatorShouldFailWitInvalidId()
     {
-        ChangeLeaveRequestApproval.Command command = new(false)
-        {
-            Id = 0
-        };
-
+        ChangeLeaveRequestApproval.Command command = new(Guid.Empty, false);
+        
         var result = await _validator.TestValidateAsync(command);
 
         result.ShouldHaveValidationErrorFor(x => x.Id)

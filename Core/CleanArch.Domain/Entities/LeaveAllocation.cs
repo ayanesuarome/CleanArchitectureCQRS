@@ -5,17 +5,17 @@ using CleanArch.Domain.Utilities;
 
 namespace CleanArch.Domain.Entities;
 
-public sealed class LeaveAllocation : BaseEntity<int>, IAuditableEntity
+public sealed class LeaveAllocation : Entity<Guid>, IAuditableEntity
 {
-    public LeaveAllocation(int period, LeaveType leaveType, string employeeId)
+    public LeaveAllocation(int period, LeaveType leaveType, Guid employeeId)
+        : base(Guid.NewGuid())
     {
         Ensure.NotEmpty(period, "The period is required.", nameof(period));
         Ensure.NotNull(leaveType, "The leave type is required.", nameof(leaveType));
-        Ensure.NotNull(employeeId, "The employee ID is required.", nameof(employeeId));
+        Ensure.NotEmpty(employeeId, "The employee ID is required.", nameof(employeeId));
 
         Period = period;
         LeaveTypeId = leaveType.Id;
-        LeaveType = leaveType;
         EmployeeId = employeeId;
     }
 
@@ -31,16 +31,15 @@ public sealed class LeaveAllocation : BaseEntity<int>, IAuditableEntity
 
     public int NumberOfDays { get; private set; }
     public int Period { get; private set; }
-    public int LeaveTypeId { get; private set; }
-    public LeaveType? LeaveType { get; private set; }
-    public string EmployeeId { get; private set; }
+    public Guid LeaveTypeId { get; private set; }
+    public Guid EmployeeId { get; private set; }
 
     #region Auditable
 
     public DateTimeOffset DateCreated { get; }
-    public string CreatedBy { get; }
+    public Guid CreatedBy { get; }
     public DateTimeOffset? DateModified { get; }
-    public string? ModifiedBy { get; }
+    public Guid? ModifiedBy { get; }
 
     #endregion
 

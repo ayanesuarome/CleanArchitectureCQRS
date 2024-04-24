@@ -1,6 +1,7 @@
 ﻿using CleanArch.Application.Abstractions.Identity;
 using CleanArch.Contracts.Identity;
 using CleanArch.Domain.Entities;
+using CleanArch.Domain.Errors;
 using CleanArch.Domain.Primitives.Result;
 using CleanArch.Domain.Repositories;
 using FluentValidation;
@@ -11,7 +12,7 @@ namespace CleanArch.Api.Features.LeaveAllocations.CreateLeaveAllocations;
 
 public static partial class CreateLeaveAllocation
 {
-    internal sealed class Handler : IRequestHandler<Command, Result<int>>
+    public sealed class Handler : IRequestHandler<Command, Result<int>>
     {
         private readonly ILeaveAllocationRepository _allocationRepository;
         private readonly ILeaveTypeRepository _leaveTypeRepository;
@@ -42,8 +43,13 @@ public static partial class CreateLeaveAllocation
             // get leave types for allocations
             LeaveType leaveType = await _leaveTypeRepository.GetByIdAsync(command.LeaveTypeId);
 
+            if(leaveType is null)
+            {
+                return new FailureResult<int>(DomainErrors.LeaveAllocation.LeaveTypeMustExist);
+            }
+
             // get employees
-            List<Employee> employees = await _userService.GetEmployees();
+            IEnumerable<Employee> employees = await _userService.GetEmployees();
 
             // get period
             int period = DateTime.Now.Year;
@@ -58,7 +64,7 @@ public static partial class CreateLeaveAllocation
                 if (!allocationExist)
                 {
                     LeaveAllocation allocation = new(period, leaveType, employee.Id);
-                    allocation.ChangeNumberOfDays(leaveType.DefaultDays);
+                    allocation.ChangeNumberOfDays(leaveType.DefaultDays.Value);
                     allocations.Add(allocation);
                 }
             }

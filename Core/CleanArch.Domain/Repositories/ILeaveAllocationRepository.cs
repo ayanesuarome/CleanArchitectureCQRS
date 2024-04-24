@@ -4,9 +4,9 @@ namespace CleanArch.Domain.Repositories;
 
 public interface ILeaveAllocationRepository : IGenericRepository<LeaveAllocation>
 {
-    Task<LeaveAllocation> GetLeaveAllocationWithDetails(int id);
-    Task<IReadOnlyCollection<LeaveAllocation>> GetLeaveAllocationsWithDetails(string? employeeId = null);
-    Task<bool> AllocationExists(string employeeId, int leaveTypeId, int period);
-    Task<LeaveAllocation> GetEmployeeAllocation(string employeeId, int leaveTypeId);
-    Task<bool> HasEmployeeAllocation(string employeeId, int leaveTypeId);
+    Task<LeaveAllocation> GetLeaveAllocationWithDetails(Guid id);
+    Task<IReadOnlyCollection<LeaveAllocation>> GetLeaveAllocationsWithDetails(Guid? employeeId = null);
+    Task<bool> AllocationExists(Guid employeeId, Guid leaveTypeId, int period);
+    Task<LeaveAllocation> GetEmployeeAllocation(Guid employeeId, Guid leaveTypeId);
+    Task<bool> HasEmployeeAllocation(Guid employeeId, Guid leaveTypeId);
 }

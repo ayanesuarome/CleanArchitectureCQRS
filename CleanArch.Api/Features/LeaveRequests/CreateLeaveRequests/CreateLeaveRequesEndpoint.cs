@@ -18,9 +18,9 @@ public sealed partial class LeaveRequestController
     {
         CreateLeaveRequest.Command command = new(
             request.LeaveTypeId,
-            request.Comments,
             request.StartDate,
-            request.EndDate);
+            request.EndDate,
+            request.Comments);
 
         Result<LeaveRequest> result = await _mediator.Send(command);
 

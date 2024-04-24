@@ -10,13 +10,13 @@ public class UserService(UserManager<ApplicationUser> userManager)
 {
     private readonly UserManager<ApplicationUser> _userManager = userManager;
 
-    public async Task<Employee> GetEmployee(string userId)
+    public async Task<Employee> GetEmployee(Guid userId)
     {
-        ApplicationUser employee = await _userManager.FindByIdAsync(userId);
+        ApplicationUser employee = await _userManager.FindByIdAsync(userId.ToString());
 
         return new Employee
         {
-            Id = employee.Id,
+            Id = new Guid(employee.Id),
             Email = employee.Email,
             FirstName = employee.FirstName.Value,
             LastName = employee.LastName.Value,
@@ -29,7 +29,7 @@ public class UserService(UserManager<ApplicationUser> userManager)
 
         return employees.Select(e => new Employee
         {
-            Id = e.Id,
+            Id = new Guid(e.Id),
             Email = e.Email,
             FirstName = e.FirstName.Value,
             LastName = e.LastName.Value,

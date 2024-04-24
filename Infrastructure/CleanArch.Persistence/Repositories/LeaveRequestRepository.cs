@@ -11,11 +11,11 @@ public class LeaveRequestRepository : GenericRepository<LeaveRequest>, ILeaveReq
     {
     }
 
-    public async Task<IReadOnlyCollection<LeaveRequest>> GetLeaveRequestsWithDetailsAsync(string? employeeId)
+    public async Task<IReadOnlyCollection<LeaveRequest>> GetLeaveRequestsWithDetailsAsync(Guid? employeeId)
     {
         IQueryable<LeaveRequest> query = TableNoTracking;
 
-        if(!string.IsNullOrEmpty(employeeId))
+        if(employeeId.HasValue)
         {
             query = query.Where(e => e.RequestingEmployeeId == employeeId);
         }
@@ -24,7 +24,7 @@ public class LeaveRequestRepository : GenericRepository<LeaveRequest>, ILeaveReq
             .ToArrayAsync();
     }
 
-    public async Task<LeaveRequest> GetLeaveRequestWithDetailsAsync(int id)
+    public async Task<LeaveRequest> GetLeaveRequestWithDetailsAsync(Guid id)
     {
         return await TableNoTracking
             //.Include(e => e.LeaveType)

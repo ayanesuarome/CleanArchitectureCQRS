@@ -21,7 +21,7 @@ public static partial class GetLeaveRequestList
 
         public async Task<Result<LeaveRequestListDto>> Handle(Query request, CancellationToken cancellationToken)
         {
-            string userId = _userIdentifierProvider.UserId.ToString();
+            Guid userId = _userIdentifierProvider.UserId;
 
             IReadOnlyCollection<LeaveRequest> leaveRequests = await _repository.GetLeaveRequestsWithDetailsAsync(userId);
             Task<LeaveRequestDetailsDto>[] tasks = leaveRequests.Select(async leaveRequest =>

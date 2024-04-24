@@ -5,7 +5,7 @@ namespace CleanArch.Api.Features.LeaveAllocations.DeleteLeaveAllocations;
 
 public static partial class DeleteLeaveAllocation
 {
-    public record Command(int Id) : IRequest<Result>
+    public sealed record Command(Guid Id) : IRequest<Result>
     {
     }
 }

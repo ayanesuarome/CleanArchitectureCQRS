@@ -1,4 +1,6 @@
 using CleanArch.Domain.Entities;
+using CleanArch.Domain.Primitives.Result;
+using CleanArch.Domain.ValueObjects;
 using Microsoft.EntityFrameworkCore;
 using Shouldly;
 
@@ -11,7 +13,10 @@ public class CleanArchEFDbContextTest(CleanArchEFDbContextFixture fixture) : ICl
     [Fact]
     public async Task Save_SetDateCreatedAndModifiedValues()
     {
-        LeaveType leaveType = new("Test Vacation", 10);
+        Result<Name> name = Name.Create("Test Vacation");
+        Result<DefaultDays> defaultDays = DefaultDays.Create(10);
+
+        LeaveType leaveType = new(name.Value, defaultDays.Value);
 
         await _fixture.context.LeaveTypes.AddAsync(leaveType);
         await _fixture.context.SaveChangesAsync();
@@ -23,14 +28,17 @@ public class CleanArchEFDbContextTest(CleanArchEFDbContextFixture fixture) : ICl
     [Fact]
     public async Task Save_AnyAsync()
     {
-        LeaveType entity = new("Test Get Leave Type", 15);
+        Result<Name> name = Name.Create("Test Get Leave Type");
+        Result<DefaultDays> defaultDays = DefaultDays.Create(15);
 
-        await _fixture.context.LeaveTypes.AddAsync(entity);
+        LeaveType leaveType = new(name.Value, defaultDays.Value);
+
+        await _fixture.context.LeaveTypes.AddAsync(leaveType);
         await _fixture.context.SaveChangesAsync();
 
         bool exist = await _fixture.context.LeaveTypes
             .AsNoTracking()
-            .AnyAsync(e => e.Id == entity.Id);
+            .AnyAsync(e => e.Id == leaveType.Id);
 
         exist.ShouldBeTrue();
     }

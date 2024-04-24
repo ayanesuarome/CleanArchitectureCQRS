@@ -1,4 +1,6 @@
 ﻿using CleanArch.Domain.Entities;
+using CleanArch.Domain.Primitives.Result;
+using CleanArch.Domain.ValueObjects;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -11,24 +13,24 @@ internal class UserConfiguration : IEntityTypeConfiguration<ApplicationUser>
     {
         PasswordHasher<ApplicationUser> hasher = new();
 
+        Result<FirstName> firstNameResult = FirstName.Create("System");
+        Result<LastName> lastNameResult = LastName.Create("Admin");
+
+        Result.FirstFailureOrSuccess(firstNameResult, lastNameResult);
+
+        if(firstNameResult.IsFailure)
+        {
+            throw new InvalidOperationException(firstNameResult.Error.Message);
+        }
+
         builder.HasData(
-            new ApplicationUser("System", "Admin")
+            new ApplicationUser(firstNameResult.Value, lastNameResult.Value)
             {
                 Id = "82ef7b08-5017-4718-988e-e4f119594fca",
                 Email = "admin@localhost.com",
                 NormalizedEmail = "ADMIN@LOCALHOST.COM",
                 UserName = "admin@localhost.com",
                 NormalizedUserName = "ADMIN@LOCALHOST.COM",
-                PasswordHash = hasher.HashPassword(null, "P@ssword1"),
-                EmailConfirmed = true
-            },
-            new ApplicationUser("System", "User")
-            {
-                Id = "958c1a3b-eceb-4e29-af5b-908e08ab8a28",
-                Email = "user@localhost.com",
-                NormalizedEmail = "USER@LOCALHOST.COM",
-                UserName = "user@localhost.com",
-                NormalizedUserName = "USER@LOCALHOST.COM",
                 PasswordHash = hasher.HashPassword(null, "P@ssword1"),
                 EmailConfirmed = true
             });

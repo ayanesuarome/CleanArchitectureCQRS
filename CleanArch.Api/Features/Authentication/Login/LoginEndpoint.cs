@@ -13,7 +13,7 @@ public sealed partial class AuthenticationController
     [ProducesResponseType(typeof(FailureResult), StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> Login([FromBody] LoginRequest request)
     {
-        Login.Login.Command command = new Login.Login.Command(request.Email, request.Password);
+        Login.Login.Command command = new(request.Email, request.Password);
         Result<TokenResponse> response = await _mediator.Send(command);
 
         return response switch

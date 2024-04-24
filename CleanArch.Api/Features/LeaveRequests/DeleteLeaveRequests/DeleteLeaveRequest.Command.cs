@@ -5,7 +5,7 @@ namespace CleanArch.Api.Features.LeaveRequests.DeleteLeaveRequests;
 
 public static partial class DeleteLeaveRequest
 {
-    public sealed record Command(int Id) : IRequest<Result>
+    public sealed record Command(Guid Id) : IRequest<Result>
     {
     }
 }

@@ -7,10 +7,10 @@ namespace CleanArch.Api.Features.LeaveRequests.UpdateLeaveRequests;
 public static partial class UpdateLeaveRequest
 {
     public sealed record Command(
-        int Id,
-        string? Comments,
+        Guid Id,
         DateOnly StartDate,
-        DateOnly EndDate) : IRequest<Result<LeaveRequest>>
+        DateOnly EndDate,
+        string? Comments) : IRequest<Result<LeaveRequest>>
     {
     }
 }

@@ -68,7 +68,7 @@ public static partial class CreateLeaveRequest
 
             // check on employee's allocation
             LeaveAllocation leaveAllocation = await _allocationRepository.GetEmployeeAllocation(
-                _userIdentifierProvider.UserId.ToString(),
+                _userIdentifierProvider.UserId,
                 command.LeaveTypeId);
 
             // if allocations aren't enough, return validation error
@@ -88,7 +88,7 @@ public static partial class CreateLeaveRequest
                 rangeResult.Value,
                 leaveType,
                 commentResult.Value,
-                _userIdentifierProvider.UserId.ToString());
+                _userIdentifierProvider.UserId);
 
             await _leaveRequestRepository.CreateAsync(leaveRequest);
 

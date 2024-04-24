@@ -6,17 +6,14 @@ using CleanArch.Domain.ValueObjects;
 
 namespace CleanArch.Domain.Entities;
 
-public sealed class LeaveRequest : BaseEntity<int>, IAuditableEntity, ISoftDeletableEntity
+public sealed class LeaveRequest : Entity<Guid>, IAuditableEntity, ISoftDeletableEntity
 {
-    public LeaveRequest(
-        DateRange range,
-        LeaveType leaveType,
-        Comment? comments,
-        string employeeId)
+    public LeaveRequest(DateRange range, LeaveType leaveType, Comment? comments, Guid employeeId)
+        : base (Guid.NewGuid())
     {
         Ensure.NotNull(range, "The date range is required.", nameof(range));
         Ensure.NotNull(leaveType, "The leave type is required.", nameof(leaveType));
-        Ensure.NotNull(employeeId, "The employee ID is required.", nameof(employeeId));
+        Ensure.NotEmpty(employeeId, "The employee ID is required.", nameof(employeeId));
 
         Range = range;
         LeaveTypeId = leaveType.Id;
@@ -36,12 +33,12 @@ public sealed class LeaveRequest : BaseEntity<int>, IAuditableEntity, ISoftDelet
     }
 
     public DateRange Range { get; private set; }
-    public int LeaveTypeId { get; private set; }
+    public Guid LeaveTypeId { get; private set; }
     public Name LeaveTypeName { get; private set; }
     public Comment? Comments { get; private set; }
     public bool? IsApproved { get; private set; }
     public bool IsCancelled { get; private set; }
-    public string RequestingEmployeeId { get; private set; }
+    public Guid RequestingEmployeeId { get; private set; }
 
 
     #region Soft Deletable
@@ -54,9 +51,9 @@ public sealed class LeaveRequest : BaseEntity<int>, IAuditableEntity, ISoftDelet
     #region Auditable
 
     public DateTimeOffset DateCreated { get; }
-    public string CreatedBy { get; }
+    public Guid CreatedBy { get; }
     public DateTimeOffset? DateModified { get; }
-    public string? ModifiedBy { get; }
+    public Guid? ModifiedBy { get; }
 
     #endregion
 

@@ -1,7 +1,7 @@
 ﻿namespace CleanArch.Contracts.LeaveTypes;
 
 public sealed record LeaveTypeDetailDto(
-    int Id,
+    Guid Id,
     string Name,
     int DefaultDays,
     DateTimeOffset? DateCreated)

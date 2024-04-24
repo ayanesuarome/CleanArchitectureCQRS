@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 namespace CleanArch.Persistence.Repositories;
 
 public class GenericRepository<TEntity>(CleanArchEFDbContext dbContext) : IGenericRepository<TEntity>
-    where TEntity : BaseEntity<int>
+    where TEntity : Entity<Guid>
 {
     protected readonly CleanArchEFDbContext _dbContext = dbContext;
     protected virtual DbSet<TEntity> Entities => _dbContext.Set<TEntity>();
@@ -18,7 +18,7 @@ public class GenericRepository<TEntity>(CleanArchEFDbContext dbContext) : IGener
         return await TableNoTracking.ToArrayAsync();
     }
 
-    public async Task<TEntity> GetByIdAsync(int id)
+    public async Task<TEntity> GetByIdAsync(Guid id)
     {
         return await TableNoTracking.FirstOrDefaultAsync(e => e.Id == id);
     }
@@ -36,7 +36,7 @@ public class GenericRepository<TEntity>(CleanArchEFDbContext dbContext) : IGener
         }
     }
 
-    public async Task<int> CreateListAsync(List<TEntity> entities)
+    public async Task<int> CreateListAsync(IEnumerable<TEntity> entities)
     {
         try
         {
