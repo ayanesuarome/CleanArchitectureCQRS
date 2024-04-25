@@ -49,7 +49,7 @@ public sealed class LeaveRequest : Entity<Guid>, IAuditableEntity, ISoftDeletabl
     #endregion
 
     #region Auditable
-
+    
     public DateTimeOffset DateCreated { get; }
     public Guid CreatedBy { get; }
     public DateTimeOffset? DateModified { get; }
@@ -57,7 +57,7 @@ public sealed class LeaveRequest : Entity<Guid>, IAuditableEntity, ISoftDeletabl
 
     #endregion
 
-    public int DaysRequested() => (Range.EndDate.DayNumber - Range.StartDate.DayNumber) + 1;
+    public int DaysRequested => (Range.EndDate.DayNumber - Range.StartDate.DayNumber) + 1;
 
     public Result Reject()
     {

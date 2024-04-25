@@ -37,8 +37,8 @@ public static partial class CreateUser
                 return new FailureResult<RegistrationResponse>(ValidationErrors.CreateUser.CreateUserValidation(validationResult.ToString()));
             }
 
-            Result<FirstName> firstNameResult = FirstName.Create(command.FirstName);
-            Result<LastName> lastNameResult = LastName.Create(command.LastName);
+            Result<UserName> firstNameResult = UserName.Create(command.FirstName);
+            Result<UserName> lastNameResult = UserName.Create(command.LastName);
             Result<Email> emailResult = Email.Create(command.Email);
 
             Result firstFailureOrSuccess = Result.FirstFailureOrSuccess(firstNameResult, lastNameResult, emailResult);

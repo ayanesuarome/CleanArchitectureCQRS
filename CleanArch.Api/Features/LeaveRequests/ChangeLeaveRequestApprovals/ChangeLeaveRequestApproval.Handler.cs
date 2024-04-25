@@ -64,7 +64,7 @@ public static partial class ChangeLeaveRequestApproval
                     leaveRequest.RequestingEmployeeId,
                     leaveRequest.LeaveTypeId);
 
-                Result updateNumberOfDaysResult = allocation.ChangeNumberOfDays(allocation.NumberOfDays - leaveRequest.DaysRequested());
+                Result updateNumberOfDaysResult = allocation.ChangeNumberOfDays(allocation.NumberOfDays - leaveRequest.DaysRequested);
 
                 if (updateNumberOfDaysResult.IsFailure)
                 {

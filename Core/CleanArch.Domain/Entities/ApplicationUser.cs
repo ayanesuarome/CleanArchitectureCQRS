@@ -1,12 +1,13 @@
-﻿using CleanArch.Domain.Utilities;
+﻿using CleanArch.Domain.Primitives;
+using CleanArch.Domain.Utilities;
 using CleanArch.Domain.ValueObjects;
 using Microsoft.AspNetCore.Identity;
 
 namespace CleanArch.Domain.Entities;
 
-public sealed class ApplicationUser : IdentityUser
+public sealed class ApplicationUser : IdentityUser, IAuditableEntity
 {
-    public ApplicationUser(FirstName firstName, LastName lastName)
+    public ApplicationUser(UserName firstName, UserName lastName)
         : base()
     {
         Ensure.NotNull(firstName, "The first name is required.", nameof(firstName));
@@ -26,11 +27,20 @@ public sealed class ApplicationUser : IdentityUser
     {
     }
 
-    public FirstName FirstName { get; private set; }
-    public LastName LastName { get; private set; }
+    public UserName FirstName { get; private set; }
+    public UserName LastName { get; private set; }
 
     /// <summary>
     /// Gets the user full name.
     /// </summary>
     public string FullName => $"{FirstName} {LastName}";
+
+    #region Auditable
+
+    public DateTimeOffset DateCreated { get; }
+    public Guid CreatedBy { get; }
+    public DateTimeOffset? DateModified { get; }
+    public Guid? ModifiedBy { get; }
+
+    #endregion
 }

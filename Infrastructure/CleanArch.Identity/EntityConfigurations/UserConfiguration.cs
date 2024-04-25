@@ -13,8 +13,8 @@ internal class UserConfiguration : IEntityTypeConfiguration<ApplicationUser>
     {
         PasswordHasher<ApplicationUser> hasher = new();
 
-        Result<FirstName> firstNameResult = FirstName.Create("System");
-        Result<LastName> lastNameResult = LastName.Create("Admin");
+        Result<UserName> firstNameResult = UserName.Create("System");
+        Result<UserName> lastNameResult = UserName.Create("Admin");
 
         Result.FirstFailureOrSuccess(firstNameResult, lastNameResult);
 
@@ -22,6 +22,24 @@ internal class UserConfiguration : IEntityTypeConfiguration<ApplicationUser>
         {
             throw new InvalidOperationException(firstNameResult.Error.Message);
         }
+
+        builder.Ignore(user => user.FullName);
+
+        builder.ComplexProperty(user => user.FirstName, userBuilder =>
+        {
+            userBuilder.Property(firstName => firstName.Value)
+                .HasColumnName(nameof(ApplicationUser.FirstName))
+                .HasMaxLength(UserName.MaxLength)
+                .IsRequired();
+        });
+
+        builder.ComplexProperty(user => user.LastName, userBuilder =>
+        {
+            userBuilder.Property(lastName => lastName.Value)
+                .HasColumnName(nameof(ApplicationUser.LastName))
+                .HasMaxLength(UserName.MaxLength)
+                .IsRequired();
+        });
 
         builder.HasData(
             new ApplicationUser(firstNameResult.Value, lastNameResult.Value)

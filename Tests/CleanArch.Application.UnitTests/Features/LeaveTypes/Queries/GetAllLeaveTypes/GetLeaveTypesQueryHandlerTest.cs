@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using CleanArch.Domain.Primitives.Result;
+﻿using CleanArch.Domain.Primitives.Result;
 using CleanArch.Application.Tests.Features.Mocks;
 using CleanArch.Domain.Repositories;
 using Moq;
@@ -14,7 +13,6 @@ public class GetLeaveTypesQueryHandlerTest : IDisposable
     #region Fields
 
     private GetLeaveTypeList.Handler _handler;
-    private IMapper _mapper;
     private Mock<ILeaveTypeRepository> _repositoryMock;
 
     #endregion
