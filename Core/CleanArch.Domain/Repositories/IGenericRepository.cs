@@ -8,7 +8,7 @@ public interface IGenericRepository<TEntity>
     Task<IReadOnlyCollection<TEntity>> GetAsync();
     Task<TEntity> GetByIdAsync(Guid id);
     Task CreateAsync(TEntity entity);
-    Task<int> CreateListAsync(IEnumerable<TEntity> entities);
+    Task CreateListAsync(IEnumerable<TEntity> entities);
     Task UpdateAsync(TEntity entity);
     Task DeleteAsync(TEntity entity);
 }

@@ -13,65 +13,15 @@ public class GenericRepository<TEntity>(CleanArchEFDbContext dbContext) : IGener
     public virtual IQueryable<TEntity> Table => Entities;
     public virtual IQueryable<TEntity> TableNoTracking => Entities.AsNoTracking();
 
-    public async Task<IReadOnlyCollection<TEntity>> GetAsync()
-    {
-        return await TableNoTracking.ToArrayAsync();
-    }
+    public async Task<IReadOnlyCollection<TEntity>> GetAsync() => await TableNoTracking.ToArrayAsync();
 
-    public async Task<TEntity> GetByIdAsync(Guid id)
-    {
-        return await TableNoTracking.FirstOrDefaultAsync(e => e.Id == id);
-    }
+    public async Task<TEntity> GetByIdAsync(Guid id) => await TableNoTracking.FirstOrDefaultAsync(e => e.Id == id);
 
-    public async Task CreateAsync(TEntity entity)
-    {
-        try
-        {
-            await _dbContext.AddAsync(entity);
-            await _dbContext.SaveChangesAsync();
-        }
-        catch (DbUpdateException ex)
-        {
-            throw new Exception(ex.Message, ex);
-        }
-    }
+    public async Task CreateAsync(TEntity entity) => await _dbContext.AddAsync(entity);
 
-    public async Task<int> CreateListAsync(IEnumerable<TEntity> entities)
-    {
-        try
-        {
-            await _dbContext.AddRangeAsync(entities);
-            return await _dbContext.SaveChangesAsync();
-        }
-        catch (DbUpdateException ex)
-        {
-            throw new Exception(ex.Message, ex);
-        }
-    }
+    public async Task CreateListAsync(IEnumerable<TEntity> entities) => _dbContext.AddRangeAsync(entities);
 
-    public async Task UpdateAsync(TEntity entity)
-    {
-        try
-        {
-            _dbContext.Entry(entity).State = EntityState.Modified;
-            await _dbContext.SaveChangesAsync();
-        }
-        catch (DbUpdateException ex)
-        {
-            throw new Exception(ex.Message, ex);
-        }
-    }
+    public async Task UpdateAsync(TEntity entity) => _dbContext.Entry(entity).State = EntityState.Modified;
 
-    public async Task DeleteAsync(TEntity entity)
-    {
-        try
-        {
-            _dbContext.Remove(entity);
-            await _dbContext.SaveChangesAsync();
-        }
-        catch (DbUpdateException ex)
-        {
-            throw new Exception(ex.Message, ex);
-        }
-    }
+    public async Task DeleteAsync(TEntity entity) => _dbContext.Remove(entity);
 }

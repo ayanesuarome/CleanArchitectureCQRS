@@ -12,7 +12,7 @@ using System.Reflection;
 
 namespace CleanArch.Api.Infrastructure
 {
-    public static class ApiServiceRegistration
+    public static class DependencyInjection
     {
         /// <summary>
         /// Adds and configures AutoMapper and MediatR services to the service collection.
@@ -20,7 +20,6 @@ namespace CleanArch.Api.Infrastructure
         /// <param name="services">Collection of service descriptors</param>
         public static IServiceCollection AddApiServices(this IServiceCollection services)
         {
-            services.AddAutoMapper(Assembly.GetExecutingAssembly());
             services.AddValidatorsFromAssemblyContaining<BaseController>(ServiceLifetime.Transient);
             //services.AddScoped<IValidator<BaseCommand>, BaseCommandValidator>();
             //services.AddScoped<IValidator<Login.Command>, Login.Validator>();
@@ -31,7 +30,7 @@ namespace CleanArch.Api.Infrastructure
             //services.AddScoped<IValidator<ChangeLeaveRequestApproval.Command>, ChangeLeaveRequestApproval.Validator>();
             //services.AddScoped<IValidator<CreateLeaveRequest.Command>, CreateLeaveRequest.Validator>();
             //services.AddScoped<IValidator<UpdateLeaveRequest.Command>, UpdateLeaveRequest.Validator>();
-            services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
+            //services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
 
             return services;
         }

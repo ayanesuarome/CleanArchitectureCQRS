@@ -1,4 +1,5 @@
-﻿using CleanArch.Application.Abstractions.Identity;
+﻿using CleanArch.Application.Abstractions.Data;
+using CleanArch.Application.Abstractions.Identity;
 using CleanArch.Contracts.Identity;
 using CleanArch.Domain.Entities;
 using CleanArch.Domain.Errors;
@@ -18,17 +19,20 @@ public static partial class CreateLeaveAllocation
         private readonly ILeaveTypeRepository _leaveTypeRepository;
         private readonly IValidator<Command> _validator;
         private readonly IUserService _userService;
+        private readonly IUnitOfWork _unitOfWork;
 
         public Handler(
             ILeaveAllocationRepository allocationRepository,
             ILeaveTypeRepository leaveTypeRepository,
             IValidator<Command> validator,
-            IUserService userService)
+            IUserService userService,
+            IUnitOfWork unitOfWork)
         {
             _allocationRepository = allocationRepository;
             _leaveTypeRepository = leaveTypeRepository;
             _validator = validator;
             _userService = userService;
+            _unitOfWork = unitOfWork;
         }
 
         public async Task<Result<int>> Handle(Command command, CancellationToken cancellationToken)
@@ -69,14 +73,14 @@ public static partial class CreateLeaveAllocation
                 }
             }
 
-            int rowsAffected = 0;
-
             if (allocations.Any())
             {
-                rowsAffected = await _allocationRepository.CreateListAsync(allocations);
+                await _allocationRepository.CreateListAsync(allocations);
             }
 
-            return Result.Success<int>(rowsAffected);
+            int affectedRows = await _unitOfWork.SaveChangesAsync(cancellationToken);
+
+            return Result.Success<int>(affectedRows);
         }
     }
 }

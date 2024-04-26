@@ -1,9 +1,10 @@
-﻿using CleanArch.Domain.Entities;
+﻿using CleanArch.Application.Abstractions.Data;
+using CleanArch.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace CleanArch.Persistence;
 
-public sealed partial class CleanArchEFDbContext : DbContext
+public sealed partial class CleanArchEFDbContext : DbContext, IUnitOfWork
 {
     public CleanArchEFDbContext(DbContextOptions<CleanArchEFDbContext> options)
         : base(options)

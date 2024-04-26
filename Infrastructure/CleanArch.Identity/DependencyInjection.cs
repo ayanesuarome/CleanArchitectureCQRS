@@ -14,7 +14,7 @@ using System.Text;
 
 namespace CleanArch.Identity;
 
-public static class IdentityServiceRegistration
+public static class DependencyInjection
 {
     private const string CleanArchIdentitySqlServerDbContext = "CleanArchIdentitySqlServerDbContext";
 
