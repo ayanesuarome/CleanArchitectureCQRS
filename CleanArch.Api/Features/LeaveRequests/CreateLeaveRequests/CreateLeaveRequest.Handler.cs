@@ -87,8 +87,8 @@ public static partial class CreateLeaveRequest
             LeaveRequest leaveRequest = new(
                 rangeResult.Value,
                 leaveType,
-                commentResult.Value,
-                _userIdentifierProvider.UserId);
+                _userIdentifierProvider.UserId,
+                commentResult.Value);
 
             await _leaveRequestRepository.CreateAsync(leaveRequest);
 

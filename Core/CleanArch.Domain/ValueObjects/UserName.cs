@@ -17,6 +17,8 @@ public sealed record UserName
 
     public string Value { get; }
 
+    public static implicit operator string(UserName value) => value.Value;
+
     public override string ToString() => Value;
 
     /// <summary>

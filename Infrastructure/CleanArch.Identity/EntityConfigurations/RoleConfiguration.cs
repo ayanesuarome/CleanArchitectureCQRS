@@ -21,5 +21,6 @@ internal class RoleConfiguration : IEntityTypeConfiguration<IdentityRole>
                 Name = "Employee",
                 NormalizedName = "EMPLOYEE"
             });
+
     }
 }

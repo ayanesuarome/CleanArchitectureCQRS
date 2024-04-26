@@ -2,6 +2,7 @@ using CleanArch.Api.ExceptionHandlers;
 using CleanArch.Api.Infrastructure;
 using CleanArch.Api.Swagger;
 using CleanArch.Identity;
+using CleanArch.Identity.Migrations;
 using CleanArch.Infrastructure;
 using CleanArch.Persistence;
 using CleanArch.Persistence.Migrations;
@@ -87,6 +88,7 @@ app.UseHttpsRedirection();
 app.MapControllers();
 
 // apply pending migrations
-MigrationHelper.ApplyMigration(app.Services);
+app.ApplyMigrations();
+app.ApplyIdentityMigrations();
 
 app.Run();

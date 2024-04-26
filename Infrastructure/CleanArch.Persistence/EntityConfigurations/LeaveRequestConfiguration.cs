@@ -32,8 +32,9 @@ internal class LeaveRequestConfiguration : IEntityTypeConfiguration<LeaveRequest
                 .IsRequired();
         });
         
-        builder.ComplexProperty(leaveRequest => leaveRequest.Comments, commentsBuilder =>
+        builder.OwnsOne(leaveRequest => leaveRequest.Comments, commentsBuilder =>
         {
+            commentsBuilder.WithOwner();
             commentsBuilder.Property(comments => comments.Value)
                 .HasColumnName(nameof(LeaveRequest.Comments))
                 .HasMaxLength(Comment.MaxLength);

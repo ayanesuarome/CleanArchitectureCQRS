@@ -1,7 +1,5 @@
 ﻿using CleanArch.Domain.Entities;
-using CleanArch.Domain.Primitives.Result;
 using CleanArch.Domain.ValueObjects;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -11,17 +9,20 @@ internal class UserConfiguration : IEntityTypeConfiguration<ApplicationUser>
 {
     public void Configure(EntityTypeBuilder<ApplicationUser> builder)
     {
-        PasswordHasher<ApplicationUser> hasher = new();
+        // Currently ComplexProperty in EF8 does not support seeding.
+        /*
+            PasswordHasher<ApplicationUser> hasher = new();
 
-        Result<UserName> firstNameResult = UserName.Create("System");
-        Result<UserName> lastNameResult = UserName.Create("Admin");
+            Result<UserName> firstNameResult = UserName.Create("System");
+            Result<UserName> lastNameResult = UserName.Create("Admin");
 
-        Result.FirstFailureOrSuccess(firstNameResult, lastNameResult);
+            Result.FirstFailureOrSuccess(firstNameResult, lastNameResult);
 
-        if(firstNameResult.IsFailure)
-        {
-            throw new InvalidOperationException(firstNameResult.Error.Message);
-        }
+            if (firstNameResult.IsFailure)
+            {
+                throw new InvalidOperationException(firstNameResult.Error.Message);
+            }
+        */
 
         builder.Ignore(user => user.FullName);
 
@@ -41,16 +42,16 @@ internal class UserConfiguration : IEntityTypeConfiguration<ApplicationUser>
                 .IsRequired();
         });
 
-        builder.HasData(
-            new ApplicationUser(firstNameResult.Value, lastNameResult.Value)
-            {
-                Id = "82ef7b08-5017-4718-988e-e4f119594fca",
-                Email = "admin@localhost.com",
-                NormalizedEmail = "ADMIN@LOCALHOST.COM",
-                UserName = "admin@localhost.com",
-                NormalizedUserName = "ADMIN@LOCALHOST.COM",
-                PasswordHash = hasher.HashPassword(null, "P@ssword1"),
-                EmailConfirmed = true
-            });
+        //builder.HasData(
+        //    new ApplicationUser(firstNameResult.Value, lastNameResult.Value)
+        //    {
+        //        Id = "82ef7b08-5017-4718-988e-e4f119594fca",
+        //        Email = "admin@localhost.com",
+        //        NormalizedEmail = "ADMIN@LOCALHOST.COM",
+        //        UserName = "admin@localhost.com",
+        //        NormalizedUserName = "ADMIN@LOCALHOST.COM",
+        //        PasswordHash = hasher.HashPassword(null, "P@ssword1"),
+        //        EmailConfirmed = true
+        //    });
     }
 }

@@ -28,10 +28,6 @@ internal class LeaveTypeConfiguration : IEntityTypeConfiguration<LeaveType>
 
         });
 
-        builder.Property(leaveType => leaveType.Name)
-            .IsRequired()
-            .HasMaxLength(100);
-
         // IAuditableEntity
         builder.Property(leaveType => leaveType.DateCreated).IsRequired();
         builder.Property(leaveType => leaveType.CreatedBy).IsRequired();

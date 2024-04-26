@@ -9,9 +9,11 @@ public sealed record DefaultDays
     public const int MinValue = 1;
     public const int MaxValue = 100;
 
-    private DefaultDays(int defaultDays) => Value = defaultDays;
+    private DefaultDays(int value) => Value = value;
     
     public int Value { get; }
+
+    public static implicit operator int(DefaultDays value) => value.Value;
 
     public static Result<DefaultDays> Create(int defaultDays) =>
         Result.Create(defaultDays, DomainErrors.DefaultDays.NullOrEmpty)

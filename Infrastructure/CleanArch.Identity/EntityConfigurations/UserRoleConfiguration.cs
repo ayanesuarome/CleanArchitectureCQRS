@@ -8,6 +8,8 @@ internal class UserRoleConfiguration : IEntityTypeConfiguration<IdentityUserRole
 {
     public void Configure(EntityTypeBuilder<IdentityUserRole<string>> builder)
     {
+        // Currently ComplexProperty in EF8 does not support seeding.
+        /*
         builder.HasData(
             new IdentityUserRole<string>
             {
@@ -19,5 +21,6 @@ internal class UserRoleConfiguration : IEntityTypeConfiguration<IdentityUserRole
                 RoleId = "fac1f94e-1c7b-4c6f-b0f3-1e1a697a39f9",
                 UserId = "958c1a3b-eceb-4e29-af5b-908e08ab8a28"
             });
+        */
     }
 }

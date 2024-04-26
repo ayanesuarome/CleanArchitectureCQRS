@@ -1,8 +1,12 @@
 ﻿using CleanArch.Domain.Errors;
 using CleanArch.Domain.Primitives.Result;
+using System.Numerics;
+using System.Runtime.CompilerServices;
 
 namespace CleanArch.Domain.ValueObjects;
 
+// EF8 Complex Types  does not support nullable.
+// This value object must be used with OwnsOne.
 public record Comment
 {
     public const int MaxLength = 300;
@@ -10,6 +14,8 @@ public record Comment
     private Comment(string value) => Value = value;
 
     public string Value { get; }
+
+    public static implicit operator string(Comment value) => value.Value;
 
     public override string ToString() => Value.ToString();
 

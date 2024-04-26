@@ -8,7 +8,7 @@ namespace CleanArch.Domain.Entities;
 
 public sealed class LeaveRequest : Entity<Guid>, IAuditableEntity, ISoftDeletableEntity
 {
-    public LeaveRequest(DateRange range, LeaveType leaveType, Comment? comments, Guid employeeId)
+    public LeaveRequest(DateRange range, LeaveType leaveType, Guid employeeId, Comment? comments)
         : base (Guid.NewGuid())
     {
         Ensure.NotNull(range, "The date range is required.", nameof(range));
