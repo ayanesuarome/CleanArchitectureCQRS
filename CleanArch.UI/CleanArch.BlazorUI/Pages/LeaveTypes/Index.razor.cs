@@ -30,22 +30,22 @@ public partial class Index
         NavigationManager.NavigateToCreateLeaveType();
     }
 
-    private async Task AllocateLeaveType(int id)
+    private async Task AllocateLeaveType(Guid id)
     {
         await LeaveAllocationService.CreateLeaveAllocations(id);
     }
 
-    private void EditLeaveType(int id)
+    private void EditLeaveType(Guid id)
     {
         NavigationManager.NavigateToEditLeaveType(id);
     }
     
-    private void DetailsLeaveType(int id)
+    private void DetailsLeaveType(Guid id)
     {
         NavigationManager.NavigateToDetailsLeaveType(id);
     }
 
-    private async Task DeleteLeaveType(int id)
+    private async Task DeleteLeaveType(Guid id)
     {
         bool confirm = await Js.InvokeAsync<bool>("confirm", "Do you want to delete this leave type?");
 

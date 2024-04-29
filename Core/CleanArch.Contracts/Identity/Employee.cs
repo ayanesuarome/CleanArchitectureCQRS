@@ -2,22 +2,7 @@
 
 namespace CleanArch.Contracts.Identity;
 
-public struct Employee
+public sealed record Employee(Guid Id, string Email, string FirstName, string LastName)
 {
-    public Guid Id { get; set; }
-    public string Email { get; set; }
-    public string FirstName { get; set; }
-    public string LastName { get; set; }
-
-    public string GetName() {
-        StringBuilder name = new(FirstName);
-
-        if (LastName != null)
-        {
-            name.Append(' ')
-                .Append(LastName);
-        }
-
-        return name.ToString();
-    }
+    public string FullName => $"{FirstName} {LastName}";
 }

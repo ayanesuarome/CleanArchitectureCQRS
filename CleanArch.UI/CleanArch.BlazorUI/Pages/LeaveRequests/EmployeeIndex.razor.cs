@@ -23,12 +23,12 @@ public partial class EmployeeIndex
         Model = await Service.GetEmployeeLeaveRequestListAsync();
     }
 
-    private void GoToDetails(int id)
+    private void GoToDetails(Guid id)
     {
         NavigationManager.NavigateToDetailsLeaveRequest(id);
     }
 
-    private async Task CancelRequestAsync(int leaveRequestId)
+    private async Task CancelRequestAsync(Guid leaveRequestId)
     {
         bool confirm = await Js.InvokeAsync<bool>("confirm", "Do you want to cancel this request?");
 

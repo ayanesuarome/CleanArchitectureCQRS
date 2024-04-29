@@ -15,7 +15,7 @@ public class LeaveTypeService(IClient client, IMapper mapper) : BaseHttpService(
         return _mapper.Map<IReadOnlyCollection<LeaveTypeVM>>(leaveTypes.LeaveTypes);
     }
 
-    public async Task<LeaveTypeVM> GetLeaveTypeDetails(int id)
+    public async Task<LeaveTypeVM> GetLeaveTypeDetails(Guid id)
     {
         LeaveTypeDetailDto leaveType = await _client.LeaveTypesGET2Async(id);
         return _mapper.Map<LeaveTypeVM>(leaveType);
@@ -51,11 +51,11 @@ public class LeaveTypeService(IClient client, IMapper mapper) : BaseHttpService(
         }
     }
 
-    public async Task<Response<Guid>> DeleteLeaveType(int id)
+    public async Task<Response<Guid>> DeleteLeaveType(Guid id)
     {
         try
         {
-            await _client.LeaveTypesDELETEAsync(50);
+            await _client.LeaveTypesDELETEAsync(id);
             return new Response<Guid>();
         }
         catch(ApiException ex)

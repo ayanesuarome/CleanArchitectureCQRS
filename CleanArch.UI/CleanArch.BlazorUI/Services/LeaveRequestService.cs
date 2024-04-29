@@ -1,12 +1,11 @@
 ﻿using AutoMapper;
 using CleanArch.BlazorUI.Interfaces;
-using CleanArch.BlazorUI.Models.LeaveAllocations;
 using CleanArch.BlazorUI.Models.LeaveRequests;
 using CleanArch.BlazorUI.Services.Base;
 
 namespace CleanArch.BlazorUI.Services;
 
-public class LeaveRequestService(IClient client, IMapper mapper) : BaseHttpService(client), ILeaveRequestService
+internal sealed class LeaveRequestService(IClient client, IMapper mapper) : BaseHttpService(client), ILeaveRequestService
 {
     private readonly IMapper _mapper = mapper;
 
@@ -47,8 +46,6 @@ public class LeaveRequestService(IClient client, IMapper mapper) : BaseHttpServi
         LeaveRequestListDto leaveRequestResponse = await _client.LeaveRequestsGET2Async();
         LeaveAllocationListDto allocationResponse = await _client.LeaveAllocationsGET2Async();
 
-        //IReadOnlyCollection<LeaveAllocationVM> leaveAllocations = 
-        //    _mapper.Map<IReadOnlyCollection<LeaveAllocationVM>>(allocationResponse.LeaveAllocationList);
         IReadOnlyCollection<LeaveRequestVM> leaveRequests = 
             _mapper.Map<IReadOnlyCollection<LeaveRequestVM>>(leaveRequestResponse.LeaveRequests);
 
@@ -57,13 +54,13 @@ public class LeaveRequestService(IClient client, IMapper mapper) : BaseHttpServi
         return model;
     }
 
-    public async Task<LeaveRequestVM> GetLeaveRequestAsync(int id)
+    public async Task<LeaveRequestVM> GetLeaveRequestAsync(Guid id)
     {
         LeaveRequestDetailsDto leaveRequest = await _client.LeaveRequestsGET3Async(id);
         return _mapper.Map<LeaveRequestVM>(leaveRequest);
     }
 
-    public async Task<Response<Guid>> ApprovedLeaveRequestAsync(int id, bool status)
+    public async Task<Response<Guid>> ApprovedLeaveRequestAsync(Guid id, bool status)
     {
         ChangeLeaveRequestApprovalRequest request = new()
         {
@@ -81,7 +78,7 @@ public class LeaveRequestService(IClient client, IMapper mapper) : BaseHttpServi
         }
     }
 
-    public async Task<Response<Guid>> CancelLeaveRequestAsync(int id)
+    public async Task<Response<Guid>> CancelLeaveRequestAsync(Guid id)
     {
         try
         {

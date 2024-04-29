@@ -26,16 +26,17 @@ public static partial class GetLeaveRequestDetail
             }
 
             LeaveRequestDetailsDto dto = new(
-                    leaveRequest.Range.StartDate,
-                    leaveRequest.Range.EndDate,
-                    leaveRequest.Comments.Value,
-                    leaveRequest.LeaveTypeId,
-                    leaveRequest.LeaveTypeName.Value,
-                    leaveRequest.RequestingEmployeeId,
-                    (await _userService.GetEmployee(leaveRequest.RequestingEmployeeId)).GetName(),
-                    leaveRequest.IsApproved,
-                    leaveRequest.IsCancelled,
-                    leaveRequest.DateCreated);
+                leaveRequest.Id,
+                leaveRequest.Range.StartDate,
+                leaveRequest.Range.EndDate,
+                leaveRequest.Comments.Value,
+                leaveRequest.LeaveTypeId,
+                leaveRequest.LeaveTypeName.Value,
+                leaveRequest.RequestingEmployeeId,
+                (await _userService.GetEmployee(leaveRequest.RequestingEmployeeId)).FullName,
+                leaveRequest.IsApproved,
+                leaveRequest.IsCancelled,
+                leaveRequest.DateCreated);
 
             return new SuccessResult<LeaveRequestDetailsDto>(dto);
         }

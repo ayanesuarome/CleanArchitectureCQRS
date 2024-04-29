@@ -11,10 +11,10 @@ public static class ApiRoutes
     public static class LeaveTypes
     {
         public const string Get = "leave-types";
-        public const string GetById = "leave-types/{id}";
+        public const string GetById = "leave-types/{id:guid}";
         public const string Post = "leave-types";
-        public const string Put = "leave-types/{id}";
-        public const string Delete = "leave-types/{id}";
+        public const string Put = "leave-types/{id:guid}";
+        public const string Delete = "leave-types/{id:guid}";
     }
 
     /// <summary>
@@ -23,12 +23,12 @@ public static class ApiRoutes
     public static class LeaveRequests
     {
         public const string Get = "leave-requests";
-        public const string GetById = "leave-requests/{id}";
+        public const string GetById = "leave-requests/{id:guid}";
         public const string Post = "leave-requests";
-        public const string Put = "leave-requests/{id}";
-        public const string Delete = "leave-requests/{id}";
-        public const string CancelRequest = "leave-requests/{id}/cancel-request";
-        public const string AdminUpdateApproval = "leave-requests/{id}/update-approval";
+        public const string Put = "leave-requests/{id:guid}";
+        public const string Delete = "leave-requests/{id:guid}";
+        public const string CancelRequest = "leave-requests/{id:guid}/cancel-request";
+        public const string AdminUpdateApproval = "leave-requests/{id:guid}/update-approval";
     }
 
     /// <summary>
@@ -37,10 +37,10 @@ public static class ApiRoutes
     public static class LeaveAllocations
     {
         public const string Get = "leave-allocations";
-        public const string GetById = "leave-allocations/{id}";
+        public const string GetById = "leave-allocations/{id:guid}";
         public const string Post = "leave-allocations";
-        public const string Put = "leave-allocations/{id}";
-        public const string Delete = "leave-allocations/{id}";
+        public const string Put = "leave-allocations/{id:guid}";
+        public const string Delete = "leave-allocations/{id:guid}";
     }
 
     /// <summary>

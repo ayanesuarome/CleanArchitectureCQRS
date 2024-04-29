@@ -1,10 +1,11 @@
 ﻿namespace CleanArch.BlazorUI.Models.LeaveRequests;
 
-public class AdminLeaveRequestVM
+internal class AdminLeaveRequestVM
 {
     public AdminLeaveRequestVM() : this([])
     {
     }
+
     public AdminLeaveRequestVM(IReadOnlyCollection<LeaveRequestVM> leaveRequests) => LeaveRequests = leaveRequests;
 
     public int TotalRequests { get; set; }

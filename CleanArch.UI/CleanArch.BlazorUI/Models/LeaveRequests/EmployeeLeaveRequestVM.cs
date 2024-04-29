@@ -2,7 +2,7 @@
 
 namespace CleanArch.BlazorUI.Models.LeaveRequests;
 
-public class EmployeeLeaveRequestVM
+internal sealed class EmployeeLeaveRequestVM
 {
     public EmployeeLeaveRequestVM() : this([])
     {
@@ -14,5 +14,5 @@ public class EmployeeLeaveRequestVM
     }
 
     public IReadOnlyCollection<LeaveRequestVM> LeaveRequests { get; }
-    public EmployeeVM? Employee => LeaveRequests.FirstOrDefault()?.Employee;
+    public string? EmployeeFullName => LeaveRequests.FirstOrDefault()?.EmployeeFullName;
 }

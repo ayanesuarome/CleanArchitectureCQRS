@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Components.Authorization;
 
 namespace CleanArch.BlazorUI.Services;
 
-public class AuthenticationService : BaseHttpService, IAuthenticationService
+internal sealed class AuthenticationService : BaseHttpService, IAuthenticationService
 {
     private readonly IMapper _mapper;
     private readonly AuthenticationStateProvider _authenticationStateProvider;

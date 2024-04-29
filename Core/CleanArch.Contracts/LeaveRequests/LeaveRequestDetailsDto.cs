@@ -1,13 +1,11 @@
-﻿using CleanArch.Contracts.Identity;
-using CleanArch.Contracts.LeaveTypes;
-
-namespace CleanArch.Contracts.LeaveRequests;
+﻿namespace CleanArch.Contracts.LeaveRequests;
 
 public sealed record LeaveRequestDetailsDto(
+    Guid Id,
     DateOnly StartDate,
     DateOnly EndDate,
     string? RequestComments,
-    Guid LeaveTypeId,
+    Guid LeaveTypeId,   
     string LeaveTypeName,
     Guid RequestingEmployeeId,
     string EmployeeFullName,

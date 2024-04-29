@@ -20,13 +20,14 @@ public static partial class AdminGetLeaveRequestList
             IReadOnlyCollection<LeaveRequest> leaveRequests = await _repository.GetLeaveRequestsWithDetailsAsync();
             Task<LeaveRequestDetailsDto>[] tasks = leaveRequests.Select(async leaveRequest =>
                 new LeaveRequestDetailsDto(
+                    leaveRequest.Id,
                     leaveRequest.Range.StartDate,
                     leaveRequest.Range.EndDate,
                     leaveRequest.Comments.Value,
                     leaveRequest.LeaveTypeId,
                     leaveRequest.LeaveTypeName.Value,
                     leaveRequest.RequestingEmployeeId,
-                    (await _userService.GetEmployee(leaveRequest.RequestingEmployeeId)).GetName(),
+                    (await _userService.GetEmployee(leaveRequest.RequestingEmployeeId)).FullName,
                     leaveRequest.IsApproved,
                     leaveRequest.IsCancelled,
                     leaveRequest.DateCreated)

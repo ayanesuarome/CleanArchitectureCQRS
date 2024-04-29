@@ -76,19 +76,19 @@
         {
             <tr>
                 <td>
-                    @item.Employee.FullName
+                    @item.EmployeeFullName
                 </td>
                 <td>
-                    @item.StartDate.Value.ToString("yyyy-MM-dd")
+                    @item.StartDate.ToString("yyyy-MM-dd")
                 </td>
                 <td>
-                    @item.EndDate.Value.ToString("yyyy-MM-dd")
+                    @item.EndDate.ToString("yyyy-MM-dd")
                 </td>
                 <td>
-                    @item.LeaveType.Name
+                    @item.LeaveTypeName
                 </td>
                 <td>
-                    @item.DateRequested.ToString("yyyy-MM-dd")
+                    @item.DateCreated.ToString("yyyy-MM-dd")
                 </td>
                 <td>
                     @if (item.IsCancelled)

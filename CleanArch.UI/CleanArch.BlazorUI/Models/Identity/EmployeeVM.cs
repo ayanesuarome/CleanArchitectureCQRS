@@ -2,7 +2,7 @@
 
 namespace CleanArch.BlazorUI.Models.Identity;
 
-public class EmployeeVM
+internal sealed class EmployeeVM
 {
     public string Id { get; set; } = null!;
     public string Email { get; set; } = null!;

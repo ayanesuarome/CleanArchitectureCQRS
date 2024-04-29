@@ -14,7 +14,7 @@ public partial class Details
     [Inject] private IToastService ToastService { get; set; } = null!;
     [Inject] private IConfiguration Configuration { get; set; } = null!;
 
-    [Parameter] public int Id { get; set; }
+    [Parameter] public Guid Id { get; set; }
     
     private string? ClassName;
     private string? HeadingText;

@@ -12,7 +12,7 @@
 </div>
 
 <p>
-    <strong>Employee name: </strong>@Model.Employee?.FullName
+    <strong>Employee name: </strong>@Model.EmployeeFullName
 </p>
 
 <table id="tblData" class="table">
@@ -43,16 +43,16 @@
         {
             <tr>
                 <td>
-                    @item.StartDate.Value.ToString("yyyy-MM-dd")
+                    @item.StartDate.ToString("yyyy-MM-dd")
                 </td>
                 <td>
-                    @item.EndDate.Value.ToString("yyyy-MM-dd")
+                    @item.EndDate.ToString("yyyy-MM-dd")
                 </td>
                 <td>
-                    @item.LeaveType.Name
+                    @item.LeaveTypeName
                 </td>
                 <td>
-                    @item.DateRequested.ToString("yyyy-MM-dd")
+                    @item.DateCreated.ToString("yyyy-MM-dd")
                 </td>
                 <td>
                     @if (item.IsCancelled)
@@ -73,7 +73,7 @@
                     }
                 </td>
                 <td>
-                    @if (!item.IsCancelled && item.StartDate > DateTime.Now)
+                    @if (!item.IsCancelled && item.StartDate > DateOnly.FromDateTime(DateTime.Now))
                     {
                         <button class="btn btn-danger" @onclick="(() => CancelRequestAsync(item.Id))">
                             <i class="fa fa-file"></i>Cancel Request

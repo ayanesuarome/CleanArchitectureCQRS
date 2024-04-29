@@ -49,7 +49,7 @@ public class NotifyLeaveRequestAction : INotificationHandler<LeaveRequestEvent>
                 To = employee.Email,
                 TemplateId = templateId,
                 TemplateData = new EmailMessageDto(
-                    RecipientName: employee.GetName(),
+                    RecipientName: employee.FullName,
                     Start: notification.LeaveRequest.Range.StartDate,
                     End: notification.LeaveRequest.Range.EndDate,
                     Now: notification.ActionDate)

@@ -8,7 +8,7 @@ namespace CleanArch.BlazorUI.Pages.LeaveTypes
 {
     public partial class Edit
     {
-        [Parameter] public int Id { get; set; }
+        [Parameter] public Guid Id { get; set; }
 
         [Inject] private NavigationManager NavigationManager { get; set; } = null!;
         [Inject] private ILeaveTypeService Service { get; set; } = null!;

@@ -14,25 +14,21 @@ public class UserService(UserManager<ApplicationUser> userManager)
     {
         ApplicationUser employee = await _userManager.FindByIdAsync(userId.ToString());
 
-        return new Employee
-        {
-            Id = new Guid(employee.Id),
-            Email = employee.Email,
-            FirstName = employee.FirstName.Value,
-            LastName = employee.LastName.Value,
-        };
+        return new Employee(
+            new Guid(employee.Id),
+            employee.Email,
+            employee.FirstName.Value,
+            employee.LastName.Value);
     }
 
     public async Task<List<Employee>> GetEmployees()
     {
         IList<ApplicationUser> employees = await _userManager.GetUsersInRoleAsync(Roles.Employee);
 
-        return employees.Select(e => new Employee
-        {
-            Id = new Guid(e.Id),
-            Email = e.Email,
-            FirstName = e.FirstName.Value,
-            LastName = e.LastName.Value,
-        }).ToList();
+        return employees.Select(e => new Employee(
+            new Guid(e.Id),
+            e.Email,
+            e.FirstName.Value,
+            e.LastName.Value)).ToList();
     }
 }
