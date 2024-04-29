@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using CleanArch.BlazorUI.Interfaces;
+﻿using CleanArch.BlazorUI.Interfaces;
 using CleanArch.BlazorUI.Models.Identity;
 using CleanArch.BlazorUI.Providers;
 using CleanArch.BlazorUI.Services.Base;
@@ -9,21 +8,22 @@ namespace CleanArch.BlazorUI.Services;
 
 internal sealed class AuthenticationService : BaseHttpService, IAuthenticationService
 {
-    private readonly IMapper _mapper;
     private readonly AuthenticationStateProvider _authenticationStateProvider;
 
     public AuthenticationService(IClient client,
-        IMapper mapper,
         AuthenticationStateProvider authenticationStateProvider)
         : base(client)
     {
-        _mapper = mapper;
         _authenticationStateProvider = authenticationStateProvider;
     }
 
     public async Task<bool> AuthenticateAsync(LoginVM model)
     {
-        LoginRequest authRequest = _mapper.Map<LoginRequest>(model);
+        LoginRequest authRequest = new()
+        {
+            Email = model.Email,
+            Password = model.Password
+        };
 
         try
         {
@@ -53,7 +53,14 @@ internal sealed class AuthenticationService : BaseHttpService, IAuthenticationSe
 
     public async Task<bool> RegisterAsync(RegistrationRequestVM model)
     {
-        RegistrationRequest request = _mapper.Map<RegistrationRequest>(model);
+        RegistrationRequest request = new()
+        {
+            FirstName = model.FirstName,
+            LastName = model.LastName,
+            Email = model.Email,
+            Password = model.Password
+        };
+
         var response = await _client.RegisterAsync(request);
 
         if (!string.IsNullOrEmpty(response.UserId))

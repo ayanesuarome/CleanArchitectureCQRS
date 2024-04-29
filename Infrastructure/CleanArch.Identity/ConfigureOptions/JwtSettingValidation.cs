@@ -18,9 +18,9 @@ internal sealed class JwtSettingValidation : IValidateOptions<JwtSettings>
 
     public ValidateOptionsResult Validate(string? name, JwtSettings options)
     {
-        if(options.DurationInMinutes < 60)
+        if(options.DurationInMinutes < 60 || options.DurationInMinutes > 1440)
         {
-            return ValidateOptionsResult.Fail($"{options.DurationInMinutes} must be greather or equal to 60");
+            return ValidateOptionsResult.Fail($"{nameof(options.DurationInMinutes)} must be between 60 - 1440.");
         }
 
         return ValidateOptionsResult.Success;

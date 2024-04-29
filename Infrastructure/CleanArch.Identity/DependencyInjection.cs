@@ -33,34 +33,12 @@ public static class DependencyInjection
         services.AddScoped<IJwtProvider, JwtProvider>();
         services.AddScoped<IUserIdentifierProvider, UserIdentifierProvider>();
 
+        services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+            .AddJwtBearer();
+
         services.ConfigureOptions<JwtSettingSetup>();
+        services.ConfigureOptions<JwtBearerSetup>();
         services.AddSingleton<IValidateOptions<JwtSettings>, JwtSettingValidation>();
-
-        IServiceProvider serviceProvider = services.BuildServiceProvider();
-
-        JwtSettings jwtSettings = serviceProvider
-            .GetRequiredService<IOptions<JwtSettings>>()
-            .Value;
-
-        services.AddAuthentication(options =>
-        {
-            options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-            options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-        }).AddJwtBearer(opt =>
-        {
-            opt.TokenValidationParameters = new TokenValidationParameters
-            {
-                ValidateIssuerSigningKey = true,
-                ValidateIssuer = true,
-                ValidateLifetime = true,
-                ValidateAudience = true,
-                // set clockskew to zero so tokens expire exactly at token expiration time (instead of 5 minutes later)
-                ClockSkew = TimeSpan.Zero,
-                ValidIssuer = jwtSettings.Issuer,
-                ValidAudience = jwtSettings.Audience,
-                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings.Key))
-            };
-        });
 
         services.AddAuthorization();
 
