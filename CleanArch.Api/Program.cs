@@ -80,6 +80,8 @@ app.UseSerilogRequestLogging();
 // Enables same CORS policy to the whole web servie.
 app.UseCors(policyName: "CleanArchAll");
 
+app.UseRouting();
+
 // Authentication and Authorization
 app.UseAuthentication().UseAuthorization();
 

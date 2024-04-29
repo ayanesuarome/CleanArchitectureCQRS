@@ -2384,6 +2384,9 @@ namespace CleanArch.BlazorUI.Services.Base
     public partial class LeaveRequestDetailsDto
     {
 
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid Id { get; set; }
+
         [System.Text.Json.Serialization.JsonPropertyName("startDate")]
         public DateOnly StartDate { get; set; }
 

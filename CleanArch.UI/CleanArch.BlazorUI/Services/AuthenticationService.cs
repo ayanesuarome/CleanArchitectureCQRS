@@ -39,7 +39,7 @@ internal sealed class AuthenticationService : BaseHttpService, IAuthenticationSe
 
             return true;
         }
-        catch
+        catch(ApiException e)
         {
             return false;
         }
