@@ -28,8 +28,8 @@ builder.Services.AddPersistenceServices();
 
 // registered with a singleton lifetime
 // chaining Exception Handlers. They are called in the order they are registered
-builder.Services.AddExceptionHandler<BadRequestExceptionHandler>();
-builder.Services.AddExceptionHandler<NotFoundExceptionHandler>();
+//builder.Services.AddExceptionHandler<BadRequestExceptionHandler>();
+//builder.Services.AddExceptionHandler<NotFoundExceptionHandler>();
 builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
 builder.Services.AddProblemDetails();
 
@@ -87,7 +87,7 @@ app.UseAuthentication().UseAuthorization();
 
 app.UseHttpsRedirection();
 
-app.MapControllers();
+app.UseEndpoints(a => a.MapControllers());
 
 // apply pending migrations
 app.ApplyMigrations();

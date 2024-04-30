@@ -1,6 +1,5 @@
 ﻿using System.Reflection;
 using Microsoft.Extensions.DependencyInjection;
-using CleanArch.Application.Behaviors;
 
 namespace CleanArch.Api.Infrastructure
 {
@@ -12,11 +11,11 @@ namespace CleanArch.Api.Infrastructure
         /// <param name="services">Collection of service descriptors</param>
         public static IServiceCollection AddApplicationServices(this IServiceCollection services)
         {
-            services.AddMediatR(config =>
-            {
-                config.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly());
-                config.AddOpenBehavior(typeof(UnitOfWorkBehavior<,>));
-            });
+            //services.AddMediatR(config =>
+            //{
+            //    config.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly());
+            //    config.AddOpenBehavior(typeof(UnitOfWorkBehavior<,>));
+            //});
 
             return services;
         }

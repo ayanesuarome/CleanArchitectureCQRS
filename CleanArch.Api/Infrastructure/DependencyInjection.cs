@@ -9,6 +9,7 @@ using CleanArch.Api.Features.LeaveRequests.CreateLeaveRequests;
 using CleanArch.Api.Features.LeaveRequests.UpdateLeaveRequests;
 using FluentValidation;
 using System.Reflection;
+using CleanArch.Api.Behaviors;
 
 namespace CleanArch.Api.Infrastructure
 {
@@ -30,7 +31,11 @@ namespace CleanArch.Api.Infrastructure
             //services.AddScoped<IValidator<ChangeLeaveRequestApproval.Command>, ChangeLeaveRequestApproval.Validator>();
             //services.AddScoped<IValidator<CreateLeaveRequest.Command>, CreateLeaveRequest.Validator>();
             //services.AddScoped<IValidator<UpdateLeaveRequest.Command>, UpdateLeaveRequest.Validator>();
-            //services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
+            services.AddMediatR(config =>
+            {
+                config.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly());
+                config.AddOpenBehavior(typeof(UnitOfWorkBehavior<,>));
+            });
 
             return services;
         }

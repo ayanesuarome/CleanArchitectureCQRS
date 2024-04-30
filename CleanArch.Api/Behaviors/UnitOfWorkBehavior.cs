@@ -2,7 +2,7 @@
 using MediatR;
 using System.Transactions;
 
-namespace CleanArch.Application.Behaviors
+namespace CleanArch.Api.Behaviors
 {
     internal class UnitOfWorkBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
         where TRequest : class, IRequest<TResponse>
