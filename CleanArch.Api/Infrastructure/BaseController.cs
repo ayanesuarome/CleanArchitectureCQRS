@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CleanArch.Api.Infrastructure;
 
-[Route("api/v{version:apiVersion}")]
+[Route("api/v{version:apiVersion}/[controller]")]
 [ApiController]
 [Authorize]
 [ProducesResponseType(StatusCodes.Status401Unauthorized)]

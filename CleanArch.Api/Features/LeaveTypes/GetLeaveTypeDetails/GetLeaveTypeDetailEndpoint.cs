@@ -9,7 +9,7 @@ namespace CleanArch.Api.Features.LeaveTypes;
 public sealed partial class LeaveTypesController
 {
     // GET api/<v>/<LeaveTypesController>/5
-    [HttpGet(ApiRoutes.LeaveTypes.GetById)]
+    [HttpGet("{id:int}")]
     [ProducesResponseType(typeof(LeaveTypeDetailDto), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> Get([FromRoute] int id)
