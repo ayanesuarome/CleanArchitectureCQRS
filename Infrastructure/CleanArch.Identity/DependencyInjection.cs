@@ -9,8 +9,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
-using Microsoft.IdentityModel.Tokens;
-using System.Text;
 
 namespace CleanArch.Identity;
 
@@ -33,24 +31,26 @@ public static class DependencyInjection
         services.AddScoped<IJwtProvider, JwtProvider>();
         services.AddScoped<IUserIdentifierProvider, UserIdentifierProvider>();
 
-        services.ConfigureOptions<JwtSettingSetup>();
+        services.ConfigureOptions<JwtOptionsSetup>();
 
-        services.AddSingleton<IValidateOptions<JwtSettings>, JwtSettingValidation>();
-        services.ConfigureOptions<JwtBearerSetup>();
+        services.AddSingleton<IValidateOptions<JwtOptions>, JwtSettingValidation>();
+        services.ConfigureOptions<JwtBearerOptionsSetup>();
 
-        services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-            .AddJwtBearer(options => options.TokenValidationParameters = new()
-            {
-                ValidateIssuerSigningKey = true,
-                ValidateIssuer = true,
-                ValidateLifetime = true,
-                ValidateAudience = true,
-                // set clockskew to zero so tokens expire exactly at token expiration time (instead of 5 minutes later)
-                ClockSkew = TimeSpan.Zero,
-                ValidIssuer = _jwtSettings.Issuer,
-                ValidAudience = _jwtSettings.Audience,
-                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtSettings.Key))
-            };);
+        IServiceProvider serviceProvider = services.BuildServiceProvider();
+
+        JwtOptions jwtSettings = serviceProvider
+            .GetRequiredService<IOptions<JwtOptions>>()
+            .Value;
+        JwtBearerOptions jwtBearerOptions = serviceProvider
+            .GetRequiredService<IOptions<JwtBearerOptions>>()
+            .Value;
+
+        services.AddAuthentication(options =>
+        {
+            options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+            options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+        }).AddJwtBearer(options => 
+            options.TokenValidationParameters = jwtBearerOptions.TokenValidationParameters);
 
         services.AddAuthorization();
 

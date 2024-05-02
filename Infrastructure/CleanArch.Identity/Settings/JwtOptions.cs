@@ -3,7 +3,7 @@
 /// <summary>
 /// Represents the JWT configuration settings.
 /// </summary>
-public record JwtSettings
+public record JwtOptions
 {
     /// <summary>
     /// Gets or sets the security key.

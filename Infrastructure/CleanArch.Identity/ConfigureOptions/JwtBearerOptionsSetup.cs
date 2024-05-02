@@ -6,9 +6,9 @@ using System.Text;
 
 namespace CleanArch.Identity.ConfigureOptions;
 
-public sealed class JwtBearerSetup(IOptions<JwtSettings> jwtSettings) : IConfigureOptions<JwtBearerOptions>
+internal sealed class JwtBearerOptionsSetup(IOptions<JwtOptions> jwtOptions) : IConfigureOptions<JwtBearerOptions>
 {
-    private readonly JwtSettings _jwtSettings = jwtSettings.Value;
+    private readonly JwtOptions _jwtOptions = jwtOptions.Value;
 
     public void Configure(JwtBearerOptions options)
     {
@@ -20,9 +20,9 @@ public sealed class JwtBearerSetup(IOptions<JwtSettings> jwtSettings) : IConfigu
             ValidateAudience = true,
             // set clockskew to zero so tokens expire exactly at token expiration time (instead of 5 minutes later)
             ClockSkew = TimeSpan.Zero,
-            ValidIssuer = _jwtSettings.Issuer,
-            ValidAudience = _jwtSettings.Audience,
-            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtSettings.Key))
+            ValidIssuer = _jwtOptions.Issuer,
+            ValidAudience = _jwtOptions.Audience,
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtOptions.Key))
         };
     }
 }

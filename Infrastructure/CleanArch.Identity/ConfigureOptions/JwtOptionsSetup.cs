@@ -4,12 +4,12 @@ using Microsoft.Extensions.Options;
 
 namespace CleanArch.Identity.ConfigureOptions;
 
-public sealed class JwtSettingSetup(IConfiguration configuration) : IConfigureOptions<JwtSettings>
+internal sealed class JwtOptionsSetup(IConfiguration configuration) : IConfigureOptions<JwtOptions>
 {
-    private const string SectionName = nameof(JwtSettings);
+    private const string SectionName = "Jwt";
     private readonly IConfiguration _configuration = configuration;
 
-    public void Configure(JwtSettings options)
+    public void Configure(JwtOptions options)
     {
         _configuration
             .GetRequiredSection(SectionName)

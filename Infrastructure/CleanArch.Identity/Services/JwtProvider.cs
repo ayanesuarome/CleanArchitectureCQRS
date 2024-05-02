@@ -10,11 +10,11 @@ using System.Text;
 
 namespace CleanArch.Identity.Services;
 
-internal sealed class JwtProvider(UserManager<ApplicationUser> userManager, IOptions<JwtSettings> jwtSettings)
+internal sealed class JwtProvider(UserManager<ApplicationUser> userManager, IOptions<JwtOptions> jwtSettings)
     : IJwtProvider
 {
     private readonly UserManager<ApplicationUser> _userManager = userManager;
-    private readonly JwtSettings _jwtSettings = jwtSettings.Value;
+    private readonly JwtOptions _jwtSettings = jwtSettings.Value;
 
     /// <inheritdoc />
     public async Task<string> GenerateToken(ApplicationUser user)
