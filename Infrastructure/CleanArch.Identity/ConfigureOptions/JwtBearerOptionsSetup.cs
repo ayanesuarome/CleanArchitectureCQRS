@@ -6,7 +6,7 @@ using System.Text;
 
 namespace CleanArch.Identity.ConfigureOptions;
 
-internal sealed class JwtBearerSetup(IOptions<JwtSettings> jwtSettings) : IConfigureOptions<JwtBearerOptions>
+public sealed class JwtBearerSetup(IOptions<JwtSettings> jwtSettings) : IConfigureOptions<JwtBearerOptions>
 {
     private readonly JwtSettings _jwtSettings = jwtSettings.Value;
 

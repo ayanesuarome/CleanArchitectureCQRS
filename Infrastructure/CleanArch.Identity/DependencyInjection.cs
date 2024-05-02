@@ -9,6 +9,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 namespace CleanArch.Identity;
 
@@ -30,15 +32,25 @@ public static class DependencyInjection
         services.AddScoped<IUserService, UserService>();
         services.AddScoped<IJwtProvider, JwtProvider>();
         services.AddScoped<IUserIdentifierProvider, UserIdentifierProvider>();
-        
+
         services.ConfigureOptions<JwtSettingSetup>();
-        services.ConfigureOptions<JwtBearerSetup>();
+
         services.AddSingleton<IValidateOptions<JwtSettings>, JwtSettingValidation>();
+        services.ConfigureOptions<JwtBearerSetup>();
 
         services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-            .AddJwtBearer();
-
-        
+            .AddJwtBearer(options => options.TokenValidationParameters = new()
+            {
+                ValidateIssuerSigningKey = true,
+                ValidateIssuer = true,
+                ValidateLifetime = true,
+                ValidateAudience = true,
+                // set clockskew to zero so tokens expire exactly at token expiration time (instead of 5 minutes later)
+                ClockSkew = TimeSpan.Zero,
+                ValidIssuer = _jwtSettings.Issuer,
+                ValidAudience = _jwtSettings.Audience,
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtSettings.Key))
+            };);
 
         services.AddAuthorization();
 
