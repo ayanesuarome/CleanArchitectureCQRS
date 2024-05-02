@@ -14,7 +14,7 @@ public sealed partial class AdminLeaveAllocationController
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult> Delete([FromRoute] Guid id)
     {
-        Result result = await _mediator.Send(new DeleteLeaveAllocation.Command(id));
+        Result result = await _sender.Send(new DeleteLeaveAllocation.Command(id));
 
         return result switch
         {

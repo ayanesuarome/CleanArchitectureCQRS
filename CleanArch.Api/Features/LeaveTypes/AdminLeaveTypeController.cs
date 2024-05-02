@@ -3,6 +3,6 @@ using MediatR;
 
 namespace CleanArch.Api.Features.LeaveTypes;
 
-public sealed partial class AdminLeaveTypeController(IMediator mediator) : BaseAdminController(mediator)
+public sealed partial class AdminLeaveTypeController(ISender sender, IPublisher publisher) : BaseAdminController(sender, publisher)
 {
 }

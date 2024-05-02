@@ -3,6 +3,8 @@ using CleanArch.Application.Exceptions;
 using CleanArch.Application.Abstractions.Logging;
 using Newtonsoft.Json;
 using System.Net;
+using Serilog.Context;
+using Microsoft.Extensions.Primitives;
 
 namespace CleanArch.Api.Middlewares;
 
@@ -65,6 +67,7 @@ public class ExceptionMiddleware(IAppLogger<ExceptionMiddleware> logger) : IMidd
         }
 
         string logMessage = JsonConvert.SerializeObject(errorDetails, Formatting.None);
+
         _logger.LogError(message: logMessage);
 
         httpContext.Response.StatusCode = (int)statusCode;

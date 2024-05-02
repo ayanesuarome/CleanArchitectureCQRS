@@ -4,6 +4,7 @@ using CleanArch.Contracts.LeaveRequests;
 using CleanArch.Domain.Entities;
 using CleanArch.Domain.Events;
 using CleanArch.Domain.Primitives.Result;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CleanArch.Api.Features.LeaveRequests;
@@ -23,11 +24,11 @@ public sealed partial class LeaveRequestController
             request.EndDate,
             request.Comments);
 
-        Result<LeaveRequest> result = await _mediator.Send(command);
+        Result<LeaveRequest> result = await _sender.Send(command);
 
         if (result.IsSuccess)
         {
-            await _mediator.Publish(new LeaveRequestEvent(result.Value, LeaveRequestAction.Updated));
+            await _publisher.Publish(new LeaveRequestEvent(result.Value, LeaveRequestAction.Updated));
         }
 
         return result switch

@@ -14,7 +14,7 @@ public sealed partial class LeaveAllocationController
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> Get([FromRoute] Guid id)
     {
-        Result<LeaveAllocationDetailsDto> result = await _mediator.Send(new GetLeaveAllocationDetail.Query(id));
+        Result<LeaveAllocationDetailsDto> result = await _sender.Send(new GetLeaveAllocationDetail.Query(id));
 
         return result switch
         {

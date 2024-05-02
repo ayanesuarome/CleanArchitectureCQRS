@@ -10,10 +10,12 @@ namespace CleanArch.Api.Infrastructure;
 [ProducesResponseType(StatusCodes.Status401Unauthorized)]
 public abstract class BaseController : ControllerBase
 {
-    protected readonly IMediator _mediator;
+    protected readonly ISender _sender;
+    protected readonly IPublisher _publisher;
 
-    protected BaseController(IMediator mediator)
+    protected BaseController(ISender sender, IPublisher publisher)
     {
-        _mediator = mediator;
+        _sender = sender;
+        _publisher = publisher;
     }
 }

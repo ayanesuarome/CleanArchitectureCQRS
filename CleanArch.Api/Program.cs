@@ -1,5 +1,6 @@
 using CleanArch.Api.ExceptionHandlers;
 using CleanArch.Api.Infrastructure;
+using CleanArch.Api.Middlewares;
 using CleanArch.Api.Swagger;
 using CleanArch.Identity;
 using CleanArch.Identity.Migrations;
@@ -25,6 +26,7 @@ builder.Services.AddApiServices();
 
 // The factory-activated middleware is added to the built-in container
 //builder.Services.AddTransient<ExceptionMiddleware>();
+builder.Services.AddTransient<RequestContextLoggingMiddleware>();
 
 // registered with a singleton lifetime
 // chaining Exception Handlers. They are called in the order they are registered
@@ -67,6 +69,7 @@ var app = builder.Build();
 // Middleware activated by MiddlewareFactory and it is registered in the request processing pipeline.
 // The factory-activated middleware is added to the built-in container with builder.Services.AddTransient<FactoryActivatedMiddleware>();
 // app.UseMiddleware<ExceptionMiddleware>();
+app.UseMiddleware<RequestContextLoggingMiddleware>();
 
 app.UseExceptionHandler();
 

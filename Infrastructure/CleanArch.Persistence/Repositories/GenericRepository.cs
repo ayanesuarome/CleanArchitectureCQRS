@@ -17,7 +17,12 @@ public class GenericRepository<TEntity>(CleanArchEFDbContext dbContext) : IGener
 
     public async Task<TEntity> GetByIdAsync(Guid id) => await TableNoTracking.FirstOrDefaultAsync(e => e.Id == id);
 
-    public async Task CreateAsync(TEntity entity) => await _dbContext.AddAsync(entity);
+    public async Task CreateAsync(TEntity entity)
+    {
+        await _dbContext.AddAsync(entity);
+        await _dbContext.SaveChangesAsync();
+    }
+    public void Create(TEntity entity) => _dbContext.Add(entity);
 
     public async Task CreateListAsync(IEnumerable<TEntity> entities) => _dbContext.AddRangeAsync(entities);
 

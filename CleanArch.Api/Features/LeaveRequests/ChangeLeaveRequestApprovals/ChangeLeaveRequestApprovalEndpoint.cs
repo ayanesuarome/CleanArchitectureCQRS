@@ -4,6 +4,7 @@ using CleanArch.Contracts.LeaveRequests;
 using CleanArch.Domain.Entities;
 using CleanArch.Domain.Events;
 using CleanArch.Domain.Primitives.Result;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CleanArch.Api.Features.LeaveRequests;
@@ -19,11 +20,11 @@ public sealed partial class AdminLeaveRequestController
     public async Task<IActionResult> UpdateApproval([FromRoute] Guid id, [FromBody] ChangeLeaveRequestApprovalRequest request)
     {
         ChangeLeaveRequestApproval.Command command = new(id, request.Approved);
-        Result<LeaveRequest> result = await _mediator.Send(command);
+        Result<LeaveRequest> result = await _sender.Send(command);
 
         if (result.IsSuccess)
         {
-            await _mediator.Publish(new LeaveRequestEvent(result.Value, LeaveRequestAction.UpdateApproval));
+            await _publisher.Publish(new LeaveRequestEvent(result.Value, LeaveRequestAction.UpdateApproval));
         }
 
         return result switch

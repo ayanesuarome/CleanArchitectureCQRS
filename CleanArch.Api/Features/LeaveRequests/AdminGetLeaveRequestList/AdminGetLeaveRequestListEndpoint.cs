@@ -12,7 +12,7 @@ public sealed partial class AdminLeaveRequestController
     [ProducesResponseType(typeof(LeaveRequestListDto), StatusCodes.Status200OK)]
     public async Task<IActionResult> Get()
     {
-        Result<LeaveRequestListDto> result = await _mediator.Send(new AdminGetLeaveRequestList.AdminGetLeaveRequestList.Query());
+        Result<LeaveRequestListDto> result = await _sender.Send(new AdminGetLeaveRequestList.AdminGetLeaveRequestList.Query());
         return Ok(result.Value);
     }
 }

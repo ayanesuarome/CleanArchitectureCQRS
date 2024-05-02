@@ -3,6 +3,6 @@ using CleanArch.Api.Infrastructure;
 
 namespace CleanArch.Api.Features.LeaveTypes;
 
-public sealed partial class LeaveTypesController(IMediator mediator) : BaseController(mediator)
+public sealed partial class LeaveTypesController(ISender sender, IPublisher publisher) : BaseController(sender, publisher)
 {
 }

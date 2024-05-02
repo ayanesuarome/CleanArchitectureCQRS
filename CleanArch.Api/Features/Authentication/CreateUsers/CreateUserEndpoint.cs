@@ -20,7 +20,7 @@ public sealed partial class AuthenticationController
             request.Email,
             request.Password);
 
-        Result<RegistrationResponse> result = await _mediator.Send(command);
+        Result<RegistrationResponse> result = await _sender.Send(command);
 
         return result switch
         {

@@ -17,7 +17,7 @@ public sealed partial class LeaveTypesController
     public async Task<IActionResult> Put([FromRoute] Guid id, [FromBody] UpdateLeaveTypeRequest request)
     {
         UpdateLeaveType.Command command = new(id, request.Name, request.DefaultDays);
-        Result<Unit> result = await _mediator.Send(command);
+        Result<Unit> result = await _sender.Send(command);
 
         return result switch
         {

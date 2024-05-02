@@ -16,8 +16,8 @@ public sealed partial class LeaveRequestController
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> CancelRequest([FromRoute] Guid id)
     {
-        Result<LeaveRequest> result = await _mediator.Send(new CancelLeaveRequest.Command(id));
-        await _mediator.Publish(new LeaveRequestEvent(result.Value, LeaveRequestAction.Canceled));
+        Result<LeaveRequest> result = await _sender.Send(new CancelLeaveRequest.Command(id));
+        await _publisher.Publish(new LeaveRequestEvent(result.Value, LeaveRequestAction.Canceled));
 
         return result switch
         {

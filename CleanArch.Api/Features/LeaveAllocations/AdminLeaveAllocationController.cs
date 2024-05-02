@@ -3,6 +3,6 @@ using MediatR;
 
 namespace CleanArch.Api.Features.LeaveAllocations;
 
-public sealed partial class AdminLeaveAllocationController(IMediator mediator) : BaseAdminController(mediator)
+public sealed partial class AdminLeaveAllocationController(ISender mediator, IPublisher publisher) : BaseAdminController(mediator, publisher)
 {
 }

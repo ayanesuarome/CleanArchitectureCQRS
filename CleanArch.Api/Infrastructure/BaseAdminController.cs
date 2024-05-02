@@ -10,8 +10,8 @@ namespace CleanArch.Api.Infrastructure;
 [ApiController]
 public abstract class BaseAdminController : BaseController
 {
-    protected BaseAdminController(IMediator mediator)
-        : base(mediator)
+    protected BaseAdminController(ISender sender, IPublisher publisher)
+        : base(sender, publisher)
     {
     }
 }

@@ -14,7 +14,7 @@ public sealed partial class AuthenticationController
     public async Task<IActionResult> Login([FromBody] LoginRequest request)
     {
         Login.Login.Command command = new(request.Email, request.Password);
-        Result<TokenResponse> response = await _mediator.Send(command);
+        Result<TokenResponse> response = await _sender.Send(command);
 
         return response switch
         {

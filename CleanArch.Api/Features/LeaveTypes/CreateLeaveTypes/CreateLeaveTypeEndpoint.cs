@@ -17,7 +17,7 @@ public sealed partial class LeaveTypesController
     public async Task<IActionResult> Post([FromBody] CreateLeaveTypeRequest request)
     {
         CreateLeaveType.Command commnad = new(request.Name, request.DefaultDays);
-        Result<Guid> result = await _mediator.Send(commnad);
+        Result<Guid> result = await _sender.Send(commnad);
 
         return result switch
         {
