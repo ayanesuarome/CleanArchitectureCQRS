@@ -4,10 +4,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CleanArch.Api.Infrastructure;
 
-[ApiController]
-[Route("api/v{version:apiVersion}")]
-[Authorize]
-[ProducesResponseType(StatusCodes.Status401Unauthorized)]
 public class BaseController : ControllerBase
 {
     protected readonly IMediator _mediator;
