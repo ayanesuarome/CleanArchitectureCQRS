@@ -17,11 +17,11 @@ builder.Host.UseSerilog((context, config) => config
     .WriteTo.Console()
     .ReadFrom.Configuration(context.Configuration));
 
-builder.Services.AddApiServices();
 builder.Services.AddIdentityServices(builder.Configuration);
 builder.Services.AddCleanArchEFDbContext(builder.Configuration);
 builder.Services.AddInfrastructureServices(builder.Configuration);
 builder.Services.AddPersistenceServices();
+builder.Services.AddApiServices();
 
 // The factory-activated middleware is added to the built-in container
 //builder.Services.AddTransient<ExceptionMiddleware>();
@@ -87,7 +87,7 @@ app.UseAuthentication().UseAuthorization();
 
 app.UseHttpsRedirection();
 
-app.UseEndpoints(a => a.MapControllers());
+app.MapControllers();
 
 // apply pending migrations
 app.ApplyMigrations();

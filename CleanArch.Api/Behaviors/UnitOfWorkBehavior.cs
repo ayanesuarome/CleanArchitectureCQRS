@@ -24,9 +24,9 @@ namespace CleanArch.Api.Behaviors
 
             // all write operations are made inside the same transaction.
             // when the transaction is disposed and if there is any execption, it rollbacks garanteeing an atomic operation.
-            using TransactionScope transactionScope = new();
+            //using TransactionScope transactionScope = new();
             TResponse response = await next();
-            await _unitOfWork.SaveChangesAsync(cancellationToken);
+            //await _unitOfWork.SaveChangesAsync(cancellationToken);
             return response;
         }
 
