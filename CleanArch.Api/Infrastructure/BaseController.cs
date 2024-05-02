@@ -8,7 +8,7 @@ namespace CleanArch.Api.Infrastructure;
 [ApiController]
 [Authorize]
 [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-public class BaseController : ControllerBase
+public abstract class BaseController : ControllerBase
 {
     protected readonly IMediator _mediator;
 

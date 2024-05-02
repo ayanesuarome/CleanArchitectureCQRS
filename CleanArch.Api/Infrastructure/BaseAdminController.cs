@@ -7,6 +7,7 @@ namespace CleanArch.Api.Infrastructure;
 
 [Route("api/admin/v{version:apiVersion}")]
 [Authorize(Roles = Roles.Administrator)]
+[ApiController]
 public abstract class BaseAdminController : BaseController
 {
     protected BaseAdminController(IMediator mediator)
