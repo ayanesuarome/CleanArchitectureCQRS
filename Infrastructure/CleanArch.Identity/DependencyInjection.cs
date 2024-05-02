@@ -30,13 +30,15 @@ public static class DependencyInjection
         services.AddScoped<IUserService, UserService>();
         services.AddScoped<IJwtProvider, JwtProvider>();
         services.AddScoped<IUserIdentifierProvider, UserIdentifierProvider>();
+        
+        services.ConfigureOptions<JwtSettingSetup>();
+        services.ConfigureOptions<JwtBearerSetup>();
+        services.AddSingleton<IValidateOptions<JwtSettings>, JwtSettingValidation>();
 
         services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             .AddJwtBearer();
 
-        services.ConfigureOptions<JwtSettingSetup>();
-        services.ConfigureOptions<JwtBearerSetup>();
-        services.AddSingleton<IValidateOptions<JwtSettings>, JwtSettingValidation>();
+        
 
         services.AddAuthorization();
 
