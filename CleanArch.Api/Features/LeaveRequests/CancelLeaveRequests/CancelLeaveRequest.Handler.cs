@@ -37,7 +37,7 @@ public static partial class CancelLeaveRequest
                 return new FailureResult<LeaveRequest>(cancelResult.Error);
             }
 
-            await _leaveRequestRepository.UpdateAsync(leaveRequest);
+            _leaveRequestRepository.Update(leaveRequest);
 
             // if already approved, re-evaluate the employee's allocations for the leave type
             if (leaveRequest.IsApproved is true)
@@ -53,7 +53,7 @@ public static partial class CancelLeaveRequest
                     return new FailureResult<LeaveRequest>(updateNumberOfDaysResult.Error);
                 }
 
-                await _leaveAllocationRepository.UpdateAsync(allocation);
+                _leaveAllocationRepository.Update(allocation);
             }
 
             return new SuccessResult<LeaveRequest>(leaveRequest);

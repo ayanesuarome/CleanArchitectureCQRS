@@ -1,32 +1,65 @@
 ﻿using CleanArch.Domain.Primitives;
-using CleanArch.Domain.Repositories;
 using Microsoft.EntityFrameworkCore;
 
 namespace CleanArch.Persistence.Repositories;
 
-public class GenericRepository<TEntity>(CleanArchEFDbContext dbContext) : IGenericRepository<TEntity>
-    where TEntity : Entity<Guid>
+/// <summary>
+/// Represents the generic repository with the most common repository methods.
+/// </summary>
+/// <typeparam name="TEntity">The entity type.</typeparam>
+internal abstract class GenericRepository<TEntity, TEntityKey>
+    where TEntity : Entity<TEntityKey>
+    where TEntityKey : new()
 {
-    protected readonly CleanArchEFDbContext _dbContext = dbContext;
-    protected virtual DbSet<TEntity> Entities => _dbContext.Set<TEntity>();
+    protected GenericRepository(CleanArchEFDbContext dbContext) => DbContext = dbContext;
 
-    public virtual IQueryable<TEntity> Table => Entities;
-    public virtual IQueryable<TEntity> TableNoTracking => Entities.AsNoTracking();
+    /// <summary>
+    /// Gets the database context.
+    /// </summary>
+    protected CleanArchEFDbContext DbContext { get; }
 
+    private DbSet<TEntity> Entities => DbContext.Set<TEntity>();
+
+    protected virtual IQueryable<TEntity> Table => Entities;
+    protected virtual IQueryable<TEntity> TableNoTracking => Entities.AsNoTracking();
+
+    /// <summary>
+    /// Gets the entity with the specified identifier.
+    /// </summary>
+    /// <param name="id">The entity identifier.</param>
+    /// <returns>The entity with the specified identifier.</returns>
+    public async Task<TEntity> GetByIdAsync(TEntityKey id) => await Table.FirstOrDefaultAsync(e => e.Id.Equals(id));
     public async Task<IReadOnlyCollection<TEntity>> GetAsync() => await TableNoTracking.ToArrayAsync();
 
-    public async Task<TEntity> GetByIdAsync(Guid id) => await TableNoTracking.FirstOrDefaultAsync(e => e.Id == id);
+    public async Task<TEntity> GetAsNoTrackingByIdAsync(TEntityKey id) => await TableNoTracking.FirstOrDefaultAsync(e => e.Id.Equals(id));
 
     public async Task CreateAsync(TEntity entity)
     {
-        await _dbContext.AddAsync(entity);
-        await _dbContext.SaveChangesAsync();
+        await DbContext.AddAsync(entity);
+        await DbContext.SaveChangesAsync();
     }
-    public void Create(TEntity entity) => _dbContext.Add(entity);
 
-    public async Task CreateListAsync(IEnumerable<TEntity> entities) => _dbContext.AddRangeAsync(entities);
+    /// <summary>
+    /// Inserts the specified entity into the database.
+    /// </summary>
+    /// <param name="entity">The entity to be inserted into the database.</param>
+    public void Add(TEntity entity) => DbContext.Add(entity);
 
-    public async Task UpdateAsync(TEntity entity) => _dbContext.Entry(entity).State = EntityState.Modified;
+    /// <summary>
+    /// Inserts the specified entities to the database.
+    /// </summary>
+    /// <param name="entities">The entities to be inserted into the database.</param>
+    public void AddRange(IReadOnlyCollection<TEntity> entities) => DbContext.AddRange(entities);
 
-    public async Task DeleteAsync(TEntity entity) => _dbContext.Remove(entity);
+    /// <summary>
+    /// Updates the specified entity in the database.
+    /// </summary>
+    /// <param name="entity">The entity to be updated.</param>
+    public void Update(TEntity entity) => DbContext.Update(entity);
+
+    /// <summary>
+    /// Removes the specified entity from the database.
+    /// </summary>
+    /// <param name="entity">The entity to be removed from the database.</param>
+    public void Delete(TEntity entity) => DbContext.Remove(entity);
 }

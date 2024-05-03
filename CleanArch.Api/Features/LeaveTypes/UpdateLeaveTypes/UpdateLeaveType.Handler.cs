@@ -53,7 +53,7 @@ public static partial class UpdateLeaveType
             leaveType.UpdateName(nameResult.Value);
             leaveType.UpdateDefaultDays(defaultDaysResult.Value);
 
-            await _repository.UpdateAsync(leaveType);
+            _repository.Update(leaveType);
 
             return new SuccessResult<Unit>(Unit.Value);
         }

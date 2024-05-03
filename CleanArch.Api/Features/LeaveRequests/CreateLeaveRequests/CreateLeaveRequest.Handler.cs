@@ -90,7 +90,7 @@ public static partial class CreateLeaveRequest
                 _userIdentifierProvider.UserId,
                 commentResult.Value);
 
-            await _leaveRequestRepository.CreateAsync(leaveRequest);
+            _leaveRequestRepository.Add(leaveRequest);
 
             return new SuccessResult<LeaveRequest>(leaveRequest);
         }

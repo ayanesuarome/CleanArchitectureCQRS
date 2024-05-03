@@ -35,12 +35,7 @@ public static class MockLeaveTypeRepository
             .ReturnsAsync(leaveTypes[0]);
 
         repositoryMock
-            .Setup(m => m.CreateAsync(It.IsAny<LeaveType>()))
-            .Returns((LeaveType LeaveType) =>
-            {
-                leaveTypes.Add(LeaveType);
-                return Task.CompletedTask;
-            });
+            .Setup(m => m.Add(It.IsAny<LeaveType>()));
 
         return repositoryMock;
     }

@@ -71,10 +71,10 @@ public static partial class ChangeLeaveRequestApproval
                     return new FailureResult<LeaveRequest>(updateNumberOfDaysResult.Error);
                 }
 
-                await _leaveAllocationRepository.UpdateAsync(allocation);
+                _leaveAllocationRepository.Update(allocation);
             }
 
-            await _leaveRequestRepository.UpdateAsync(leaveRequest);
+            _leaveRequestRepository.Update(leaveRequest);
 
             return new SuccessResult<LeaveRequest>(leaveRequest);
         }

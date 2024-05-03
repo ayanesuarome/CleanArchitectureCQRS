@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CleanArch.Persistence.Repositories;
 
-public class LeaveRequestRepository : GenericRepository<LeaveRequest>, ILeaveRequestRepository
+internal class LeaveRequestRepository : GenericRepository<LeaveRequest, Guid>, ILeaveRequestRepository
 {
     public LeaveRequestRepository(CleanArchEFDbContext dbContext)
         : base(dbContext)
@@ -26,8 +26,6 @@ public class LeaveRequestRepository : GenericRepository<LeaveRequest>, ILeaveReq
 
     public async Task<LeaveRequest> GetLeaveRequestWithDetailsAsync(Guid id)
     {
-        return await TableNoTracking
-            //.Include(e => e.LeaveType)
-            .FirstOrDefaultAsync(e => e.Id == id);
+        return await GetAsNoTrackingByIdAsync(id);
     }
 }

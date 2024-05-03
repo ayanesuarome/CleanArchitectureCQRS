@@ -22,7 +22,7 @@ public static partial class DeleteLeaveRequest
                 return new NotFoundResult(DomainErrors.LeaveRequest.NotFound(command.Id));
             }
 
-            await _repository.DeleteAsync(leaveRequest);
+            _repository.Delete(leaveRequest);
 
             return new SuccessResult();
         }

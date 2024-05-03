@@ -61,7 +61,7 @@ public static partial class UpdateLeaveRequest
             leaveRequest.UpdateDateRange(rangeResult.Value);
             leaveRequest.UpdateComments(commentResult.Value);
 
-            await _repository.UpdateAsync(leaveRequest);
+            _repository.Update(leaveRequest);
 
             return new SuccessResult<LeaveRequest>(leaveRequest);
         }

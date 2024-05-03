@@ -1,6 +1,6 @@
 ﻿using CleanArch.Application.Abstractions.Data;
 using MediatR;
-using System.Transactions;
+using Microsoft.EntityFrameworkCore.Storage;
 
 namespace CleanArch.Api.Behaviors
 {
@@ -23,13 +23,21 @@ namespace CleanArch.Api.Behaviors
             }
 
             // all write operations are made inside the same transaction.
-            // when the transaction is disposed and if there is any execption, it rollbacks garanteeing an atomic operation.
-            using (TransactionScope transactionScope = new())
+            await using IDbContextTransaction transaction = await _unitOfWork.BeginTransactionAsync(cancellationToken);
+
+            try
             {
                 TResponse response = await next();
-                await _unitOfWork.SaveChangesAsync(cancellationToken);
-                transactionScope.Complete();
+
+                await transaction.CommitAsync(cancellationToken);
+
                 return response;
+            }
+            catch (Exception)
+            {
+                await transaction.RollbackAsync(cancellationToken);
+
+                throw;
             }
         }
 

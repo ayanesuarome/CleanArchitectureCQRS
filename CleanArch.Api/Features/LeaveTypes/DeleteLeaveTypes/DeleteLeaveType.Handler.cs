@@ -22,7 +22,7 @@ public static partial class DeleteLeaveType
                 return new NotFoundResult<Unit>(DomainErrors.LeaveType.NotFound(command.Id));
             }
 
-            await _repository.DeleteAsync(leaveTypeToDelete);
+            _repository.Delete(leaveTypeToDelete);
             return new SuccessResult<Unit>(Unit.Value);
         }
     }

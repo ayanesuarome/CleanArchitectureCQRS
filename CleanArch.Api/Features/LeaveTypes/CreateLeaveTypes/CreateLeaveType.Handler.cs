@@ -43,7 +43,7 @@ public static partial class CreateLeaveType
 
             LeaveType leaveTypeToCreate = new(nameResult.Value, defaultDaysResult.Value);
 
-            await _repository.CreateAsync(leaveTypeToCreate);
+            _repository.Add(leaveTypeToCreate);
 
             return new SuccessResult<Guid>(leaveTypeToCreate.Id);
         }

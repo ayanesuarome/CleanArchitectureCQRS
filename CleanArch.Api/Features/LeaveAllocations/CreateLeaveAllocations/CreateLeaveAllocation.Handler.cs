@@ -75,7 +75,7 @@ public static partial class CreateLeaveAllocation
 
             if (allocations.Any())
             {
-                await _allocationRepository.CreateListAsync(allocations);
+                _allocationRepository.AddRange(allocations);
             }
 
             int affectedRows = await _unitOfWork.SaveChangesAsync(cancellationToken);

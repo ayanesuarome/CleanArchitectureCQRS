@@ -22,7 +22,7 @@ public static partial class DeleteLeaveAllocation
                 return new NotFoundResult(DomainErrors.LeaveAllocation.NotFound(command.Id));
             }
 
-            await _repository.DeleteAsync(leaveAllocation);
+            _repository.Delete(leaveAllocation);
 
             return new SuccessResult();
         }

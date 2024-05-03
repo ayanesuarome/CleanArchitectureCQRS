@@ -5,14 +5,14 @@ namespace CleanArch.Domain.Primitives;
 /// <summary>
 /// Represents the base class that all entities derive from.
 /// </summary>
-public abstract class Entity<TKey> : IEquatable<Entity<TKey>>
-    where TKey : IEquatable<TKey>
+public abstract class Entity<TEntityKey> : IEquatable<Entity<TEntityKey>>
+    where TEntityKey : new()
 {
     /// <summary>
     /// Initializes a new instance of the <see cref="Entity{TKey}"/> class.
     /// </summary>
     /// <param name="id">The entity identifier.</param>
-    protected Entity(TKey id) : this()
+    protected Entity(TEntityKey id)
     {
         Ensure.NotEmpty(id, "The identifier is required.", nameof(id));
         Id = id;
@@ -31,10 +31,10 @@ public abstract class Entity<TKey> : IEquatable<Entity<TKey>>
     /// <summary>
     /// Gets or sets the entity identifier.
     /// </summary>
-    public TKey Id { get; private set; }
+    public TEntityKey Id { get; init; }
 
     /// <inheritdoc />
-    public bool Equals(Entity<TKey>? other)
+    public bool Equals(Entity<TEntityKey>? other)
     {
         if(other is null)
         {
