@@ -1,23 +1,21 @@
 ﻿using CleanArch.Application.Abstractions.Data;
+using CleanArch.Application.Abstractions.Messaging;
 using MediatR;
 using Microsoft.EntityFrameworkCore.Storage;
 
 namespace CleanArch.Api.Behaviors
 {
-    internal class UnitOfWorkBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
+    internal sealed class UnitOfWorkBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
         where TRequest : class, IRequest<TResponse>
         where TResponse : class
     {
         private readonly IUnitOfWork _unitOfWork;
 
-        public UnitOfWorkBehavior(IUnitOfWork unitOfWork)
-        {
-            _unitOfWork = unitOfWork;
-        }
+        public UnitOfWorkBehavior(IUnitOfWork unitOfWork) => _unitOfWork = unitOfWork;
 
         public async Task<TResponse> Handle(TRequest request, RequestHandlerDelegate<TResponse> next, CancellationToken cancellationToken)
         {
-            if (IsQuery() || IsIdentity())
+            if(request is IQuery<TRequest> || IsIdentity())
             {
                 return await next();
             }
@@ -28,9 +26,8 @@ namespace CleanArch.Api.Behaviors
             try
             {
                 TResponse response = await next();
-
+                await _unitOfWork.SaveChangesAsync();
                 await transaction.CommitAsync(cancellationToken);
-
                 return response;
             }
             catch (Exception)
@@ -39,16 +36,6 @@ namespace CleanArch.Api.Behaviors
 
                 throw;
             }
-        }
-
-        private bool IsQuery()
-        {
-            if (typeof(TRequest).Name.EndsWith("Query"))
-            {
-                return true;
-            }
-
-            return false;
         }
 
         private bool IsIdentity()

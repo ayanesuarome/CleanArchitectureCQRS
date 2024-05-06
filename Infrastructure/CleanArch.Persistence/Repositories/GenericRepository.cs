@@ -43,23 +43,23 @@ internal abstract class GenericRepository<TEntity, TEntityKey>
     /// Inserts the specified entity into the database.
     /// </summary>
     /// <param name="entity">The entity to be inserted into the database.</param>
-    public void Add(TEntity entity) => DbContext.Add(entity);
+    public void Add(TEntity entity) => Entities.Add(entity);
 
     /// <summary>
     /// Inserts the specified entities to the database.
     /// </summary>
     /// <param name="entities">The entities to be inserted into the database.</param>
-    public void AddRange(IReadOnlyCollection<TEntity> entities) => DbContext.AddRange(entities);
+    public void AddRange(IReadOnlyCollection<TEntity> entities) => Entities.AddRange(entities);
 
     /// <summary>
     /// Updates the specified entity in the database.
     /// </summary>
     /// <param name="entity">The entity to be updated.</param>
-    public void Update(TEntity entity) => DbContext.Update(entity);
+    public void Update(TEntity entity) => Entities.Update(entity);
 
     /// <summary>
     /// Removes the specified entity from the database.
     /// </summary>
     /// <param name="entity">The entity to be removed from the database.</param>
-    public void Delete(TEntity entity) => DbContext.Remove(entity);
+    public void Delete(TEntity entity) => Entities.Remove(entity);
 }

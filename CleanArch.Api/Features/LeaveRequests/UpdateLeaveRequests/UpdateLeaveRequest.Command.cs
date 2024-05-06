@@ -1,6 +1,6 @@
 ﻿using CleanArch.Domain.Primitives.Result;
 using CleanArch.Domain.Entities;
-using MediatR;
+using CleanArch.Application.Abstractions.Messaging;
 
 namespace CleanArch.Api.Features.LeaveRequests.UpdateLeaveRequests;
 
@@ -10,7 +10,7 @@ public static partial class UpdateLeaveRequest
         Guid Id,
         DateOnly StartDate,
         DateOnly EndDate,
-        string? Comments) : IRequest<Result<LeaveRequest>>
+        string? Comments) : ICommand<Result<LeaveRequest>>
     {
     }
 }

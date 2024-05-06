@@ -1,4 +1,5 @@
-﻿using CleanArch.Domain.Entities;
+﻿using CleanArch.Application.Abstractions.Data;
+using CleanArch.Domain.Entities;
 using CleanArch.Domain.Errors;
 using CleanArch.Domain.Primitives.Result;
 using CleanArch.Domain.Repositories;
@@ -6,16 +7,25 @@ using CleanArch.Domain.ValueObjects;
 using FluentValidation;
 using FluentValidation.Results;
 using MediatR;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace CleanArch.Api.Features.LeaveTypes.CreateLeaveTypes;
 
 public static partial class CreateLeaveType
 {
-    internal sealed class Handler(ILeaveTypeRepository repository, IValidator<Command> validator)
+    internal sealed class Handler
         : IRequestHandler<Command, Result<Guid>>
     {
-        private readonly ILeaveTypeRepository _repository = repository;
-        private readonly IValidator<Command> _validator = validator;
+        private readonly ILeaveTypeRepository _repository;
+        private readonly IValidator<Command> _validator;
+        private readonly IUnitOfWork _unitOfWork;
+
+        public Handler(ILeaveTypeRepository repository, IValidator<Command> validator, IUnitOfWork unitOfWork)
+        {
+            _repository = repository;
+            _validator = validator;
+            _unitOfWork = unitOfWork;
+        }
 
         public async Task<Result<Guid>> Handle(Command command, CancellationToken cancellationToken)
         {
@@ -42,6 +52,9 @@ public static partial class CreateLeaveType
             }
 
             LeaveType leaveTypeToCreate = new(nameResult.Value, defaultDaysResult.Value);
+
+            Result<Name> nameResult1 = Name.Create("Test");
+            Result<DefaultDays> defaultDaysResult1 = DefaultDays.Create(15);
 
             _repository.Add(leaveTypeToCreate);
 

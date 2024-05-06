@@ -78,9 +78,7 @@ public static partial class CreateLeaveAllocation
                 _allocationRepository.AddRange(allocations);
             }
 
-            int affectedRows = await _unitOfWork.SaveChangesAsync(cancellationToken);
-
-            return Result.Success<int>(affectedRows);
+            return Result.Success<int>(allocations.Count);
         }
     }
 }
