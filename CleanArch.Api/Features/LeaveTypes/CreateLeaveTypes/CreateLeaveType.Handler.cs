@@ -1,4 +1,5 @@
 ﻿using CleanArch.Application.Abstractions.Data;
+using CleanArch.Application.Abstractions.Messaging;
 using CleanArch.Domain.Entities;
 using CleanArch.Domain.Errors;
 using CleanArch.Domain.Primitives.Result;
@@ -6,15 +7,13 @@ using CleanArch.Domain.Repositories;
 using CleanArch.Domain.ValueObjects;
 using FluentValidation;
 using FluentValidation.Results;
-using MediatR;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace CleanArch.Api.Features.LeaveTypes.CreateLeaveTypes;
 
 public static partial class CreateLeaveType
 {
     internal sealed class Handler
-        : IRequestHandler<Command, Result<Guid>>
+        : ICommandHandler<Command, Result<Guid>>
     {
         private readonly ILeaveTypeRepository _repository;
         private readonly IValidator<Command> _validator;

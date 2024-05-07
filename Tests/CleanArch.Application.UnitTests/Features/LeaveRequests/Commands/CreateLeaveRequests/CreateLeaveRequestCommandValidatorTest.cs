@@ -15,8 +15,8 @@ public class CreateLeaveRequestCommandValidatorTest(CreateLeaveRequestCommandVal
     {
         CreateLeaveRequest.Command command = new(
             Guid.Empty,
-            DateOnly.MinValue,
-            DateOnly.MaxValue,
+            DateOnly.MinValue.ToString(),
+            DateOnly.MaxValue.ToString(),
             null);
 
         var result = await _fixture.validator.TestValidateAsync(command);
@@ -69,8 +69,8 @@ public class CreateLeaveRequestCommandValidatorTest(CreateLeaveRequestCommandVal
     {
         CreateLeaveRequest.Command command = new(
             Guid.NewGuid(),
-            DateOnly.FromDateTime(DateTime.Now),
-            DateOnly.FromDateTime(DateTime.Now).AddDays(1),
+            DateOnly.FromDateTime(DateTime.Now).ToString(),
+            DateOnly.FromDateTime(DateTime.Now).AddDays(1).ToString(),
             null);
 
         var result = await _fixture.validator.TestValidateAsync(command);

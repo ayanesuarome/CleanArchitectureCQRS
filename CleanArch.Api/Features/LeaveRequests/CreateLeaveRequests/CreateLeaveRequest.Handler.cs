@@ -1,4 +1,5 @@
 ﻿using CleanArch.Application.Abstractions.Identity;
+using CleanArch.Application.Abstractions.Messaging;
 using CleanArch.Domain.Entities;
 using CleanArch.Domain.Errors;
 using CleanArch.Domain.Primitives.Result;
@@ -6,13 +7,12 @@ using CleanArch.Domain.Repositories;
 using CleanArch.Domain.ValueObjects;
 using FluentValidation;
 using FluentValidation.Results;
-using MediatR;
 
 namespace CleanArch.Api.Features.LeaveRequests.CreateLeaveRequests;
 
 public static partial class CreateLeaveRequest
 {
-    public sealed class Handler : IRequestHandler<Command, Result<LeaveRequest>>
+    public sealed class Handler : ICommandHandler<Command, Result<LeaveRequest>>
     {
         private readonly ILeaveRequestRepository _leaveRequestRepository;
         private readonly ILeaveAllocationRepository _allocationRepository;
@@ -88,7 +88,7 @@ public static partial class CreateLeaveRequest
                 rangeResult.Value,
                 leaveType,
                 _userIdentifierProvider.UserId,
-                commentResult.Value);
+                commentResult?.Value);
 
             _leaveRequestRepository.Add(leaveRequest);
 

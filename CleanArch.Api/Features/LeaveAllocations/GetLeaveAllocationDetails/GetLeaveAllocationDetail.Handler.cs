@@ -1,16 +1,16 @@
-﻿using CleanArch.Contracts.LeaveAllocations;
+﻿using CleanArch.Application.Abstractions.Messaging;
+using CleanArch.Contracts.LeaveAllocations;
 using CleanArch.Domain.Entities;
 using CleanArch.Domain.Errors;
 using CleanArch.Domain.Primitives.Result;
 using CleanArch.Domain.Repositories;
-using MediatR;
 
 namespace CleanArch.Api.Features.LeaveAllocations.GetLeaveAllocationDetails;
 
 public static partial class GetLeaveAllocationDetail
 {
     internal sealed class Handler(ILeaveAllocationRepository repository)
-        : IRequestHandler<Query, Result<LeaveAllocationDetailsDto>>
+        : IQueryHandler<Query, Result<LeaveAllocationDetailsDto>>
     {
         private readonly ILeaveAllocationRepository _repository = repository;
 

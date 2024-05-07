@@ -2,8 +2,8 @@
 
 public sealed record LeaveRequestDetailsDto(
     Guid Id,
-    DateOnly StartDate,
-    DateOnly EndDate,
+    string StartDate,
+    string EndDate,
     string? RequestComments,
     Guid LeaveTypeId,   
     string LeaveTypeName,

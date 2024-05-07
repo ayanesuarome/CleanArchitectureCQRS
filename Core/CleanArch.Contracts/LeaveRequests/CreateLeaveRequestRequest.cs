@@ -2,8 +2,8 @@
 
 public sealed record CreateLeaveRequestRequest(
     Guid LeaveTypeId,
-    DateOnly StartDate,
-    DateOnly EndDate,
+    string StartDate,
+    string EndDate,
     string? Comments)
 {
 }

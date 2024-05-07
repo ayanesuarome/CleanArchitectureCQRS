@@ -1,14 +1,14 @@
 ﻿using CleanArch.Domain.Primitives.Result;
 using CleanArch.Domain.Entities;
 using CleanArch.Domain.Repositories;
-using MediatR;
 using CleanArch.Domain.Errors;
+using CleanArch.Application.Abstractions.Messaging;
 
 namespace CleanArch.Api.Features.LeaveRequests.CancelLeaveRequests;
 
 public static partial class CancelLeaveRequest
 {
-    internal sealed class Handler : IRequestHandler<Command, Result<LeaveRequest>>
+    internal sealed class Handler : ICommandHandler<Command, Result<LeaveRequest>>
     {
         private readonly ILeaveRequestRepository _leaveRequestRepository;
         private readonly ILeaveAllocationRepository _leaveAllocationRepository;

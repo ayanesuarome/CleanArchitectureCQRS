@@ -1,4 +1,5 @@
-﻿using CleanArch.Domain.Entities;
+﻿using CleanArch.Application.Abstractions.Messaging;
+using CleanArch.Domain.Entities;
 using CleanArch.Domain.Errors;
 using CleanArch.Domain.Primitives.Result;
 using CleanArch.Domain.Repositories;
@@ -9,7 +10,7 @@ namespace CleanArch.Api.Features.LeaveTypes.DeleteLeaveTypes;
 public static partial class DeleteLeaveType
 {
     internal sealed class Handler(ILeaveTypeRepository repository)
-        : IRequestHandler<Command, Result<Unit>>
+        : ICommandHandler<Command, Result<Unit>>
     {
         private readonly ILeaveTypeRepository _repository = repository;
 

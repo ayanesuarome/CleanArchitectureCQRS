@@ -1,4 +1,5 @@
-﻿using CleanArch.Domain.Entities;
+﻿using CleanArch.Application.Abstractions.Messaging;
+using CleanArch.Domain.Entities;
 using CleanArch.Domain.Errors;
 using CleanArch.Domain.Primitives.Result;
 using CleanArch.Domain.Repositories;
@@ -14,7 +15,7 @@ public static partial class UpdateLeaveType
     public sealed class Handler(
         ILeaveTypeRepository repository,
         IValidator<Command> validator)
-        : IRequestHandler<Command, Result<Unit>>
+        : ICommandHandler<Command, Result<Unit>>
     {
         private readonly ILeaveTypeRepository _repository = repository;
         private readonly IValidator<Command> _validator = validator;
@@ -54,7 +55,7 @@ public static partial class UpdateLeaveType
 
             leaveType.UpdateDefaultDays(defaultDaysResult.Value);
 
-            _repository.Update(leaveType);
+            //_repository.Update(leaveType);
 
             return new SuccessResult<Unit>(Unit.Value);
         }

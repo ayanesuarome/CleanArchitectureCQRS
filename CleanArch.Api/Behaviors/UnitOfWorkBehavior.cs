@@ -15,7 +15,7 @@ namespace CleanArch.Api.Behaviors
 
         public async Task<TResponse> Handle(TRequest request, RequestHandlerDelegate<TResponse> next, CancellationToken cancellationToken)
         {
-            if(request is IQuery<TRequest> || IsIdentity())
+            if(request is IQuery<TResponse> || IsIdentity())
             {
                 return await next();
             }

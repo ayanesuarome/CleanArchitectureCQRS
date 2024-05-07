@@ -3,15 +3,15 @@ using CleanArch.Domain.Entities;
 using CleanArch.Domain.Repositories;
 using FluentValidation;
 using FluentValidation.Results;
-using MediatR;
 using CleanArch.Domain.Errors;
 using CleanArch.Domain.ValueObjects;
+using CleanArch.Application.Abstractions.Messaging;
 
 namespace CleanArch.Api.Features.LeaveRequests.UpdateLeaveRequests;
 
 public static partial class UpdateLeaveRequest
 {
-    internal sealed class Handler : IRequestHandler<Command, Result<LeaveRequest>>
+    internal sealed class Handler : ICommandHandler<Command, Result<LeaveRequest>>
     {
         private readonly ILeaveRequestRepository _repository;
         private readonly IValidator<Command> _validator;
@@ -59,6 +59,7 @@ public static partial class UpdateLeaveRequest
             leaveRequest.UpdateDateRange(rangeResult.Value);
             leaveRequest.UpdateComments(commentResult.Value);
 
+            // can be omitted since EF keeps track of entity changes
             _repository.Update(leaveRequest);
 
             return new SuccessResult<LeaveRequest>(leaveRequest);

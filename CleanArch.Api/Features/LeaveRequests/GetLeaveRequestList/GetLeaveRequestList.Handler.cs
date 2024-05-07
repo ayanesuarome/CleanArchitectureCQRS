@@ -1,9 +1,9 @@
 ﻿using CleanArch.Application.Abstractions.Identity;
+using CleanArch.Application.Abstractions.Messaging;
 using CleanArch.Contracts.LeaveRequests;
 using CleanArch.Domain.Entities;
 using CleanArch.Domain.Primitives.Result;
 using CleanArch.Domain.Repositories;
-using MediatR;
 
 namespace CleanArch.Api.Features.LeaveRequests.GetLeaveRequestList;
 
@@ -13,7 +13,7 @@ public static partial class GetLeaveRequestList
         ILeaveRequestRepository repository,
         IUserIdentifierProvider userIdentifierProvider,
         IUserService userService)
-    : IRequestHandler<Query, Result<LeaveRequestListDto>>
+        : IQueryHandler<Query, Result<LeaveRequestListDto>>
     {
         private readonly ILeaveRequestRepository _repository = repository;
         private readonly IUserIdentifierProvider _userIdentifierProvider = userIdentifierProvider;
@@ -24,23 +24,26 @@ public static partial class GetLeaveRequestList
             Guid userId = _userIdentifierProvider.UserId;
 
             IReadOnlyCollection<LeaveRequest> leaveRequests = await _repository.GetLeaveRequestsWithDetailsAsync(userId);
-            Task<LeaveRequestDetailsDto>[] tasks = leaveRequests.Select(async leaveRequest =>
-                new LeaveRequestDetailsDto(
+            List<LeaveRequestListDto.LeaveRequestDetailsModel> models = [];
+
+            foreach (LeaveRequest leaveRequest in leaveRequests)
+            {
+                var employeeFullName = (await _userService.GetEmployee(userId)).FullName;
+                models.Add(new(
                     leaveRequest.Id,
-                    leaveRequest.Range.StartDate,
-                    leaveRequest.Range.EndDate,
-                    leaveRequest.Comments,
+                    leaveRequest.Range.StartDate.ToString(),
+                    leaveRequest.Range.EndDate.ToString(),
+                    leaveRequest.Comments?.Value,
                     leaveRequest.LeaveTypeId,
                     leaveRequest.LeaveTypeName,
                     leaveRequest.RequestingEmployeeId,
-                    (await _userService.GetEmployee(userId)).FullName,
+                    employeeFullName,
                     leaveRequest.IsApproved,
                     leaveRequest.IsCancelled,
-                    leaveRequest.DateCreated)
-                ).ToArray();
+                    leaveRequest.DateCreated));
+            }
 
-            LeaveRequestDetailsDto[] dtos = await Task.WhenAll(tasks);
-            LeaveRequestListDto requestListDto = new(dtos);
+            LeaveRequestListDto requestListDto = new(models);
 
             return new SuccessResult<LeaveRequestListDto>(requestListDto);
         }

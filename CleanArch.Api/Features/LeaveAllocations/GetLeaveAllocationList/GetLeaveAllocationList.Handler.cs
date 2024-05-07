@@ -1,16 +1,16 @@
 ﻿using CleanArch.Application.Abstractions.Identity;
+using CleanArch.Application.Abstractions.Messaging;
 using CleanArch.Contracts.LeaveAllocations;
 using CleanArch.Domain.Entities;
 using CleanArch.Domain.Primitives.Result;
 using CleanArch.Domain.Repositories;
-using MediatR;
 
 namespace CleanArch.Api.Features.LeaveAllocations.GetLeaveAllocationList;
 
 public static partial class GetLeaveAllocationList
 {
     internal sealed class Handler(ILeaveAllocationRepository repository, IUserIdentifierProvider userIdentifierProvider)
-        : IRequestHandler<Query, Result<LeaveAllocationListDto>>
+        : IQueryHandler<Query, Result<LeaveAllocationListDto>>
     {
         private readonly ILeaveAllocationRepository _repository = repository;
         private readonly IUserIdentifierProvider _userIdentifierProvider = userIdentifierProvider;

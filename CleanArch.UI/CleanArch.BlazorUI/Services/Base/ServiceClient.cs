@@ -2236,10 +2236,10 @@ namespace CleanArch.BlazorUI.Services.Base
         public System.Guid LeaveTypeId { get; set; }
 
         [System.Text.Json.Serialization.JsonPropertyName("startDate")]
-        public DateOnly StartDate { get; set; }
+        public string StartDate { get; set; }
 
         [System.Text.Json.Serialization.JsonPropertyName("endDate")]
-        public DateOnly EndDate { get; set; }
+        public string EndDate { get; set; }
 
         [System.Text.Json.Serialization.JsonPropertyName("comments")]
         public string Comments { get; set; }
@@ -2388,10 +2388,49 @@ namespace CleanArch.BlazorUI.Services.Base
         public System.Guid Id { get; set; }
 
         [System.Text.Json.Serialization.JsonPropertyName("startDate")]
-        public DateOnly StartDate { get; set; }
+        public string StartDate { get; set; }
 
         [System.Text.Json.Serialization.JsonPropertyName("endDate")]
-        public DateOnly EndDate { get; set; }
+        public string EndDate { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("requestComments")]
+        public string RequestComments { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("leaveTypeId")]
+        public System.Guid LeaveTypeId { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("leaveTypeName")]
+        public string LeaveTypeName { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("requestingEmployeeId")]
+        public System.Guid RequestingEmployeeId { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("employeeFullName")]
+        public string EmployeeFullName { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("isApproved")]
+        public bool? IsApproved { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("isCancelled")]
+        public bool IsCancelled { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("dateCreated")]
+        public System.DateTimeOffset DateCreated { get; set; }
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.0.7.0 (NJsonSchema v11.0.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class LeaveRequestDetailsModel
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid Id { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("startDate")]
+        public string StartDate { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("endDate")]
+        public string EndDate { get; set; }
 
         [System.Text.Json.Serialization.JsonPropertyName("requestComments")]
         public string RequestComments { get; set; }
@@ -2424,7 +2463,7 @@ namespace CleanArch.BlazorUI.Services.Base
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("leaveRequests")]
-        public System.Collections.Generic.ICollection<LeaveRequestDetailsDto> LeaveRequests { get; set; }
+        public System.Collections.Generic.ICollection<LeaveRequestDetailsModel> LeaveRequests { get; set; }
 
     }
 

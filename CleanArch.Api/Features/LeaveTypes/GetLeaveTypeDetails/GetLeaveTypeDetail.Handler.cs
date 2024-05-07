@@ -1,16 +1,16 @@
-﻿using CleanArch.Contracts.LeaveTypes;
+﻿using CleanArch.Application.Abstractions.Messaging;
+using CleanArch.Contracts.LeaveTypes;
 using CleanArch.Domain.Entities;
 using CleanArch.Domain.Errors;
 using CleanArch.Domain.Primitives.Result;
 using CleanArch.Domain.Repositories;
-using MediatR;
 
 namespace CleanArch.Api.Features.LeaveTypes.GetLeaveTypeDetails;
 
 public static partial class GetLeaveTypeDetail
 {
     internal sealed class Handler(ILeaveTypeRepository repository)
-        : IRequestHandler<Query, Result<LeaveTypeDetailDto>>
+        : IQueryHandler<Query, Result<LeaveTypeDetailDto>>
     {
         private readonly ILeaveTypeRepository _repository = repository;
 

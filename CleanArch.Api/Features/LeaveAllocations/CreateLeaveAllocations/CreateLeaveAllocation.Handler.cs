@@ -1,5 +1,6 @@
 ﻿using CleanArch.Application.Abstractions.Data;
 using CleanArch.Application.Abstractions.Identity;
+using CleanArch.Application.Abstractions.Messaging;
 using CleanArch.Contracts.Identity;
 using CleanArch.Domain.Entities;
 using CleanArch.Domain.Errors;
@@ -7,13 +8,12 @@ using CleanArch.Domain.Primitives.Result;
 using CleanArch.Domain.Repositories;
 using FluentValidation;
 using FluentValidation.Results;
-using MediatR;
 
 namespace CleanArch.Api.Features.LeaveAllocations.CreateLeaveAllocations;
 
 public static partial class CreateLeaveAllocation
 {
-    public sealed class Handler : IRequestHandler<Command, Result<int>>
+    public sealed class Handler : ICommandHandler<Command, Result<int>>
     {
         private readonly ILeaveAllocationRepository _allocationRepository;
         private readonly ILeaveTypeRepository _leaveTypeRepository;

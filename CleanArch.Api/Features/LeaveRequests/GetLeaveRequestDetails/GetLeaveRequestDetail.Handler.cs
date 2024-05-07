@@ -1,17 +1,17 @@
 ﻿using CleanArch.Application.Abstractions.Identity;
+using CleanArch.Application.Abstractions.Messaging;
 using CleanArch.Contracts.LeaveRequests;
 using CleanArch.Domain.Entities;
 using CleanArch.Domain.Errors;
 using CleanArch.Domain.Primitives.Result;
 using CleanArch.Domain.Repositories;
-using MediatR;
 
 namespace CleanArch.Api.Features.LeaveRequests.GetLeaveRequestDetails;
 
 public static partial class GetLeaveRequestDetail
 {
     internal sealed class Handler(ILeaveRequestRepository repository, IUserService userService)
-        : IRequestHandler<Query, Result<LeaveRequestDetailsDto>>
+        : IQueryHandler<Query, Result<LeaveRequestDetailsDto>>
     {
         private readonly ILeaveRequestRepository _repository = repository;
         private readonly IUserService _userService = userService;
@@ -27,9 +27,9 @@ public static partial class GetLeaveRequestDetail
 
             LeaveRequestDetailsDto dto = new(
                 leaveRequest.Id,
-                leaveRequest.Range.StartDate,
-                leaveRequest.Range.EndDate,
-                leaveRequest.Comments.Value,
+                leaveRequest.Range.StartDate.ToString(),
+                leaveRequest.Range.EndDate.ToString(),
+                leaveRequest.Comments?.Value,
                 leaveRequest.LeaveTypeId,
                 leaveRequest.LeaveTypeName.Value,
                 leaveRequest.RequestingEmployeeId,

@@ -1,16 +1,16 @@
-﻿using CleanArch.Domain.Entities;
+﻿using CleanArch.Application.Abstractions.Messaging;
+using CleanArch.Domain.Entities;
 using CleanArch.Domain.Errors;
 using CleanArch.Domain.Primitives.Result;
 using CleanArch.Domain.Repositories;
 using FluentValidation;
 using FluentValidation.Results;
-using MediatR;
 
 namespace CleanArch.Api.Features.LeaveRequests.ChangeLeaveRequestApprovals;
 
 public static partial class ChangeLeaveRequestApproval
 {
-    internal sealed class Handler : IRequestHandler<Command, Result<LeaveRequest>>
+    internal sealed class Handler : ICommandHandler<Command, Result<LeaveRequest>>
     {
         private readonly ILeaveRequestRepository _leaveRequestRepository;
         private readonly ILeaveAllocationRepository _leaveAllocationRepository;

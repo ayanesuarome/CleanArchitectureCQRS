@@ -1,15 +1,15 @@
-﻿using CleanArch.Domain.Entities;
+﻿using CleanArch.Application.Abstractions.Messaging;
+using CleanArch.Domain.Entities;
 using CleanArch.Domain.Errors;
 using CleanArch.Domain.Primitives.Result;
 using CleanArch.Domain.Repositories;
-using MediatR;
 
 namespace CleanArch.Api.Features.LeaveRequests.DeleteLeaveRequests;
 
 public static partial class DeleteLeaveRequest
 {
     internal sealed class Handler(ILeaveRequestRepository repository)
-        : IRequestHandler<Command, Result>
+        : ICommandHandler<Command, Result>
     {
         private readonly ILeaveRequestRepository _repository = repository;
 
