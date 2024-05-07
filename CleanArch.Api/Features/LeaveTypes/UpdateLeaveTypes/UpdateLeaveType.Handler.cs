@@ -45,12 +45,13 @@ public static partial class UpdateLeaveType
                 return new FailureResult<Unit>(firstFailureOrSuccess.Error);
             }
 
-            if(!await _repository.IsUniqueAsync(nameResult.Value, cancellationToken))
+            Result updateNameResult = await leaveType.UpdateName(nameResult.Value, repository);
+
+            if(updateNameResult.IsFailure)
             {
-                return new FailureResult<Unit>(DomainErrors.LeaveType.DuplicateName);
+                return new FailureResult<Unit>(updateNameResult.Error);
             }
 
-            leaveType.UpdateName(nameResult.Value);
             leaveType.UpdateDefaultDays(defaultDaysResult.Value);
 
             _repository.Update(leaveType);

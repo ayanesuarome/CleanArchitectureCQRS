@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using CleanArch.Domain.Primitives.Result;
+﻿using CleanArch.Domain.Primitives.Result;
 using CleanArch.Domain.Entities;
 using CleanArch.Domain.Repositories;
 using FluentValidation;
@@ -14,7 +13,6 @@ public static partial class UpdateLeaveRequest
 {
     internal sealed class Handler : IRequestHandler<Command, Result<LeaveRequest>>
     {
-        private readonly IMapper _mapper;
         private readonly ILeaveRequestRepository _repository;
         private readonly IValidator<Command> _validator;
 

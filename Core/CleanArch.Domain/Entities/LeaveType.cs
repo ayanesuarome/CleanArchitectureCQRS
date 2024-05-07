@@ -1,6 +1,11 @@
 ﻿using CleanArch.Domain.Primitives;
+using CleanArch.Domain.Primitives.Result;
+using CleanArch.Domain.Repositories;
 using CleanArch.Domain.Utilities;
 using CleanArch.Domain.ValueObjects;
+using MediatR;
+using Microsoft.AspNetCore.Mvc.RazorPages;
+using System.Threading;
 
 namespace CleanArch.Domain.Entities;
 
@@ -38,14 +43,20 @@ public sealed class LeaveType : Entity<Guid>, IAuditableEntity
 
     #endregion
 
-    public void UpdateName(Name name)
+    public async Task<Result> UpdateName(Name name, ILeaveTypeRepository repository)
     {
         if(name == Name)
         {
-            return;
+            return Result.Success();
+        }
+
+        if (!await repository.IsUniqueAsync(name.Value))
+        {
+            return new FailureResult<Unit>(Errors.DomainErrors.LeaveType.DuplicateName);
         }
 
         Name = name;
+        return Result.Success();
     }
 
     public void UpdateDefaultDays(DefaultDays defaultDays)
