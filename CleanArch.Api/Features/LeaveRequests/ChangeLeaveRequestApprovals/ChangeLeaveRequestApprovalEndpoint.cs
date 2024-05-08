@@ -23,11 +23,11 @@ public sealed partial class AdminLeaveRequestController
         CancellationToken cancellationToken)
     {
         ChangeLeaveRequestApproval.Command command = new(id, request.Approved);
-        Result<LeaveRequest> result = await _sender.Send(command, cancellationToken);
+        Result<LeaveRequest> result = await Sender.Send(command, cancellationToken);
 
         if (result.IsSuccess)
         {
-            await _publisher.Publish(new LeaveRequestEvent(result.Value, LeaveRequestAction.UpdateApproval));
+            await Publisher.Publish(new LeaveRequestEvent(result.Value, LeaveRequestAction.UpdateApproval));
         }
 
         return result switch

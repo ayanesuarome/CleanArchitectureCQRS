@@ -1,4 +1,4 @@
-﻿using CleanArch.Application.Abstractions.Identity;
+﻿using CleanArch.Application.Abstractions.Authentication;
 using CleanArch.Contracts.Identity;
 using CleanArch.Domain.Entities;
 using Microsoft.AspNetCore.Identity;

@@ -20,7 +20,7 @@ public sealed partial class LeaveTypesController
         CancellationToken cancellationToken)
     {
         UpdateLeaveType.Command command = new(id, request.Name, request.DefaultDays);
-        Result<Unit> result = await _sender.Send(command, cancellationToken);
+        Result<Unit> result = await Sender.Send(command, cancellationToken);
 
         return result switch
         {

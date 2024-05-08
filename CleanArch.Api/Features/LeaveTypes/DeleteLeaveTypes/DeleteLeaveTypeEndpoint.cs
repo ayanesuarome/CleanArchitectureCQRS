@@ -14,7 +14,7 @@ namespace CleanArch.Api.Features.LeaveTypes
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> Delete([FromRoute] Guid id, CancellationToken cancellationToken)
         {
-            Result<Unit> result = await _sender.Send(new DeleteLeaveType.Command(id), cancellationToken);
+            Result<Unit> result = await Sender.Send(new DeleteLeaveType.Command(id), cancellationToken);
 
             return result switch
             {

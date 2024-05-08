@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using CleanArch.Application.Abstractions.Identity;
+using CleanArch.Application.Abstractions.Authentication;
 using CleanArch.Domain.Entities;
 using CleanArch.Contracts.LeaveRequests;
 using CleanArch.Contracts.Identity;

@@ -1,4 +1,4 @@
-﻿using CleanArch.Application.Abstractions.Identity;
+﻿using CleanArch.Application.Abstractions.Authentication;
 using Microsoft.AspNetCore.Http;
 
 namespace CleanArch.Identity.Services;

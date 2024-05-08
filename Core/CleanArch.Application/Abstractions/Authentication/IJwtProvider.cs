@@ -1,6 +1,6 @@
 ﻿using CleanArch.Domain.Entities;
 
-namespace CleanArch.Application.Abstractions.Identity;
+namespace CleanArch.Application.Abstractions.Authentication;
 
 public interface IJwtProvider
 {

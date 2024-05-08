@@ -14,7 +14,7 @@ public sealed partial class LeaveRequestController
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> Get([FromRoute] Guid id, CancellationToken cancellationToken)
     {
-        Result<LeaveRequestDetailsDto> result = await _sender.Send(new GetLeaveRequestDetail.Query(id), cancellationToken);
+        Result<LeaveRequestDetailsDto> result = await Sender.Send(new GetLeaveRequestDetail.Query(id), cancellationToken);
 
         return result switch
         {

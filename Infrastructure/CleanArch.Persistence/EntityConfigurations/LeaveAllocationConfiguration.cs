@@ -1,4 +1,5 @@
 ﻿using CleanArch.Domain.Entities;
+using CleanArch.Persistence.Constants;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -8,6 +9,8 @@ internal sealed class LeaveAllocationConfiguration : IEntityTypeConfiguration<Le
 {
     public void Configure(EntityTypeBuilder<LeaveAllocation> builder)
     {
+        builder.ToTable(TableNames.LeaveAllocations);
+
         builder.HasKey(leaveAllocation =>  leaveAllocation.Id);
 
         builder.HasOne<LeaveType>()

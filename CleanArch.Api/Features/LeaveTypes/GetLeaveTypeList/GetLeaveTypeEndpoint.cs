@@ -12,7 +12,7 @@ public sealed partial class LeaveTypesController
     [ProducesResponseType(typeof(LeaveTypeListDto), StatusCodes.Status200OK)]
     public async Task<IActionResult> Get(CancellationToken cancellationToken)
     {
-        Result<LeaveTypeListDto> result = await _sender.Send(new GetLeaveTypeList.GetLeaveTypeList.Query(), cancellationToken);
+        Result<LeaveTypeListDto> result = await Sender.Send(new GetLeaveTypeList.GetLeaveTypeList.Query(), cancellationToken);
         return Ok(result.Value);
     }
 }

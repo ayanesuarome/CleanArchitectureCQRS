@@ -1,5 +1,5 @@
 ﻿using CleanArch.Application.Abstractions.Email;
-using CleanArch.Application.Abstractions.Identity;
+using CleanArch.Application.Abstractions.Authentication;
 using CleanArch.Application.Abstractions.Logging;
 using MediatR;
 using Microsoft.Extensions.Options;

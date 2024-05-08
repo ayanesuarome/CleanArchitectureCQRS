@@ -1,4 +1,4 @@
-﻿namespace CleanArch.Application.Abstractions.Identity;
+﻿namespace CleanArch.Application.Abstractions.Authentication;
 
 /// <summary>
 /// Represents the user identifier provider interface.

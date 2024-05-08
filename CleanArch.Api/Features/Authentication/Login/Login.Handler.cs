@@ -1,4 +1,4 @@
-﻿using CleanArch.Application.Abstractions.Identity;
+﻿using CleanArch.Application.Abstractions.Authentication;
 using CleanArch.Application.Abstractions.Messaging;
 using CleanArch.Contracts.Identity;
 using CleanArch.Domain.Entities;
@@ -19,10 +19,10 @@ public static partial class Login
         private readonly IValidator<Command> _validator;
 
         public Handler(
-        UserManager<User> userManager,
-        SignInManager<User> signInManager,
-        IJwtProvider jwtProvider,
-        IValidator<Command> validator)
+            UserManager<User> userManager,
+            SignInManager<User> signInManager,
+            IJwtProvider jwtProvider,
+            IValidator<Command> validator)
         {
             _userManager = userManager;
             _signInManager = signInManager;

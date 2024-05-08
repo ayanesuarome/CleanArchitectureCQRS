@@ -13,7 +13,7 @@ public sealed partial class LeaveRequestController
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> Delete([FromRoute] Guid id, CancellationToken cancellationToken)
     {
-        Result result = await _sender.Send(new DeleteLeaveRequest.Command(id), cancellationToken);
+        Result result = await Sender.Send(new DeleteLeaveRequest.Command(id), cancellationToken);
 
         return result switch
         {

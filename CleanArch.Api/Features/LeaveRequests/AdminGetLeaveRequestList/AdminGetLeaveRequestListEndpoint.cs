@@ -12,7 +12,7 @@ public sealed partial class AdminLeaveRequestController
     [ProducesResponseType(typeof(LeaveRequestListDto), StatusCodes.Status200OK)]
     public async Task<IActionResult> Get(CancellationToken cancellationToken)
     {
-        Result<LeaveRequestListDto> result = await _sender.Send(new AdminGetLeaveRequestList.AdminGetLeaveRequestList.Query(), cancellationToken);
+        Result<LeaveRequestListDto> result = await Sender.Send(new AdminGetLeaveRequestList.AdminGetLeaveRequestList.Query(), cancellationToken);
         return Ok(result.Value);
     }
 }

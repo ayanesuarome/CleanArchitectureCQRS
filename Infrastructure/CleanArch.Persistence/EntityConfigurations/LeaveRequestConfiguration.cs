@@ -1,5 +1,6 @@
 ﻿using CleanArch.Domain.Entities;
 using CleanArch.Domain.ValueObjects;
+using CleanArch.Persistence.Constants;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -9,6 +10,8 @@ internal sealed class LeaveRequestConfiguration : IEntityTypeConfiguration<Leave
 {
     public void Configure(EntityTypeBuilder<LeaveRequest> builder)
     {
+        builder.ToTable(TableNames.LeaveRequests);
+
         builder.HasKey(leaveRequest => leaveRequest.Id);
 
         builder

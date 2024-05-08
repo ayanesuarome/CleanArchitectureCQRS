@@ -1,4 +1,4 @@
-﻿using CleanArch.Infrastructure.Services.Emails.Settings;
+﻿using CleanArch.Infrastructure.Emails.Settings;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
 

@@ -1,4 +1,4 @@
-﻿using CleanArch.Application.Abstractions.Identity;
+﻿using CleanArch.Application.Abstractions.Authentication;
 using CleanArch.Domain.Primitives;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Diagnostics;

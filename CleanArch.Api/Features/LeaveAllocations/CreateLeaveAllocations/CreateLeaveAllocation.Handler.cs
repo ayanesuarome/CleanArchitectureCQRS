@@ -1,5 +1,5 @@
 ﻿using CleanArch.Application.Abstractions.Data;
-using CleanArch.Application.Abstractions.Identity;
+using CleanArch.Application.Abstractions.Authentication;
 using CleanArch.Application.Abstractions.Messaging;
 using CleanArch.Contracts.Identity;
 using CleanArch.Domain.Entities;

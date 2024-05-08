@@ -15,7 +15,7 @@ public sealed partial class AdminLeaveAllocationController
     [ProducesResponseType(typeof(Error), StatusCodes.Status400BadRequest)]
     public async Task<ActionResult> Post([FromBody] CreateLeaveAllocationRequest request, CancellationToken cancellationToken)
     {
-        Result<int> rowsAffectedResult = await _sender.Send(new CreateLeaveAllocation.Command(request.LeaveTypeId), cancellationToken);
+        Result<int> rowsAffectedResult = await Sender.Send(new CreateLeaveAllocation.Command(request.LeaveTypeId), cancellationToken);
 
         if (rowsAffectedResult.IsFailure)
         {

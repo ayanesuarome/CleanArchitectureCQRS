@@ -1,4 +1,4 @@
-﻿namespace CleanArch.Infrastructure.Services.Emails.Settings;
+﻿namespace CleanArch.Infrastructure.Emails.Settings;
 
 public sealed record EmailTemplateIds
 {

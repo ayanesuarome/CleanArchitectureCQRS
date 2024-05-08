@@ -23,11 +23,11 @@ public sealed partial class LeaveRequestController
             request.EndDate,
             request.Comments);
 
-        Result<LeaveRequest> result = await _sender.Send(command, cancellationToken);
+        Result<LeaveRequest> result = await Sender.Send(command, cancellationToken);
 
         if (result.IsSuccess)
         {
-            await _publisher.Publish(new LeaveRequestEvent(result.Value, LeaveRequestAction.Created));
+            await Publisher.Publish(new LeaveRequestEvent(result.Value, LeaveRequestAction.Created));
         }
 
         return result switch

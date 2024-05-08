@@ -1,11 +1,11 @@
 ﻿using CleanArch.Api.Contracts.Emails;
 using CleanArch.Application.Abstractions.Email;
-using CleanArch.Infrastructure.Services.Emails.Settings;
+using CleanArch.Infrastructure.Emails.Settings;
 using Microsoft.Extensions.Options;
 using SendGrid;
 using SendGrid.Helpers.Mail;
 
-namespace CleanArch.Infrastructure.Services.Emails;
+namespace CleanArch.Infrastructure.Emails;
 
 internal sealed class EmailSender : IEmailSender
 {

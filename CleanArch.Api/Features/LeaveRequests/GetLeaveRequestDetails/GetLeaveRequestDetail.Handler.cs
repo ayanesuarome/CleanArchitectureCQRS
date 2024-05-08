@@ -1,4 +1,4 @@
-﻿using CleanArch.Application.Abstractions.Identity;
+﻿using CleanArch.Application.Abstractions.Authentication;
 using CleanArch.Application.Abstractions.Messaging;
 using CleanArch.Contracts.LeaveRequests;
 using CleanArch.Domain.Entities;
