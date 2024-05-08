@@ -11,9 +11,9 @@ public sealed partial class LeaveRequestController
     [HttpDelete(ApiRoutes.LeaveRequests.Delete)]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> Delete([FromRoute] Guid id)
+    public async Task<IActionResult> Delete([FromRoute] Guid id, CancellationToken cancellationToken)
     {
-        Result result = await _sender.Send(new DeleteLeaveRequest.Command(id));
+        Result result = await _sender.Send(new DeleteLeaveRequest.Command(id), cancellationToken);
 
         return result switch
         {

@@ -5,9 +5,9 @@ using Microsoft.AspNetCore.Identity;
 
 namespace CleanArch.Domain.Entities;
 
-public sealed class ApplicationUser : IdentityUser, IAuditableEntity
+public sealed class User : IdentityUser, IAuditableEntity
 {
-    public ApplicationUser(UserName firstName, UserName lastName)
+    public User(UserName firstName, UserName lastName)
         : base()
     {
         Ensure.NotNull(firstName, "The first name is required.", nameof(firstName));
@@ -18,12 +18,12 @@ public sealed class ApplicationUser : IdentityUser, IAuditableEntity
     }
 
     // <summary>
-    /// Initializes a new instance of the class <see cref="ApplicationUser"/>.
+    /// Initializes a new instance of the class <see cref="User"/>.
     /// </summary>
     /// <remarks>
     /// Required by EF Core.
     /// </remarks>
-    private ApplicationUser()
+    private User()
     {
     }
 

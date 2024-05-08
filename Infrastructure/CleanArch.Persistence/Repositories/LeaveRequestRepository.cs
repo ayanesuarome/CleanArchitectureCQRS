@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CleanArch.Persistence.Repositories;
 
-internal class LeaveRequestRepository : GenericRepository<LeaveRequest, Guid>, ILeaveRequestRepository
+internal sealed class LeaveRequestRepository : GenericRepository<LeaveRequest, Guid>, ILeaveRequestRepository
 {
     public LeaveRequestRepository(CleanArchEFDbContext dbContext)
         : base(dbContext)

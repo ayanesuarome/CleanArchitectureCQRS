@@ -1,25 +1,25 @@
 ﻿using CleanArch.Application.Abstractions.Identity;
+using CleanArch.Application.Abstractions.Messaging;
 using CleanArch.Contracts.Identity;
 using CleanArch.Domain.Entities;
 using CleanArch.Domain.Primitives.Result;
 using CleanArch.Domain.ValueObjects;
 using FluentValidation;
 using FluentValidation.Results;
-using MediatR;
 using Microsoft.AspNetCore.Identity;
 
 namespace CleanArch.Api.Features.Authentication.CreateUsers;
 
 public static partial class CreateUser
 {
-    public sealed class Handler : IRequestHandler<Command, Result<RegistrationResponse>>
+    public sealed class Handler : ICommandHandler<Command, Result<RegistrationResponse>>
     {
-        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly UserManager<User> _userManager;
         private readonly IJwtProvider _jwtProvider;
         private readonly IValidator<Command> _validator;
 
         public Handler(
-        UserManager<ApplicationUser> userManager,
+        UserManager<User> userManager,
         IJwtProvider jwtProvider,
         IValidator<Command> validator)
         {
@@ -48,7 +48,7 @@ public static partial class CreateUser
                 return new FailureResult<RegistrationResponse>(firstFailureOrSuccess.Error);
             }
 
-            ApplicationUser user = new(firstNameResult.Value, lastNameResult.Value)
+            User user = new(firstNameResult.Value, lastNameResult.Value)
             {
                 Email = emailResult.Value,
                 UserName = command.Email,

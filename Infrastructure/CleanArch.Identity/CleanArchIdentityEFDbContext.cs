@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CleanArch.Identity;
 
-public sealed partial class CleanArchIdentityEFDbContext : IdentityDbContext<ApplicationUser>
+public sealed partial class CleanArchIdentityEFDbContext : IdentityDbContext<User>
 {
     public CleanArchIdentityEFDbContext(DbContextOptions<CleanArchIdentityEFDbContext> options)
         : base(options)
@@ -13,7 +13,8 @@ public sealed partial class CleanArchIdentityEFDbContext : IdentityDbContext<App
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
-        builder.ApplyConfigurationsFromAssembly(typeof(CleanArchIdentityEFDbContext).Assembly);
         base.OnModelCreating(builder);
+        builder.ApplyConfigurationsFromAssembly(typeof(CleanArchIdentityEFDbContext).Assembly);
+        builder.HasDefaultSchema("identity");
     }
 }

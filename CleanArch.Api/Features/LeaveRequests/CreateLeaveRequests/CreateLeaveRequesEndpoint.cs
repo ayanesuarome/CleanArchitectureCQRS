@@ -15,7 +15,7 @@ public sealed partial class LeaveRequestController
     [HttpPost(ApiRoutes.LeaveRequests.Post)]
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(typeof(FailureResult), StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> Post([FromBody] CreateLeaveRequestRequest request)
+    public async Task<IActionResult> Post([FromBody] CreateLeaveRequestRequest request, CancellationToken cancellationToken)
     {
         CreateLeaveRequest.Command command = new(
             request.LeaveTypeId,
@@ -23,7 +23,7 @@ public sealed partial class LeaveRequestController
             request.EndDate,
             request.Comments);
 
-        Result<LeaveRequest> result = await _sender.Send(command);
+        Result<LeaveRequest> result = await _sender.Send(command, cancellationToken);
 
         if (result.IsSuccess)
         {

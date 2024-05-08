@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Http;
 
 namespace CleanArch.Identity.Services;
 
-public class UserIdentifierProvider : IUserIdentifierProvider
+internal sealed class UserIdentifierProvider : IUserIdentifierProvider
 {
     public UserIdentifierProvider(IHttpContextAccessor httpContextAccessor)
     {

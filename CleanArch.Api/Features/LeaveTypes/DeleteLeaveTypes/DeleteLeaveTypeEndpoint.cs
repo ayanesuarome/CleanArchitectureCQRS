@@ -12,9 +12,9 @@ namespace CleanArch.Api.Features.LeaveTypes
         [HttpDelete(ApiRoutes.LeaveTypes.Delete)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> Delete([FromRoute] Guid id)
+        public async Task<IActionResult> Delete([FromRoute] Guid id, CancellationToken cancellationToken)
         {
-            Result<Unit> result = await _sender.Send(new DeleteLeaveType.Command(id));
+            Result<Unit> result = await _sender.Send(new DeleteLeaveType.Command(id), cancellationToken);
 
             return result switch
             {

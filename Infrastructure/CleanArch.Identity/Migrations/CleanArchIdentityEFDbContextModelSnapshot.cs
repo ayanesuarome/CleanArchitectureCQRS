@@ -18,12 +18,13 @@ namespace CleanArch.Identity.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
+                .HasDefaultSchema("identity")
                 .HasAnnotation("ProductVersion", "8.0.4")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("CleanArch.Domain.Entities.ApplicationUser", b =>
+            modelBuilder.Entity("CleanArch.Domain.Entities.User", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
@@ -75,7 +76,7 @@ namespace CleanArch.Identity.Migrations
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
 
-                    b.ComplexProperty<Dictionary<string, object>>("FirstName", "CleanArch.Domain.Entities.ApplicationUser.FirstName#UserName", b1 =>
+                    b.ComplexProperty<Dictionary<string, object>>("FirstName", "CleanArch.Domain.Entities.User.FirstName#UserName", b1 =>
                         {
                             b1.IsRequired();
 
@@ -86,7 +87,7 @@ namespace CleanArch.Identity.Migrations
                                 .HasColumnName("FirstName");
                         });
 
-                    b.ComplexProperty<Dictionary<string, object>>("LastName", "CleanArch.Domain.Entities.ApplicationUser.LastName#UserName", b1 =>
+                    b.ComplexProperty<Dictionary<string, object>>("LastName", "CleanArch.Domain.Entities.User.LastName#UserName", b1 =>
                         {
                             b1.IsRequired();
 
@@ -107,7 +108,7 @@ namespace CleanArch.Identity.Migrations
                         .HasDatabaseName("UserNameIndex")
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
-                    b.ToTable("AspNetUsers", (string)null);
+                    b.ToTable("AspNetUsers", "identity");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -134,7 +135,7 @@ namespace CleanArch.Identity.Migrations
                         .HasDatabaseName("RoleNameIndex")
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
-                    b.ToTable("AspNetRoles", (string)null);
+                    b.ToTable("AspNetRoles", "identity");
 
                     b.HasData(
                         new
@@ -173,7 +174,7 @@ namespace CleanArch.Identity.Migrations
 
                     b.HasIndex("RoleId");
 
-                    b.ToTable("AspNetRoleClaims", (string)null);
+                    b.ToTable("AspNetRoleClaims", "identity");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
@@ -198,7 +199,7 @@ namespace CleanArch.Identity.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("AspNetUserClaims", (string)null);
+                    b.ToTable("AspNetUserClaims", "identity");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
@@ -220,7 +221,7 @@ namespace CleanArch.Identity.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("AspNetUserLogins", (string)null);
+                    b.ToTable("AspNetUserLogins", "identity");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
@@ -235,7 +236,7 @@ namespace CleanArch.Identity.Migrations
 
                     b.HasIndex("RoleId");
 
-                    b.ToTable("AspNetUserRoles", (string)null);
+                    b.ToTable("AspNetUserRoles", "identity");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
@@ -254,7 +255,7 @@ namespace CleanArch.Identity.Migrations
 
                     b.HasKey("UserId", "LoginProvider", "Name");
 
-                    b.ToTable("AspNetUserTokens", (string)null);
+                    b.ToTable("AspNetUserTokens", "identity");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -268,7 +269,7 @@ namespace CleanArch.Identity.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("CleanArch.Domain.Entities.ApplicationUser", null)
+                    b.HasOne("CleanArch.Domain.Entities.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -277,7 +278,7 @@ namespace CleanArch.Identity.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("CleanArch.Domain.Entities.ApplicationUser", null)
+                    b.HasOne("CleanArch.Domain.Entities.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -292,7 +293,7 @@ namespace CleanArch.Identity.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("CleanArch.Domain.Entities.ApplicationUser", null)
+                    b.HasOne("CleanArch.Domain.Entities.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -301,7 +302,7 @@ namespace CleanArch.Identity.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
-                    b.HasOne("CleanArch.Domain.Entities.ApplicationUser", null)
+                    b.HasOne("CleanArch.Domain.Entities.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)

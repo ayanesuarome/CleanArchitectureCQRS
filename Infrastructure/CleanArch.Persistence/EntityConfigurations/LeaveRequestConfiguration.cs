@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace CleanArch.Persistence.EntityConfigurations;
 
-internal class LeaveRequestConfiguration : IEntityTypeConfiguration<LeaveRequest>
+internal sealed class LeaveRequestConfiguration : IEntityTypeConfiguration<LeaveRequest>
 {
     public void Configure(EntityTypeBuilder<LeaveRequest> builder)
     {

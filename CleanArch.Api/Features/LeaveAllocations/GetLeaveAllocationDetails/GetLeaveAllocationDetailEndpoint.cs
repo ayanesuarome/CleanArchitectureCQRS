@@ -12,9 +12,9 @@ public sealed partial class LeaveAllocationController
     [HttpGet(ApiRoutes.LeaveAllocations.GetById)]
     [ProducesResponseType(typeof(LeaveAllocationDetailsDto), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> Get([FromRoute] Guid id)
+    public async Task<IActionResult> Get([FromRoute] Guid id, CancellationToken cancellationToken)
     {
-        Result<LeaveAllocationDetailsDto> result = await _sender.Send(new GetLeaveAllocationDetail.Query(id));
+        Result<LeaveAllocationDetailsDto> result = await _sender.Send(new GetLeaveAllocationDetail.Query(id), cancellationToken);
 
         return result switch
         {

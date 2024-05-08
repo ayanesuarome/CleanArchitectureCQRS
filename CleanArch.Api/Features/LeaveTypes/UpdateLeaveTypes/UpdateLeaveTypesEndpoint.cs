@@ -14,10 +14,13 @@ public sealed partial class LeaveTypesController
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(typeof(FailureResult), StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> Put([FromRoute] Guid id, [FromBody] UpdateLeaveTypeRequest request)
+    public async Task<IActionResult> Put(
+        [FromRoute] Guid id,
+        [FromBody] UpdateLeaveTypeRequest request,
+        CancellationToken cancellationToken)
     {
         UpdateLeaveType.Command command = new(id, request.Name, request.DefaultDays);
-        Result<Unit> result = await _sender.Send(command);
+        Result<Unit> result = await _sender.Send(command, cancellationToken);
 
         return result switch
         {

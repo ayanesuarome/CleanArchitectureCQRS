@@ -13,8 +13,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CleanArch.Persistence.Migrations
 {
     [DbContext(typeof(CleanArchEFDbContext))]
-    [Migration("20240426072219_InitMigration")]
-    partial class InitMigration
+    [Migration("20240508083531_CreateDatabase")]
+    partial class CreateDatabase
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

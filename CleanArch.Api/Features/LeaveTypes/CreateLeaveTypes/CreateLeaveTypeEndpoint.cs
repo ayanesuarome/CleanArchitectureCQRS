@@ -14,10 +14,10 @@ public sealed partial class LeaveTypesController
     [HttpPost(ApiRoutes.LeaveTypes.Post)]
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(typeof(FailureResult), StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> Post([FromBody] CreateLeaveTypeRequest request)
+    public async Task<IActionResult> Post([FromBody] CreateLeaveTypeRequest request, CancellationToken cancellationToken)
     {
         CreateLeaveType.Command commnad = new(request.Name, request.DefaultDays);
-        Result<Guid> result = await _sender.Send(commnad);
+        Result<Guid> result = await _sender.Send(commnad, cancellationToken);
 
         return result switch
         {

@@ -9,5 +9,5 @@ public interface IJwtProvider
     /// </summary>
     /// <param name="user">The user.</param>
     /// <returns>The JWT for the specified user.</returns>
-    Task<string> GenerateToken(ApplicationUser user);
+    Task<string> GenerateToken(User user);
 }

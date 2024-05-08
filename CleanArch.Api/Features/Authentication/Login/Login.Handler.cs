@@ -1,26 +1,26 @@
 ﻿using CleanArch.Application.Abstractions.Identity;
+using CleanArch.Application.Abstractions.Messaging;
 using CleanArch.Contracts.Identity;
 using CleanArch.Domain.Entities;
 using CleanArch.Domain.Errors;
 using CleanArch.Domain.Primitives.Result;
 using FluentValidation;
-using MediatR;
 using Microsoft.AspNetCore.Identity;
 
 namespace CleanArch.Api.Features.Authentication.Login;
 
 public static partial class Login
 {
-    public sealed class Handler : IRequestHandler<Command, Result<TokenResponse>>
+    public sealed class Handler : ICommandHandler<Command, Result<TokenResponse>>
     {
-        private readonly UserManager<ApplicationUser> _userManager;
-        private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly UserManager<User> _userManager;
+        private readonly SignInManager<User> _signInManager;
         private readonly IJwtProvider _jwtProvider;
         private readonly IValidator<Command> _validator;
 
         public Handler(
-        UserManager<ApplicationUser> userManager,
-        SignInManager<ApplicationUser> signInManager,
+        UserManager<User> userManager,
+        SignInManager<User> signInManager,
         IJwtProvider jwtProvider,
         IValidator<Command> validator)
         {
@@ -32,8 +32,8 @@ public static partial class Login
 
         public async Task<Result<TokenResponse>> Handle(Command request, CancellationToken cancellationToken)
         {
-            ApplicationUser user = await _userManager.FindByEmailAsync(request.Email);
-
+            User? user = await _userManager.FindByEmailAsync(request.Email);
+            
             if (user is null)
             {
                 return new FailureResult<TokenResponse>(DomainErrors.Authentication.InvalidEmailOrPassword);

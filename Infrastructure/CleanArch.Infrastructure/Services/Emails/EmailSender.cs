@@ -7,7 +7,7 @@ using SendGrid.Helpers.Mail;
 
 namespace CleanArch.Infrastructure.Services.Emails;
 
-public class EmailSender : IEmailSender
+internal sealed class EmailSender : IEmailSender
 {
     private readonly EmailSettings _emailSettings;
     private readonly SendGridClient _client;

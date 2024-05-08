@@ -16,7 +16,10 @@ public sealed partial class LeaveRequestController
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(typeof(FailureResult), StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> Put([FromRoute] Guid id, [FromBody] UpdateLeaveRequestRequest request)
+    public async Task<IActionResult> Put(
+        [FromRoute] Guid id,
+        [FromBody] UpdateLeaveRequestRequest request,
+        CancellationToken cancellationToken)
     {
         UpdateLeaveRequest.Command command = new(
             id,
@@ -24,7 +27,7 @@ public sealed partial class LeaveRequestController
             request.EndDate,
             request.Comments);
 
-        Result<LeaveRequest> result = await _sender.Send(command);
+        Result<LeaveRequest> result = await _sender.Send(command, cancellationToken);
 
         if (result.IsSuccess)
         {

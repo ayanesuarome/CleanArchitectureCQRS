@@ -14,33 +14,16 @@ namespace CleanArch.Identity;
 
 public static class DependencyInjection
 {
-    private const string CleanArchIdentitySqlServerDbContext = "CleanArchIdentitySqlServerDbContext";
+    private const string CleanArchSqlServerDbContext = "CleanArchSqlServerDbContext";
 
     public static IServiceCollection AddIdentityServices(this IServiceCollection services, IConfiguration configuration)
     {
         services.AddDbContext<CleanArchIdentityEFDbContext>(options =>
         {
-            options.UseSqlServer(configuration.GetConnectionString(CleanArchIdentitySqlServerDbContext));
+            options.UseSqlServer(configuration.GetConnectionString(CleanArchSqlServerDbContext));
         });
 
-        services.AddIdentity<ApplicationUser, IdentityRole>()
-            .AddEntityFrameworkStores<CleanArchIdentityEFDbContext>()
-            .AddDefaultTokenProviders();
-
-        services.AddScoped<IUserService, UserService>();
-        services.AddScoped<IJwtProvider, JwtProvider>();
-        services.AddScoped<IUserIdentifierProvider, UserIdentifierProvider>();
-
-        services.ConfigureOptions<JwtOptionsSetup>();
-
-        services.AddSingleton<IValidateOptions<JwtOptions>, JwtSettingValidation>();
-        services.ConfigureOptions<JwtBearerOptionsSetup>();
-
         IServiceProvider serviceProvider = services.BuildServiceProvider();
-
-        JwtOptions jwtSettings = serviceProvider
-            .GetRequiredService<IOptions<JwtOptions>>()
-            .Value;
         JwtBearerOptions jwtBearerOptions = serviceProvider
             .GetRequiredService<IOptions<JwtBearerOptions>>()
             .Value;
@@ -49,10 +32,25 @@ public static class DependencyInjection
         {
             options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
             options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-        }).AddJwtBearer(options => 
-            options.TokenValidationParameters = jwtBearerOptions.TokenValidationParameters);
+        })
+        .AddJwtBearer(options =>
+            options.TokenValidationParameters = jwtBearerOptions.TokenValidationParameters)
+        .AddCookie(IdentityConstants.ApplicationScheme);
 
         services.AddAuthorization();
+
+        services.AddIdentityCore<User>()
+            .AddEntityFrameworkStores<CleanArchIdentityEFDbContext>()
+            // configure the required services for the Identity endpoints added in .Net8
+            .AddApiEndpoints();
+
+        services.AddScoped<IUserService, UserService>();
+        services.AddScoped<IJwtProvider, JwtProvider>();
+        services.AddScoped<IUserIdentifierProvider, UserIdentifierProvider>();
+
+        services.ConfigureOptions<JwtOptionsSetup>();
+        services.AddSingleton<IValidateOptions<JwtOptions>, JwtSettingValidation>();
+        services.ConfigureOptions<JwtBearerOptionsSetup>();
 
         return services;
     }

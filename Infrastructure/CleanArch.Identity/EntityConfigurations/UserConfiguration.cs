@@ -5,9 +5,9 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace CleanArch.Identity.EntityConfigurations;
 
-internal class UserConfiguration : IEntityTypeConfiguration<ApplicationUser>
+internal sealed class UserConfiguration : IEntityTypeConfiguration<User>
 {
-    public void Configure(EntityTypeBuilder<ApplicationUser> builder)
+    public void Configure(EntityTypeBuilder<User> builder)
     {
         // Currently ComplexProperty in EF8 does not support seeding.
         /*
@@ -29,7 +29,7 @@ internal class UserConfiguration : IEntityTypeConfiguration<ApplicationUser>
         builder.ComplexProperty(user => user.FirstName, userBuilder =>
         {
             userBuilder.Property(firstName => firstName.Value)
-                .HasColumnName(nameof(ApplicationUser.FirstName))
+                .HasColumnName(nameof(User.FirstName))
                 .HasMaxLength(UserName.MaxLength)
                 .IsRequired();
         });
@@ -37,7 +37,7 @@ internal class UserConfiguration : IEntityTypeConfiguration<ApplicationUser>
         builder.ComplexProperty(user => user.LastName, userBuilder =>
         {
             userBuilder.Property(lastName => lastName.Value)
-                .HasColumnName(nameof(ApplicationUser.LastName))
+                .HasColumnName(nameof(User.LastName))
                 .HasMaxLength(UserName.MaxLength)
                 .IsRequired();
         });

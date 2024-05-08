@@ -12,9 +12,9 @@ public sealed partial class AdminLeaveAllocationController
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(typeof(FailureResult), StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<ActionResult> Delete([FromRoute] Guid id)
+    public async Task<ActionResult> Delete([FromRoute] Guid id, CancellationToken cancellationToken)
     {
-        Result result = await _sender.Send(new DeleteLeaveAllocation.Command(id));
+        Result result = await _sender.Send(new DeleteLeaveAllocation.Command(id), cancellationToken);
 
         return result switch
         {

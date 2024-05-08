@@ -10,9 +10,9 @@ public sealed partial class LeaveTypesController
     // GET: api/<v>/<LeaveTypesController>
     [HttpGet(ApiRoutes.LeaveTypes.Get)]
     [ProducesResponseType(typeof(LeaveTypeListDto), StatusCodes.Status200OK)]
-    public async Task<IActionResult> Get()
+    public async Task<IActionResult> Get(CancellationToken cancellationToken)
     {
-        Result<LeaveTypeListDto> result = await _sender.Send(new GetLeaveTypeList.GetLeaveTypeList.Query());
+        Result<LeaveTypeListDto> result = await _sender.Send(new GetLeaveTypeList.GetLeaveTypeList.Query(), cancellationToken);
         return Ok(result.Value);
     }
 }

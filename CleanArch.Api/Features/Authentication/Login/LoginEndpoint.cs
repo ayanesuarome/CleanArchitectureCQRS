@@ -11,10 +11,10 @@ public sealed partial class AuthenticationController
     [HttpPost(ApiRoutes.Authentication.Login)]
     [ProducesResponseType(typeof(TokenResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(FailureResult), StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> Login([FromBody] LoginRequest request)
+    public async Task<IActionResult> Login([FromBody] LoginRequest request, CancellationToken cancellationToken)
     {
         Login.Login.Command command = new(request.Email, request.Password);
-        Result<TokenResponse> response = await _sender.Send(command);
+        Result<TokenResponse> response = await _sender.Send(command, cancellationToken);
 
         return response switch
         {

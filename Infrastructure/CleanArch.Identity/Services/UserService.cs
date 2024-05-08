@@ -5,14 +5,13 @@ using Microsoft.AspNetCore.Identity;
 
 namespace CleanArch.Identity.Services;
 
-public class UserService(UserManager<ApplicationUser> userManager)
-    : IUserService
+internal sealed class UserService(UserManager<User> userManager) : IUserService
 {
-    private readonly UserManager<ApplicationUser> _userManager = userManager;
+    private readonly UserManager<User> _userManager = userManager;
 
     public async Task<Employee> GetEmployee(Guid userId)
     {
-        ApplicationUser employee = await _userManager.FindByIdAsync(userId.ToString());
+        User employee = await _userManager.FindByIdAsync(userId.ToString());
 
         return new Employee(
             new Guid(employee.Id),
@@ -23,7 +22,7 @@ public class UserService(UserManager<ApplicationUser> userManager)
 
     public async Task<List<Employee>> GetEmployees()
     {
-        IList<ApplicationUser> employees = await _userManager.GetUsersInRoleAsync(Roles.Employee);
+        IList<User> employees = await _userManager.GetUsersInRoleAsync(Roles.Employee);
 
         return employees.Select(e => new Employee(
             new Guid(e.Id),

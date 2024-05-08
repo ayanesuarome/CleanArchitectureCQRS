@@ -6,7 +6,7 @@ using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace CleanArch.Api.Swagger;
 
-public class ConfigureSwaggerOptions(IApiVersionDescriptionProvider provider)
+internal sealed class ConfigureSwaggerOptions(IApiVersionDescriptionProvider provider)
     : IConfigureNamedOptions<SwaggerGenOptions>
 {
     private readonly IApiVersionDescriptionProvider _provider = provider;

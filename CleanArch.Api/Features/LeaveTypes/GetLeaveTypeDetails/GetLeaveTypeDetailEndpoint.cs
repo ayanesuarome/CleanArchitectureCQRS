@@ -12,9 +12,9 @@ public sealed partial class LeaveTypesController
     [HttpGet(ApiRoutes.LeaveTypes.GetById)]
     [ProducesResponseType(typeof(LeaveTypeDetailDto), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> Get([FromRoute] Guid id)
+    public async Task<IActionResult> Get([FromRoute] Guid id, CancellationToken cancellationToken)
     {
-        Result<LeaveTypeDetailDto> result = await _sender.Send(new GetLeaveTypeDetail.Query(id));
+        Result<LeaveTypeDetailDto> result = await _sender.Send(new GetLeaveTypeDetail.Query(id), cancellationToken);
 
         return result switch
         {

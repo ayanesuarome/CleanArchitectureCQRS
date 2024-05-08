@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace CleanArch.Identity.EntityConfigurations;
 
-internal class UserRoleConfiguration : IEntityTypeConfiguration<IdentityUserRole<string>>
+internal sealed class UserRoleConfiguration : IEntityTypeConfiguration<IdentityUserRole<string>>
 {
     public void Configure(EntityTypeBuilder<IdentityUserRole<string>> builder)
     {

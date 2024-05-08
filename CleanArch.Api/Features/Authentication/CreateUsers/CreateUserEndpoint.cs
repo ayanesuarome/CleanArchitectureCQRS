@@ -12,7 +12,7 @@ public sealed partial class AuthenticationController
     [HttpPost(ApiRoutes.Authentication.Register)]
     [ProducesResponseType(typeof(RegistrationResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(FailureResult), StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> Register([FromBody] RegistrationRequest request)
+    public async Task<IActionResult> Register([FromBody] RegistrationRequest request, CancellationToken cancellationToken)
     {
         CreateUser.Command command = new(
             request.FirstName,
@@ -20,7 +20,7 @@ public sealed partial class AuthenticationController
             request.Email,
             request.Password);
 
-        Result<RegistrationResponse> result = await _sender.Send(command);
+        Result<RegistrationResponse> result = await _sender.Send(command, cancellationToken);
 
         return result switch
         {

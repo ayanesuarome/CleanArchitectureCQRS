@@ -1,6 +1,6 @@
-﻿using CleanArch.Contracts.Identity;
+﻿using CleanArch.Application.Abstractions.Messaging;
+using CleanArch.Contracts.Identity;
 using CleanArch.Domain.Primitives.Result;
-using MediatR;
 
 namespace CleanArch.Api.Features.Authentication.CreateUsers;
 
@@ -11,7 +11,7 @@ public static partial class CreateUser
         string LastName,
         string Email,
         string Password)
-        : IRequest<Result<RegistrationResponse>>
+        : ICommand<Result<RegistrationResponse>>
     {
     }
 }

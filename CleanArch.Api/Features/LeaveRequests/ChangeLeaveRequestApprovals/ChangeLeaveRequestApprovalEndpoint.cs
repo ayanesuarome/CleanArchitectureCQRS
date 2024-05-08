@@ -17,10 +17,13 @@ public sealed partial class AdminLeaveRequestController
     [ProducesResponseType(typeof(FailureResult), StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesDefaultResponseType]
-    public async Task<IActionResult> UpdateApproval([FromRoute] Guid id, [FromBody] ChangeLeaveRequestApprovalRequest request)
+    public async Task<IActionResult> UpdateApproval(
+        [FromRoute] Guid id,
+        [FromBody] ChangeLeaveRequestApprovalRequest request,
+        CancellationToken cancellationToken)
     {
         ChangeLeaveRequestApproval.Command command = new(id, request.Approved);
-        Result<LeaveRequest> result = await _sender.Send(command);
+        Result<LeaveRequest> result = await _sender.Send(command, cancellationToken);
 
         if (result.IsSuccess)
         {

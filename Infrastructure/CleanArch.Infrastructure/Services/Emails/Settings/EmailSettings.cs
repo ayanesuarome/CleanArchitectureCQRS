@@ -1,6 +1,6 @@
 ﻿namespace CleanArch.Infrastructure.Services.Emails.Settings;
 
-public record EmailSettings
+internal sealed record EmailSettings
 {
     public string ApiKey { get; init; } = string.Empty;
     public string FromAddress { get; init; } = string.Empty;
