@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using CleanArch.Api.Infrastructure;
 using CleanArch.Identity.Authentication;
-using CleanArch.Domain.Enums;
+using CleanArch.Domain.Enumerations;
 
 namespace CleanArch.Api.Features.LeaveTypes;
 

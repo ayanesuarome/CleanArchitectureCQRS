@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using CleanArch.Domain.Enumerations;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CleanArch.Identity.Authentication;
 

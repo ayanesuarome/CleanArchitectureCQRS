@@ -5,7 +5,7 @@ using MediatR;
 using Microsoft.Extensions.Options;
 using CleanArch.Domain.Events;
 using CleanArch.Api.Contracts.Emails;
-using CleanArch.Infrastructure.Services.Emails.Settings;
+using CleanArch.Infrastructure.Emails.Settings;
 using CleanArch.Contracts.Identity;
 
 namespace CleanArch.Api.Features.LeaveRequests.NotifyLeaveRequestActions;

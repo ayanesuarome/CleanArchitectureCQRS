@@ -13,7 +13,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CleanArch.Persistence.Migrations
 {
     [DbContext(typeof(CleanArchEFDbContext))]
-    [Migration("20240508083531_CreateDatabase")]
+    [Migration("20240509095220_CreateDatabase")]
     partial class CreateDatabase
     {
         /// <inheritdoc />
@@ -60,7 +60,7 @@ namespace CleanArch.Persistence.Migrations
 
                     b.HasIndex("LeaveTypeId");
 
-                    b.ToTable("LeaveAllocations");
+                    b.ToTable("LeaveAllocations", (string)null);
                 });
 
             modelBuilder.Entity("CleanArch.Domain.Entities.LeaveRequest", b =>
@@ -132,7 +132,7 @@ namespace CleanArch.Persistence.Migrations
 
                     b.HasIndex("LeaveTypeId");
 
-                    b.ToTable("LeaveRequests");
+                    b.ToTable("LeaveRequests", (string)null);
                 });
 
             modelBuilder.Entity("CleanArch.Domain.Entities.LeaveType", b =>
@@ -176,7 +176,7 @@ namespace CleanArch.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("LeaveTypes");
+                    b.ToTable("LeaveTypes", (string)null);
                 });
 
             modelBuilder.Entity("CleanArch.Domain.Entities.LeaveAllocation", b =>

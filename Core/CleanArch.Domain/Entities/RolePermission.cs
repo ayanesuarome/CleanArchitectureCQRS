@@ -14,10 +14,13 @@ public class RolePermission<TKey>
     {
         Ensure.NotEmpty(roleId, "The role ID is required", nameof(roleId));
         Ensure.NotEmpty(permissionId, "The permission ID is required", nameof(permissionId));
+
+        RoleId = roleId;
+        PermissionId = permissionId;
     }
 
     /// <summary>
-    /// Initializes a new instance of the class <see cref="RolePermission"/>.
+    /// Initializes a new instance of the class <see cref="RolePermission{TKey}"/>.
     /// </summary>
     /// <remarks>
     /// Required by EF Core.

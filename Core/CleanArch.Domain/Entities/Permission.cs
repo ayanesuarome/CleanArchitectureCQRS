@@ -3,12 +3,19 @@ using CleanArch.Domain.Utilities;
 
 namespace CleanArch.Domain.Entities;
 
-public class Permission : Entity<int>
+public sealed class Permission : Entity<int>
 {
+    public Permission(string name)
+    {
+        Ensure.NotNull(name, "The name is required", nameof(name));
+        Name = name;
+    }
+
     public Permission(int id, string name)
         : base(id)
     {
         Ensure.NotNull(name, "The name is required", nameof(name));
+        Name = name;
     }
 
     /// <summary>
@@ -21,5 +28,5 @@ public class Permission : Entity<int>
     {
     }
 
-    public string Name { get; private set; }
+    public string Name { get; init; }
 }

@@ -1,151 +1,134 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using CleanArch.Domain.Utilities;
 using System.Reflection;
 
-namespace CleanArch.Domain.Primitives
+namespace CleanArch.Domain.Primitives;
+
+/// <summary>
+/// Represents an enumeration of objects with a unique numeric identifier and a name.
+/// </summary>
+/// <typeparam name="TEnum">The type of the enumeration.</typeparam>
+public abstract class Enumeration<TEnum> : IEquatable<Enumeration<TEnum>>
+    where TEnum : Enumeration<TEnum>
 {
+    private static readonly Lazy<Dictionary<int, TEnum>> EnumerationsDictionary =
+        new(() => CreateEnumerationDictionary(typeof(TEnum)));
+
     /// <summary>
-    /// Represents an enumeration type.
+    /// Initializes a new instance of the <see cref="Enumeration{TEnum}"/> class.
     /// </summary>
-    /// <typeparam name="TEnum">The type of the enumeration.</typeparam>
-    public abstract class Enumeration<TEnum> : IEquatable<Enumeration<TEnum>>, IComparable<Enumeration<TEnum>>
-        where TEnum : Enumeration<TEnum>
+    /// <param name="id">The enumeration identifier.</param>
+    /// <param name="name">The enumeration name.</param>
+    protected Enumeration(int id, string name)
+        : this()
     {
-        private static readonly Lazy<Dictionary<int, TEnum>> EnumerationsDictionary =
-            new Lazy<Dictionary<int, TEnum>>(() => GetAllEnumerationOptions().ToDictionary(item => item.Value));
+        Ensure.NotNull(name, "The name is required.", nameof(name));
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Enumeration{TEnum}"/> class.
-        /// </summary>
-        /// <param name="value">The value.</param>
-        /// <param name="name">The name.</param>
-        protected Enumeration(int value, string name)
-        {
-            Value = value;
-            Name = name;
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Enumeration{TEnum}"/> class.
-        /// </summary>
-        /// <remarks>
-        /// Required by EF Core.
-        /// </remarks>
-        protected Enumeration()
-        {
-            Value = default;
-            Name = string.Empty;
-        }
-
-        /// <summary>
-        /// Gets the enumeration values.
-        /// </summary>
-        /// <returns>The read-only collection of enumeration values.</returns>
-        public static IReadOnlyCollection<TEnum> List => EnumerationsDictionary.Value.Values.ToList();
-
-        /// <summary>
-        /// Gets the value.
-        /// </summary>
-        public int Value { get; private set; }
-
-        /// <summary>
-        /// Gets the name.
-        /// </summary>
-        public string Name { get; private set; }
-
-        /// <summary>
-        /// Checks if the there is an enumeration with the specified value.
-        /// </summary>
-        /// <param name="value">The value.</param>
-        /// <returns>True if there is an enumeration with the specified value, otherwise false.</returns>
-        public static bool ContainsValue(int value) => EnumerationsDictionary.Value.ContainsKey(value);
-
-        public static bool operator ==(Enumeration<TEnum> a, Enumeration<TEnum> b)
-        {
-            if (a is null && b is null)
-            {
-                return true;
-            }
-
-            if (a is null || b is null)
-            {
-                return false;
-            }
-
-            return a.Equals(b);
-        }
-
-        public static bool operator !=(Enumeration<TEnum> a, Enumeration<TEnum> b) => !(a == b);
-
-        /// <inheritdoc />
-        public bool Equals(Enumeration<TEnum> other)
-        {
-            if (other is null)
-            {
-                return false;
-            }
-
-            return GetType() == other.GetType() && other.Value.Equals(Value);
-        }
-
-        /// <inheritdoc />
-        public override bool Equals(object obj)
-        {
-            if (obj is null)
-            {
-                return false;
-            }
-
-            if (!(obj is Enumeration<TEnum> otherValue))
-            {
-                return false;
-            }
-
-            return GetType() == obj.GetType() && otherValue.Value.Equals(Value);
-        }
-
-        /// <inheritdoc />
-        public int CompareTo(Enumeration<TEnum> other) => other is null ? 1 : Value.CompareTo(other.Value);
-
-        /// <inheritdoc />
-        public override int GetHashCode() => Value.GetHashCode();
-
-        /// <summary>
-        /// Gets all of the defined enumeration options.
-        /// </summary>
-        /// <returns>The enumerable collection of enumerations.</returns>
-        private static IEnumerable<TEnum> GetAllEnumerationOptions()
-        {
-            Type enumType = typeof(TEnum);
-
-            IEnumerable<Type> enumerationTypes = Assembly
-                .GetAssembly(enumType)!
-                .GetTypes()
-                .Where(type => enumType.IsAssignableFrom(type));
-
-            var enumerations = new List<TEnum>();
-
-            foreach (Type enumerationType in enumerationTypes)
-            {
-                List<TEnum> enumerationTypeOptions = GetFieldsOfType<TEnum>(enumerationType);
-
-                enumerations.AddRange(enumerationTypeOptions);
-            }
-
-            return enumerations;
-        }
-
-        /// <summary>
-        /// Gets the fields of the specified type for the specified type.
-        /// </summary>
-        /// <typeparam name="TFieldType">The field type.</typeparam>
-        /// <param name="type">The type whose fields are being retrieved.</param>
-        /// <returns>The fields of the specified type for the specified type.</returns>
-        private static List<TFieldType> GetFieldsOfType<TFieldType>(Type type) =>
-            type.GetFields(BindingFlags.Public | BindingFlags.Static | BindingFlags.FlattenHierarchy)
-                .Where(fieldInfo => type.IsAssignableFrom(fieldInfo.FieldType))
-                .Select(fieldInfo => (TFieldType)fieldInfo.GetValue(null))
-                .ToList();
+        Id = id;
+        Name = name;
     }
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="Enumeration{TEnum}"/> class.
+    /// </summary>
+    /// <remarks>
+    /// Required for deserialization.
+    /// </remarks>
+    protected Enumeration() => Name = string.Empty;
+
+    /// <summary>
+    /// Gets the value.
+    /// </summary>
+    public int Id { get; protected init; }
+
+    /// <summary>
+    /// Gets the name.
+    /// </summary>
+    public string Name { get; protected init; }
+
+    /// <summary>
+    /// Gets the enumeration values.
+    /// </summary>
+    /// <returns>The read-only collection of enumeration values.</returns>
+    public static IReadOnlyCollection<TEnum> GetValues() => EnumerationsDictionary.Value.Values.ToList();
+
+    /// <summary>
+    /// Creates an enumeration of the specified type based on the specified identifier.
+    /// </summary>
+    /// <param name="id">The enumeration identifier.</param>
+    /// <returns>The enumeration instance that matches the specified identifier, if it exists.</returns>
+    public static TEnum? FromId(int id) => EnumerationsDictionary.Value.TryGetValue(id, out TEnum? enumeration) ? enumeration : null;
+
+    /// <summary>
+    /// Creates an enumeration of the specified type based on the specified name.
+    /// </summary>
+    /// <param name="name">The enumeration name.</param>
+    /// <returns>The enumeration instance that matches the specified name, if it exists.</returns>
+    public static TEnum? FromName(string name) => EnumerationsDictionary.Value.Values.SingleOrDefault(x => x.Name == name);
+
+    /// <summary>
+    /// Checks if the enumeration with the specified identifier exists.
+    /// </summary>
+    /// <param name="id">The enumeration identifier.</param>
+    /// <returns>True if an enumeration with the specified identifier exists, otherwise false.</returns>
+    public static bool Contains(int id) => EnumerationsDictionary.Value.ContainsKey(id);
+
+    public static bool operator ==(Enumeration<TEnum> a, Enumeration<TEnum> b)
+    {
+        if (a is null && b is null)
+        {
+            return true;
+        }
+
+        if (a is null || b is null)
+        {
+            return false;
+        }
+
+        return a.Equals(b);
+    }
+
+    public static bool operator !=(Enumeration<TEnum> a, Enumeration<TEnum> b) => !(a == b);
+
+    /// <inheritdoc />
+    /// <inheritdoc />
+    public virtual bool Equals(Enumeration<TEnum>? other)
+    {
+        if (other is null)
+        {
+            return false;
+        }
+
+        return GetType() == other.GetType() && other.Id.Equals(Id);
+    }
+
+    /// <inheritdoc />
+    public override bool Equals(object? obj)
+    {
+        if (obj is null)
+        {
+            return false;
+        }
+
+        if (GetType() != obj.GetType())
+        {
+            return false;
+        }
+
+        return obj is Enumeration<TEnum> otherValue && otherValue.Id.Equals(Id);
+    }
+
+    /// <inheritdoc />
+    public override int GetHashCode() => Id.GetHashCode() * 37;
+
+    private static Dictionary<int, TEnum> CreateEnumerationDictionary(Type enumType) => GetFieldsForType(enumType).ToDictionary(t => t.Id);
+
+    /// <summary>
+    /// Gets the fields of the specified type.
+    /// </summary>
+    /// <param name="enumType">The type whose fields are being retrieved.</param>
+    /// <returns>The fields of the specified type.</returns>
+    private static IEnumerable<TEnum> GetFieldsForType(Type enumType) =>
+        enumType.GetFields(BindingFlags.Public | BindingFlags.Static | BindingFlags.FlattenHierarchy)
+        .Where(fieldInfo => enumType.IsAssignableFrom(fieldInfo.FieldType))
+        .Select(fieldInfo => (TEnum)fieldInfo.GetValue(default)!);
 }

@@ -47,7 +47,7 @@ public static partial class CreateUser
             {
                 return new FailureResult<RegistrationResponse>(firstFailureOrSuccess.Error);
             }
-
+            
             User user = new(firstNameResult.Value, lastNameResult.Value)
             {
                 Email = emailResult.Value,

@@ -1,8 +1,9 @@
 ﻿using CleanArch.Domain.Entities;
-using CleanArch.Domain.Enumerations;
 using CleanArch.Identity.Constants;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using Role = CleanArch.Domain.Enumerations.Role;
+using Permission = CleanArch.Domain.Enumerations.Permission;
 
 namespace CleanArch.Identity.EntityConfigurations;
 
@@ -12,7 +13,7 @@ internal sealed class RolePermissionConfiguration : IEntityTypeConfiguration<Rol
     {
         builder.ToTable(TableNames.RolePermissions);
 
-        // compound key
+        // composite key
         builder.HasKey(rolePermissions =>
             new {
                 rolePermissions.RoleId,
@@ -20,21 +21,21 @@ internal sealed class RolePermissionConfiguration : IEntityTypeConfiguration<Rol
             });
 
         builder.HasData(
-            Create(Role.Registered, Domain.Enums.Permission.AccessLeaveTypes),
+            Create(Role.Registered, Permission.AccessLeaveTypes),
             #region Employee
             #endregion
             #region Administrator
-            Create(Role.Administrator, Domain.Enums.Permission.CreateLeaveType),
-            Create(Role.Administrator, Domain.Enums.Permission.UpdateLeaveType),
-            Create(Role.Administrator, Domain.Enums.Permission.DeleteLeaveType)
+            Create(Role.Administrator, Permission.CreateLeaveType),
+            Create(Role.Administrator, Permission.UpdateLeaveType),
+            Create(Role.Administrator, Permission.DeleteLeaveType)
             #endregion
             );
     }
 
-    private static RolePermission<int> Create(Role role, Domain.Enums.Permission permission)
+    private static RolePermission<int> Create(Role role, Permission permission)
     {
         return new RolePermission<int>(
-            roleId: role.Value,
+            roleId: role.Id,
             permissionId: (int)permission);
     }
 }

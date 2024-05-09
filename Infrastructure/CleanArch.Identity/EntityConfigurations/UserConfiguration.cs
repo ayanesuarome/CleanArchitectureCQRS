@@ -23,6 +23,7 @@ internal sealed class UserConfiguration : IEntityTypeConfiguration<User>
                 throw new InvalidOperationException(firstNameResult.Error.Message);
             }
         */
+        builder.HasKey(user => user.Id);
 
         builder.Ignore(user => user.FullName);
 
@@ -41,17 +42,5 @@ internal sealed class UserConfiguration : IEntityTypeConfiguration<User>
                 .HasMaxLength(UserName.MaxLength)
                 .IsRequired();
         });
-
-        //builder.HasData(
-        //    new ApplicationUser(firstNameResult.Value, lastNameResult.Value)
-        //    {
-        //        Id = "82ef7b08-5017-4718-988e-e4f119594fca",
-        //        Email = "admin@localhost.com",
-        //        NormalizedEmail = "ADMIN@LOCALHOST.COM",
-        //        UserName = "admin@localhost.com",
-        //        NormalizedUserName = "ADMIN@LOCALHOST.COM",
-        //        PasswordHash = hasher.HashPassword(null, "P@ssword1"),
-        //        EmailConfirmed = true
-        //    });
     }
 }

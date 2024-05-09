@@ -1,5 +1,4 @@
 ﻿using CleanArch.Domain.Entities;
-using CleanArch.Domain.Enumerations;
 using CleanArch.Identity.Constants;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -12,15 +11,21 @@ internal sealed class RoleConfiguration : IEntityTypeConfiguration<Role>
     {
         builder.ToTable(TableNames.Roles);
 
-        builder.HasKey(role => role.Value);
+        builder.HasKey(role => role.Id);
 
         builder.HasMany(role => role.Permissions)
             .WithMany()
             .UsingEntity<RolePermission<int>>();
 
         builder.HasMany(role => role.Users)
-            .WithMany();
+            .WithMany(user => user.Roles);
 
-        builder.HasData(Role.List);
+        IEnumerable<Role> roles = Domain.Enumerations.Role
+            .GetValues()
+            .Select(role => new Role(
+                role.Id,
+                role.Name));
+
+        builder.HasData(roles);
     }
 }

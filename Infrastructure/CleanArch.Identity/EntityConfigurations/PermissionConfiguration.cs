@@ -13,11 +13,11 @@ internal sealed class PermissionConfiguration : IEntityTypeConfiguration<Permiss
 
         builder.HasKey(permission => permission.Id);
 
-        IEnumerable<Permission> permissions = Enum.GetValues<Domain.Enums.Permission>()
-            .Select(permission =>
-                new Permission(
-                    (int)permission,
-                    permission.ToString()));
+        IEnumerable<Permission> permissions = Enum
+            .GetValues<Domain.Enumerations.Permission>()
+            .Select(permission => new Permission(
+                id: (int)permission,
+                name: permission.ToString()));
 
         builder.HasData(permissions);
     }

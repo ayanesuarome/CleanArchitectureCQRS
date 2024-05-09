@@ -57,7 +57,7 @@ namespace CleanArch.Persistence.Migrations
 
                     b.HasIndex("LeaveTypeId");
 
-                    b.ToTable("LeaveAllocations");
+                    b.ToTable("LeaveAllocations", (string)null);
                 });
 
             modelBuilder.Entity("CleanArch.Domain.Entities.LeaveRequest", b =>
@@ -129,7 +129,7 @@ namespace CleanArch.Persistence.Migrations
 
                     b.HasIndex("LeaveTypeId");
 
-                    b.ToTable("LeaveRequests");
+                    b.ToTable("LeaveRequests", (string)null);
                 });
 
             modelBuilder.Entity("CleanArch.Domain.Entities.LeaveType", b =>
@@ -173,7 +173,7 @@ namespace CleanArch.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("LeaveTypes");
+                    b.ToTable("LeaveTypes", (string)null);
                 });
 
             modelBuilder.Entity("CleanArch.Domain.Entities.LeaveAllocation", b =>
