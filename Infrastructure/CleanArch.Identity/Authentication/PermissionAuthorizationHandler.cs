@@ -14,13 +14,15 @@ public sealed class PermissionAuthorizationHandler : AuthorizationHandler<Permis
         _serviceScopeFactory = serviceScopeFactory;
     }
 
-    protected override async Task HandleRequirementAsync(AuthorizationHandlerContext context, PermissionRequirement requirement)
+    protected override async Task HandleRequirementAsync(
+        AuthorizationHandlerContext context,
+        PermissionRequirement requirement)
     {
-        string? memberId = context.User.Claims
+        string? userId = context.User.Claims
             .FirstOrDefault(claim =>
                 claim.Type == JwtRegisteredClaimNames.Sub)?.Value;
 
-        if(!Guid.TryParse(memberId, out Guid id))
+        if(!Guid.TryParse(userId, out Guid id))
         {
             return;
         }

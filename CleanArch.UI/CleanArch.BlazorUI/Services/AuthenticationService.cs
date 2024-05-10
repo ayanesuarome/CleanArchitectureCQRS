@@ -63,7 +63,7 @@ internal sealed class AuthenticationService : BaseHttpService, IAuthenticationSe
 
         var response = await _client.RegisterAsync(request);
 
-        if (!string.IsNullOrEmpty(response.UserId))
+        if (response.UserId == Guid.Empty)
         {
             return false;
         }

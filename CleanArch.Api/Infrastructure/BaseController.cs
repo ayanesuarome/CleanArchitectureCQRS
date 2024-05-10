@@ -6,7 +6,7 @@ namespace CleanArch.Api.Infrastructure;
 
 [Route("api/v{version:apiVersion}")]
 [ApiController]
-[Authorize]
+//[Authorize]
 [ProducesResponseType(StatusCodes.Status401Unauthorized)]
 public abstract class BaseController : ControllerBase
 {

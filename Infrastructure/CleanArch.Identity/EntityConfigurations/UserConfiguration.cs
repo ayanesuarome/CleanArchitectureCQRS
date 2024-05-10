@@ -24,10 +24,6 @@ internal sealed class UserConfiguration : IEntityTypeConfiguration<User>
                 throw new InvalidOperationException(firstNameResult.Error.Message);
             }
         */
-        //builder.ToTable(TableNames.Users);
-
-        //builder.HasKey(user => user.Id);
-
         builder.Ignore(user => user.FullName);
 
         builder.ComplexProperty(user => user.FirstName, userBuilder =>
