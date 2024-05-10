@@ -1,14 +1,18 @@
 ﻿using CleanArch.Application.Abstractions.Authentication;
+using CleanArch.Application.Abstractions.Data;
 using CleanArch.Domain.Entities;
 using CleanArch.Identity.ConfigureOptions;
 using CleanArch.Identity.Services;
 using CleanArch.Identity.Settings;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
+using System;
 
 namespace CleanArch.Identity;
 
@@ -18,11 +22,6 @@ public static class DependencyInjection
 
     public static IServiceCollection AddIdentityServices(this IServiceCollection services, IConfiguration configuration)
     {
-        services.AddDbContext<CleanArchIdentityEFDbContext>(options =>
-        {
-            options.UseSqlServer(configuration.GetConnectionString(CleanArchSqlServerDbContext));
-        });
-
         IServiceProvider serviceProvider = services.BuildServiceProvider();
         JwtBearerOptions jwtBearerOptions = serviceProvider
             .GetRequiredService<IOptions<JwtBearerOptions>>()
@@ -39,10 +38,17 @@ public static class DependencyInjection
 
         services.AddAuthorization();
 
-        services.AddIdentityCore<User>()
+        services.AddDbContext<CleanArchIdentityEFDbContext>(options =>
+        {
+            options.LogTo(Console.WriteLine, new[] { RelationalEventId.CommandExecuting });
+            options.UseSqlServer(configuration.GetConnectionString(CleanArchSqlServerDbContext));
+        });
+
+        services.AddIdentity<User, Role>()
             .AddEntityFrameworkStores<CleanArchIdentityEFDbContext>()
-            // configure the required services for the Identity endpoints added in .Net8
-            .AddApiEndpoints();
+            //.AddUserStore<UserStore<User, Role, CleanArchIdentityEFDbContext, int>>()
+            //.AddRoleStore<RoleStore<Role, CleanArchIdentityEFDbContext, int>>()
+            .AddDefaultTokenProviders();
 
         services.AddScoped<IUserService, UserService>();
         services.AddScoped<IJwtProvider, JwtProvider>();

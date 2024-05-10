@@ -33,12 +33,12 @@ internal sealed class JwtProvider : IJwtProvider
         IEnumerable<Claim> claims = new[]
         {
             // identifies the principal that is the subject of the JWT
-            new Claim(JwtRegisteredClaimNames.Sub, user.Id),
+            new Claim(JwtRegisteredClaimNames.Sub, user.Id.ToString()),
             // unique identifier for the JWT. It can be used to prevent the JWT from being replayed
             new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
             new Claim(JwtRegisteredClaimNames.Email, user.Email),
             new Claim(JwtRegisteredClaimNames.Name, user.FullName),
-            new Claim("uid", user.Id)
+            new Claim("uid", user.Id.ToString())
         }
         .Union(userClaims)
         .Union(roleClaims);

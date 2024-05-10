@@ -18,7 +18,7 @@ internal sealed class PermissionService : IPermissionService
         ICollection<Role>[] roles = await _dbContext.Set<User>()
             .Include(user => user.Roles)
             .ThenInclude(user => user.Permissions)
-            .Where(user => user.Id == memberId.ToString())
+            .Where(user => user.Id == memberId)
             .Select(user => user.Roles)
             .ToArrayAsync();
         throw new NotImplementedException();

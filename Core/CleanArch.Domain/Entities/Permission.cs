@@ -5,12 +5,6 @@ namespace CleanArch.Domain.Entities;
 
 public sealed class Permission : Entity<int>
 {
-    public Permission(string name)
-    {
-        Ensure.NotNull(name, "The name is required", nameof(name));
-        Name = name;
-    }
-
     public Permission(int id, string name)
         : base(id)
     {

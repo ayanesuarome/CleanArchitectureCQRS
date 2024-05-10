@@ -1,5 +1,6 @@
 ﻿using CleanArch.Domain.Entities;
 using CleanArch.Domain.ValueObjects;
+using CleanArch.Identity.Constants;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -23,6 +24,8 @@ internal sealed class UserConfiguration : IEntityTypeConfiguration<User>
                 throw new InvalidOperationException(firstNameResult.Error.Message);
             }
         */
+        builder.ToTable(TableNames.Users);
+
         builder.HasKey(user => user.Id);
 
         builder.Ignore(user => user.FullName);

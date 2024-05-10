@@ -6,11 +6,9 @@ namespace CleanArch.Domain.Entities;
 /// <summary>
 /// Represents the link between a role and a permission.
 /// </summary>
-/// <typeparam name="TKey">The type of the primary key used for roles and permissions.</typeparam>
-public class RolePermission<TKey>
-    where TKey : IEquatable<TKey>
+public class RolePermission
 {
-    public RolePermission(TKey roleId, TKey permissionId)
+    public RolePermission(Guid roleId, int permissionId)
     {
         Ensure.NotEmpty(roleId, "The role ID is required", nameof(roleId));
         Ensure.NotEmpty(permissionId, "The permission ID is required", nameof(permissionId));
@@ -20,7 +18,7 @@ public class RolePermission<TKey>
     }
 
     /// <summary>
-    /// Initializes a new instance of the class <see cref="RolePermission{TKey}"/>.
+    /// Initializes a new instance of the class <see cref="RolePermission"/>.
     /// </summary>
     /// <remarks>
     /// Required by EF Core.
@@ -32,10 +30,10 @@ public class RolePermission<TKey>
     /// <summary>
     /// Gets or sets the primary key of the role that is linked to the user.
     /// </summary>
-    public TKey RoleId { get; init; }
+    public Guid RoleId { get; init; }
 
     /// <summary>
     /// Gets or sets the primary key of the permission that is linked to the user.
     /// </summary>
-    public TKey PermissionId { get; init; }
+    public int PermissionId { get; init; }
 }

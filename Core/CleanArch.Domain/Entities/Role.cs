@@ -3,15 +3,9 @@ using Microsoft.AspNetCore.Identity;
 
 namespace CleanArch.Domain.Entities;
 
-public sealed class Role : IdentityRole<int>
+public sealed class Role : IdentityRole<Guid>
 {
-    public Role(string name)
-        : base(name)
-    {
-        Ensure.NotNull(name, "The name is required.", nameof(name));
-    }
-
-    public Role(int id, string name)
+    public Role(Guid id, string name)
         : base(name)
     {
         Ensure.NotEmpty(id, "The identifier is required.", nameof(id));

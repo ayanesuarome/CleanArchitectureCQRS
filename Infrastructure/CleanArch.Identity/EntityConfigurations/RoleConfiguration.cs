@@ -15,16 +15,17 @@ internal sealed class RoleConfiguration : IEntityTypeConfiguration<Role>
 
         builder.HasMany(role => role.Permissions)
             .WithMany()
-            .UsingEntity<RolePermission<int>>();
+            .UsingEntity<RolePermission>();
 
         builder.HasMany(role => role.Users)
             .WithMany(user => user.Roles);
 
         IEnumerable<Role> roles = Domain.Enumerations.Role
             .GetValues()
-            .Select(role => new Role(
-                role.Id,
-                role.Name));
+            .Select(role => new Role(role.Id, role.Name)
+            {
+                NormalizedName = role.Name.ToString()
+            });
 
         builder.HasData(roles);
     }

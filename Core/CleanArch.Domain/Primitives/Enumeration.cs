@@ -16,14 +16,14 @@ public abstract class Enumeration<TEnum> : IEquatable<Enumeration<TEnum>>
     /// <summary>
     /// Initializes a new instance of the <see cref="Enumeration{TEnum}"/> class.
     /// </summary>
-    /// <param name="id">The enumeration identifier.</param>
+    /// <param name="value">The enumeration value.</param>
     /// <param name="name">The enumeration name.</param>
-    protected Enumeration(int id, string name)
+    protected Enumeration(int value, string name)
         : this()
     {
         Ensure.NotNull(name, "The name is required.", nameof(name));
 
-        Id = id;
+        Value = value;
         Name = name;
     }
 
@@ -38,7 +38,7 @@ public abstract class Enumeration<TEnum> : IEquatable<Enumeration<TEnum>>
     /// <summary>
     /// Gets the value.
     /// </summary>
-    public int Id { get; protected init; }
+    public int Value { get; protected init; }
 
     /// <summary>
     /// Gets the name.
@@ -98,7 +98,7 @@ public abstract class Enumeration<TEnum> : IEquatable<Enumeration<TEnum>>
             return false;
         }
 
-        return GetType() == other.GetType() && other.Id.Equals(Id);
+        return GetType() == other.GetType() && other.Value.Equals(Value);
     }
 
     /// <inheritdoc />
@@ -114,13 +114,13 @@ public abstract class Enumeration<TEnum> : IEquatable<Enumeration<TEnum>>
             return false;
         }
 
-        return obj is Enumeration<TEnum> otherValue && otherValue.Id.Equals(Id);
+        return obj is Enumeration<TEnum> otherValue && otherValue.Value.Equals(Value);
     }
 
     /// <inheritdoc />
-    public override int GetHashCode() => Id.GetHashCode() * 37;
+    public override int GetHashCode() => Value.GetHashCode() * 37;
 
-    private static Dictionary<int, TEnum> CreateEnumerationDictionary(Type enumType) => GetFieldsForType(enumType).ToDictionary(t => t.Id);
+    private static Dictionary<int, TEnum> CreateEnumerationDictionary(Type enumType) => GetFieldsForType(enumType).ToDictionary(t => t.Value);
 
     /// <summary>
     /// Gets the fields of the specified type.

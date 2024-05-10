@@ -40,7 +40,7 @@ public static partial class Login
             }
 
             SignInResult result = await _signInManager.CheckPasswordSignInAsync(user, request.Password, false);
-
+            
             if (!result.Succeeded)
             {
                 return new FailureResult<TokenResponse>(DomainErrors.Authentication.InvalidEmailOrPassword);

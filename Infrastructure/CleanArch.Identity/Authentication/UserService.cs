@@ -14,7 +14,7 @@ internal sealed class UserService(UserManager<User> userManager) : IUserService
         User employee = await _userManager.FindByIdAsync(userId.ToString());
 
         return new Employee(
-            new Guid(employee.Id),
+            employee.Id,
             employee.Email,
             employee.FirstName.Value,
             employee.LastName.Value);
@@ -25,7 +25,7 @@ internal sealed class UserService(UserManager<User> userManager) : IUserService
         IList<User> employees = await _userManager.GetUsersInRoleAsync(Roles.Employee);
 
         return employees.Select(e => new Employee(
-            new Guid(e.Id),
+            e.Id,
             e.Email,
             e.FirstName.Value,
             e.LastName.Value)).ToList();

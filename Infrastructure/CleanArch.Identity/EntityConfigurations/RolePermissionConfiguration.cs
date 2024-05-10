@@ -7,9 +7,9 @@ using Permission = CleanArch.Domain.Enumerations.Permission;
 
 namespace CleanArch.Identity.EntityConfigurations;
 
-internal sealed class RolePermissionConfiguration : IEntityTypeConfiguration<RolePermission<int>>
+internal sealed class RolePermissionConfiguration : IEntityTypeConfiguration<RolePermission>
 {
-    public void Configure(EntityTypeBuilder<RolePermission<int>> builder)
+    public void Configure(EntityTypeBuilder<RolePermission> builder)
     {
         builder.ToTable(TableNames.RolePermissions);
 
@@ -22,19 +22,19 @@ internal sealed class RolePermissionConfiguration : IEntityTypeConfiguration<Rol
 
         builder.HasData(
             Create(Role.Registered, Permission.AccessLeaveTypes),
-            #region Employee
-            #endregion
-            #region Administrator
+        #region Employee
+        #endregion
+        #region Administrator
             Create(Role.Administrator, Permission.CreateLeaveType),
             Create(Role.Administrator, Permission.UpdateLeaveType),
             Create(Role.Administrator, Permission.DeleteLeaveType)
-            #endregion
+        #endregion
             );
     }
 
-    private static RolePermission<int> Create(Role role, Permission permission)
+    private static RolePermission Create(Role role, Permission permission)
     {
-        return new RolePermission<int>(
+        return new RolePermission(
             roleId: role.Id,
             permissionId: (int)permission);
     }

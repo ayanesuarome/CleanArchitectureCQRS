@@ -5,14 +5,14 @@ using Microsoft.AspNetCore.Identity;
 
 namespace CleanArch.Domain.Entities;
 
-public sealed class User : IdentityUser, IAuditableEntity
+public sealed class User : IdentityUser<Guid>, IAuditableEntity
 {
     public User(UserName firstName, UserName lastName)
-        : base()
     {
         Ensure.NotNull(firstName, "The first name is required.", nameof(firstName));
         Ensure.NotNull(lastName, "The last name is required.", nameof(lastName));
 
+        Id = Guid.NewGuid();
         FirstName = firstName;
         LastName = lastName;
     }
