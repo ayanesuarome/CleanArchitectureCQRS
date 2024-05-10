@@ -18,9 +18,7 @@ public sealed class PermissionAuthorizationHandler : AuthorizationHandler<Permis
         AuthorizationHandlerContext context,
         PermissionRequirement requirement)
     {
-        string? userId = context.User.Claims
-            .FirstOrDefault(claim =>
-                claim.Type == JwtRegisteredClaimNames.Sub)?.Value;
+        string? userId = context.User.FindFirst("uid")?.Value;
 
         if(!Guid.TryParse(userId, out Guid id))
         {

@@ -6,11 +6,12 @@ using System.Text;
 
 namespace CleanArch.Identity.ConfigureOptions;
 
-internal sealed class JwtBearerOptionsSetup(IOptions<JwtOptions> jwtOptions) : IConfigureOptions<JwtBearerOptions>
+internal sealed class JwtBearerOptionsSetup(IOptions<JwtOptions> jwtOptions)
+    : IPostConfigureOptions<JwtBearerOptions>
 {
     private readonly JwtOptions _jwtOptions = jwtOptions.Value;
 
-    public void Configure(JwtBearerOptions options)
+    public void PostConfigure(string? name, JwtBearerOptions options)
     {
         options.TokenValidationParameters = new()
         {

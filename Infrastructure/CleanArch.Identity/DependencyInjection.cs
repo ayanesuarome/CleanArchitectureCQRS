@@ -36,18 +36,15 @@ public static class DependencyInjection
             //.AddRoleStore<RoleStore<Role, CleanArchIdentityEFDbContext, int>>()
             .AddDefaultTokenProviders();
 
-        IServiceProvider serviceProvider = services.BuildServiceProvider();
-        JwtBearerOptions jwtBearerOptions = serviceProvider
-            .GetRequiredService<IOptions<JwtBearerOptions>>()
-            .Value;
+        services.ConfigureOptions<JwtOptionsSetup>();
+        services.AddSingleton<IValidateOptions<JwtOptions>, JwtSettingValidation>();
+        services.ConfigureOptions<JwtBearerOptionsSetup>();
 
         services.AddAuthentication(options =>
         {
             options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
             options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-        })
-        .AddJwtBearer(options =>
-            options.TokenValidationParameters = jwtBearerOptions.TokenValidationParameters);
+        }).AddJwtBearer();
 
         services.AddAuthorization();
         services.AddSingleton<IAuthorizationHandler, PermissionAuthorizationHandler>();
@@ -56,10 +53,7 @@ public static class DependencyInjection
         services.AddScoped<IUserService, UserService>();
         services.AddScoped<IJwtProvider, JwtProvider>();
         services.AddScoped<IUserIdentifierProvider, UserIdentifierProvider>();
-
-        services.ConfigureOptions<JwtOptionsSetup>();
-        services.AddSingleton<IValidateOptions<JwtOptions>, JwtSettingValidation>();
-        services.ConfigureOptions<JwtBearerOptionsSetup>();
+        services.AddScoped<IPermissionService, PermissionService>();
 
         return services;
     }

@@ -12,7 +12,6 @@ public sealed partial class LeaveTypesController
     // GET: api/<v>/<LeaveTypesController>
     [HttpGet(ApiRoutes.LeaveTypes.Get)]
     [ProducesResponseType(typeof(LeaveTypeListDto), StatusCodes.Status200OK)]
-    [HasPermission(Permission.AccessLeaveTypes)]
     public async Task<IActionResult> Get(CancellationToken cancellationToken)
     {
         Result<LeaveTypeListDto> result = await Sender.Send(new GetLeaveTypeList.GetLeaveTypeList.Query(), cancellationToken);
