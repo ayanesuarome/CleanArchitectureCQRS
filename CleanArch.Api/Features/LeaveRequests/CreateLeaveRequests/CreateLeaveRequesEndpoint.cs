@@ -4,7 +4,7 @@ using CleanArch.Contracts.LeaveRequests;
 using CleanArch.Domain.Entities;
 using CleanArch.Domain.Events;
 using CleanArch.Domain.Primitives.Result;
-using MediatR;
+using CleanArch.Identity.Authentication;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CleanArch.Api.Features.LeaveRequests;
@@ -15,6 +15,7 @@ public sealed partial class LeaveRequestController
     [HttpPost(ApiRoutes.LeaveRequests.Post)]
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(typeof(FailureResult), StatusCodes.Status400BadRequest)]
+    [HasPermission(Domain.Enumerations.Permission.CreateLeaveRequest)]
     public async Task<IActionResult> Post([FromBody] CreateLeaveRequestRequest request, CancellationToken cancellationToken)
     {
         CreateLeaveRequest.Command command = new(

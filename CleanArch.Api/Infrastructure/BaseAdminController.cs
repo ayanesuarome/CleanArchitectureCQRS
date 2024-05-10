@@ -1,4 +1,5 @@
 ﻿using CleanArch.Contracts.Identity;
+using CleanArch.Domain.Enumerations;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -6,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace CleanArch.Api.Infrastructure;
 
 [Route("api/admin/v{version:apiVersion}")]
-[Authorize(Roles = Roles.Administrator)]
+[Authorize(Roles = "Administrator")]
 [ApiController]
 public abstract class BaseAdminController : BaseController
 {

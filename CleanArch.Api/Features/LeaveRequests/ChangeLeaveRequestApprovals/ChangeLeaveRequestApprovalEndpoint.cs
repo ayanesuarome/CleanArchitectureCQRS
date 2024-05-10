@@ -4,7 +4,7 @@ using CleanArch.Contracts.LeaveRequests;
 using CleanArch.Domain.Entities;
 using CleanArch.Domain.Events;
 using CleanArch.Domain.Primitives.Result;
-using MediatR;
+using CleanArch.Identity.Authentication;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CleanArch.Api.Features.LeaveRequests;
@@ -16,7 +16,7 @@ public sealed partial class AdminLeaveRequestController
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(typeof(FailureResult), StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    [ProducesDefaultResponseType]
+    [HasPermission(Domain.Enumerations.Permission.ChangeLeaveRequestApproval)]
     public async Task<IActionResult> UpdateApproval(
         [FromRoute] Guid id,
         [FromBody] ChangeLeaveRequestApprovalRequest request,

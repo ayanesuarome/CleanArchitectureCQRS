@@ -30,7 +30,6 @@ public sealed class Role : Enumeration<Role>
     public ICollection<Permission> Permissions { get; set; }
     public ICollection<User> Users { get; set; }
 
-    public static readonly Role Registered = new(Guid.Parse("881c93c8-6b92-407b-b8bf-196855192ec6"), 1, "Registered");
     public static readonly Role Employee = new(Guid.Parse("ffdb391e-8dd5-4910-9766-02b02c8c1e29"), 2, "Employee");
     public static readonly Role Administrator = new(Guid.Parse("d9fca87d-b460-43a1-8d72-e31b189dc353"), 3, "Administrator");
 }

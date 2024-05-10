@@ -21,13 +21,23 @@ internal sealed class RolePermissionConfiguration : IEntityTypeConfiguration<Rol
             });
 
         builder.HasData(
-            Create(Role.Registered, Permission.AccessLeaveTypes),
         #region Employee
+            Create(Role.Employee, Permission.AccessLeaveTypes),
+            Create(Role.Employee, Permission.AccessLeaveRequests),
+            Create(Role.Employee, Permission.CreateLeaveRequest),
+            Create(Role.Employee, Permission.UpdateLeaveRequest),
+            Create(Role.Employee, Permission.CancelLeaveRequest),
         #endregion
         #region Administrator
+            Create(Role.Administrator, Permission.AccessLeaveTypes),
             Create(Role.Administrator, Permission.CreateLeaveType),
             Create(Role.Administrator, Permission.UpdateLeaveType),
-            Create(Role.Administrator, Permission.DeleteLeaveType)
+            Create(Role.Administrator, Permission.DeleteLeaveType),
+            Create(Role.Administrator, Permission.AccessLeaveRequests),
+            Create(Role.Administrator, Permission.DeleteLeaveRequest),
+            Create(Role.Administrator, Permission.ChangeLeaveRequestApproval),
+            Create(Role.Administrator, Permission.AccessLeaveAllocations),
+            Create(Role.Administrator, Permission.CreateLeaveAllocation)
         #endregion
             );
     }

@@ -24,7 +24,7 @@ internal sealed class RoleConfiguration : IEntityTypeConfiguration<Role>
             .GetValues()
             .Select(role => new Role(role.Id, role.Name)
             {
-                NormalizedName = role.Name.ToString()
+                NormalizedName = role.Name.ToUpper()
             });
 
         builder.HasData(roles);

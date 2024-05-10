@@ -22,7 +22,7 @@ internal sealed class UserService(UserManager<User> userManager) : IUserService
 
     public async Task<List<Employee>> GetEmployees()
     {
-        IList<User> employees = await _userManager.GetUsersInRoleAsync(Roles.Employee);
+        IList<User> employees = await _userManager.GetUsersInRoleAsync(Domain.Enumerations.Role.Employee.Name);
 
         return employees.Select(e => new Employee(
             e.Id,

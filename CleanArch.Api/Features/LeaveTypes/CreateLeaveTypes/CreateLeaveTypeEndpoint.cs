@@ -3,8 +3,8 @@ using CleanArch.Api.Features.LeaveTypes.CreateLeaveTypes;
 using CleanArch.Domain.Primitives.Result;
 using CleanArch.Contracts;
 using CleanArch.Contracts.LeaveTypes;
-
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+using CleanArch.Identity.Authentication;
+using CleanArch.Domain.Enumerations;
 
 namespace CleanArch.Api.Features.LeaveTypes;
 
@@ -14,6 +14,7 @@ public sealed partial class LeaveTypesController
     [HttpPost(ApiRoutes.LeaveTypes.Post)]
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(typeof(FailureResult), StatusCodes.Status400BadRequest)]
+    [HasPermission(Permission.CreateLeaveType)]
     public async Task<IActionResult> Post([FromBody] CreateLeaveTypeRequest request, CancellationToken cancellationToken)
     {
         CreateLeaveType.Command commnad = new(request.Name, request.DefaultDays);
