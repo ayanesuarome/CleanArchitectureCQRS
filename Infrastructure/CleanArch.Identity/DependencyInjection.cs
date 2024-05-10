@@ -33,8 +33,7 @@ public static class DependencyInjection
             options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
         })
         .AddJwtBearer(options =>
-            options.TokenValidationParameters = jwtBearerOptions.TokenValidationParameters)
-        .AddCookie(IdentityConstants.ApplicationScheme);
+            options.TokenValidationParameters = jwtBearerOptions.TokenValidationParameters);
 
         services.AddAuthorization();
 

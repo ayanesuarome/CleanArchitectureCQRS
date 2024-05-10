@@ -193,7 +193,7 @@ namespace CleanArch.Persistence.Migrations
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.OwnsOne("CleanArch.Domain.ValueObjects.Comment", "Comments", b1 =>
+                    b.OwnsOne("CleanArch.Domain.Entities.LeaveRequest.Comments#CleanArch.Domain.ValueObjects.Comment", "Comments", b1 =>
                         {
                             b1.Property<Guid>("LeaveRequestId")
                                 .HasColumnType("uniqueidentifier");
@@ -206,7 +206,7 @@ namespace CleanArch.Persistence.Migrations
 
                             b1.HasKey("LeaveRequestId");
 
-                            b1.ToTable("LeaveRequests");
+                            b1.ToTable("LeaveRequests", (string)null);
 
                             b1.WithOwner()
                                 .HasForeignKey("LeaveRequestId");

@@ -13,7 +13,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CleanArch.Identity.Migrations
 {
     [DbContext(typeof(CleanArchIdentityEFDbContext))]
-    [Migration("20240510161856_AddIdentityTables")]
+    [Migration("20240510165729_AddIdentityTables")]
     partial class AddIdentityTables
     {
         /// <inheritdoc />
@@ -141,7 +141,7 @@ namespace CleanArch.Identity.Migrations
                         .HasDatabaseName("RoleNameIndex")
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
-                    b.ToTable("Roles", "identity");
+                    b.ToTable("AspNetRoles", "identity");
 
                     b.HasData(
                         new
@@ -330,7 +330,7 @@ namespace CleanArch.Identity.Migrations
                         .HasDatabaseName("UserNameIndex")
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
-                    b.ToTable("Users", "identity");
+                    b.ToTable("AspNetUsers", "identity");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
