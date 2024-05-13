@@ -74,7 +74,7 @@
         collapseNavMenu = !collapseNavMenu;
     }
 
-    private string GetName(AuthenticationState context)
+    private string? GetName(AuthenticationState context)
     {
         return context.User?.Identity?.Name;
     }

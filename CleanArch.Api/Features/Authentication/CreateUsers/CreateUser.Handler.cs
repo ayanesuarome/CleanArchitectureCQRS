@@ -62,7 +62,8 @@ public static partial class CreateUser
                 return new FailureResult<RegistrationResponse>(ValidationErrors.CreateUser.CreateUserValidation(result.Errors.ToString()));
             }
 
-            await _userManager.AddToRoleAsync(user, Domain.Enumerations.Role.Employee.Name);
+            await _userManager.AddToRoleAsync(user, Domain.Enumerations.Role.Administrator.Name);
+            //await _userManager.AddToRoleAsync(user, Domain.Enumerations.Role.Employee.Name);
 
             RegistrationResponse response = new(user.Id);
 
