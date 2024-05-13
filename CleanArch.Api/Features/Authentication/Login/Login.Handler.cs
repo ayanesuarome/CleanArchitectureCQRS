@@ -46,7 +46,7 @@ public static partial class Login
                 return new FailureResult<TokenResponse>(DomainErrors.Authentication.InvalidEmailOrPassword);
             }
 
-            string securityToken = await _jwtProvider.GenerateToken(user);
+            string securityToken = await _jwtProvider.GenerateTokenAsync(user);
             TokenResponse response = new(securityToken);
 
             return new SuccessResult<TokenResponse>(response);

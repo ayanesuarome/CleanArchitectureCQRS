@@ -2,6 +2,6 @@
 
 internal static class TableNames
 {
-    public const string Permissions = "Permissions";
-    public const string RolePermissions = "RolePermissions";
+    internal const string Permissions = "Permissions";
+    internal const string RolePermissions = "RolePermissions";
 }
