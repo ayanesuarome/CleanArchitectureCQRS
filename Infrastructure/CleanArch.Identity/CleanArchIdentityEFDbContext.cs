@@ -13,6 +13,9 @@ public sealed partial class CleanArchIdentityEFDbContext : IdentityDbContext<Use
     {
     }
 
+    public DbSet<Permission> Permissions { get; set; }
+    public DbSet<RolePermission> RolePermissions { get; set; }
+
     protected override void OnModelCreating(ModelBuilder builder)
     {
         base.OnModelCreating(builder);

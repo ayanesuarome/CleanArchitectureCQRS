@@ -1,6 +1,5 @@
 ﻿using CleanArch.Domain.Entities;
 using CleanArch.Domain.ValueObjects;
-using CleanArch.Identity.Constants;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

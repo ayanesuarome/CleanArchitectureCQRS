@@ -43,10 +43,4 @@ public sealed class User : IdentityUser<Guid>, IAuditableEntity
     public Guid? ModifiedBy { get; }
 
     #endregion
-
-    #region Relation
-
-    public ICollection<Role> Roles { get; set; }
-
-    #endregion
 }

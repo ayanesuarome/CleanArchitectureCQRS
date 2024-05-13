@@ -1,7 +1,7 @@
 ﻿using CleanArch.Application.Abstractions.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.DependencyInjection;
-using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 
 namespace CleanArch.Identity.Authentication;
 
@@ -18,7 +18,7 @@ public sealed class PermissionAuthorizationHandler : AuthorizationHandler<Permis
         AuthorizationHandlerContext context,
         PermissionRequirement requirement)
     {
-        string? userId = context.User.FindFirst("uid")?.Value;
+        string? userId = context.User.FindFirstValue("uid");
 
         if(!Guid.TryParse(userId, out Guid id))
         {

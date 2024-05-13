@@ -1,6 +1,4 @@
 ﻿using CleanArch.Application.Abstractions.Authentication;
-using CleanArch.Domain.Entities;
-using Microsoft.EntityFrameworkCore;
 
 namespace CleanArch.Identity.Authentication;
 
@@ -13,19 +11,17 @@ internal sealed class PermissionService : IPermissionService
         _dbContext = dbContext;
     }
 
-    public async Task<HashSet<string>> GetPermissionsAsync(Guid userId)
+    public Task<HashSet<string>> GetPermissionsAsync(Guid userId)
     {
-        ICollection<Role>[] roles = await _dbContext.Users
-            .Include(user => user.Roles)
-            .ThenInclude(user => user.Permissions)
-            .Where(user => user.Id == userId)
-            .Select(user => user.Roles)
-            .ToArrayAsync();
+        HashSet<string> permissions = (from userRole in _dbContext.UserRoles
+                  join rolePermission in _dbContext.RolePermissions
+                  on userRole.RoleId equals rolePermission.RoleId
+                  where userRole.UserId == userId
+                  join permission in _dbContext.Permissions
+                  on rolePermission.PermissionId equals permission.Id
+                  select permission.Name)
+                  .ToHashSet();
 
-        return roles
-            .SelectMany(role => role)
-            .SelectMany(role => role.Permissions)
-            .Select(role => role.Name)
-            .ToHashSet();
+        return Task.FromResult(permissions);
     }
 }

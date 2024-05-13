@@ -8,6 +8,7 @@ namespace CleanArch.Api.Infrastructure;
 [ApiController]
 [Authorize]
 [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+[ProducesResponseType(StatusCodes.Status403Forbidden)]
 public abstract class BaseController : ControllerBase
 {
     protected ISender Sender { get; }
