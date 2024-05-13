@@ -1,5 +1,4 @@
 ﻿using CleanArch.Application.Abstractions.Authentication;
-using CleanArch.Application.Abstractions.Data;
 using CleanArch.Domain.Entities;
 using CleanArch.Identity.Authentication;
 using CleanArch.Identity.ConfigureOptions;
@@ -8,13 +7,11 @@ using CleanArch.Identity.Settings;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
-using System;
 
 namespace CleanArch.Identity;
 
@@ -32,8 +29,6 @@ public static class DependencyInjection
 
         services.AddIdentity<User, Role>()
             .AddEntityFrameworkStores<CleanArchIdentityEFDbContext>()
-            //.AddUserStore<UserStore<User, Role, CleanArchIdentityEFDbContext, int>>()
-            //.AddRoleStore<RoleStore<Role, CleanArchIdentityEFDbContext, int>>()
             .AddDefaultTokenProviders();
 
         services.ConfigureOptions<JwtOptionsSetup>();
