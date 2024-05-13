@@ -10,6 +10,7 @@ using CleanArch.Api.Features.LeaveRequests.UpdateLeaveRequests;
 using FluentValidation;
 using System.Reflection;
 using CleanArch.Api.Behaviors;
+using CleanArch.Infrastructure;
 
 namespace CleanArch.Api.Infrastructure
 {

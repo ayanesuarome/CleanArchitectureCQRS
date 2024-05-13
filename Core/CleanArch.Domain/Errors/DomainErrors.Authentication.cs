@@ -9,7 +9,6 @@ public static partial class DomainErrors
     /// </summary>
     public static class Authentication
     {
-        public static Error InvalidEmailOrPassword => new Error(
-            "Authentication.InvalidEmailOrPassword", "The specified email or password are incorrect.");
+        public static Error InvalidEmailOrPassword => new ("Authentication.InvalidEmailOrPassword", "The specified email or password are incorrect.");
     }
 }

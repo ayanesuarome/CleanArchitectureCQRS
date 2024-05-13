@@ -28,7 +28,7 @@ public static partial class Login
             _signInManager = signInManager;
             _jwtProvider = jwtProvider;
             _validator = validator;
-        }
+            }
 
         public async Task<Result<TokenResponse>> Handle(Command request, CancellationToken cancellationToken)
         {

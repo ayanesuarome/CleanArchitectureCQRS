@@ -1,13 +1,14 @@
 ﻿using CleanArch.Application.Abstractions.Data;
 using CleanArch.Application.Abstractions.Messaging;
+using CleanArch.Domain.Primitives.Result;
 using MediatR;
 using Microsoft.EntityFrameworkCore.Storage;
 
 namespace CleanArch.Api.Behaviors
 {
     internal sealed class UnitOfWorkBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
-        where TRequest : class, IRequest<TResponse>
-        where TResponse : class
+        where TRequest : ICommand<TResponse>
+        where TResponse : Result
     {
         private readonly IUnitOfWork _unitOfWork;
 
@@ -15,7 +16,7 @@ namespace CleanArch.Api.Behaviors
 
         public async Task<TResponse> Handle(TRequest request, RequestHandlerDelegate<TResponse> next, CancellationToken cancellationToken)
         {
-            if(request is IQuery<TResponse> || IsIdentity())
+            if(IsIdentity())
             {
                 return await next();
             }

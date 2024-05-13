@@ -6,6 +6,6 @@ public static partial class DomainErrors
 {
     public static class DateRange
     {
-        public static Error RangeIsNotValid => new Error("DateRange.RangeIsNotValid", "The range is not valid.");
+        public static Error RangeIsNotValid => new ("DateRange.RangeIsNotValid", "The range is not valid.");
     }
 }

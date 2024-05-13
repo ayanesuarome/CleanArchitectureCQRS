@@ -6,12 +6,6 @@ namespace CleanArch.Application.Extensions;
 
 public static class FluentValidationExtensions
 {
-    public static ValidationResult AddError(this ValidationResult result, string field, string errorMessage)
-    {
-        result.Errors.Add(new ValidationFailure(field, errorMessage));
-        return result;
-    }
-
     /// <summary>
     /// Specifies a custom error to use if validation fails.
     /// </summary>

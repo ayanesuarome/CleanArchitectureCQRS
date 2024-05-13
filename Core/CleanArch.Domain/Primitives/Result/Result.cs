@@ -46,34 +46,34 @@ public class Result
     public static Result Failure(Error error) => new(false, error);
 
     /// <summary>
-    /// Returns a success <see cref="Result{T}"/> with the specified value.
+    /// Returns a success <see cref="Result{TValue}"/> with the specified value.
     /// </summary>
-    /// <typeparam name="T">The result type.</typeparam>
+    /// <typeparam name="TValue">The result type.</typeparam>
     /// <param name="value">The result value.</param>
-    /// <returns>A new instance of <see cref="Result{T}"/> with the success flag set.</returns>
-    public static Result<T> Success<T>(T value) => new(value);
+    /// <returns>A new instance of <see cref="Result{TValue}"/> with the success flag set.</returns>
+    public static Result<TValue> Success<TValue>(TValue value) => new(value);
 
     /// <summary>
-    /// Returns a failure <see cref="Result{T}"/> with the specified error.
+    /// Returns a failure <see cref="Result{TValue}"/> with the specified error.
     /// </summary>
-    /// <typeparam name="T">The result type.</typeparam>
+    /// <typeparam name="TValue">The result type.</typeparam>
     /// <param name="error">The error.</param>
-    /// <returns>A new instance of <see cref="Result{T}"/> with the specified error and failure flag set.</returns>
+    /// <returns>A new instance of <see cref="Result{TValue}"/> with the specified error and failure flag set.</returns>
     /// <remarks>
     /// We're purposefully ignoring the nullable assignment here because the API will never allow it to be accessed.
     /// The value is accessed through a method that will throw an exception if the result is a failure result.
-    public static Result<T> Failure<T>(Error error) => new(error);
+    public static Result<TValue> Failure<TValue>(Error error) => new(error);
 
     /// <summary>
-    /// Creates a new <see cref="Result{T}"/> with the specified nullable value and the specified error.
+    /// Creates a new <see cref="Result{TValue}"/> with the specified nullable value and the specified error.
     /// </summary>
-    /// <typeparam name="T">The result type.</typeparam>
+    /// <typeparam name="TValue">The result type.</typeparam>
     /// <param name="value">The result value.</param>
     /// <param name="error">The error in case the value is null.</param>
-    /// <returns>A new instance of <see cref="Result{T}"/> with the specified value or an error.</returns>
-    public static Result<T> Create<T>(T value, Error error)
-        where T : class =>
-        value is null ? Failure<T>(error) : Success(value);
+    /// <returns>A new instance of <see cref="Result{TValue}"/> with the specified value or an error.</returns>
+    public static Result<TValue> Create<TValue>(TValue value, Error error)
+        where TValue : class =>
+        value is null ? Failure<TValue>(error) : Success(value);
 
     public static Result<int> Create(int value, Error error) =>
         value == default ? Failure<int>(error) : Success(value);
@@ -97,11 +97,11 @@ public class Result
     }
 }
 
-public class Result<T> : Result
+public class Result<TValue> : Result
 {
-    private T _value;
+    private TValue _value;
 
-    public T Value
+    public TValue Value
     {
         get
         {
@@ -120,7 +120,7 @@ public class Result<T> : Result
     /// <summary>
     /// Successful result.
     /// </summary>
-    internal Result(T value) : base(true, Error.None)
+    internal Result(TValue value) : base(true, Error.None)
     {
         Value = value;
     }
@@ -133,5 +133,5 @@ public class Result<T> : Result
         Value = default!;
     }
 
-    public static implicit operator Result<T>(T value) => new Result<T>(value);
+    public static implicit operator Result<TValue>(TValue value) => new Result<TValue>(value);
 }
