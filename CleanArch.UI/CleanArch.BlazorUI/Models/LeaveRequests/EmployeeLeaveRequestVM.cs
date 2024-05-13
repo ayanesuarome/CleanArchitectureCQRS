@@ -1,11 +1,18 @@
 ﻿using CleanArch.BlazorUI.Models.Identity;
-using CleanArch.BlazorUI.Models.LeaveAllocations;
 
 namespace CleanArch.BlazorUI.Models.LeaveRequests;
 
-public class EmployeeLeaveRequestVM
+internal sealed class EmployeeLeaveRequestVM
 {
-    public List<LeaveAllocationVM> LeaveAllocations { get; set; } = [];
-    public List<LeaveRequestVM> LeaveRequests { get; set; } = [];
-    public EmployeeVM? Employee => LeaveRequests.FirstOrDefault()?.Employee;
+    public EmployeeLeaveRequestVM() : this([])
+    {
+    }
+
+    public EmployeeLeaveRequestVM(IReadOnlyCollection<LeaveRequestVM> leaveRequests)
+    {
+        LeaveRequests = leaveRequests;
+    }
+
+    public IReadOnlyCollection<LeaveRequestVM> LeaveRequests { get; }
+    public string? EmployeeFullName => LeaveRequests.FirstOrDefault()?.EmployeeFullName;
 }

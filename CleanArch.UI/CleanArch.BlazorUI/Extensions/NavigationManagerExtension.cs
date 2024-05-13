@@ -32,12 +32,12 @@ public static class NavigationManagerExtension
         navigationManager.NavigateTo(Paths.LeaveType.CreateLeaveType);
     }
     
-    public static void NavigateToDetailsLeaveType(this NavigationManager navigationManager, int id)
+    public static void NavigateToDetailsLeaveType(this NavigationManager navigationManager, Guid id)
     {
         navigationManager.NavigateTo(String.Format(Paths.LeaveType.DetailsLeaveType, id));
     }
     
-    public static void NavigateToEditLeaveType(this NavigationManager navigationManager, int id)
+    public static void NavigateToEditLeaveType(this NavigationManager navigationManager, Guid id)
     {
         navigationManager.NavigateTo(String.Format(Paths.LeaveType.EditLeaveType, id));
     }
@@ -54,7 +54,7 @@ public static class NavigationManagerExtension
     {
         navigationManager.NavigateTo(Paths.LeaveRequest.EmployeeLeaveRequests);
     }
-    public static void NavigateToDetailsLeaveRequest(this NavigationManager navigationManager, int id)
+    public static void NavigateToDetailsLeaveRequest(this NavigationManager navigationManager, Guid id)
     {
         navigationManager.NavigateTo(String.Format(Paths.LeaveRequest.DetailsLeaveRequest, id));
     }

@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using CleanArch.BlazorUI.Interfaces;
+﻿using CleanArch.BlazorUI.Interfaces;
 using CleanArch.BlazorUI.Models.Identity;
 using CleanArch.BlazorUI.Providers;
 using CleanArch.BlazorUI.Services.Base;
@@ -7,27 +6,28 @@ using Microsoft.AspNetCore.Components.Authorization;
 
 namespace CleanArch.BlazorUI.Services;
 
-public class AuthenticationService : BaseHttpService, IAuthenticationService
+internal sealed class AuthenticationService : BaseHttpService, IAuthenticationService
 {
-    private readonly IMapper _mapper;
     private readonly AuthenticationStateProvider _authenticationStateProvider;
 
     public AuthenticationService(IClient client,
-        IMapper mapper,
         AuthenticationStateProvider authenticationStateProvider)
         : base(client)
     {
-        _mapper = mapper;
         _authenticationStateProvider = authenticationStateProvider;
     }
 
     public async Task<bool> AuthenticateAsync(LoginVM model)
     {
-        AuthRequest authRequest = _mapper.Map<AuthRequest>(model);
+        LoginRequest authRequest = new()
+        {
+            Email = model.Email,
+            Password = model.Password
+        };
 
         try
         {
-            AuthResponse response = await _client.LoginAsync(authRequest);
+            TokenResponse response = await _client.LoginAsync(authRequest);
 
             if (string.IsNullOrEmpty(response?.Token))
             {
@@ -39,7 +39,7 @@ public class AuthenticationService : BaseHttpService, IAuthenticationService
 
             return true;
         }
-        catch
+        catch(ApiException e)
         {
             return false;
         }
@@ -53,10 +53,17 @@ public class AuthenticationService : BaseHttpService, IAuthenticationService
 
     public async Task<bool> RegisterAsync(RegistrationRequestVM model)
     {
-        RegistrationRequest request = _mapper.Map<RegistrationRequest>(model);
+        RegistrationRequest request = new()
+        {
+            FirstName = model.FirstName,
+            LastName = model.LastName,
+            Email = model.Email,
+            Password = model.Password
+        };
+
         var response = await _client.RegisterAsync(request);
 
-        if (!string.IsNullOrEmpty(response.UserId))
+        if (response.UserId == Guid.Empty)
         {
             return false;
         }

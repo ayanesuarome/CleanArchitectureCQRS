@@ -2,7 +2,7 @@
 
 namespace CleanArch.BlazorUI.Models.Identity
 {
-    public class RegistrationRequestVM
+    internal sealed class RegistrationRequestVM
     {
         [Required]
         public string FirstName { get; set; }

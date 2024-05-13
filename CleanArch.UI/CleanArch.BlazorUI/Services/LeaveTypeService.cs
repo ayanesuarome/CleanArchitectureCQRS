@@ -1,32 +1,52 @@
-﻿using AutoMapper;
-using CleanArch.BlazorUI.Interfaces;
+﻿using CleanArch.BlazorUI.Interfaces;
 using CleanArch.BlazorUI.Models.LeaveTypes;
 using CleanArch.BlazorUI.Services.Base;
+using System.Collections.Generic;
 
 namespace CleanArch.BlazorUI.Services;
 
-public class LeaveTypeService(IClient client, IMapper mapper) : BaseHttpService(client), ILeaveTypeService
+public class LeaveTypeService(IClient client) : BaseHttpService(client), ILeaveTypeService
 {
-    private readonly IMapper _mapper = mapper;
-
-    public async Task<List<LeaveTypeVM>> GetLeaveTypeList()
+    public async Task<IReadOnlyCollection<LeaveTypeVM>> GetLeaveTypeList()
     {
-        ICollection<LeaveTypeDto> leaveTypes = await _client.LeaveTypesAllAsync();
-        return _mapper.Map<List<LeaveTypeVM>>(leaveTypes);
+        LeaveTypeListDto dto = await _client.LeaveTypesGETAsync();
+        List<LeaveTypeVM> models = new();
+
+        foreach (LeaveTypeModel leaveType in dto.LeaveTypes)
+        {
+            models.Add(new()
+            {
+                Id = leaveType.Id,
+                Name = leaveType.Name,
+                DefaultDays = leaveType.DefaultDays
+            });
+        }
+
+        return models;
     }
 
-    public async Task<LeaveTypeVM> GetLeaveTypeDetails(int id)
+    public async Task<LeaveTypeVM> GetLeaveTypeDetails(Guid id)
     {
-        LeaveTypeDetailsDto leaveType = await _client.LeaveTypesGETAsync(id);
-        return _mapper.Map<LeaveTypeVM>(leaveType);
+        LeaveTypeDetailDto leaveType = await _client.LeaveTypesGET2Async(id);
+        return new LeaveTypeVM()
+        {
+            Id = leaveType.Id,
+            Name = leaveType.Name,
+            DefaultDays = leaveType.DefaultDays
+        };
     }
 
     public async Task<Response<Guid>> CreateLeaveType(LeaveTypeVM leaveType)
     {
         try
         {
-            CreateLeaveTypeCommand command = _mapper.Map<CreateLeaveTypeCommand>(leaveType);
-            await _client.LeaveTypesPOSTAsync(command);
+            CreateLeaveTypeRequest request = new()
+            {
+                Name = leaveType.Name,
+                DefaultDays = leaveType.DefaultDays
+            };
+
+            await _client.LeaveTypesPOSTAsync(request);
 
             return new Response<Guid>();
         }
@@ -40,8 +60,12 @@ public class LeaveTypeService(IClient client, IMapper mapper) : BaseHttpService(
     {
         try
         {
-            UpdateLeaveTypeCommand command = _mapper.Map<UpdateLeaveTypeCommand>(leaveType);
-            await _client.LeaveTypesPUTAsync(leaveType.Id, command);
+            UpdateLeaveTypeRequest request = new()
+            {
+                Name = leaveType.Name,
+                DefaultDays = leaveType.DefaultDays
+            };
+            await _client.LeaveTypesPUTAsync(leaveType.Id, request);
 
             return new Response<Guid>();
         }
@@ -51,11 +75,11 @@ public class LeaveTypeService(IClient client, IMapper mapper) : BaseHttpService(
         }
     }
 
-    public async Task<Response<Guid>> DeleteLeaveType(int id)
+    public async Task<Response<Guid>> DeleteLeaveType(Guid id)
     {
         try
         {
-            await _client.AdminLeaveTypeAsync(id);
+            await _client.LeaveTypesDELETEAsync(id);
             return new Response<Guid>();
         }
         catch(ApiException ex)

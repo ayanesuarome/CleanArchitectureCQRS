@@ -1,10 +1,10 @@
-﻿using AutoMapper;
-using CleanArch.Application.AutoMapper;
-using CleanArch.Application.Features.LeaveTypes.Queries.GetLeaveTypeList;
+﻿using CleanArch.Domain.Primitives.Result;
 using CleanArch.Application.Tests.Features.Mocks;
 using CleanArch.Domain.Repositories;
 using Moq;
 using Shouldly;
+using CleanArch.Api.Features.LeaveTypes.GetLeaveTypeList;
+using CleanArch.Contracts.LeaveTypes;
 
 namespace CleanArch.Application.Tests.Features.LeaveTypes.Queries.GetAllLeaveTypes;
 
@@ -12,8 +12,7 @@ public class GetLeaveTypesQueryHandlerTest : IDisposable
 {
     #region Fields
 
-    private GetLeaveTypeListQueryHandler _handler;
-    private IMapper _mapper;
+    private GetLeaveTypeList.Handler _handler;
     private Mock<ILeaveTypeRepository> _repositoryMock;
 
     #endregion
@@ -22,17 +21,16 @@ public class GetLeaveTypesQueryHandlerTest : IDisposable
 
     public GetLeaveTypesQueryHandlerTest()
     {
-        _repositoryMock = MockListTypeRepository.GetLeaveTypeRepositoryMock();
-        MapperConfiguration mapperConfig = new(cfg => cfg.AddProfile<LeaveTypeProfile>());
-        _mapper = mapperConfig.CreateMapper();
+        _repositoryMock = MockLeaveTypeRepository.GetLeaveTypeRepositoryMock();
+        //MapperConfiguration mapperConfig = new(cfg => cfg.AddProfile<LeaveTypeProfile>());
+        //_mapper = mapperConfig.CreateMapper();
 
-        _handler = new GetLeaveTypeListQueryHandler(_mapper, _repositoryMock.Object);
+        _handler = new GetLeaveTypeList.Handler(_repositoryMock.Object);
     }
 
     public void Dispose()
     {
         _repositoryMock = null;
-        _mapper = null;
         _handler = null;
     }
 
@@ -47,12 +45,12 @@ public class GetLeaveTypesQueryHandlerTest : IDisposable
     [Fact]
     public async Task HandleReturnListOfLeaveTypeDto()
     {
-        List<LeaveTypeDto> leaveTypes = await _handler.Handle(It.IsAny<GetLeaveTypeListQuery>(), default);
+        Result<LeaveTypeListDto> result = await _handler.Handle(It.IsAny<GetLeaveTypeList.Query>(), default);
 
         _repositoryMock
             .Verify(m => m.GetAsync(), Times.Once);
-        leaveTypes.ShouldNotBeNull();
-        leaveTypes.Count.ShouldBe(3);
+        result.Value.ShouldNotBeNull();
+        result.Value.LeaveTypes.Count.ShouldBe(3);
     }
 
     #endregion

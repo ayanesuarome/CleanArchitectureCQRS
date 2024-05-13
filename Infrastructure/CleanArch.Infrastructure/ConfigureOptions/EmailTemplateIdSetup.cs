@@ -1,10 +1,10 @@
-﻿using CleanArch.Application.Models.Emails;
+﻿using CleanArch.Infrastructure.Emails.Settings;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
 
 namespace CleanArch.Infrastructure.ConfigureOptions;
 
-public class EmailTemplateIdSetup(IConfiguration configuration) : IConfigureOptions<EmailTemplateIds>
+internal sealed class EmailTemplateIdSetup(IConfiguration configuration) : IConfigureOptions<EmailTemplateIds>
 {
     private const string SectionName = nameof(EmailTemplateIds);
     private readonly IConfiguration _configuration = configuration;

@@ -26,10 +26,10 @@ internal sealed class BadRequestExceptionHandler(IServiceScopeFactory serviceSco
         }
 
         using IServiceScope scope = serviceScopeFactory.CreateScope();
-        IAppLogger<GlobalExceptionHandler> logger = scope
+        IAppLogger<BadRequestExceptionHandler> logger = scope
             .ServiceProvider
-            .GetRequiredService<IAppLogger<GlobalExceptionHandler>>();
-        
+            .GetRequiredService<IAppLogger<BadRequestExceptionHandler>>();
+
         CustomProblemDetails errorDetails = new()
         {
             Title = badRequestException.Message,

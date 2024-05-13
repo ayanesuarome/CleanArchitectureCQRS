@@ -1,4 +1,5 @@
-﻿namespace CleanArch.Application.Events;
+﻿namespace CleanArch.Domain.Events;
+
 public enum LeaveRequestAction
 {
     Created,

@@ -2,7 +2,7 @@
 
 namespace CleanArch.BlazorUI.Interfaces;
 
-public interface IAuthenticationService
+internal interface IAuthenticationService
 {
     Task<bool> AuthenticateAsync(LoginVM model);
     Task Logout();

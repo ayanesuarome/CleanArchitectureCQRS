@@ -2,9 +2,11 @@
 
 <h3>Leave Types</h3>
 
+<AuthorizeView Roles="Administrator">
 <div class="m-2 d-flex justify-content-end">
     <button @onclick="CreateLeaveType" class="btn btn-success">Add Leave Type</button>
 </div>
+</AuthorizeView>
 
 @if(!string.IsNullOrEmpty(Message))
 {

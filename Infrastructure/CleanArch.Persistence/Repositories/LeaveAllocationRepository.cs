@@ -4,14 +4,14 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CleanArch.Persistence.Repositories;
 
-public class LeaveAllocationRepository : GenericRepository<LeaveAllocation>, ILeaveAllocationRepository
+internal sealed class LeaveAllocationRepository : GenericRepository<LeaveAllocation, Guid>, ILeaveAllocationRepository
 {
     public LeaveAllocationRepository(CleanArchEFDbContext dbContext)
         : base(dbContext)
     {
     }
 
-    public async Task<bool> AllocationExists(string employeeId, int leaveTypeId, int period)
+    public async Task<bool> AllocationExists(Guid employeeId, Guid leaveTypeId, int period)
     {
         return await TableNoTracking
             .AnyAsync(e => e.EmployeeId == employeeId
@@ -19,38 +19,38 @@ public class LeaveAllocationRepository : GenericRepository<LeaveAllocation>, ILe
                 && e.Period == period);
     }
 
-    public async Task<LeaveAllocation> GetEmployeeAllocation(string employeeId, int leaveTypeId)
+    public async Task<LeaveAllocation> GetEmployeeAllocation(Guid employeeId, Guid leaveTypeId)
     {
         return await TableNoTracking
             .FirstOrDefaultAsync(e => e.EmployeeId == employeeId
                 && e.LeaveTypeId == leaveTypeId);
     }
 
-    public async Task<bool> HasEmployeeAllocation(string employeeId, int leaveTypeId)
+    public async Task<bool> HasEmployeeAllocation(Guid employeeId, Guid leaveTypeId)
     {
         return await TableNoTracking
             .AnyAsync(e => e.EmployeeId == employeeId
                 && e.LeaveTypeId == leaveTypeId);
     }
 
-    public async Task<List<LeaveAllocation>> GetLeaveAllocationsWithDetails(string? employeeId)
+    public async Task<IReadOnlyCollection<LeaveAllocation>> GetLeaveAllocationsWithDetails(Guid? employeeId)
     {
         IQueryable<LeaveAllocation> query = TableNoTracking;
         
-        if(!string.IsNullOrEmpty(employeeId))
+        if(employeeId.HasValue)
         {
             query = query.Where(e => e.EmployeeId == employeeId);
         }
 
         return await query
-            .Include(e => e.LeaveType)
+            //.Include(e => e.LeaveType)
             .ToListAsync();
     }
 
-    public async Task<LeaveAllocation> GetLeaveAllocationWithDetails(int id)
+    public async Task<LeaveAllocation> GetLeaveAllocationWithDetails(Guid id)
     {
         return await TableNoTracking
-            .Include(e => e.LeaveType)
+            //.Include(e => e.LeaveType)
             .FirstOrDefaultAsync(e => e.Id == id);
     }
 }

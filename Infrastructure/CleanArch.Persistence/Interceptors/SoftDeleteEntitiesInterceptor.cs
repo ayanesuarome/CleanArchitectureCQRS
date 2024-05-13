@@ -1,7 +1,7 @@
 ﻿using CleanArch.Domain.Primitives;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Diagnostics;
+using Microsoft.EntityFrameworkCore;
 
 namespace CleanArch.Persistence.Interceptors;
 
@@ -12,7 +12,7 @@ internal sealed class SoftDeleteEntitiesInterceptor : SaveChangesInterceptor
         InterceptionResult<int> result,
         CancellationToken cancellationToken = default)
     {
-        if(eventData.Context is null)
+        if (eventData.Context is null)
         {
             return base.SavingChangesAsync(eventData, result, cancellationToken);
         }

@@ -1,5 +1,7 @@
 ﻿using BenchmarkDotNet.Attributes;
 using CleanArch.Domain.Entities;
+using CleanArch.Domain.Primitives.Result;
+using CleanArch.Domain.ValueObjects;
 using Microsoft.EntityFrameworkCore;
 
 namespace CleanArch.Benchmarking
@@ -10,11 +12,10 @@ namespace CleanArch.Benchmarking
         [Benchmark]
         public async Task AnyLeaveTypeAsync()
         {
-            LeaveType entity = new()
-            {
-                DefaultDays = 15,
-                Name = "Test Get Leave Type"
-            };
+            Result<Name> name = Name.Create("Test Get Leave Type");
+            Result<DefaultDays> defaultDays = DefaultDays.Create(15);
+
+            LeaveType entity = new(name.Value, defaultDays.Value);
 
             await context.LeaveTypes.AddAsync(entity);
             await context.SaveChangesAsync();
@@ -27,12 +28,11 @@ namespace CleanArch.Benchmarking
         [Benchmark]
         public async Task GetLeaveTypeAsync()
         {
-            LeaveType entity = new()
-            {
-                DefaultDays = 15,
-                Name = "Test Get Leave Type"
-            };
+            Result<Name> name = Name.Create("Test Get Leave Type");
+            Result<DefaultDays> defaultDays = DefaultDays.Create(15);
 
+            LeaveType entity = new(name.Value, defaultDays.Value);
+            
             await context.LeaveTypes.AddAsync(entity);
             await context.SaveChangesAsync();
 

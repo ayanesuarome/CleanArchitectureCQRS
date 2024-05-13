@@ -11,9 +11,6 @@ using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using System.Net.Http.Headers;
 using Microsoft.Extensions.Configuration.Memory;
-using System.Reflection;
-using AutoMapper;
-using CleanArch.BlazorUI.MappingProfiles;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 
@@ -53,17 +50,5 @@ builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
 builder.Services.AddScoped<ILeaveTypeService, LeaveTypeService>();
 builder.Services.AddScoped<ILeaveRequestService, LeaveRequestService>();
 builder.Services.AddScoped<ILeaveAllocationService, LeaveAllocationService>();
-
-var mapperConfiguration = new MapperConfiguration(configuration =>
-{
-    configuration.AddProfile(new IdentityProfile());
-    configuration.AddProfile(new LeaveRequestProfile());
-    configuration.AddProfile(new LeaveAllocationProfile());
-    configuration.AddProfile(new LeaveTypeProfile());
-});
-
-var mapper = mapperConfiguration.CreateMapper();
-builder.Services.AddSingleton(mapper);
-
 
 await builder.Build().RunAsync();

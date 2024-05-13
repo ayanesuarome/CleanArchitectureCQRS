@@ -5,16 +5,16 @@ namespace CleanArch.BlazorUI.Services;
 
 public class LeaveAllocationService(IClient client): BaseHttpService(client), ILeaveAllocationService
 {
-    public async Task<Response<Guid>> CreateLeaveAllocations(int leaveTypeId)
+    public async Task<Response<Guid>> CreateLeaveAllocations(Guid leaveTypeId)
     {
         try
         {
-            CreateLeaveAllocationCommand body = new()
+            CreateLeaveAllocationRequest request = new()
             {
                 LeaveTypeId = leaveTypeId
             };
 
-            await _client.AdminLeaveAllocationPOSTAsync(body);
+            await _client.LeaveAllocationsPOSTAsync(request);
 
             return new Response<Guid>();
         }

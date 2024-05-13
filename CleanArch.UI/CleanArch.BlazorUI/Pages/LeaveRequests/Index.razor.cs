@@ -16,7 +16,7 @@ public partial class Index
         Model = await Service.GetAdminLeaveRequestListAsync();
     }
 
-    private void GoToDetails(int id)
+    private void GoToDetails(Guid id)
     {
         NavigationManager.NavigateToDetailsLeaveRequest(id);
     }

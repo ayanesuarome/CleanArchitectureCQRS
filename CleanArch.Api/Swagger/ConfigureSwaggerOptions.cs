@@ -1,11 +1,12 @@
 ﻿using Asp.Versioning.ApiExplorer;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace CleanArch.Api.Swagger;
 
-public class ConfigureSwaggerOptions(IApiVersionDescriptionProvider provider)
+internal sealed class ConfigureSwaggerOptions(IApiVersionDescriptionProvider provider)
     : IConfigureNamedOptions<SwaggerGenOptions>
 {
     private readonly IApiVersionDescriptionProvider _provider = provider;
@@ -22,6 +23,33 @@ public class ConfigureSwaggerOptions(IApiVersionDescriptionProvider provider)
         {
             options.SwaggerDoc(description.GroupName, CreateInfoForApiVersion(description));
         }
+
+        options.AddSecurityDefinition(
+                name: JwtBearerDefaults.AuthenticationScheme,
+                securityScheme: new OpenApiSecurityScheme
+                {
+                    Name = "Authorization",
+                    Description = "Enter the Bearer Authorization as following: `Bearer Generated-JWT-Token`",
+                    In = ParameterLocation.Header,
+                    Type = SecuritySchemeType.ApiKey,
+                    Scheme = JwtBearerDefaults.AuthenticationScheme
+                });
+
+        options.AddSecurityRequirement(
+            new OpenApiSecurityRequirement
+            {
+                    {
+                        new OpenApiSecurityScheme
+                        {
+                            Reference = new OpenApiReference
+                            {
+                                Type = ReferenceType.SecurityScheme,
+                                Id = JwtBearerDefaults.AuthenticationScheme
+                            }
+                        },
+                        Array.Empty<string>()
+                    }
+            });
     }
 
     private static OpenApiInfo CreateInfoForApiVersion(ApiVersionDescription description)

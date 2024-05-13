@@ -2,9 +2,9 @@
 
 namespace CleanArch.BlazorUI.Models.Identity;
 
-public class LoginVM
+internal sealed class LoginVM
 {
-    [Required]
+    [Required, EmailAddress]
     public string Email { get; set; } = null!;
 
     [Required]

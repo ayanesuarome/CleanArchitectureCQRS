@@ -4,31 +4,28 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CleanArch.Persistence.Repositories;
 
-public class LeaveRequestRepository : GenericRepository<LeaveRequest>, ILeaveRequestRepository
+internal sealed class LeaveRequestRepository : GenericRepository<LeaveRequest, Guid>, ILeaveRequestRepository
 {
     public LeaveRequestRepository(CleanArchEFDbContext dbContext)
         : base(dbContext)
     {
     }
 
-    public async Task<List<LeaveRequest>> GetLeaveRequestsWithDetailsAsync(string? employeeId)
+    public async Task<IReadOnlyCollection<LeaveRequest>> GetLeaveRequestsWithDetailsAsync(Guid? employeeId)
     {
         IQueryable<LeaveRequest> query = TableNoTracking;
 
-        if(!string.IsNullOrEmpty(employeeId))
+        if(employeeId.HasValue)
         {
             query = query.Where(e => e.RequestingEmployeeId == employeeId && e.IsCancelled == false);
         }
         
         return await query
-            .Include(e => e.LeaveType)
-            .ToListAsync();
+            .ToArrayAsync();
     }
 
-    public async Task<LeaveRequest> GetLeaveRequestWithDetailsAsync(int id)
+    public async Task<LeaveRequest> GetLeaveRequestWithDetailsAsync(Guid id)
     {
-        return await TableNoTracking
-            .Include(e => e.LeaveType)
-            .FirstOrDefaultAsync(e => e.Id == id);
+        return await GetAsNoTrackingByIdAsync(id);
     }
 }

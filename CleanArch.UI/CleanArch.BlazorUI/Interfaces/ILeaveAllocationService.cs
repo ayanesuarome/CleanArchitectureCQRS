@@ -4,5 +4,5 @@ namespace CleanArch.BlazorUI.Interfaces;
 
 public interface ILeaveAllocationService
 {
-    Task<Response<Guid>> CreateLeaveAllocations(int leaveTypeId);
+    Task<Response<Guid>> CreateLeaveAllocations(Guid leaveTypeId);
 }

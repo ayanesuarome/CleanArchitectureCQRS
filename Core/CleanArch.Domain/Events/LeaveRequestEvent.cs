@@ -1,7 +1,7 @@
-﻿using CleanArch.Domain.Entities;
-using CleanArch.Domain.Events;
+﻿using CleanArch.Domain.Events;
+using CleanArch.Domain.Entities;
 
-namespace CleanArch.Application.Events;
+namespace CleanArch.Domain.Events;
 
 public class LeaveRequestEvent : IDomainEvent
 {

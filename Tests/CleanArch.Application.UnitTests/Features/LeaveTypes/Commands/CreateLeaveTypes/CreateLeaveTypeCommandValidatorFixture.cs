@@ -1,4 +1,4 @@
-﻿using CleanArch.Application.Features.LeaveTypes.Commands.CreateLeaveType;
+﻿using CleanArch.Api.Features.LeaveTypes.CreateLeaveTypes;
 using CleanArch.Domain.Repositories;
 using Moq;
 

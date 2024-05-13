@@ -8,13 +8,15 @@ public abstract class BaseHttpService(IClient client)
 
     protected Response<Guid> ConvertApiExceptions<Guid>(ApiException exception)
     {
+        dynamic aux = exception;
+        Error error = aux.Result;
         return exception.StatusCode switch
         {
             ((int)HttpStatusCode.BadRequest) =>
                 new Response<Guid>()
                 {
                     Message = "Invalid data was submitted.",
-                    ValidationErrors = exception.Response,
+                    ValidationErrors = exception.Message,
                     Success = false
                 },
             ((int)HttpStatusCode.NotFound) =>

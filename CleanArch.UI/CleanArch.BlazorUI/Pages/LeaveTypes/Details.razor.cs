@@ -6,7 +6,7 @@ namespace CleanArch.BlazorUI.Pages.LeaveTypes
 {
     public partial class Details
     {
-        [Parameter] public int Id { get; set; }
+        [Parameter] public Guid Id { get; set; }
 
         [Inject] private ILeaveTypeService Service { get; set; } = null!;
 

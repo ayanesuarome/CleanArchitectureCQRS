@@ -25,11 +25,11 @@ internal sealed class NotFoundExceptionHandler(IServiceScopeFactory serviceScope
         }
 
         using IServiceScope scope = serviceScopeFactory.CreateScope();
-        IAppLogger<GlobalExceptionHandler> logger = scope
+        IAppLogger<NotFoundExceptionHandler> logger = scope
             .ServiceProvider
-            .GetRequiredService<IAppLogger<GlobalExceptionHandler>>();
+            .GetRequiredService<IAppLogger<NotFoundExceptionHandler>>();
 
-        logger.LogError(exception, "Exception ocurred: {Message}", exception.Message);
+        logger.LogError(notFoundException, "Exception ocurred: {Message}", exception.Message);
 
         ProblemDetails errorDetails = new()
         {
