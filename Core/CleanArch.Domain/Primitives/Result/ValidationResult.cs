@@ -2,6 +2,13 @@
 
 namespace CleanArch.Domain.Primitives.Result;
 
+public interface IValidationResult
+{
+    public static Error ValidationError => new("ValidationError", "A validation problem occurred.");
+
+    IReadOnlyCollection<Error> Errors { get; }
+}
+
 public sealed class ValidationResult : Result, IValidationResult
 {
     private ValidationResult(IReadOnlyCollection<Error> errors)

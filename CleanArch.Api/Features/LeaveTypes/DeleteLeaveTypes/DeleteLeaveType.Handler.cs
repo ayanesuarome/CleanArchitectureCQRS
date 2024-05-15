@@ -23,7 +23,7 @@ public static partial class DeleteLeaveType
             }
 
             _repository.Delete(leaveTypeToDelete);
-            return new SuccessResult<Unit>(Unit.Value);
+            return Result.Success<Unit>(Unit.Value);
         }
     }
 

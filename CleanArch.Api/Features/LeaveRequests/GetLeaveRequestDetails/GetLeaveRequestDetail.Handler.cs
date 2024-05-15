@@ -45,7 +45,7 @@ public static partial class GetLeaveRequestDetail
                 leaveRequest.IsCancelled,
                 leaveRequest.DateCreated);
 
-            return new SuccessResult<LeaveRequestDetailsDto>(dto);
+            return Result.Success<LeaveRequestDetailsDto>(dto);
         }
     }
 }

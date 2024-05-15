@@ -43,14 +43,14 @@ public static partial class CreateLeaveRequest
             
             if (firstFailureOrSuccess.IsFailure)
             {
-                return new FailureResult<LeaveRequest>(firstFailureOrSuccess.Error);
+                return Result.Failure<LeaveRequest>(firstFailureOrSuccess.Error);
             }
 
             LeaveType leaveType = await _leaveTypeRepository.GetByIdAsync(command.LeaveTypeId);
 
             if(leaveType is null)
             {
-                return new FailureResult<LeaveRequest>(DomainErrors.LeaveRequest.LeaveTypeMustExist);
+                return Result.Failure<LeaveRequest>(DomainErrors.LeaveRequest.LeaveTypeMustExist);
             }
 
             // check on employee's allocation
@@ -61,14 +61,14 @@ public static partial class CreateLeaveRequest
             // if allocations aren't enough, return validation error
             if (leaveAllocation is null)
             {
-                return new FailureResult<LeaveRequest>(DomainErrors.LeaveRequest.NoAllocationsForLeaveType(command.LeaveTypeId));
+                return Result.Failure<LeaveRequest>(DomainErrors.LeaveRequest.NoAllocationsForLeaveType(command.LeaveTypeId));
             }
 
             Result hasEnoughDaysResult = leaveAllocation.ValidateHasEnoughDays(command.StartDate, command.EndDate);
             
             if (hasEnoughDaysResult.IsFailure)
             {
-                return new FailureResult<LeaveRequest>(hasEnoughDaysResult.Error);
+                return Result.Failure<LeaveRequest>(hasEnoughDaysResult.Error);
             }
 
             LeaveRequest leaveRequest = new(
@@ -79,7 +79,7 @@ public static partial class CreateLeaveRequest
 
             _leaveRequestRepository.Add(leaveRequest);
 
-            return new SuccessResult<LeaveRequest>(leaveRequest);
+            return Result.Success<LeaveRequest>(leaveRequest);
         }
     }
 }

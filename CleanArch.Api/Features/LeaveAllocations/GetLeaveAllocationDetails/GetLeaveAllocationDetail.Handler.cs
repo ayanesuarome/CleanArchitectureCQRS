@@ -27,7 +27,7 @@ public static partial class GetLeaveAllocationDetail
                 leaveAllocation.Period,
                 leaveAllocation.Id);
 
-            return new SuccessResult<LeaveAllocationDetailsDto>(dto);
+            return Result.Success<LeaveAllocationDetailsDto>(dto);
         }
     }
 }

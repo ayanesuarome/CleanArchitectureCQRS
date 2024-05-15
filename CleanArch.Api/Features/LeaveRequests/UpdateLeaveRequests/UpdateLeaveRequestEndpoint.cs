@@ -1,6 +1,5 @@
 ﻿using CleanArch.Api.Contracts;
 using CleanArch.Api.Features.LeaveRequests.UpdateLeaveRequests;
-using CleanArch.Contracts;
 using CleanArch.Contracts.LeaveRequests;
 using CleanArch.Domain.Entities;
 using CleanArch.Domain.Events;
@@ -15,7 +14,7 @@ public sealed partial class LeaveRequestController
     // PUT api/<v>/leave-requests/5
     [HttpPut(ApiRoutes.LeaveRequests.Put)]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
-    [ProducesResponseType(typeof(FailureResult), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [HasPermission(Domain.Enumerations.Permission.UpdateLeaveRequest)]
     public async Task<IActionResult> Put(
@@ -31,16 +30,12 @@ public sealed partial class LeaveRequestController
 
         Result<LeaveRequest> result = await Sender.Send(command, cancellationToken);
 
-        if (result.IsSuccess)
+        if (result.IsFailure)
         {
-            await Publisher.Publish(new LeaveRequestEvent(result.Value, LeaveRequestAction.Updated));
+            return HandleFailure(result);
         }
 
-        return result switch
-        {
-            SuccessResult<LeaveRequest> => NoContent(),
-            NotFoundResult<LeaveRequest> => NotFound(),
-            FailureResult<LeaveRequest> errorResult => BadRequest(errorResult)
-        };
+        await Publisher.Publish(new LeaveRequestEvent(result.Value, LeaveRequestAction.Updated));
+        return NoContent();
     }
 }

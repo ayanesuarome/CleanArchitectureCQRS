@@ -6,6 +6,6 @@ using MediatR;
 namespace CleanArch.Api.Features.LeaveRequests;
 
 [HasPermission(Permission.AccessLeaveRequests)]
-public sealed partial class LeaveRequestController(ISender mediator, IPublisher publisher) : BaseController(mediator, publisher)
+public sealed partial class LeaveRequestController(ISender mediator, IPublisher publisher) : BaseApiController(mediator, publisher)
 {
 }

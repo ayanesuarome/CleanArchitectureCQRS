@@ -32,7 +32,7 @@ public static partial class ChangeLeaveRequestApproval
 
             if (leaveRequest.IsCancelled)
             {
-                return new FailureResult<LeaveRequest>(DomainErrors.LeaveRequest.ApprovalStateIsAlreadyCanceled);
+                return Result.Failure<LeaveRequest>(DomainErrors.LeaveRequest.ApprovalStateIsAlreadyCanceled);
             }
 
             Result approvalResult = command.Approved
@@ -41,7 +41,7 @@ public static partial class ChangeLeaveRequestApproval
 
             if(approvalResult.IsFailure)
             {
-                return new FailureResult<LeaveRequest>(approvalResult.Error);
+                return Result.Failure<LeaveRequest>(approvalResult.Error);
             }
 
             // if request is approved, get and update the employee's allocation
@@ -55,7 +55,7 @@ public static partial class ChangeLeaveRequestApproval
 
                 if (updateNumberOfDaysResult.IsFailure)
                 {
-                    return new FailureResult<LeaveRequest>(updateNumberOfDaysResult.Error);
+                    return Result.Failure<LeaveRequest>(updateNumberOfDaysResult.Error);
                 }
 
                 _leaveAllocationRepository.Update(allocation);
@@ -63,7 +63,7 @@ public static partial class ChangeLeaveRequestApproval
 
             _leaveRequestRepository.Update(leaveRequest);
 
-            return new SuccessResult<LeaveRequest>(leaveRequest);
+            return Result.Success<LeaveRequest>(leaveRequest);
         }
     }
 }

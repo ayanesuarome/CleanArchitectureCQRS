@@ -36,7 +36,7 @@ public static partial class UpdateLeaveRequest
 
             if (firstFailureOrSuccess.IsFailure)
             {
-                return new FailureResult<LeaveRequest>(firstFailureOrSuccess.Error);
+                return Result.Failure<LeaveRequest>(firstFailureOrSuccess.Error);
             }
 
             leaveRequest.UpdateDateRange(rangeResult.Value);
@@ -45,7 +45,7 @@ public static partial class UpdateLeaveRequest
             // can be omitted since EF keeps track of entity changes
             _repository.Update(leaveRequest);
 
-            return new SuccessResult<LeaveRequest>(leaveRequest);
+            return Result.Success<LeaveRequest>(leaveRequest);
         }
     }
 }

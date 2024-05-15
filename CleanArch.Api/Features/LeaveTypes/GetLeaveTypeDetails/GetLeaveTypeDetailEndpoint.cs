@@ -1,6 +1,5 @@
 ﻿using CleanArch.Api.Contracts;
 using CleanArch.Api.Features.LeaveTypes.GetLeaveTypeDetails;
-using CleanArch.Contracts;
 using CleanArch.Contracts.LeaveTypes;
 using CleanArch.Domain.Enumerations;
 using CleanArch.Domain.Primitives.Result;
@@ -20,10 +19,8 @@ public sealed partial class LeaveTypesController
     {
         Result<LeaveTypeDetailDto> result = await Sender.Send(new GetLeaveTypeDetail.Query(id), cancellationToken);
 
-        return result switch
-        {
-            SuccessResult<LeaveTypeDetailDto> success => Ok(success.Value),
-            NotFoundResult<LeaveTypeDetailDto> => NotFound()
-        };
+        return result.Match(
+            onSuccess: value => Ok(value),
+            onFailure: () => NotFound());
     }
 }

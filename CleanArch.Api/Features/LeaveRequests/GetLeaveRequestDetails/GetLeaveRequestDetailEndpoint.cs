@@ -1,6 +1,5 @@
 ﻿using CleanArch.Api.Contracts;
 using CleanArch.Api.Features.LeaveRequests.GetLeaveRequestDetails;
-using CleanArch.Contracts;
 using CleanArch.Contracts.LeaveRequests;
 using CleanArch.Domain.Primitives.Result;
 using Microsoft.AspNetCore.Mvc;
@@ -17,10 +16,8 @@ public sealed partial class LeaveRequestController
     {
         Result<LeaveRequestDetailsDto> result = await Sender.Send(new GetLeaveRequestDetail.Query(id), cancellationToken);
 
-        return result switch
-        {
-            SuccessResult<LeaveRequestDetailsDto> success => Ok(success.Value),
-            NotFoundResult<LeaveRequestDetailsDto> => NotFound()
-        };
+        return result.Match(
+            onSuccess: value => Ok(value),
+            onFailure: () => NotFound());
     }
 }

@@ -52,7 +52,7 @@ public sealed class LeaveType : Entity<Guid>, IAuditableEntity
 
         if (!await repository.IsUniqueAsync(name.Value))
         {
-            return new FailureResult<Unit>(Errors.DomainErrors.LeaveType.DuplicateName);
+            return Result.Failure<Unit>(Errors.DomainErrors.LeaveType.DuplicateName);
         }
 
         Name = name;

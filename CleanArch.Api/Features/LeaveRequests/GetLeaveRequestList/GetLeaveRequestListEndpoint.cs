@@ -13,7 +13,10 @@ public sealed partial class LeaveRequestController
     [ProducesResponseType(typeof(LeaveRequestListDto), StatusCodes.Status200OK)]
     public async Task<ActionResult> Get(CancellationToken cancellationToken)
     {
-        Result<LeaveRequestListDto> result = await Sender.Send(new GetLeaveRequestList.GetLeaveRequestList.Query(), cancellationToken);
+        Result<LeaveRequestListDto> result = await Sender.Send(
+            new GetLeaveRequestList.GetLeaveRequestList.Query(),
+            cancellationToken);
+
         return Ok(result.Value);
     }
 }

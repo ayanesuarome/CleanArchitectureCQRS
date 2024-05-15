@@ -32,21 +32,19 @@ public static partial class UpdateLeaveType
 
             if(firstFailureOrSuccess.IsFailure)
             {
-                return new FailureResult<Unit>(firstFailureOrSuccess.Error);
+                return Result.Failure<Unit>(firstFailureOrSuccess.Error);
             }
 
             Result updateNameResult = await leaveType.UpdateName(nameResult.Value, _repository);
 
             if(updateNameResult.IsFailure)
             {
-                return new FailureResult<Unit>(updateNameResult.Error);
+                return Result.Failure<Unit>(updateNameResult.Error);
             }
 
             leaveType.UpdateDefaultDays(defaultDaysResult.Value);
 
-            //_repository.Update(leaveType);
-
-            return new SuccessResult<Unit>(Unit.Value);
+            return Result.Success<Unit>(Unit.Value);
         }
     }
 }

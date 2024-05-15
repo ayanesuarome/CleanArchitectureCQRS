@@ -1,6 +1,5 @@
 ﻿using CleanArch.Api.Contracts;
 using CleanArch.Api.Features.LeaveRequests.ChangeLeaveRequestApprovals;
-using CleanArch.Contracts;
 using CleanArch.Contracts.LeaveRequests;
 using CleanArch.Domain.Entities;
 using CleanArch.Domain.Events;
@@ -15,7 +14,7 @@ public sealed partial class AdminLeaveRequestController
     // PUT api/admin/<v>/leave-requests/5/update-approval
     [HttpPut(ApiRoutes.LeaveRequests.AdminUpdateApproval)]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
-    [ProducesResponseType(typeof(FailureResult), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [HasPermission(Domain.Enumerations.Permission.ChangeLeaveRequestApproval)]
     public async Task<IActionResult> UpdateApproval(
@@ -26,16 +25,13 @@ public sealed partial class AdminLeaveRequestController
         ChangeLeaveRequestApproval.Command command = new(id, request.Approved);
         Result<LeaveRequest> result = await Sender.Send(command, cancellationToken);
 
-        if (result.IsSuccess)
+        if (result.IsFailure)
         {
-            await Publisher.Publish(new LeaveRequestEvent(result.Value, LeaveRequestAction.UpdateApproval));
+            return HandleFailure(result);
         }
 
-        return result switch
-        {
-            SuccessResult<LeaveRequest> => NoContent(),
-            NotFoundResult<LeaveRequest> => NotFound(),
-            FailureResult<LeaveRequest> errorResult => BadRequest(errorResult.Error)
-        };
+        await Publisher.Publish(new LeaveRequestEvent(result.Value, LeaveRequestAction.UpdateApproval));
+
+        return NoContent();
     }
 }

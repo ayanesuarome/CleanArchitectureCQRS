@@ -23,7 +23,7 @@ public static partial class DeleteLeaveAllocation
 
             _repository.Delete(leaveAllocation);
 
-            return new SuccessResult();
+            return Result.Success();
         }
     }
 }

@@ -28,7 +28,7 @@ public static partial class Login
             _signInManager = signInManager;
             _jwtProvider = jwtProvider;
             _validator = validator;
-            }
+        }
 
         public async Task<Result<TokenResponse>> Handle(Command request, CancellationToken cancellationToken)
         {
@@ -36,20 +36,20 @@ public static partial class Login
             
             if (user is null)
             {
-                return new FailureResult<TokenResponse>(DomainErrors.Authentication.InvalidEmailOrPassword);
+                return Result.Failure<TokenResponse>(DomainErrors.Authentication.InvalidEmailOrPassword);
             }
 
             SignInResult result = await _signInManager.CheckPasswordSignInAsync(user, request.Password, false);
             
             if (!result.Succeeded)
             {
-                return new FailureResult<TokenResponse>(DomainErrors.Authentication.InvalidEmailOrPassword);
+                return Result.Failure<TokenResponse>(DomainErrors.Authentication.InvalidEmailOrPassword);
             }
 
             string securityToken = await _jwtProvider.GenerateTokenAsync(user);
             TokenResponse response = new(securityToken);
 
-            return new SuccessResult<TokenResponse>(response);
+            return Result.Success<TokenResponse>(response);
         }
     }
 }

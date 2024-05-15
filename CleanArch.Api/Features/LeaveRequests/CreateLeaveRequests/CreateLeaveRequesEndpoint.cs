@@ -1,6 +1,5 @@
 ﻿using CleanArch.Api.Contracts;
 using CleanArch.Api.Features.LeaveRequests.CreateLeaveRequests;
-using CleanArch.Contracts;
 using CleanArch.Contracts.LeaveRequests;
 using CleanArch.Domain.Entities;
 using CleanArch.Domain.Events;
@@ -15,7 +14,7 @@ public sealed partial class LeaveRequestController
     // POST api/<v>/leave-requests
     [HttpPost(ApiRoutes.LeaveRequests.Post)]
     [ProducesResponseType(StatusCodes.Status201Created)]
-    [ProducesResponseType(typeof(FailureResult), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
     [HasPermission(Domain.Enumerations.Permission.CreateLeaveRequest)]
     public async Task<IActionResult> Post([FromBody] CreateLeaveRequestRequest request, CancellationToken cancellationToken)
     {
@@ -27,15 +26,16 @@ public sealed partial class LeaveRequestController
 
         Result<LeaveRequest> result = await Sender.Send(command, cancellationToken);
 
-        if (result.IsSuccess)
+        if (result.IsFailure)
         {
-            await Publisher.Publish(new LeaveRequestEvent(result.Value, LeaveRequestAction.Created));
+            return HandleFailure(result);
         }
 
-        return result switch
-        {
-            SuccessResult<LeaveRequest> successResult => CreatedAtAction(nameof(Get), new { successResult.Value.Id }),
-            FailureResult<LeaveRequest> errorResult => BadRequest(errorResult)
-        };
+        await Publisher.Publish(new LeaveRequestEvent(result.Value, LeaveRequestAction.Created));
+
+        return CreatedAtAction(
+            nameof(Get),
+            new { id = result.Value.Id },
+            result.Value.Id);
     }
 }

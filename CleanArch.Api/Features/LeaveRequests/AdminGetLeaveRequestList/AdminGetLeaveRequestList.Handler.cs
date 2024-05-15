@@ -47,7 +47,7 @@ public static partial class AdminGetLeaveRequestList
 
             LeaveRequestListDto requestListDto = new(models);
             
-            return new SuccessResult<LeaveRequestListDto>(requestListDto);
+            return Result.Success<LeaveRequestListDto>(requestListDto);
         }
     }
 }

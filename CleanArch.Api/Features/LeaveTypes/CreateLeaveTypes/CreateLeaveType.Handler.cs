@@ -30,18 +30,18 @@ public static partial class CreateLeaveType
 
             if (firstFailureOrSuccess.IsFailure)
             {
-                return new FailureResult<Guid>(firstFailureOrSuccess.Error);
+                return Result.Failure<Guid>(firstFailureOrSuccess.Error);
             }
 
             if (!await _repository.IsUniqueAsync(nameResult.Value, cancellationToken))
             {
-                return new FailureResult<Guid>(DomainErrors.LeaveType.DuplicateName);
+                return Result.Failure<Guid>(DomainErrors.LeaveType.DuplicateName);
             }
 
             LeaveType leaveType = new(nameResult.Value, defaultDaysResult.Value);
             _repository.Add(leaveType);
 
-            return new SuccessResult<Guid>(leaveType.Id);
+            return Result.Success<Guid>(leaveType.Id);
         }
     }
 }

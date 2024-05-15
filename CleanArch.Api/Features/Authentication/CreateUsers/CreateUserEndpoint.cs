@@ -1,5 +1,4 @@
-﻿using CleanArch.Contracts;
-using CleanArch.Contracts.Identity;
+﻿using CleanArch.Contracts.Identity;
 using CleanArch.Api.Features.Authentication.CreateUsers;
 using Microsoft.AspNetCore.Mvc;
 using CleanArch.Domain.Primitives.Result;
@@ -12,7 +11,7 @@ public sealed partial class AuthenticationController
     // POST api/<v>/authentication/register
     [HttpPost(ApiRoutes.Authentication.Register)]
     [ProducesResponseType(typeof(RegistrationResponse), StatusCodes.Status200OK)]
-    [ProducesResponseType(typeof(FailureResult), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> Register([FromBody] RegistrationRequest request, CancellationToken cancellationToken)
     {
         CreateUser.Command command = new(
@@ -21,12 +20,13 @@ public sealed partial class AuthenticationController
             request.Email,
             request.Password);
 
-        Result<RegistrationResponse> result = await _sender.Send(command, cancellationToken);
+        Result<RegistrationResponse> result = await Sender.Send(command, cancellationToken);
 
-        return result switch
+        if (result.IsFailure)
         {
-            SuccessResult<RegistrationResponse> successResult => Ok(successResult.Value),
-            FailureResult<RegistrationResponse> errorResult => BadRequest(errorResult.Error)
-        };
+            return HandleFailure(result);
+        }
+
+        return Ok(result);
     }
 }

@@ -1,5 +1,4 @@
-﻿using CleanArch.Application.Abstractions.Data;
-using CleanArch.Application.Abstractions.Authentication;
+﻿using CleanArch.Application.Abstractions.Authentication;
 using CleanArch.Application.Abstractions.Messaging;
 using CleanArch.Contracts.Identity;
 using CleanArch.Domain.Entities;
@@ -16,7 +15,6 @@ public static partial class CreateLeaveAllocation
         private readonly ILeaveAllocationRepository _allocationRepository;
         private readonly ILeaveTypeRepository _leaveTypeRepository;
         private readonly IUserService _userService;
-        private readonly IUnitOfWork _unitOfWork;
 
         public Handler(
             ILeaveAllocationRepository allocationRepository,
@@ -35,7 +33,7 @@ public static partial class CreateLeaveAllocation
 
             if(leaveType is null)
             {
-                return new FailureResult<int>(DomainErrors.LeaveAllocation.LeaveTypeMustExist);
+                return Result.Failure<int>(DomainErrors.LeaveAllocation.LeaveTypeMustExist);
             }
 
             // get employees

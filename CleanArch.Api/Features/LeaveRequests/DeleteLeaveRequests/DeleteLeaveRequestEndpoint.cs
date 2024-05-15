@@ -1,6 +1,5 @@
 ﻿using CleanArch.Api.Contracts;
 using CleanArch.Api.Features.LeaveRequests.DeleteLeaveRequests;
-using CleanArch.Contracts;
 using CleanArch.Domain.Primitives.Result;
 using CleanArch.Identity.Authentication;
 using Microsoft.AspNetCore.Mvc;
@@ -18,10 +17,8 @@ public sealed partial class LeaveRequestController
     {
         Result result = await Sender.Send(new DeleteLeaveRequest.Command(id), cancellationToken);
 
-        return result switch
-        {
-            SuccessResult => NoContent(),
-            Domain.Primitives.Result.NotFoundResult => NotFound()
-        };
+        return result.Match(
+            onSuccess: () => NoContent(),
+            onFailure: () => NotFound());
     }
 }

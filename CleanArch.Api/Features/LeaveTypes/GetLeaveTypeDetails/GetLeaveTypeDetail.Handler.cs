@@ -28,7 +28,7 @@ public static partial class GetLeaveTypeDetail
                 leaveType.DefaultDays.Value,
                 leaveType.DateCreated);
 
-            return new SuccessResult<LeaveTypeDetailDto>(dto);
+            return Result.Success<LeaveTypeDetailDto>(dto);
         }
     }
 }

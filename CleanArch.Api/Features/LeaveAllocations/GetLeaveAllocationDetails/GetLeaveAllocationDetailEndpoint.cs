@@ -1,6 +1,5 @@
 ﻿using CleanArch.Api.Contracts;
 using CleanArch.Api.Features.LeaveAllocations.GetLeaveAllocationDetails;
-using CleanArch.Contracts;
 using CleanArch.Contracts.LeaveAllocations;
 using CleanArch.Domain.Primitives.Result;
 using Microsoft.AspNetCore.Mvc;
@@ -17,11 +16,9 @@ public sealed partial class LeaveAllocationController
     {
         Result<LeaveAllocationDetailsDto> result = await Sender.Send(new GetLeaveAllocationDetail.Query(id), cancellationToken);
 
-        return result switch
-        {
-            SuccessResult<LeaveAllocationDetailsDto> successResult => Ok(successResult.Value),
-            NotFoundResult<LeaveAllocationDetailsDto> => NotFound()
-        };
+        return result.Match(
+            onSuccess: value => Ok(value),
+            onFailure: () => NotFound());
     }
     
 }

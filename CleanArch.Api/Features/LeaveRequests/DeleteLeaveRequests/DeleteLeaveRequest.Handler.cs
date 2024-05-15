@@ -23,7 +23,7 @@ public static partial class DeleteLeaveRequest
 
             _repository.Delete(leaveRequest);
 
-            return new SuccessResult();
+            return Result.Success();
         }
     }
 }

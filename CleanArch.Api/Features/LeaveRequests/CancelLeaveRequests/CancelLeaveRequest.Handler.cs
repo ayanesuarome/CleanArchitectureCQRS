@@ -34,7 +34,7 @@ public static partial class CancelLeaveRequest
 
             if(cancelResult.IsFailure)
             {
-                return new FailureResult<LeaveRequest>(cancelResult.Error);
+                return Result.Failure<LeaveRequest>(cancelResult.Error);
             }
 
             _leaveRequestRepository.Update(leaveRequest);
@@ -50,13 +50,13 @@ public static partial class CancelLeaveRequest
 
                 if(updateNumberOfDaysResult.IsFailure)
                 {
-                    return new FailureResult<LeaveRequest>(updateNumberOfDaysResult.Error);
+                    return Result.Failure<LeaveRequest>(updateNumberOfDaysResult.Error);
                 }
 
                 _leaveAllocationRepository.Update(allocation);
             }
 
-            return new SuccessResult<LeaveRequest>(leaveRequest);
+            return Result.Success<LeaveRequest>(leaveRequest);
         }
     }
 }

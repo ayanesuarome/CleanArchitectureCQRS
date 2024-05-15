@@ -33,7 +33,7 @@ public static partial class CreateUser
 
             if (firstFailureOrSuccess.IsFailure)
             {
-                return new FailureResult<RegistrationResponse>(firstFailureOrSuccess.Error);
+                return Result.Failure<RegistrationResponse>(firstFailureOrSuccess.Error);
             }
             
             User user = new(firstNameResult.Value, lastNameResult.Value)
@@ -47,14 +47,14 @@ public static partial class CreateUser
 
             if (!result.Succeeded)
             {
-                return new FailureResult<RegistrationResponse>(ValidationErrors.CreateUser.CreateUserValidation(result.Errors.ToString()));
+                return Result.Failure<RegistrationResponse>(ValidationErrors.CreateUser.CreateUserValidation(result.Errors.ToString()));
             }
 
             await _userManager.AddToRoleAsync(user, Domain.Enumerations.Role.Employee.Name);
 
             RegistrationResponse response = new(user.Id);
 
-            return new SuccessResult<RegistrationResponse>(response);
+            return Result.Success<RegistrationResponse>(response);
         }
     }
 }
