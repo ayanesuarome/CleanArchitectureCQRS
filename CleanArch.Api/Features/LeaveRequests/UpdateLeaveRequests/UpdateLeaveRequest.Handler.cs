@@ -9,7 +9,7 @@ namespace CleanArch.Api.Features.LeaveRequests.UpdateLeaveRequests;
 
 public static partial class UpdateLeaveRequest
 {
-    internal sealed class Handler : ICommandHandler<Command, LeaveRequest>
+    internal sealed class Handler : ICommandHandler<Command, Result<LeaveRequest>>
     {
         private readonly ILeaveRequestRepository _repository;
 

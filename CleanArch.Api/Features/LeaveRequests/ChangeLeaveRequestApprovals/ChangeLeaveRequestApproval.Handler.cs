@@ -8,7 +8,7 @@ namespace CleanArch.Api.Features.LeaveRequests.ChangeLeaveRequestApprovals;
 
 public static partial class ChangeLeaveRequestApproval
 {
-    internal sealed class Handler : ICommandHandler<Command, LeaveRequest>
+    internal sealed class Handler : ICommandHandler<Command, Result<LeaveRequest>>
     {
         private readonly ILeaveRequestRepository _leaveRequestRepository;
         private readonly ILeaveAllocationRepository _leaveAllocationRepository;

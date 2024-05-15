@@ -10,7 +10,7 @@ namespace CleanArch.Api.Features.LeaveRequests.CreateLeaveRequests;
 
 public static partial class CreateLeaveRequest
 {
-    internal sealed class Handler : ICommandHandler<Command, LeaveRequest>
+    internal sealed class Handler : ICommandHandler<Command, Result<LeaveRequest>>
     {
         private readonly ILeaveRequestRepository _leaveRequestRepository;
         private readonly ILeaveAllocationRepository _allocationRepository;

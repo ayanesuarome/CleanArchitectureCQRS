@@ -1,12 +1,13 @@
 ﻿using CleanArch.Application.Abstractions.Messaging;
 using CleanArch.Domain.Entities;
+using CleanArch.Domain.Primitives.Result;
 using System.Globalization;
 
 namespace CleanArch.Api.Features.LeaveRequests.CreateLeaveRequests;
 
 public static partial class CreateLeaveRequest
 {
-    public sealed record Command : ICommand<LeaveRequest>
+    public sealed record Command : ICommand<Result<LeaveRequest>>
     {
         public Command(Guid leaveTypeId, string startDate, string endDate, string? comments)
         {

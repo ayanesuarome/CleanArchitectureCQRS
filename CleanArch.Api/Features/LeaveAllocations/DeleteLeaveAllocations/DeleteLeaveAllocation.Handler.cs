@@ -8,7 +8,7 @@ namespace CleanArch.Api.Features.LeaveAllocations.DeleteLeaveAllocations;
 
 public static partial class DeleteLeaveAllocation
 {
-    internal sealed class Handler(ILeaveAllocationRepository repository) : ICommandHandler<Command>
+    internal sealed class Handler(ILeaveAllocationRepository repository) : ICommandHandler<Command, Result>
     {
         private readonly ILeaveAllocationRepository _repository = repository;
 

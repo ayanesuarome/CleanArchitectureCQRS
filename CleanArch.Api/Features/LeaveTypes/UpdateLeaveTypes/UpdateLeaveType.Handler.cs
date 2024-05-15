@@ -10,7 +10,7 @@ namespace CleanArch.Api.Features.LeaveTypes.UpdateLeaveTypes;
 
 public static partial class UpdateLeaveType
 {
-    internal sealed class Handler : ICommandHandler<Command, Unit>
+    internal sealed class Handler : ICommandHandler<Command, Result<Unit>>
     {
         private readonly ILeaveTypeRepository _repository;
 

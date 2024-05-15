@@ -13,7 +13,7 @@ namespace CleanArch.Api.Behaviors;
 /// <typeparam name="TResponse">The response type.</typeparam>
 internal sealed class TransactionBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
     where TRequest : ICommand<TResponse>
-    where TResponse : Result<TResponse>
+    where TResponse : Result
 {
     private readonly IUnitOfWork _unitOfWork;
 
@@ -50,11 +50,6 @@ internal sealed class TransactionBehavior<TRequest, TResponse> : IPipelineBehavi
 
     private bool IsIdentity()
     {
-        if (typeof(TRequest).FullName.Contains("Authentication"))
-        {
-            return true;
-        }
-
-        return false;
+        return typeof(TRequest).FullName.Contains("Authentication");
     }
 }

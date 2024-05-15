@@ -6,7 +6,7 @@ namespace CleanArch.Api.Features.LeaveTypes.UpdateLeaveTypes;
 
 public static partial class UpdateLeaveType
 {
-    public sealed record Command(Guid Id, string Name, int DefaultDays) : ICommand<Unit>
+    public sealed record Command(Guid Id, string Name, int DefaultDays) : ICommand<Result<Unit>>
     {
     }
 }

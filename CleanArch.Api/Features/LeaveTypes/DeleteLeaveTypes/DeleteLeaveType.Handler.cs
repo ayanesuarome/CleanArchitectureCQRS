@@ -9,7 +9,7 @@ namespace CleanArch.Api.Features.LeaveTypes.DeleteLeaveTypes;
 
 public static partial class DeleteLeaveType
 {
-    internal sealed class Handler(ILeaveTypeRepository repository) : ICommandHandler<Command, Unit>
+    internal sealed class Handler(ILeaveTypeRepository repository) : ICommandHandler<Command, Result<Unit>>
     {
         private readonly ILeaveTypeRepository _repository = repository;
 

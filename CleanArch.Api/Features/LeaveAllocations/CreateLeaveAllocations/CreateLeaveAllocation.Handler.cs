@@ -11,7 +11,7 @@ namespace CleanArch.Api.Features.LeaveAllocations.CreateLeaveAllocations;
 
 public static partial class CreateLeaveAllocation
 {
-    internal sealed class Handler : ICommandHandler<Command, int>
+    internal sealed class Handler : ICommandHandler<Command, Result<int>>
     {
         private readonly ILeaveAllocationRepository _allocationRepository;
         private readonly ILeaveTypeRepository _leaveTypeRepository;

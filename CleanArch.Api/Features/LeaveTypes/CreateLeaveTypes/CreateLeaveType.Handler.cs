@@ -10,7 +10,7 @@ namespace CleanArch.Api.Features.LeaveTypes.CreateLeaveTypes;
 
 public static partial class CreateLeaveType
 {
-    internal sealed class Handler : ICommandHandler<Command, Guid>
+    internal sealed class Handler : ICommandHandler<Command, Result<Guid>>
     {
         private readonly ILeaveTypeRepository _repository;
         private readonly IUnitOfWork unitOfWork;
@@ -38,17 +38,10 @@ public static partial class CreateLeaveType
                 return new FailureResult<Guid>(DomainErrors.LeaveType.DuplicateName);
             }
 
-            LeaveType leaveTypeToCreate = new(nameResult.Value, defaultDaysResult.Value);
+            LeaveType leaveType = new(nameResult.Value, defaultDaysResult.Value);
+            _repository.Add(leaveType);
 
-            Result<Name> nameResult1 = Name.Create("Test");
-            Result<DefaultDays> defaultDaysResult1 = DefaultDays.Create(15);
-            LeaveType leave = new(nameResult1.Value, defaultDaysResult1.Value);
-
-            _repository.Add(leaveTypeToCreate);
-            await this.unitOfWork.SaveChangesAsync();
-            _repository.Add(leave);
-
-            return new SuccessResult<Guid>(leaveTypeToCreate.Id);
+            return new SuccessResult<Guid>(leaveType.Id);
         }
     }
 }

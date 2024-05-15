@@ -10,7 +10,7 @@ namespace CleanArch.Api.Features.Authentication.CreateUsers;
 
 public static partial class CreateUser
 {
-    internal sealed class Handler : ICommandHandler<Command, RegistrationResponse>
+    internal sealed class Handler : ICommandHandler<Command, Result<RegistrationResponse>>
     {
         private readonly UserManager<User> _userManager;
         private readonly IJwtProvider _jwtProvider;
