@@ -1,8 +1,6 @@
 ﻿using CleanArch.Domain.Primitives.Result;
 using CleanArch.Domain.Entities;
 using CleanArch.Domain.Repositories;
-using FluentValidation;
-using FluentValidation.Results;
 using CleanArch.Domain.Errors;
 using CleanArch.Domain.ValueObjects;
 using CleanArch.Application.Abstractions.Messaging;
@@ -11,18 +9,11 @@ namespace CleanArch.Api.Features.LeaveRequests.UpdateLeaveRequests;
 
 public static partial class UpdateLeaveRequest
 {
-    internal sealed class Handler : ICommandHandler<Command, Result<LeaveRequest>>
+    internal sealed class Handler : ICommandHandler<Command, LeaveRequest>
     {
         private readonly ILeaveRequestRepository _repository;
-        private readonly IValidator<Command> _validator;
 
-        public Handler(
-            ILeaveRequestRepository repository,
-            IValidator<Command> validator)
-        {
-            _repository = repository;
-            _validator = validator;
-        }
+        public Handler(ILeaveRequestRepository repository) => _repository = repository;
 
         public async Task<Result<LeaveRequest>> Handle(Command command, CancellationToken cancellationToken)
         {
@@ -31,14 +22,6 @@ public static partial class UpdateLeaveRequest
             if (leaveRequest is null)
             {
                 return new NotFoundResult<LeaveRequest>(DomainErrors.LeaveRequest.NotFound(command.Id));
-            }
-
-            ValidationResult validationResult = await _validator.ValidateAsync(command, cancellationToken);
-
-            if (!validationResult.IsValid)
-            {
-                return new FailureResult<LeaveRequest>(
-                    ValidationErrors.UpdateLeaveRequest.UpdateLeaveRequestValidation(validationResult.ToString()));
             }
 
             Result<DateRange> rangeResult = DateRange.Create(command.StartDate, command.EndDate);

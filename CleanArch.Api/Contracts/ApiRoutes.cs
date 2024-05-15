@@ -1,4 +1,4 @@
-﻿namespace CleanArch.Contracts;
+﻿namespace CleanArch.Api.Contracts;
 
 /// <summary>
 /// Contains the API endpoint routes.

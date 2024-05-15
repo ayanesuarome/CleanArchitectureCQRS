@@ -9,11 +9,18 @@ namespace CleanArch.Api.Features.LeaveAllocations.GetLeaveAllocationList;
 
 public static partial class GetLeaveAllocationList
 {
-    internal sealed class Handler(ILeaveAllocationRepository repository, IUserIdentifierProvider userIdentifierProvider)
-        : IQueryHandler<Query, Result<LeaveAllocationListDto>>
+    internal sealed class Handler : IQueryHandler<Query, LeaveAllocationListDto>
     {
-        private readonly ILeaveAllocationRepository _repository = repository;
-        private readonly IUserIdentifierProvider _userIdentifierProvider = userIdentifierProvider;
+        private readonly ILeaveAllocationRepository _repository;
+        private readonly IUserIdentifierProvider _userIdentifierProvider;
+
+        public Handler(
+            ILeaveAllocationRepository repository,
+            IUserIdentifierProvider userIdentifierProvider)
+        {
+            _repository = repository;
+            _userIdentifierProvider = userIdentifierProvider;
+        }
 
         public async Task<Result<LeaveAllocationListDto>> Handle(Query request, CancellationToken cancellationToken)
         {

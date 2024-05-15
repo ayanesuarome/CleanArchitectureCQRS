@@ -1,4 +1,5 @@
-﻿using CleanArch.Contracts;
+﻿using CleanArch.Api.Contracts;
+using CleanArch.Contracts;
 using CleanArch.Contracts.LeaveRequests;
 using CleanArch.Domain.Enumerations;
 using CleanArch.Domain.Primitives.Result;

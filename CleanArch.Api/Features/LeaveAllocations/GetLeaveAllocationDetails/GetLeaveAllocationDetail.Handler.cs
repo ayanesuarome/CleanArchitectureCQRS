@@ -9,8 +9,7 @@ namespace CleanArch.Api.Features.LeaveAllocations.GetLeaveAllocationDetails;
 
 public static partial class GetLeaveAllocationDetail
 {
-    internal sealed class Handler(ILeaveAllocationRepository repository)
-        : IQueryHandler<Query, Result<LeaveAllocationDetailsDto>>
+    internal sealed class Handler(ILeaveAllocationRepository repository) : IQueryHandler<Query, LeaveAllocationDetailsDto>
     {
         private readonly ILeaveAllocationRepository _repository = repository;
 

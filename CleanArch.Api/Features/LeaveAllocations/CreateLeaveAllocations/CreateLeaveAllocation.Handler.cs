@@ -6,44 +6,30 @@ using CleanArch.Domain.Entities;
 using CleanArch.Domain.Errors;
 using CleanArch.Domain.Primitives.Result;
 using CleanArch.Domain.Repositories;
-using FluentValidation;
-using FluentValidation.Results;
 
 namespace CleanArch.Api.Features.LeaveAllocations.CreateLeaveAllocations;
 
 public static partial class CreateLeaveAllocation
 {
-    public sealed class Handler : ICommandHandler<Command, Result<int>>
+    internal sealed class Handler : ICommandHandler<Command, int>
     {
         private readonly ILeaveAllocationRepository _allocationRepository;
         private readonly ILeaveTypeRepository _leaveTypeRepository;
-        private readonly IValidator<Command> _validator;
         private readonly IUserService _userService;
         private readonly IUnitOfWork _unitOfWork;
 
         public Handler(
             ILeaveAllocationRepository allocationRepository,
             ILeaveTypeRepository leaveTypeRepository,
-            IValidator<Command> validator,
-            IUserService userService,
-            IUnitOfWork unitOfWork)
+            IUserService userService)
         {
             _allocationRepository = allocationRepository;
             _leaveTypeRepository = leaveTypeRepository;
-            _validator = validator;
             _userService = userService;
-            _unitOfWork = unitOfWork;
         }
 
         public async Task<Result<int>> Handle(Command command, CancellationToken cancellationToken)
         {
-            ValidationResult validationResult = await _validator.ValidateAsync(command, cancellationToken);
-
-            if (!validationResult.IsValid)
-            {
-                return Result.Failure<int>(ValidationErrors.CreateLeaveAllocation.CreateLeaveAllocationValidation(validationResult.ToString()));
-            }
-
             // get leave types for allocations
             LeaveType leaveType = await _leaveTypeRepository.GetByIdAsync(command.LeaveTypeId);
 

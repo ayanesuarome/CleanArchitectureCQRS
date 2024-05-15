@@ -1,19 +1,14 @@
 ﻿using CleanArch.Application.Extensions;
-using CleanArch.Domain.Repositories;
 using FluentValidation;
 
 namespace CleanArch.Api.Features.LeaveTypes.UpdateLeaveTypes;
 
 public static partial class UpdateLeaveType
 {
-    public sealed class Validator : AbstractValidator<Command>
+    internal sealed class Validator : AbstractValidator<Command>
     {
-        private readonly ILeaveTypeRepository _repository;
-
-        public Validator(ILeaveTypeRepository repository)
+        public Validator()
         {
-            _repository = repository;
-
             RuleFor(m => m.Id)
                 .NotEmpty()
                 .WithError(ValidationErrors.UpdateLeaveType.IdIsRequired);

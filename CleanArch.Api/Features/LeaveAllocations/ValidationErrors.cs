@@ -23,8 +23,4 @@ internal static class ValidationErrors
 
         internal static Error UpdateLeaveAllocationValidation(string message) => new("UpdateLeaveAllocation.Validation", message);
     }
-
-    internal static Error InvalidLeaveAllocation(IDictionary<string, string[]> errors) => new(
-        "LeaveAllocation.InvalidLeaveAllocation",
-        $"Invalid Leave allocation", errors);
 }

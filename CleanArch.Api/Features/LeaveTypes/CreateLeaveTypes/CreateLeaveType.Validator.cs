@@ -6,7 +6,7 @@ namespace CleanArch.Api.Features.LeaveTypes.CreateLeaveTypes;
 
 public static partial class CreateLeaveType
 {
-    public sealed class Validator : AbstractValidator<Command>
+    internal sealed class Validator : AbstractValidator<Command>
     {
         private readonly ILeaveTypeRepository _repository;
 

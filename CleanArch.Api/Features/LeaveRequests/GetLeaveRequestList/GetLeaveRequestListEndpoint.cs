@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using CleanArch.Contracts;
 using CleanArch.Contracts.LeaveRequests;
+using CleanArch.Api.Contracts;
 
 namespace CleanArch.Api.Features.LeaveRequests;
 

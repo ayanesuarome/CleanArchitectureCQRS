@@ -18,7 +18,7 @@ public static class FluentValidationExtensions
         this IRuleBuilderOptions<T, TProperty> rule, Error error)
     {
         return rule
-            .WithErrorCode(error.Type)
+            .WithErrorCode(error.Code)
             .WithMessage(error.Message);
     }
 }

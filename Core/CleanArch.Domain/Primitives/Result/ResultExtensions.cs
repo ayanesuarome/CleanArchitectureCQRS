@@ -17,11 +17,6 @@ public static class ResultExtensions
         return result.IsSuccess ? func(result.Value) : Result.Failure<TOut>(result.Error);
     }
 
-    //public static T Match<T, R>(this Result<R> result, Func<T> onSuccess, Func<Error, T> onFailure)
-    //{
-    //    //return result.IsSuccess ? onSuccess() : onFailure((result as ErrorResult).);
-    //}
-
     /// <summary>
     /// Matches the success status of the result to the corresponding functions.
     /// </summary>

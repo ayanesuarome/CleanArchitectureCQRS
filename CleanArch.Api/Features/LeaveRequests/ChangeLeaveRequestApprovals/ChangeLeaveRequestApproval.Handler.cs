@@ -3,27 +3,22 @@ using CleanArch.Domain.Entities;
 using CleanArch.Domain.Errors;
 using CleanArch.Domain.Primitives.Result;
 using CleanArch.Domain.Repositories;
-using FluentValidation;
-using FluentValidation.Results;
 
 namespace CleanArch.Api.Features.LeaveRequests.ChangeLeaveRequestApprovals;
 
 public static partial class ChangeLeaveRequestApproval
 {
-    internal sealed class Handler : ICommandHandler<Command, Result<LeaveRequest>>
+    internal sealed class Handler : ICommandHandler<Command, LeaveRequest>
     {
         private readonly ILeaveRequestRepository _leaveRequestRepository;
         private readonly ILeaveAllocationRepository _leaveAllocationRepository;
-        private readonly IValidator<Command> _validator;
 
         public Handler(
             ILeaveRequestRepository leaveRequestRepository,
-            ILeaveAllocationRepository leaveAllocationRepository,
-            IValidator<Command> validator)
+            ILeaveAllocationRepository leaveAllocationRepository)
         {
             _leaveRequestRepository = leaveRequestRepository;
             _leaveAllocationRepository = leaveAllocationRepository;
-            _validator = validator;
         }
 
         public async Task<Result<LeaveRequest>> Handle(Command command, CancellationToken cancellationToken)
@@ -33,14 +28,6 @@ public static partial class ChangeLeaveRequestApproval
             if (leaveRequest is null)
             {
                 return new NotFoundResult<LeaveRequest>(DomainErrors.LeaveRequest.NotFound(command.Id));
-            }
-
-            ValidationResult validationResult = await _validator.ValidateAsync(command, cancellationToken);
-
-            if (!validationResult.IsValid)
-            {
-                return new FailureResult<LeaveRequest>(
-                    ValidationErrors.ChangeLeaveRequestApproval.ChangeLeaveRequestApprovalValidation(validationResult.ToString()));
             }
 
             if (leaveRequest.IsCancelled)

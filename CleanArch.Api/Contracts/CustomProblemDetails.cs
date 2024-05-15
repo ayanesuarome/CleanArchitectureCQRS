@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace CleanArch.Api.Models;
+namespace CleanArch.Api.Contracts;
 
 public class CustomProblemDetails : ProblemDetails
 {

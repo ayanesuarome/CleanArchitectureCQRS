@@ -2,7 +2,7 @@
 
 public sealed record UpdateLeaveRequestRequest(
     string? Comments,
-    DateOnly StartDate,
-    DateOnly EndDate)
+    string StartDate,
+    string EndDate)
 {
 }

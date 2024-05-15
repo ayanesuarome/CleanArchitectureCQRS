@@ -6,7 +6,7 @@ namespace CleanArch.Api.Features.LeaveTypes.DeleteLeaveTypes;
 
 public static partial class DeleteLeaveType
 {
-    public sealed record Command(Guid Id) : ICommand<Result<Unit>>
+    public sealed record Command(Guid Id) : ICommand<Unit>
     {
     }
 }

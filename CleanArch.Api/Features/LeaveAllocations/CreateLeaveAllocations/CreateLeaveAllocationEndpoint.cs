@@ -1,4 +1,5 @@
-﻿using CleanArch.Api.Features.LeaveAllocations.CreateLeaveAllocations;
+﻿using CleanArch.Api.Contracts;
+using CleanArch.Api.Features.LeaveAllocations.CreateLeaveAllocations;
 using CleanArch.Contracts;
 using CleanArch.Contracts.LeaveAllocations;
 using CleanArch.Domain.Enumerations;

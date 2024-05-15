@@ -1,7 +1,7 @@
 ﻿using CleanArch.Api.Features.LeaveTypes.UpdateLeaveTypes;
 using FluentValidation.TestHelper;
 
-namespace CleanArch.Application.UnitTests.Features.LeaveTypes.Commands.UpdateLeaveTypes;
+namespace CleanArch.Application.Tests.Features.LeaveTypes.Commands.UpdateLeaveTypes;
 
 public class UpdateLeaveTypeCommandValidatorTest(UpdateLeaveTypeCommandValidatorFixture fixture)
     : IClassFixture<UpdateLeaveTypeCommandValidatorFixture>

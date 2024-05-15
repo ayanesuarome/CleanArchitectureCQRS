@@ -24,8 +24,4 @@ internal static class ValidationErrors
 
         internal static Error UpdateLeaveTypeValidation(string message) => new("UpdateLeaveType.Validation", message);
     }
-
-    internal static Error InvalidLeaveType(IDictionary<string, string[]> errors) => new("LeaveType.InvalidLeaveType", "Invalid LeaveType", errors);
-    
-    
 }

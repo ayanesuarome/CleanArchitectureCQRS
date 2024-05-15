@@ -4,7 +4,7 @@ namespace CleanArch.Application.Tests.Features.LeaveRequests.Commands.CreateLeav
 
 public class CreateLeaveRequestCommandValidatorFixture : IDisposable
 {
-    public CreateLeaveRequest.Validator validator;
+    internal CreateLeaveRequest.Validator validator;
 
     #region Setup and Cleanup
 

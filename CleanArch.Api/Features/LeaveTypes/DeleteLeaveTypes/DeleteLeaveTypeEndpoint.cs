@@ -5,6 +5,7 @@ using CleanArch.Domain.Primitives.Result;
 using CleanArch.Contracts;
 using CleanArch.Identity.Authentication;
 using CleanArch.Domain.Enumerations;
+using CleanArch.Api.Contracts;
 
 namespace CleanArch.Api.Features.LeaveTypes
 {

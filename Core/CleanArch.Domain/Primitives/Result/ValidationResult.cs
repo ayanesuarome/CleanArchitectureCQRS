@@ -1,27 +1,29 @@
-﻿namespace CleanArch.Domain.Primitives.Result;
+﻿using System.Collections.Generic;
 
-public sealed class ValidationResultOne : Result, IValidationResult
+namespace CleanArch.Domain.Primitives.Result;
+
+public sealed class ValidationResult : Result, IValidationResult
 {
-    private ValidationResultOne(Error[] errors)
+    private ValidationResult(IReadOnlyCollection<Error> errors)
         : base(false, IValidationResult.ValidationError)
     {
         Errors = errors;
     }
 
-    public Error[] Errors { get; }
+    public IReadOnlyCollection<Error> Errors { get; }
 
-    public static ValidationResultOne WithErrors(Error[] errors) => new(errors);
+    public static ValidationResult WithErrors(IReadOnlyCollection<Error> errors) => new(errors);
 }
 
 public sealed class ValidationResult<TValue> : Result<TValue>, IValidationResult
 {
-    private ValidationResult(Error[] errors)
+    private ValidationResult(IReadOnlyCollection<Error> errors)
         : base(IValidationResult.ValidationError)
     {
         Errors = errors;
     }
 
-    public Error[] Errors { get; }
+    public IReadOnlyCollection<Error> Errors { get; }
 
-    public static ValidationResult<TValue> WithErrors(Error[] errors) => new(errors);
+    public static ValidationResult<TValue> WithErrors(IReadOnlyCollection<Error> errors) => new(errors);
 }

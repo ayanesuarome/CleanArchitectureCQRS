@@ -4,5 +4,5 @@ public interface IValidationResult
 {
     public static Error ValidationError => new("ValidationError", "A validation problem occurred.");
 
-    Error[] Errors { get; }
+    IReadOnlyCollection<Error> Errors { get; }
 }

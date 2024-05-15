@@ -2,7 +2,7 @@
 
 public class FailureResult : Result
 {
-    public string ErrorType => Error!.Type;
+    public string ErrorType => Error!.Code;
     public string ErrorMessage => Error!.Message;
 
     public FailureResult(Error error) : base(false, error)
@@ -12,7 +12,7 @@ public class FailureResult : Result
 
 public class FailureResult<T> : Result<T>
 {
-    public string ErrorType => Error!.Type;
+    public string ErrorType => Error!.Code;
     public string ErrorMessage => Error!.Message;
 
     public FailureResult(Error error) : base(error)

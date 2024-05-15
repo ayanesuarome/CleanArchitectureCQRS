@@ -11,7 +11,7 @@ namespace CleanArch.Api.Features.Authentication.Login;
 
 public static partial class Login
 {
-    public sealed class Handler : ICommandHandler<Command, Result<TokenResponse>>
+    internal sealed class Handler : ICommandHandler<Command, TokenResponse>
     {
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;

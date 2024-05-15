@@ -6,7 +6,7 @@ namespace CleanArch.Api.Features.Authentication.CreateUsers;
 
 public static partial class CreateUser
 {
-    public sealed class Validator : AbstractValidator<Command>
+    internal sealed class Validator : AbstractValidator<Command>
     {
         public Validator()
         {

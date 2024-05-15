@@ -8,8 +8,7 @@ namespace CleanArch.Api.Features.LeaveRequests.DeleteLeaveRequests;
 
 public static partial class DeleteLeaveRequest
 {
-    internal sealed class Handler(ILeaveRequestRepository repository)
-        : ICommandHandler<Command, Result>
+    internal sealed class Handler(ILeaveRequestRepository repository) : ICommandHandler<Command>
     {
         private readonly ILeaveRequestRepository _repository = repository;
 

@@ -5,7 +5,7 @@ namespace CleanArch.Api.Features.LeaveRequests.ChangeLeaveRequestApprovals;
 
 public static partial class ChangeLeaveRequestApproval
 {
-    public sealed class Validator : AbstractValidator<Command>
+    internal sealed class Validator : AbstractValidator<Command>
     {
         public Validator()
         {

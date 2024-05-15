@@ -9,15 +9,21 @@ namespace CleanArch.Api.Features.LeaveRequests.GetLeaveRequestList;
 
 public static partial class GetLeaveRequestList
 {
-    internal sealed class Handler(
-        ILeaveRequestRepository repository,
-        IUserIdentifierProvider userIdentifierProvider,
-        IUserService userService)
-        : IQueryHandler<Query, Result<LeaveRequestListDto>>
+    internal sealed class Handler : IQueryHandler<Query, LeaveRequestListDto>
     {
-        private readonly ILeaveRequestRepository _repository = repository;
-        private readonly IUserIdentifierProvider _userIdentifierProvider = userIdentifierProvider;
-        private readonly IUserService _userService = userService;
+        private readonly ILeaveRequestRepository _repository;
+        private readonly IUserIdentifierProvider _userIdentifierProvider;
+        private readonly IUserService _userService;
+
+        public Handler(
+            ILeaveRequestRepository repository,
+            IUserIdentifierProvider userIdentifierProvider,
+            IUserService userService)
+        {
+            _repository = repository;
+            _userIdentifierProvider = userIdentifierProvider;
+            _userService = userService;
+        }
 
         public async Task<Result<LeaveRequestListDto>> Handle(Query request, CancellationToken cancellationToken)
         {

@@ -5,45 +5,32 @@ using CleanArch.Domain.Errors;
 using CleanArch.Domain.Primitives.Result;
 using CleanArch.Domain.Repositories;
 using CleanArch.Domain.ValueObjects;
-using FluentValidation;
-using FluentValidation.Results;
 
 namespace CleanArch.Api.Features.LeaveRequests.CreateLeaveRequests;
 
 public static partial class CreateLeaveRequest
 {
-    public sealed class Handler : ICommandHandler<Command, Result<LeaveRequest>>
+    internal sealed class Handler : ICommandHandler<Command, LeaveRequest>
     {
         private readonly ILeaveRequestRepository _leaveRequestRepository;
         private readonly ILeaveAllocationRepository _allocationRepository;
         private readonly ILeaveTypeRepository _leaveTypeRepository;
         private readonly IUserIdentifierProvider _userIdentifierProvider;
-        private readonly IValidator<Command> _validator;
 
         public Handler(
             ILeaveRequestRepository leaveRequestRepository,
             ILeaveAllocationRepository allocationRepository,
             ILeaveTypeRepository leaveTypeRepository,
-            IUserIdentifierProvider userIdentifierProvider,
-            IValidator<Command> validator)
+            IUserIdentifierProvider userIdentifierProvider)
         {
             _leaveRequestRepository = leaveRequestRepository;
             _allocationRepository = allocationRepository;
             _leaveTypeRepository = leaveTypeRepository;
             _userIdentifierProvider = userIdentifierProvider;
-            _validator = validator;
         }
 
         public async Task<Result<LeaveRequest>> Handle(Command command, CancellationToken cancellationToken)
         {
-            ValidationResult validationResult = await _validator.ValidateAsync(command, cancellationToken);
-
-            if (!validationResult.IsValid)
-            {
-                return new FailureResult<LeaveRequest>(
-                    ValidationErrors.CreateLeaveRequest.CreateLeaveRequestValidation(validationResult.ToDictionary()));
-            }
-
             Result<DateRange> rangeResult = DateRange.Create(command.StartDate, command.EndDate);
             Result<Comment>? commentResult = null;
 

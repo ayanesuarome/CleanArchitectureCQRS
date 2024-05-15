@@ -28,8 +28,6 @@ internal static class ValidationErrors
             "The EndDate must be after StartDate.");
 
         internal static Error CreateLeaveRequestValidation(string message) => new("CreateLeaveRequest.Validation", message);
-        internal static Error CreateLeaveRequestValidation(IDictionary<string, string[]> errors) => new(
-        "CreateLeaveRequest.Validation", "Invalid Leave request", errors);
     }
 
     internal static class UpdateLeaveRequest
@@ -40,8 +38,4 @@ internal static class ValidationErrors
         internal static Error UpdateLeaveRequestValidation(string message) => new("UpdateLeaveRequest.Validation", message);
 
     }
-
-    internal static Error InvalidApprovalRequest(IDictionary<string, string[]> errors) => new(
-        "LeaveRequest.InvalidApprovalRequest",
-        "Invalid approval request", errors);
 }

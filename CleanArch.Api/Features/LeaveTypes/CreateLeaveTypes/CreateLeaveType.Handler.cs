@@ -1,40 +1,22 @@
-﻿using CleanArch.Application.Abstractions.Data;
-using CleanArch.Application.Abstractions.Messaging;
+﻿using CleanArch.Application.Abstractions.Messaging;
 using CleanArch.Domain.Entities;
 using CleanArch.Domain.Errors;
 using CleanArch.Domain.Primitives.Result;
 using CleanArch.Domain.Repositories;
 using CleanArch.Domain.ValueObjects;
-using FluentValidation;
-using FluentValidation.Results;
 
 namespace CleanArch.Api.Features.LeaveTypes.CreateLeaveTypes;
 
 public static partial class CreateLeaveType
 {
-    internal sealed class Handler
-        : ICommandHandler<Command, Result<Guid>>
+    internal sealed class Handler : ICommandHandler<Command, Guid>
     {
         private readonly ILeaveTypeRepository _repository;
-        private readonly IValidator<Command> _validator;
-        private readonly IUnitOfWork _unitOfWork;
 
-        public Handler(ILeaveTypeRepository repository, IValidator<Command> validator, IUnitOfWork unitOfWork)
-        {
-            _repository = repository;
-            _validator = validator;
-            _unitOfWork = unitOfWork;
-        }
+        public Handler(ILeaveTypeRepository repository) => _repository = repository;
 
         public async Task<Result<Guid>> Handle(Command command, CancellationToken cancellationToken)
         {
-            ValidationResult validationResult = await _validator.ValidateAsync(command, cancellationToken);
-
-            if (!validationResult.IsValid)
-            {
-                return new FailureResult<Guid>(ValidationErrors.CreateLeaveType.CreateLeaveTypeValidation(validationResult.ToString()));
-            }
-
             Result<Name> nameResult = Name.Create(command.Name);
             Result<DefaultDays> defaultDaysResult = DefaultDays.Create(command.DefaultDays);
 

@@ -2425,50 +2425,6 @@ namespace CleanArch.BlazorUI.Services.Base
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.0.7.0 (NJsonSchema v11.0.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class DateOnly
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("year")]
-        public int Year { get; set; }
-
-        [System.Text.Json.Serialization.JsonPropertyName("month")]
-        public int Month { get; set; }
-
-        [System.Text.Json.Serialization.JsonPropertyName("day")]
-        public int Day { get; set; }
-
-        [System.Text.Json.Serialization.JsonPropertyName("dayOfWeek")]
-        public DayOfWeek DayOfWeek { get; set; }
-
-        [System.Text.Json.Serialization.JsonPropertyName("dayOfYear")]
-        public int DayOfYear { get; set; }
-
-        [System.Text.Json.Serialization.JsonPropertyName("dayNumber")]
-        public int DayNumber { get; set; }
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.0.7.0 (NJsonSchema v11.0.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public enum DayOfWeek
-    {
-
-        _0 = 0,
-
-        _1 = 1,
-
-        _2 = 2,
-
-        _3 = 3,
-
-        _4 = 4,
-
-        _5 = 5,
-
-        _6 = 6,
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.0.7.0 (NJsonSchema v11.0.0.0 (Newtonsoft.Json v13.0.0.0))")]
     public partial class Error
     {
 
@@ -2761,10 +2717,10 @@ namespace CleanArch.BlazorUI.Services.Base
         public string Comments { get; set; }
 
         [System.Text.Json.Serialization.JsonPropertyName("startDate")]
-        public DateOnly StartDate { get; set; }
+        public string StartDate { get; set; }
 
         [System.Text.Json.Serialization.JsonPropertyName("endDate")]
-        public DateOnly EndDate { get; set; }
+        public string EndDate { get; set; }
 
     }
 

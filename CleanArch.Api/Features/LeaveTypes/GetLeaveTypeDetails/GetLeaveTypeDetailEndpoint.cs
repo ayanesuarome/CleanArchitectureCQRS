@@ -1,4 +1,5 @@
-﻿using CleanArch.Api.Features.LeaveTypes.GetLeaveTypeDetails;
+﻿using CleanArch.Api.Contracts;
+using CleanArch.Api.Features.LeaveTypes.GetLeaveTypeDetails;
 using CleanArch.Contracts;
 using CleanArch.Contracts.LeaveTypes;
 using CleanArch.Domain.Enumerations;

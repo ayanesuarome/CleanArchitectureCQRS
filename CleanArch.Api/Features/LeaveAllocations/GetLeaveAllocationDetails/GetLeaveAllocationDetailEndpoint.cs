@@ -1,4 +1,5 @@
-﻿using CleanArch.Api.Features.LeaveAllocations.GetLeaveAllocationDetails;
+﻿using CleanArch.Api.Contracts;
+using CleanArch.Api.Features.LeaveAllocations.GetLeaveAllocationDetails;
 using CleanArch.Contracts;
 using CleanArch.Contracts.LeaveAllocations;
 using CleanArch.Domain.Primitives.Result;

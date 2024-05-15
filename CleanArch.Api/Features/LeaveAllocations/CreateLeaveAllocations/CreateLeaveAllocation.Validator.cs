@@ -5,7 +5,7 @@ namespace CleanArch.Api.Features.LeaveAllocations.CreateLeaveAllocations;
 
 public static partial class CreateLeaveAllocation
 {
-    public sealed class Validator : AbstractValidator<Command>
+    internal sealed class Validator : AbstractValidator<Command>
     {
         public Validator()
         {

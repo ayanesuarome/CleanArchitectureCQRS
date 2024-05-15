@@ -4,21 +4,17 @@ using CleanArch.Domain.Errors;
 using CleanArch.Domain.Primitives.Result;
 using CleanArch.Domain.Repositories;
 using CleanArch.Domain.ValueObjects;
-using FluentValidation;
-using FluentValidation.Results;
 using MediatR;
 
 namespace CleanArch.Api.Features.LeaveTypes.UpdateLeaveTypes;
 
 public static partial class UpdateLeaveType
 {
-    public sealed class Handler(
-        ILeaveTypeRepository repository,
-        IValidator<Command> validator)
-        : ICommandHandler<Command, Result<Unit>>
+    internal sealed class Handler : ICommandHandler<Command, Unit>
     {
-        private readonly ILeaveTypeRepository _repository = repository;
-        private readonly IValidator<Command> _validator = validator;
+        private readonly ILeaveTypeRepository _repository;
+
+        public Handler(ILeaveTypeRepository repository) => _repository = repository;
 
         public async Task<Result<Unit>> Handle(Command command, CancellationToken cancellationToken)
         {
@@ -27,13 +23,6 @@ public static partial class UpdateLeaveType
             if (leaveType is null)
             {
                 return new NotFoundResult<Unit>(DomainErrors.LeaveType.NotFound(command.Id));
-            }
-
-            ValidationResult validationResult = await _validator.ValidateAsync(command, cancellationToken);
-
-            if (!validationResult.IsValid)
-            {
-                return new FailureResult<Unit>(ValidationErrors.UpdateLeaveType.UpdateLeaveTypeValidation(validationResult.ToString()));
             }
 
             Result<Name> nameResult = Name.Create(command.Name);
@@ -46,7 +35,7 @@ public static partial class UpdateLeaveType
                 return new FailureResult<Unit>(firstFailureOrSuccess.Error);
             }
 
-            Result updateNameResult = await leaveType.UpdateName(nameResult.Value, repository);
+            Result updateNameResult = await leaveType.UpdateName(nameResult.Value, _repository);
 
             if(updateNameResult.IsFailure)
             {

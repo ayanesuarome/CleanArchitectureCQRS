@@ -6,13 +6,22 @@ using Microsoft.EntityFrameworkCore.Storage;
 
 namespace CleanArch.Api.Behaviors
 {
-    internal sealed class UnitOfWorkBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
+    /// <summary>
+    /// Represents the transaction behaviour middleware.
+    /// </summary>
+    /// <typeparam name="TRequest">The request type.</typeparam>
+    /// <typeparam name="TResponse">The response type.</typeparam>
+    internal sealed class TransactionBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
         where TRequest : ICommand<TResponse>
         where TResponse : Result
     {
         private readonly IUnitOfWork _unitOfWork;
 
-        public UnitOfWorkBehavior(IUnitOfWork unitOfWork) => _unitOfWork = unitOfWork;
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TransactionBehavior{TRequest,TResponse}"/> class.
+        /// </summary>
+        /// <param name="unitOfWork">The unit of work.</param>
+        public TransactionBehavior(IUnitOfWork unitOfWork) => _unitOfWork = unitOfWork;
 
         public async Task<TResponse> Handle(TRequest request, RequestHandlerDelegate<TResponse> next, CancellationToken cancellationToken)
         {

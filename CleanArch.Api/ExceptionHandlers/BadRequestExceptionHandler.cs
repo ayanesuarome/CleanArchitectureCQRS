@@ -1,8 +1,10 @@
-﻿using CleanArch.Api.Models;
+﻿using CleanArch.Api.Contracts;
 using CleanArch.Application.Exceptions;
 using CleanArch.Application.Abstractions.Logging;
 using Microsoft.AspNetCore.Diagnostics;
 using Newtonsoft.Json;
+using System.Net;
+using CleanArch.Domain.Primitives.Result;
 
 namespace CleanArch.Api.ExceptionHandlers;
 

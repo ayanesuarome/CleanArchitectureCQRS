@@ -1,4 +1,5 @@
-﻿using CleanArch.Api.Features.LeaveRequests.GetLeaveRequestDetails;
+﻿using CleanArch.Api.Contracts;
+using CleanArch.Api.Features.LeaveRequests.GetLeaveRequestDetails;
 using CleanArch.Contracts;
 using CleanArch.Contracts.LeaveRequests;
 using CleanArch.Domain.Primitives.Result;

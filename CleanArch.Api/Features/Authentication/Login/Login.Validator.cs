@@ -5,7 +5,7 @@ namespace CleanArch.Api.Features.Authentication.Login;
 
 public static partial class Login
 {
-    public sealed class Validator : AbstractValidator<Command>
+    internal sealed class Validator : AbstractValidator<Command>
     {
         public Validator()
         {
