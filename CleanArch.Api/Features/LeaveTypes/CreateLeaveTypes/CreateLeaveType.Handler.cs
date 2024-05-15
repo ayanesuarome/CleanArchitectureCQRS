@@ -1,4 +1,5 @@
-﻿using CleanArch.Application.Abstractions.Messaging;
+﻿using CleanArch.Application.Abstractions.Data;
+using CleanArch.Application.Abstractions.Messaging;
 using CleanArch.Domain.Entities;
 using CleanArch.Domain.Errors;
 using CleanArch.Domain.Primitives.Result;
@@ -12,8 +13,13 @@ public static partial class CreateLeaveType
     internal sealed class Handler : ICommandHandler<Command, Guid>
     {
         private readonly ILeaveTypeRepository _repository;
+        private readonly IUnitOfWork unitOfWork;
 
-        public Handler(ILeaveTypeRepository repository) => _repository = repository;
+        public Handler(ILeaveTypeRepository repository, IUnitOfWork unitOfWork)
+        {
+            _repository = repository;
+            this.unitOfWork = unitOfWork;
+        }
 
         public async Task<Result<Guid>> Handle(Command command, CancellationToken cancellationToken)
         {
@@ -36,8 +42,11 @@ public static partial class CreateLeaveType
 
             Result<Name> nameResult1 = Name.Create("Test");
             Result<DefaultDays> defaultDaysResult1 = DefaultDays.Create(15);
+            LeaveType leave = new(nameResult1.Value, defaultDaysResult1.Value);
 
             _repository.Add(leaveTypeToCreate);
+            await this.unitOfWork.SaveChangesAsync();
+            _repository.Add(leave);
 
             return new SuccessResult<Guid>(leaveTypeToCreate.Id);
         }

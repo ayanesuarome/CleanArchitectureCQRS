@@ -7,6 +7,7 @@ using CleanArch.Identity.Migrations;
 using CleanArch.Infrastructure;
 using CleanArch.Persistence;
 using CleanArch.Persistence.Migrations;
+using Microsoft.AspNetCore.Mvc;
 using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -23,6 +24,8 @@ builder.Services.AddCleanArchEFDbContext(builder.Configuration);
 builder.Services.AddInfrastructureServices(builder.Configuration);
 builder.Services.AddPersistenceServices();
 builder.Services.AddApiServices();
+
+builder.Services.Configure<ApiBehaviorOptions>(options => options.SuppressModelStateInvalidFilter = true);
 
 // The factory-activated middleware is added to the built-in container
 //builder.Services.AddTransient<ExceptionMiddleware>();

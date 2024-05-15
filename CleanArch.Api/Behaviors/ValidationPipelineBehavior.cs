@@ -11,7 +11,7 @@ namespace CleanArch.Api.Behaviors;
 /// <typeparam name="TRequest">The request type.</typeparam>
 /// <typeparam name="TResponse">The response type.</typeparam>
 internal sealed class ValidationPipelineBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
-    where TRequest : ICommand<TRequest>
+    where TRequest : IRequest<TResponse>
     where TResponse : Result
 {
     private readonly IEnumerable<IValidator<TRequest>> _validators;
@@ -51,7 +51,7 @@ internal sealed class ValidationPipelineBehavior<TRequest, TResponse> : IPipelin
     }
 
     private static TResult CreateValidationResult<TResult>(IReadOnlyCollection<Error> errors)
-        where TResult : Result
+        where TResult : class
     {
         if(typeof(TResult) == (typeof(Result)))
         {

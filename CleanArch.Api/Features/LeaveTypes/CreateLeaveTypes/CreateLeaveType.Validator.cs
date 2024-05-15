@@ -8,9 +8,7 @@ public static partial class CreateLeaveType
 {
     internal sealed class Validator : AbstractValidator<Command>
     {
-        private readonly ILeaveTypeRepository _repository;
-
-        public Validator(ILeaveTypeRepository repository)
+        public Validator()
         {
             RuleFor(m => m.Name)
                 .NotEmpty()
@@ -19,8 +17,6 @@ public static partial class CreateLeaveType
             RuleFor(m => m.DefaultDays)
                 .NotEmpty()
                 .WithError(ValidationErrors.CreateLeaveType.DefaultDaysIsRequired);
-
-            _repository = repository;
         }
     }
 }
