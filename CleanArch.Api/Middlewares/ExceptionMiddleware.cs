@@ -1,10 +1,8 @@
-﻿using CleanArch.Api.Contracts;
-using CleanArch.Application.Exceptions;
+﻿using CleanArch.Application.Exceptions;
 using CleanArch.Application.Abstractions.Logging;
 using Newtonsoft.Json;
 using System.Net;
-using Serilog.Context;
-using Microsoft.Extensions.Primitives;
+using Microsoft.AspNetCore.Mvc;
 
 namespace CleanArch.Api.Middlewares;
 
@@ -30,24 +28,29 @@ public class ExceptionMiddleware(IAppLogger<ExceptionMiddleware> logger) : IMidd
         Exception exception)
     {
         HttpStatusCode statusCode = HttpStatusCode.InternalServerError;
-        CustomProblemDetails errorDetails;
+        ProblemDetails errorDetails;
 
         switch (exception)
         {
             case BadRequestException badRequestException:
                 statusCode = HttpStatusCode.BadRequest;
-                errorDetails = new CustomProblemDetails
+                errorDetails = new ProblemDetails
                 {
                     Title = badRequestException.Message,
                     Status = (int)statusCode,
                     Type = nameof(BadRequestException),
                     Detail = badRequestException.InnerException?.Message,
-                    Errors = badRequestException.ValidationErrors
+                    Extensions = {
+                        {
+                            nameof(badRequestException.Errors),
+                            badRequestException.Errors
+                        }
+                    }
                 };
                 break;
             case NotFoundException notFoundException:
                 statusCode = HttpStatusCode.NotFound;
-                errorDetails = new CustomProblemDetails
+                errorDetails = new ProblemDetails()
                 {
                     Title = notFoundException.Message,
                     Status = (int)statusCode,
@@ -56,7 +59,7 @@ public class ExceptionMiddleware(IAppLogger<ExceptionMiddleware> logger) : IMidd
                 };
                 break;
             default:
-                errorDetails = new CustomProblemDetails
+                errorDetails = new ProblemDetails
                 {
                     Title = "Oops! Sorry! Something went wrong. Please contact your administrator.",
                     Status = (int)statusCode,

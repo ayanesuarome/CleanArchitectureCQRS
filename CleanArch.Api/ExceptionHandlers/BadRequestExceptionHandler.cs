@@ -1,10 +1,8 @@
-﻿using CleanArch.Api.Contracts;
-using CleanArch.Application.Exceptions;
+﻿using CleanArch.Application.Exceptions;
 using CleanArch.Application.Abstractions.Logging;
 using Microsoft.AspNetCore.Diagnostics;
 using Newtonsoft.Json;
-using System.Net;
-using CleanArch.Domain.Primitives.Result;
+using Microsoft.AspNetCore.Mvc;
 
 namespace CleanArch.Api.ExceptionHandlers;
 
@@ -32,13 +30,18 @@ internal sealed class BadRequestExceptionHandler(IServiceScopeFactory serviceSco
             .ServiceProvider
             .GetRequiredService<IAppLogger<BadRequestExceptionHandler>>();
 
-        CustomProblemDetails errorDetails = new()
+        ProblemDetails errorDetails = new()
         {
             Title = badRequestException.Message,
             Status = StatusCodes.Status400BadRequest,
             Type = nameof(BadRequestException),
             Detail = badRequestException.Message,
-            Errors = badRequestException.ValidationErrors
+            Extensions = {
+                {
+                    nameof(badRequestException.Errors),
+                    badRequestException.Errors
+                }
+            }
         };
 
         var logMessage = JsonConvert.SerializeObject(errorDetails);

@@ -6,9 +6,12 @@ namespace CleanArch.Identity.Authentication;
 // Define missing policies for every new Permission enum value is added.
 public sealed class PermissionAuthorizationPolicyProvider : DefaultAuthorizationPolicyProvider
 {
+    private readonly AuthorizationOptions _authorizationOptions;
+
     public PermissionAuthorizationPolicyProvider(IOptions<AuthorizationOptions> options)
         : base(options)
     {
+        _authorizationOptions = options.Value;
     }
 
     public override async Task<AuthorizationPolicy?> GetPolicyAsync(string policyName)
@@ -20,8 +23,12 @@ public sealed class PermissionAuthorizationPolicyProvider : DefaultAuthorization
             return policy;
         }
 
-        return new AuthorizationPolicyBuilder()
+        AuthorizationPolicy authorizationPolicy = new AuthorizationPolicyBuilder()
             .AddRequirements(new PermissionRequirement(policyName))
             .Build();
+
+        _authorizationOptions.AddPolicy(policyName, authorizationPolicy);
+
+        return authorizationPolicy;
     }
 }

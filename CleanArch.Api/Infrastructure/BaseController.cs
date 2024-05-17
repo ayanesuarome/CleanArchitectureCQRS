@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CleanArch.Api.Infrastructure;
 
+[Route("api/v{version:apiVersion}")]
 [ApiController]
 public abstract class BaseController : ControllerBase
 {
@@ -21,9 +22,9 @@ public abstract class BaseController : ControllerBase
         {
             { IsSuccess: true } => throw new InvalidOperationException(
                 $"You cannot handle a failure result when {nameof(result.IsSuccess)} is true"),
-            INotFoundResult => NotFound(),
             IValidationResult validationResult => BadRequest(result.Error, validationResult.Errors),
-            _ => BadRequest(result.Error)
+            INotFoundResult => NotFound(),
+            _ => BadRequest(result.Error),
         };
 
     /// <summary>

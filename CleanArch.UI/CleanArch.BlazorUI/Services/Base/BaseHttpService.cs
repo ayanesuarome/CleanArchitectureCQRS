@@ -9,7 +9,7 @@ public abstract class BaseHttpService(IClient client)
     protected Response<Guid> ConvertApiExceptions<Guid>(ApiException exception)
     {
         dynamic aux = exception;
-        Error error = aux.Result;
+        
         return exception.StatusCode switch
         {
             ((int)HttpStatusCode.BadRequest) =>
