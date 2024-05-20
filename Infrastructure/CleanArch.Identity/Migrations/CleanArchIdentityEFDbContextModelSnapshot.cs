@@ -325,7 +325,7 @@ namespace CleanArch.Identity.Migrations
                         {
                             Id = new Guid("82ef7b08-5017-4718-988e-e4f119594fca"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "61d53fbd-ce28-4450-8039-a77a84f7e4e6",
+                            ConcurrencyStamp = "7506eaf2-fdf1-4af6-9051-b5e7615183ce",
                             Email = "admin@localhost.com",
                             EmailConfirmed = false,
                             FirstName = "System",
@@ -333,6 +333,7 @@ namespace CleanArch.Identity.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@LOCALHOST.COM",
                             NormalizedUserName = "ADMIN@LOCALHOST.COM",
+                            PasswordHash = "AQAAAAIAAYagAAAAEOANJ9oYIBsHs1x+5QcrPYsyjjNLpH6ylCpjUZ6T0TedakSxRXAx4D0Tlc8y9ObTow==",
                             PhoneNumberConfirmed = false,
                             TwoFactorEnabled = false,
                             UserName = "admin@localhost.com"

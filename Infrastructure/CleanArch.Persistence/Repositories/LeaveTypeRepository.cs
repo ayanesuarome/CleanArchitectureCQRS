@@ -12,9 +12,9 @@ internal sealed class LeaveTypeRepository : GenericRepository<LeaveType, LeaveTy
     {
     }
 
-    public async Task<bool> IsUniqueAsync(string name, CancellationToken token = default)
+    public async Task<bool> IsUniqueAsync(Name name, CancellationToken token = default)
     {
-        return !await TableNoTracking.AnyAsync(t => t.Name.Value == name);
+        return !await TableNoTracking.AnyAsync(t => t.Name == name);
     }
 
     public async Task<bool> AnyAsync(LeaveTypeId id, CancellationToken token = default)

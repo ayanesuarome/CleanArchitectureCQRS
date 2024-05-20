@@ -17,14 +17,12 @@ internal sealed class UserConfiguration : IEntityTypeConfiguration<User>
             .HasConversion(
                 firstName => firstName.Value,
                 value => UserName.Create(value).Value)
-            .HasColumnName(nameof(User.FirstName))
             .HasMaxLength(UserName.MaxLength);
 
         builder.Property(user => user.LastName)
             .HasConversion(
                 lastName => lastName.Value,
                 value => UserName.Create(value).Value)
-            .HasColumnName(nameof(User.LastName))
             .HasMaxLength(UserName.MaxLength);
 
         // Seeding
@@ -47,7 +45,7 @@ internal sealed class UserConfiguration : IEntityTypeConfiguration<User>
             NormalizedEmail = "ADMIN@LOCALHOST.COM",
             UserName = "admin@localhost.com",
             NormalizedUserName = "ADMIN@LOCALHOST.COM",
-            //PasswordHash = hasher.HashPassword()
+            PasswordHash = hasher.HashPassword(null, "P@ssword1")
         };
 
         builder.HasData(user);

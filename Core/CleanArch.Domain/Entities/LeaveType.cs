@@ -48,7 +48,7 @@ public sealed class LeaveType : Entity<LeaveTypeId>, IAuditableEntity
             return Result.Success();
         }
 
-        if (!await repository.IsUniqueAsync(name.Value))
+        if (!await repository.IsUniqueAsync(name))
         {
             return Result.Failure<Unit>(Errors.DomainErrors.LeaveType.DuplicateName);
         }
