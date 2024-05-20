@@ -3,6 +3,7 @@ using CleanArch.Domain.Entities;
 using CleanArch.Domain.Errors;
 using CleanArch.Domain.Primitives.Result;
 using CleanArch.Domain.Repositories;
+using CleanArch.Domain.ValueObjects;
 using MediatR;
 
 namespace CleanArch.Api.Features.LeaveTypes.DeleteLeaveTypes;
@@ -15,7 +16,7 @@ public static partial class DeleteLeaveType
 
         public async Task<Result<Unit>> Handle(Command command, CancellationToken cancellationToken)
         {
-            LeaveType leaveTypeToDelete = await _repository.GetByIdAsync(command.Id);
+            LeaveType leaveTypeToDelete = await _repository.GetByIdAsync(new LeaveTypeId(command.Id));
 
             if (leaveTypeToDelete is null)
             {

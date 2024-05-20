@@ -1,12 +1,13 @@
 ﻿using CleanArch.Domain.Primitives;
 using CleanArch.Domain.Utilities;
+using CleanArch.Domain.ValueObjects;
 
 namespace CleanArch.Domain.Entities;
 
-public sealed class Permission : Entity<int>
+public sealed class Permission : Entity<PermissionId>
 {
     public Permission(int id, string name)
-        : base(id)
+        : base(new PermissionId(id))
     {
         Ensure.NotNull(name, "The name is required", nameof(name));
         Name = name;

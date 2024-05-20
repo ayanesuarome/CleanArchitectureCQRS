@@ -46,7 +46,7 @@ public static partial class CreateLeaveRequest
                 return Result.Failure<LeaveRequest>(firstFailureOrSuccess.Error);
             }
 
-            LeaveType leaveType = await _leaveTypeRepository.GetByIdAsync(command.LeaveTypeId);
+            LeaveType leaveType = await _leaveTypeRepository.GetByIdAsync(new LeaveTypeId(command.LeaveTypeId));
 
             if(leaveType is null)
             {
@@ -56,7 +56,7 @@ public static partial class CreateLeaveRequest
             // check on employee's allocation
             LeaveAllocation leaveAllocation = await _allocationRepository.GetEmployeeAllocation(
                 _userIdentifierProvider.UserId,
-                command.LeaveTypeId);
+                new LeaveTypeId(command.LeaveTypeId));
 
             // if allocations aren't enough, return validation error
             if (leaveAllocation is null)

@@ -14,6 +14,11 @@ internal sealed class LeaveRequestConfiguration : IEntityTypeConfiguration<Leave
 
         builder.HasKey(leaveRequest => leaveRequest.Id);
 
+        builder.Property(leaveRequest => leaveRequest.Id)
+            .HasConversion(
+                leaveRequestId => leaveRequestId.Id,
+                id => new LeaveRequestId(id));
+
         builder
             // only one query filter per entity; use IgnoreQueryFilters() in combination with Where per entity
             .HasQueryFilter(leaveRequest => !leaveRequest.IsDeleted)
@@ -27,14 +32,21 @@ internal sealed class LeaveRequestConfiguration : IEntityTypeConfiguration<Leave
             .IsRequired()
             .OnDelete(DeleteBehavior.NoAction);
 
-        builder.ComplexProperty(leaveRequest => leaveRequest.LeaveTypeName, leaveTypeNameBuilder =>
-        {
-            leaveTypeNameBuilder.Property(leaveTypeName => leaveTypeName.Value)
-                .HasColumnName(nameof(LeaveRequest.LeaveTypeName))
-                .HasMaxLength(Name.MaxLength)
-                .IsRequired();
-        });
-        
+        builder.Property(leaveRequest => leaveRequest.LeaveTypeName)
+            .HasConversion(
+                leaveTypeName => leaveTypeName.Value,
+                value => Name.Create(value).Value)
+            .HasMaxLength(Name.MaxLength)
+            .IsRequired();
+
+        //builder.ComplexProperty(leaveRequest => leaveRequest.LeaveTypeName, leaveTypeNameBuilder =>
+        //{
+        //    leaveTypeNameBuilder.Property(leaveTypeName => leaveTypeName.Value)
+        //        .HasColumnName(nameof(LeaveRequest.LeaveTypeName))
+        //        .HasMaxLength(Name.MaxLength)
+        //        .IsRequired();
+        //});
+
         builder.OwnsOne(leaveRequest => leaveRequest.Comments, commentsBuilder =>
         {
             commentsBuilder.WithOwner();

@@ -18,7 +18,7 @@ public static partial class UpdateLeaveType
 
         public async Task<Result<Unit>> Handle(Command command, CancellationToken cancellationToken)
         {
-            LeaveType leaveType = await _repository.GetByIdAsync(command.Id);
+            LeaveType leaveType = await _repository.GetByIdAsync(new LeaveTypeId(command.Id));
 
             if (leaveType is null)
             {

@@ -5,6 +5,7 @@ using CleanArch.Domain.Entities;
 using CleanArch.Domain.Errors;
 using CleanArch.Domain.Primitives.Result;
 using CleanArch.Domain.Repositories;
+using CleanArch.Domain.ValueObjects;
 
 namespace CleanArch.Api.Features.LeaveRequests.GetLeaveRequestDetails;
 
@@ -25,7 +26,7 @@ public static partial class GetLeaveRequestDetail
 
         public async Task<Result<LeaveRequestDetailsDto>> Handle(Query query, CancellationToken cancellationToken)
         {
-            LeaveRequest leaveRequest = await _repository.GetLeaveRequestWithDetailsAsync(query.Id);
+            LeaveRequest leaveRequest = await _repository.GetLeaveRequestWithDetailsAsync(new LeaveRequestId(query.Id));
 
             if (leaveRequest is null)
             {

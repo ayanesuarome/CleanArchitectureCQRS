@@ -5,6 +5,7 @@ using CleanArch.Domain.Entities;
 using CleanArch.Domain.Errors;
 using CleanArch.Domain.Primitives.Result;
 using CleanArch.Domain.Repositories;
+using CleanArch.Domain.ValueObjects;
 
 namespace CleanArch.Api.Features.LeaveAllocations.CreateLeaveAllocations;
 
@@ -29,7 +30,7 @@ public static partial class CreateLeaveAllocation
         public async Task<Result<int>> Handle(Command command, CancellationToken cancellationToken)
         {
             // get leave types for allocations
-            LeaveType leaveType = await _leaveTypeRepository.GetByIdAsync(command.LeaveTypeId);
+            LeaveType leaveType = await _leaveTypeRepository.GetByIdAsync(new LeaveTypeId(command.LeaveTypeId));
 
             if(leaveType is null)
             {

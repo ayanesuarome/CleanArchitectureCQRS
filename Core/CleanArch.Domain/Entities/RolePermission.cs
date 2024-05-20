@@ -1,5 +1,6 @@
 ﻿using CleanArch.Domain.Primitives;
 using CleanArch.Domain.Utilities;
+using CleanArch.Domain.ValueObjects;
 
 namespace CleanArch.Domain.Entities;
 
@@ -8,7 +9,7 @@ namespace CleanArch.Domain.Entities;
 /// </summary>
 public class RolePermission
 {
-    public RolePermission(Guid roleId, int permissionId)
+    public RolePermission(Guid roleId, PermissionId permissionId)
     {
         Ensure.NotEmpty(roleId, "The role ID is required", nameof(roleId));
         Ensure.NotEmpty(permissionId, "The permission ID is required", nameof(permissionId));
@@ -35,5 +36,5 @@ public class RolePermission
     /// <summary>
     /// Gets or sets the primary key of the permission that is linked to the user.
     /// </summary>
-    public int PermissionId { get; init; }
+    public PermissionId PermissionId { get; init; }
 }

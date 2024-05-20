@@ -6,10 +6,10 @@ using CleanArch.Domain.ValueObjects;
 
 namespace CleanArch.Domain.Entities;
 
-public sealed class LeaveRequest : Entity<Guid>, IAuditableEntity, ISoftDeletableEntity
+public sealed class LeaveRequest : Entity<LeaveRequestId>, IAuditableEntity, ISoftDeletableEntity
 {
     public LeaveRequest(DateRange range, LeaveType leaveType, Guid employeeId, Comment? comments)
-        : base (Guid.NewGuid())
+        : base (new LeaveRequestId(Guid.NewGuid()))
     {
         Ensure.NotNull(range, "The date range is required.", nameof(range));
         Ensure.NotNull(leaveType, "The leave type is required.", nameof(leaveType));
@@ -33,7 +33,7 @@ public sealed class LeaveRequest : Entity<Guid>, IAuditableEntity, ISoftDeletabl
     }
 
     public DateRange Range { get; private set; }
-    public Guid LeaveTypeId { get; private set; }
+    public LeaveTypeId LeaveTypeId { get; private set; }
     public Name LeaveTypeName { get; private set; }
     public Comment? Comments { get; private set; }
     public bool? IsApproved { get; private set; }

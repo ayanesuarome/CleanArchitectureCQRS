@@ -31,7 +31,7 @@ public static class MockLeaveTypeRepository
             .ReturnsAsync(leaveTypes);
 
         repositoryMock
-            .Setup(m => m.GetByIdAsync(It.IsAny<Guid>()))
+            .Setup(m => m.GetByIdAsync(It.IsAny<LeaveTypeId>()))
             .ReturnsAsync(leaveTypes[0]);
 
         repositoryMock

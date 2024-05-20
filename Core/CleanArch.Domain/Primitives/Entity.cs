@@ -1,12 +1,13 @@
 ﻿using CleanArch.Domain.Utilities;
+using System.Runtime.CompilerServices;
 
 namespace CleanArch.Domain.Primitives;
 
 /// <summary>
 /// Represents the base class that all entities derive from.
 /// </summary>
-public abstract class Entity<TEntityKey> : IEquatable<Entity<TEntityKey>>
-    where TEntityKey : new()
+public abstract class Entity<TEntityKey> 
+    where TEntityKey : class, IEquatable<TEntityKey>
 {
     /// <summary>
     /// Initializes a new instance of the <see cref="Entity{TKey}"/> class.
@@ -14,7 +15,7 @@ public abstract class Entity<TEntityKey> : IEquatable<Entity<TEntityKey>>
     /// <param name="id">The entity identifier.</param>
     protected Entity(TEntityKey id)
     {
-        Ensure.NotEmpty(id, "The identifier is required.", nameof(id));
+        Ensure.NotNull(id, "The identifier is required.", nameof(id));
         Id = id;
     }
 
@@ -32,16 +33,4 @@ public abstract class Entity<TEntityKey> : IEquatable<Entity<TEntityKey>>
     /// Gets or sets the entity identifier.
     /// </summary>
     public TEntityKey Id { get; init; }
-
-    /// <inheritdoc />
-    public bool Equals(Entity<TEntityKey>? other)
-    {
-        if(other is null)
-        {
-            return false;
-        }
-
-        return ReferenceEquals(this, other)
-            || Id.ToString() == other.Id.ToString();
-    }
 }

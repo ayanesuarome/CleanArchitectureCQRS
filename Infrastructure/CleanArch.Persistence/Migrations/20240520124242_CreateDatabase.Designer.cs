@@ -13,7 +13,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CleanArch.Persistence.Migrations
 {
     [DbContext(typeof(CleanArchEFDbContext))]
-    [Migration("20240509095220_CreateDatabase")]
+    [Migration("20240520124242_CreateDatabase")]
     partial class CreateDatabase
     {
         /// <inheritdoc />
@@ -29,7 +29,6 @@ namespace CleanArch.Persistence.Migrations
             modelBuilder.Entity("CleanArch.Domain.Entities.LeaveAllocation", b =>
                 {
                     b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("CreatedBy")
@@ -66,7 +65,6 @@ namespace CleanArch.Persistence.Migrations
             modelBuilder.Entity("CleanArch.Domain.Entities.LeaveRequest", b =>
                 {
                     b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("CreatedBy")
@@ -95,22 +93,16 @@ namespace CleanArch.Persistence.Migrations
                     b.Property<Guid>("LeaveTypeId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<string>("LeaveTypeName")
+                        .IsRequired()
+                        .HasMaxLength(70)
+                        .HasColumnType("nvarchar(70)");
+
                     b.Property<Guid?>("ModifiedBy")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("RequestingEmployeeId")
                         .HasColumnType("uniqueidentifier");
-
-                    b.ComplexProperty<Dictionary<string, object>>("LeaveTypeName", "CleanArch.Domain.Entities.LeaveRequest.LeaveTypeName#Name", b1 =>
-                        {
-                            b1.IsRequired();
-
-                            b1.Property<string>("Value")
-                                .IsRequired()
-                                .HasMaxLength(70)
-                                .HasColumnType("nvarchar(70)")
-                                .HasColumnName("LeaveTypeName");
-                        });
 
                     b.ComplexProperty<Dictionary<string, object>>("Range", "CleanArch.Domain.Entities.LeaveRequest.Range#DateRange", b1 =>
                         {
@@ -138,7 +130,6 @@ namespace CleanArch.Persistence.Migrations
             modelBuilder.Entity("CleanArch.Domain.Entities.LeaveType", b =>
                 {
                     b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("CreatedBy")
@@ -150,31 +141,22 @@ namespace CleanArch.Persistence.Migrations
                     b.Property<DateTimeOffset?>("DateModified")
                         .HasColumnType("datetimeoffset");
 
+                    b.Property<int>("DefaultDays")
+                        .HasMaxLength(100)
+                        .HasColumnType("int");
+
                     b.Property<Guid?>("ModifiedBy")
                         .HasColumnType("uniqueidentifier");
 
-                    b.ComplexProperty<Dictionary<string, object>>("DefaultDays", "CleanArch.Domain.Entities.LeaveType.DefaultDays#DefaultDays", b1 =>
-                        {
-                            b1.IsRequired();
-
-                            b1.Property<int>("Value")
-                                .HasMaxLength(100)
-                                .HasColumnType("int")
-                                .HasColumnName("DefaultDays");
-                        });
-
-                    b.ComplexProperty<Dictionary<string, object>>("Name", "CleanArch.Domain.Entities.LeaveType.Name#Name", b1 =>
-                        {
-                            b1.IsRequired();
-
-                            b1.Property<string>("Value")
-                                .IsRequired()
-                                .HasMaxLength(70)
-                                .HasColumnType("nvarchar(70)")
-                                .HasColumnName("Name");
-                        });
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(70)
+                        .HasColumnType("nvarchar(70)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Name")
+                        .IsUnique();
 
                     b.ToTable("LeaveTypes", (string)null);
                 });

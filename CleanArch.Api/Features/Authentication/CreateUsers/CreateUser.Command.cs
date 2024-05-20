@@ -11,7 +11,5 @@ public static partial class CreateUser
         string LastName,
         string Email,
         string Password)
-        : ICommand<Result<RegistrationResponse>>
-    {
-    }
+        : ICommand<Result<RegistrationResponse>>;
 }

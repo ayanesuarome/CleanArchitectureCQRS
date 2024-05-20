@@ -4,15 +4,13 @@ using CleanArch.Domain.Repositories;
 using CleanArch.Domain.Utilities;
 using CleanArch.Domain.ValueObjects;
 using MediatR;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using System.Threading;
 
 namespace CleanArch.Domain.Entities;
 
-public sealed class LeaveType : Entity<Guid>, IAuditableEntity
+public sealed class LeaveType : Entity<LeaveTypeId>, IAuditableEntity
 {
     public LeaveType(Name name, DefaultDays defaultDays)
-        : base(Guid.NewGuid())
+        : base(new LeaveTypeId(Guid.NewGuid()))
     {
         Ensure.NotNull(name, "The name is required", nameof(name));
         Ensure.NotNull(defaultDays, "The default days is required", nameof(defaultDays));
@@ -31,7 +29,6 @@ public sealed class LeaveType : Entity<Guid>, IAuditableEntity
     {
     }
 
-    public LEaveType
     public Name Name { get; private set; }
     public DefaultDays DefaultDays { get; private set; }
 

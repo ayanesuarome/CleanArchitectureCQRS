@@ -9,7 +9,7 @@ namespace CleanArch.Persistence.Repositories;
 /// <typeparam name="TEntity">The entity type.</typeparam>
 internal abstract class GenericRepository<TEntity, TEntityKey>
     where TEntity : Entity<TEntityKey>
-    where TEntityKey : new()
+    where TEntityKey : class, IEquatable<TEntityKey>
 {
     protected GenericRepository(CleanArchEFDbContext dbContext) => DbContext = dbContext;
 

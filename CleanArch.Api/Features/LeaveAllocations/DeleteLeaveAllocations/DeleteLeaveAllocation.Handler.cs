@@ -3,6 +3,7 @@ using CleanArch.Domain.Entities;
 using CleanArch.Domain.Errors;
 using CleanArch.Domain.Primitives.Result;
 using CleanArch.Domain.Repositories;
+using CleanArch.Domain.ValueObjects;
 
 namespace CleanArch.Api.Features.LeaveAllocations.DeleteLeaveAllocations;
 
@@ -14,7 +15,7 @@ public static partial class DeleteLeaveAllocation
 
         public async Task<Result> Handle(Command command, CancellationToken cancellationToken)
         {
-            LeaveAllocation leaveAllocation = await _repository.GetByIdAsync(command.Id);
+            LeaveAllocation leaveAllocation = await _repository.GetByIdAsync(new LeaveAllocationId(command.Id));
 
             if (leaveAllocation is null)
             {

@@ -2,13 +2,14 @@
 using CleanArch.Domain.Primitives;
 using CleanArch.Domain.Primitives.Result;
 using CleanArch.Domain.Utilities;
+using CleanArch.Domain.ValueObjects;
 
 namespace CleanArch.Domain.Entities;
 
-public sealed class LeaveAllocation : Entity<Guid>, IAuditableEntity
+public sealed class LeaveAllocation : Entity<LeaveAllocationId>, IAuditableEntity
 {
     public LeaveAllocation(int period, LeaveType leaveType, Guid employeeId)
-        : base(Guid.NewGuid())
+        : base(new LeaveAllocationId(Guid.NewGuid()))
     {
         Ensure.NotEmpty(period, "The period is required.", nameof(period));
         Ensure.NotNull(leaveType, "The leave type is required.", nameof(leaveType));
@@ -31,7 +32,7 @@ public sealed class LeaveAllocation : Entity<Guid>, IAuditableEntity
 
     public int NumberOfDays { get; private set; }
     public int Period { get; private set; }
-    public Guid LeaveTypeId { get; private set; }
+    public LeaveTypeId LeaveTypeId { get; private set; }
     public Guid EmployeeId { get; private set; }
 
     #region Auditable

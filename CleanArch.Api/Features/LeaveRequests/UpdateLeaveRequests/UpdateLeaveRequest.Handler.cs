@@ -17,7 +17,7 @@ public static partial class UpdateLeaveRequest
 
         public async Task<Result<LeaveRequest>> Handle(Command command, CancellationToken cancellationToken)
         {
-            LeaveRequest leaveRequest = await _repository.GetByIdAsync(command.Id);
+            LeaveRequest leaveRequest = await _repository.GetByIdAsync(new LeaveRequestId(command.Id));
 
             if (leaveRequest is null)
             {

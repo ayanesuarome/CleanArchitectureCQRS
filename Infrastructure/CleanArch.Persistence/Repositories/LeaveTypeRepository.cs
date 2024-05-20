@@ -1,10 +1,11 @@
 ﻿using CleanArch.Domain.Entities;
 using CleanArch.Domain.Repositories;
+using CleanArch.Domain.ValueObjects;
 using Microsoft.EntityFrameworkCore;
 
 namespace CleanArch.Persistence.Repositories;
 
-internal sealed class LeaveTypeRepository : GenericRepository<LeaveType, Guid>, ILeaveTypeRepository
+internal sealed class LeaveTypeRepository : GenericRepository<LeaveType, LeaveTypeId>, ILeaveTypeRepository
 {
     public LeaveTypeRepository(CleanArchEFDbContext dbContext)
         : base(dbContext)
@@ -16,7 +17,7 @@ internal sealed class LeaveTypeRepository : GenericRepository<LeaveType, Guid>, 
         return !await TableNoTracking.AnyAsync(t => t.Name.Value == name);
     }
 
-    public async Task<bool> AnyAsync(Guid id, CancellationToken token = default)
+    public async Task<bool> AnyAsync(LeaveTypeId id, CancellationToken token = default)
     {
         return await TableNoTracking.AnyAsync(t => t.Id == id);
     }

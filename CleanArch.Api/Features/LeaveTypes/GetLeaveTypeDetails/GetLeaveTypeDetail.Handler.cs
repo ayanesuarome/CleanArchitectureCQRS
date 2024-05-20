@@ -4,6 +4,7 @@ using CleanArch.Domain.Entities;
 using CleanArch.Domain.Errors;
 using CleanArch.Domain.Primitives.Result;
 using CleanArch.Domain.Repositories;
+using CleanArch.Domain.ValueObjects;
 
 namespace CleanArch.Api.Features.LeaveTypes.GetLeaveTypeDetails;
 
@@ -15,7 +16,7 @@ public static partial class GetLeaveTypeDetail
 
         public async Task<Result<LeaveTypeDetailDto>> Handle(Query query, CancellationToken cancellationToken)
         {
-            LeaveType leaveType = await _repository.GetByIdAsync(query.Id);
+            LeaveType leaveType = await _repository.GetByIdAsync(new LeaveTypeId(query.Id));
 
             if (leaveType is null)
             {

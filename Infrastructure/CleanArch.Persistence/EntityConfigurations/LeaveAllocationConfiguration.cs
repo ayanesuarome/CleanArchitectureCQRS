@@ -1,4 +1,5 @@
 ﻿using CleanArch.Domain.Entities;
+using CleanArch.Domain.ValueObjects;
 using CleanArch.Persistence.Constants;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -12,6 +13,11 @@ internal sealed class LeaveAllocationConfiguration : IEntityTypeConfiguration<Le
         builder.ToTable(TableNames.LeaveAllocations);
 
         builder.HasKey(leaveAllocation =>  leaveAllocation.Id);
+        
+        builder.Property(leaveAllocation => leaveAllocation.Id)
+            .HasConversion(
+                leaveAllocationId => leaveAllocationId.Id,
+                id => new LeaveAllocationId(id));
 
         builder.HasOne<LeaveType>()
             .WithMany()

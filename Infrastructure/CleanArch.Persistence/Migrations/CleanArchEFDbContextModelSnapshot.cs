@@ -26,7 +26,6 @@ namespace CleanArch.Persistence.Migrations
             modelBuilder.Entity("CleanArch.Domain.Entities.LeaveAllocation", b =>
                 {
                     b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("CreatedBy")
@@ -63,7 +62,6 @@ namespace CleanArch.Persistence.Migrations
             modelBuilder.Entity("CleanArch.Domain.Entities.LeaveRequest", b =>
                 {
                     b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("CreatedBy")
@@ -92,22 +90,16 @@ namespace CleanArch.Persistence.Migrations
                     b.Property<Guid>("LeaveTypeId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<string>("LeaveTypeName")
+                        .IsRequired()
+                        .HasMaxLength(70)
+                        .HasColumnType("nvarchar(70)");
+
                     b.Property<Guid?>("ModifiedBy")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("RequestingEmployeeId")
                         .HasColumnType("uniqueidentifier");
-
-                    b.ComplexProperty<Dictionary<string, object>>("LeaveTypeName", "CleanArch.Domain.Entities.LeaveRequest.LeaveTypeName#Name", b1 =>
-                        {
-                            b1.IsRequired();
-
-                            b1.Property<string>("Value")
-                                .IsRequired()
-                                .HasMaxLength(70)
-                                .HasColumnType("nvarchar(70)")
-                                .HasColumnName("LeaveTypeName");
-                        });
 
                     b.ComplexProperty<Dictionary<string, object>>("Range", "CleanArch.Domain.Entities.LeaveRequest.Range#DateRange", b1 =>
                         {
@@ -135,7 +127,6 @@ namespace CleanArch.Persistence.Migrations
             modelBuilder.Entity("CleanArch.Domain.Entities.LeaveType", b =>
                 {
                     b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("CreatedBy")
@@ -147,31 +138,22 @@ namespace CleanArch.Persistence.Migrations
                     b.Property<DateTimeOffset?>("DateModified")
                         .HasColumnType("datetimeoffset");
 
+                    b.Property<int>("DefaultDays")
+                        .HasMaxLength(100)
+                        .HasColumnType("int");
+
                     b.Property<Guid?>("ModifiedBy")
                         .HasColumnType("uniqueidentifier");
 
-                    b.ComplexProperty<Dictionary<string, object>>("DefaultDays", "CleanArch.Domain.Entities.LeaveType.DefaultDays#DefaultDays", b1 =>
-                        {
-                            b1.IsRequired();
-
-                            b1.Property<int>("Value")
-                                .HasMaxLength(100)
-                                .HasColumnType("int")
-                                .HasColumnName("DefaultDays");
-                        });
-
-                    b.ComplexProperty<Dictionary<string, object>>("Name", "CleanArch.Domain.Entities.LeaveType.Name#Name", b1 =>
-                        {
-                            b1.IsRequired();
-
-                            b1.Property<string>("Value")
-                                .IsRequired()
-                                .HasMaxLength(70)
-                                .HasColumnType("nvarchar(70)")
-                                .HasColumnName("Name");
-                        });
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(70)
+                        .HasColumnType("nvarchar(70)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Name")
+                        .IsUnique();
 
                     b.ToTable("LeaveTypes", (string)null);
                 });
@@ -193,7 +175,7 @@ namespace CleanArch.Persistence.Migrations
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.OwnsOne("CleanArch.Domain.Entities.LeaveRequest.Comments#CleanArch.Domain.ValueObjects.Comment", "Comments", b1 =>
+                    b.OwnsOne("CleanArch.Domain.ValueObjects.Comment", "Comments", b1 =>
                         {
                             b1.Property<Guid>("LeaveRequestId")
                                 .HasColumnType("uniqueidentifier");
@@ -206,7 +188,7 @@ namespace CleanArch.Persistence.Migrations
 
                             b1.HasKey("LeaveRequestId");
 
-                            b1.ToTable("LeaveRequests", (string)null);
+                            b1.ToTable("LeaveRequests");
 
                             b1.WithOwner()
                                 .HasForeignKey("LeaveRequestId");

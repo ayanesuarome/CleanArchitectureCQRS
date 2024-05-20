@@ -3,6 +3,7 @@ using CleanArch.Domain.Entities;
 using CleanArch.Domain.Errors;
 using CleanArch.Domain.Primitives.Result;
 using CleanArch.Domain.Repositories;
+using CleanArch.Domain.ValueObjects;
 
 namespace CleanArch.Api.Features.LeaveRequests.DeleteLeaveRequests;
 
@@ -14,7 +15,7 @@ public static partial class DeleteLeaveRequest
 
         public async Task<Result> Handle(Command command, CancellationToken cancellationToken)
         {
-            LeaveRequest leaveRequest = await _repository.GetByIdAsync(command.Id);
+            LeaveRequest leaveRequest = await _repository.GetByIdAsync(new LeaveRequestId(command.Id));
 
             if (leaveRequest is null)
             {

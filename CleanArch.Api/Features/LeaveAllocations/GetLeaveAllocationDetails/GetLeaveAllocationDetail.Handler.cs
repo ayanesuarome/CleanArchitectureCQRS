@@ -4,6 +4,7 @@ using CleanArch.Domain.Entities;
 using CleanArch.Domain.Errors;
 using CleanArch.Domain.Primitives.Result;
 using CleanArch.Domain.Repositories;
+using CleanArch.Domain.ValueObjects;
 
 namespace CleanArch.Api.Features.LeaveAllocations.GetLeaveAllocationDetails;
 
@@ -15,7 +16,7 @@ public static partial class GetLeaveAllocationDetail
 
         public async Task<Result<LeaveAllocationDetailsDto>> Handle(Query query, CancellationToken cancellationToken)
         {
-            LeaveAllocation leaveAllocation = await _repository.GetLeaveAllocationWithDetails(query.Id);
+            LeaveAllocation leaveAllocation = await _repository.GetLeaveAllocationWithDetails(new LeaveAllocationId(query.Id));
 
             if (leaveAllocation is null)
             {

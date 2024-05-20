@@ -3,6 +3,7 @@ using CleanArch.Domain.Entities;
 using CleanArch.Domain.Repositories;
 using CleanArch.Domain.Errors;
 using CleanArch.Application.Abstractions.Messaging;
+using CleanArch.Domain.ValueObjects;
 
 namespace CleanArch.Api.Features.LeaveRequests.CancelLeaveRequests;
 
@@ -23,7 +24,7 @@ public static partial class CancelLeaveRequest
 
         public async Task<Result<LeaveRequest>> Handle(Command command, CancellationToken cancellationToken)
         {
-            LeaveRequest leaveRequest = await _leaveRequestRepository.GetByIdAsync(command.Id);
+            LeaveRequest leaveRequest = await _leaveRequestRepository.GetByIdAsync(new LeaveRequestId(command.Id));
 
             if (leaveRequest is null)
             {

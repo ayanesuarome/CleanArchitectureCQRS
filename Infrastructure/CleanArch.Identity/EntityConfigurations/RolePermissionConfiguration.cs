@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Role = CleanArch.Domain.Enumerations.Role;
 using Permission = CleanArch.Domain.Enumerations.Permission;
+using CleanArch.Domain.ValueObjects;
 
 namespace CleanArch.Identity.EntityConfigurations;
 
@@ -19,6 +20,11 @@ internal sealed class RolePermissionConfiguration : IEntityTypeConfiguration<Rol
                 rolePermissions.RoleId,
                 rolePermissions.PermissionId
             });
+
+        builder.Property(rolePermissions => rolePermissions.PermissionId)
+            .HasConversion(
+                permissionId => permissionId.Id,
+                id => new PermissionId(id));
 
         builder.HasData(
         #region Employee
@@ -46,6 +52,6 @@ internal sealed class RolePermissionConfiguration : IEntityTypeConfiguration<Rol
     {
         return new RolePermission(
             roleId: role.Id,
-            permissionId: (int)permission);
+            permissionId: new PermissionId((int)permission));
     }
 }

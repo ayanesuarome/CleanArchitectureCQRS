@@ -16,12 +16,12 @@ namespace CleanArch.Persistence.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(70)", maxLength: 70, nullable: false),
+                    DefaultDays = table.Column<int>(type: "int", maxLength: 100, nullable: false),
                     DateCreated = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
                     CreatedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     DateModified = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
-                    ModifiedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    DefaultDays = table.Column<int>(type: "int", maxLength: 100, nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(70)", maxLength: 70, nullable: false)
+                    ModifiedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -58,6 +58,7 @@ namespace CleanArch.Persistence.Migrations
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     LeaveTypeId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    LeaveTypeName = table.Column<string>(type: "nvarchar(70)", maxLength: 70, nullable: false),
                     Comments = table.Column<string>(type: "nvarchar(300)", maxLength: 300, nullable: true),
                     IsApproved = table.Column<bool>(type: "bit", nullable: true),
                     IsCancelled = table.Column<bool>(type: "bit", nullable: false),
@@ -68,7 +69,6 @@ namespace CleanArch.Persistence.Migrations
                     CreatedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     DateModified = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
                     ModifiedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    LeaveTypeName = table.Column<string>(type: "nvarchar(70)", maxLength: 70, nullable: false),
                     EndDate = table.Column<DateOnly>(type: "date", nullable: false),
                     StartDate = table.Column<DateOnly>(type: "date", nullable: false)
                 },
@@ -97,6 +97,12 @@ namespace CleanArch.Persistence.Migrations
                 name: "IX_LeaveRequests_LeaveTypeId",
                 table: "LeaveRequests",
                 column: "LeaveTypeId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_LeaveTypes_Name",
+                table: "LeaveTypes",
+                column: "Name",
+                unique: true);
         }
 
         /// <inheritdoc />
