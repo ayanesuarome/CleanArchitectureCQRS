@@ -36,8 +36,7 @@ namespace CleanArch.Identity.Migrations
                 schema: "identity",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<int>(type: "int", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
@@ -74,9 +73,9 @@ namespace CleanArch.Identity.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    RoleId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     FirstName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     LastName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    RoleId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -236,6 +235,12 @@ namespace CleanArch.Identity.Migrations
 
             migrationBuilder.InsertData(
                 schema: "identity",
+                table: "AspNetUsers",
+                columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "FirstName", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "RoleId", "SecurityStamp", "TwoFactorEnabled", "UserName" },
+                values: new object[] { new Guid("82ef7b08-5017-4718-988e-e4f119594fca"), 0, "8994775b-678f-4223-8db9-0892b253578b", null, false, "System", "Admin", false, null, null, null, null, null, false, null, null, false, null });
+
+            migrationBuilder.InsertData(
+                schema: "identity",
                 table: "Permissions",
                 columns: new[] { "Id", "Name" },
                 values: new object[,]
@@ -255,6 +260,12 @@ namespace CleanArch.Identity.Migrations
                     { 13, "UpdateLeaveAllocation" },
                     { 14, "DeleteLeaveAllocation" }
                 });
+
+            migrationBuilder.InsertData(
+                schema: "identity",
+                table: "AspNetUserRoles",
+                columns: new[] { "RoleId", "UserId" },
+                values: new object[] { new Guid("d9fca87d-b460-43a1-8d72-e31b189dc353"), new Guid("82ef7b08-5017-4718-988e-e4f119594fca") });
 
             migrationBuilder.InsertData(
                 schema: "identity",

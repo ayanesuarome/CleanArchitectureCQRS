@@ -11,22 +11,6 @@ internal sealed class UserConfiguration : IEntityTypeConfiguration<User>
 {
     public void Configure(EntityTypeBuilder<User> builder)
     {
-        // Currently ComplexProperty in EF8 does not support seeding.
-
-        //PasswordHasher<User> hasher = new();
-
-        //Result<UserName> firstNameResult = UserName.Create("System");
-        //Result<UserName> lastNameResult = UserName.Create("Admin");
-
-        //Result.FirstFailureOrSuccess(firstNameResult, lastNameResult);
-
-        //if (firstNameResult.IsFailure)
-        //{
-        //    throw new InvalidOperationException(firstNameResult.Error.Message);
-        //}
-
-        //User user = new User(firstNameResult.Value, lastNameResult.Value);
-
         builder.Ignore(user => user.FullName);
 
         builder.Property(user => user.FirstName)
@@ -43,6 +27,22 @@ internal sealed class UserConfiguration : IEntityTypeConfiguration<User>
             .HasColumnName(nameof(User.LastName))
             .HasMaxLength(UserName.MaxLength);
 
-        //builder.HasData(user);
+        // Seeding
+        PasswordHasher<User> hasher = new();
+
+        Result<UserName> firstNameResult = UserName.Create("System");
+        Result<UserName> lastNameResult = UserName.Create("Admin");
+
+        Result.FirstFailureOrSuccess(firstNameResult, lastNameResult);
+
+        if (firstNameResult.IsFailure)
+        {
+            throw new InvalidOperationException(firstNameResult.Error.Message);
+        }
+
+        User user = new User(firstNameResult.Value, lastNameResult.Value);
+        user.Id = Guid.Parse("82ef7b08-5017-4718-988e-e4f119594fca");
+
+        builder.HasData(user);
     }
 }
