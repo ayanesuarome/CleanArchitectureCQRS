@@ -31,6 +31,7 @@ public sealed class LeaveType : Entity<Guid>, IAuditableEntity
     {
     }
 
+    public LEaveType
     public Name Name { get; private set; }
     public DefaultDays DefaultDays { get; private set; }
 
