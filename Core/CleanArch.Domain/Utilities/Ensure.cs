@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using System.Runtime.CompilerServices;
 
 namespace CleanArch.Domain.Utilities;
 
@@ -12,7 +13,7 @@ public static class Ensure
     /// <param name="message">The message to show if the check fails.</param>
     /// <param name="argumentName">The name of the argument being checked.</param>
     /// <exception cref="ArgumentNullException"> if the specified value is null.</exception>
-    public static void NotNull<T>(T value, string message, string argumentName)
+    public static void NotNull<T>(T value, string message, [CallerArgumentExpression("value")] string? argumentName = null)
         where T : class
     {
         if (value is null)
@@ -28,7 +29,7 @@ public static class Ensure
     /// <param name="message">The message to show if the check fails.</param>
     /// <param name="argumentName">The name of the argument being checked.</param>
     /// <exception cref="ArgumentException"> if the specified value is the default value for the type.</exception>
-    public static void NotEmpty<T>(T value, string message, string argumentName)
+    public static void NotEmpty<T>(T value, string message, [CallerArgumentExpression("value")] string? argumentName = null)
     {
         Type type = typeof(T);
 
@@ -58,7 +59,7 @@ public static class Ensure
     /// <param name="message">The message to show if the check fails.</param>
     /// <param name="argumentName">The name of the argument being checked.</param>
     /// <exception cref="ArgumentException"> if the specified value is the default value for the type.</exception>
-    public static void NotEmpty(DateTimeOffset value, string message, string argumentName)
+    public static void NotEmpty(DateTimeOffset value, string message, [CallerArgumentExpression("value")] string? argumentName = null)
     {
         if (value == default)
         {

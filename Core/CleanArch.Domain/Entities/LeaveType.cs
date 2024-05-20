@@ -12,8 +12,8 @@ public sealed class LeaveType : Entity<LeaveTypeId>, IAuditableEntity
     public LeaveType(Name name, DefaultDays defaultDays)
         : base(new LeaveTypeId(Guid.NewGuid()))
     {
-        Ensure.NotNull(name, "The name is required", nameof(name));
-        Ensure.NotNull(defaultDays, "The default days is required", nameof(defaultDays));
+        Ensure.NotNull(name, "The name is required");
+        Ensure.NotNull(defaultDays, "The default days is required");
 
         Name = name;
         DefaultDays = defaultDays;
