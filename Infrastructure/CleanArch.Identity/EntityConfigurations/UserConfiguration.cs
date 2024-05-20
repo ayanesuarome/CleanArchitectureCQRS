@@ -40,8 +40,15 @@ internal sealed class UserConfiguration : IEntityTypeConfiguration<User>
             throw new InvalidOperationException(firstNameResult.Error.Message);
         }
 
-        User user = new User(firstNameResult.Value, lastNameResult.Value);
-        user.Id = Guid.Parse("82ef7b08-5017-4718-988e-e4f119594fca");
+        User user = new User(firstNameResult.Value, lastNameResult.Value)
+        {
+            Id = Guid.Parse("82ef7b08-5017-4718-988e-e4f119594fca"),
+            Email = "admin@localhost.com",
+            NormalizedEmail = "ADMIN@LOCALHOST.COM",
+            UserName = "admin@localhost.com",
+            NormalizedUserName = "ADMIN@LOCALHOST.COM",
+            //PasswordHash = hasher.HashPassword()
+        };
 
         builder.HasData(user);
     }

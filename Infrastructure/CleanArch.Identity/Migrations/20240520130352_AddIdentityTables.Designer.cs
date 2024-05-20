@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CleanArch.Identity.Migrations
 {
     [DbContext(typeof(CleanArchIdentityEFDbContext))]
-    [Migration("20240520125015_AddIdentityTables")]
+    [Migration("20240520130352_AddIdentityTables")]
     partial class AddIdentityTables
     {
         /// <inheritdoc />
@@ -328,13 +328,17 @@ namespace CleanArch.Identity.Migrations
                         {
                             Id = new Guid("82ef7b08-5017-4718-988e-e4f119594fca"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "8994775b-678f-4223-8db9-0892b253578b",
+                            ConcurrencyStamp = "61d53fbd-ce28-4450-8039-a77a84f7e4e6",
+                            Email = "admin@localhost.com",
                             EmailConfirmed = false,
                             FirstName = "System",
                             LastName = "Admin",
                             LockoutEnabled = false,
+                            NormalizedEmail = "ADMIN@LOCALHOST.COM",
+                            NormalizedUserName = "ADMIN@LOCALHOST.COM",
                             PhoneNumberConfirmed = false,
-                            TwoFactorEnabled = false
+                            TwoFactorEnabled = false,
+                            UserName = "admin@localhost.com"
                         });
                 });
 

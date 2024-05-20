@@ -237,7 +237,7 @@ namespace CleanArch.Identity.Migrations
                 schema: "identity",
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "FirstName", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "RoleId", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { new Guid("82ef7b08-5017-4718-988e-e4f119594fca"), 0, "8994775b-678f-4223-8db9-0892b253578b", null, false, "System", "Admin", false, null, null, null, null, null, false, null, null, false, null });
+                values: new object[] { new Guid("82ef7b08-5017-4718-988e-e4f119594fca"), 0, "61d53fbd-ce28-4450-8039-a77a84f7e4e6", "admin@localhost.com", false, "System", "Admin", false, null, "ADMIN@LOCALHOST.COM", "ADMIN@LOCALHOST.COM", null, null, false, null, null, false, "admin@localhost.com" });
 
             migrationBuilder.InsertData(
                 schema: "identity",
