@@ -1,9 +1,9 @@
 ﻿using CleanArch.Application.Abstractions.Data;
 using CleanArch.Application.Abstractions.Messaging;
 using CleanArch.Domain.Entities;
-using CleanArch.Domain.Errors;
 using CleanArch.Domain.Primitives.Result;
 using CleanArch.Domain.Repositories;
+using CleanArch.Domain.Requirements;
 using CleanArch.Domain.ValueObjects;
 
 namespace CleanArch.Api.Features.LeaveTypes.CreateLeaveTypes;
@@ -33,15 +33,19 @@ public static partial class CreateLeaveType
                 return Result.Failure<Guid>(firstFailureOrSuccess.Error);
             }
 
-            if (!await _repository.IsUniqueAsync(nameResult.Value, cancellationToken))
+            LeaveTypeNameUniqueRequirement requirement = new (async () =>
+                await _repository.IsUniqueAsync(nameResult.Value, cancellationToken));
+
+            Result<LeaveType> leaveTypeResult = LeaveType.Create(nameResult.Value, defaultDaysResult.Value, requirement);
+            
+            if(leaveTypeResult.IsFailure)
             {
-                return Result.Failure<Guid>(DomainErrors.LeaveType.DuplicateName);
+                return Result.Failure<Guid>(leaveTypeResult.Error);
             }
 
-            LeaveType leaveType = new(nameResult.Value, defaultDaysResult.Value);
-            _repository.Add(leaveType);
+            _repository.Add(leaveTypeResult.Value);
 
-            return Result.Success<Guid>(leaveType.Id);
+            return Result.Success<Guid>(leaveTypeResult.Value.Id);
         }
     }
 }

@@ -1,15 +1,14 @@
 ﻿using CleanArch.Domain.Primitives;
 using CleanArch.Domain.Primitives.Result;
-using CleanArch.Domain.Repositories;
+using CleanArch.Domain.Requirements;
 using CleanArch.Domain.Utilities;
 using CleanArch.Domain.ValueObjects;
-using MediatR;
 
 namespace CleanArch.Domain.Entities;
 
 public sealed class LeaveType : Entity<LeaveTypeId>, IAuditableEntity
 {
-    public LeaveType(Name name, DefaultDays defaultDays)
+    private LeaveType(Name name, DefaultDays defaultDays)
         : base(new LeaveTypeId(Guid.NewGuid()))
     {
         Ensure.NotNull(name, "The name is required");
@@ -41,16 +40,31 @@ public sealed class LeaveType : Entity<LeaveTypeId>, IAuditableEntity
 
     #endregion
 
-    public async Task<Result> UpdateName(Name name, ILeaveTypeRepository repository)
+    public static Result<LeaveType> Create(
+        Name name,
+        DefaultDays defaultDays,
+        LeaveTypeNameUniqueRequirement nameUniqueRequirement)
+    {
+        if(!nameUniqueRequirement.IsSatified)
+        {
+            return Result.Failure<LeaveType>(Errors.DomainErrors.LeaveType.DuplicateName);
+        }
+
+        LeaveType leaveType = new(name, defaultDays);
+
+        return Result.Success(leaveType);
+    }
+
+    public Result UpdateName(Name name, LeaveTypeNameUniqueRequirement nameUniqueRequirement)
     {
         if(name == Name)
         {
             return Result.Success();
         }
 
-        if (!await repository.IsUniqueAsync(name))
+        if (!nameUniqueRequirement.IsSatified)
         {
-            return Result.Failure<Unit>(Errors.DomainErrors.LeaveType.DuplicateName);
+            return Result.Failure(Errors.DomainErrors.LeaveType.DuplicateName);
         }
 
         Name = name;

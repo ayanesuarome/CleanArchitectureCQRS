@@ -3,6 +3,7 @@ using CleanArch.Domain.Entities;
 using CleanArch.Domain.Errors;
 using CleanArch.Domain.Primitives.Result;
 using CleanArch.Domain.Repositories;
+using CleanArch.Domain.Requirements;
 using CleanArch.Domain.ValueObjects;
 using MediatR;
 
@@ -35,7 +36,10 @@ public static partial class UpdateLeaveType
                 return Result.Failure<Unit>(firstFailureOrSuccess.Error);
             }
 
-            Result updateNameResult = await leaveType.UpdateName(nameResult.Value, _repository);
+            LeaveTypeNameUniqueRequirement requirement = new(async () =>
+                await _repository.IsUniqueAsync(nameResult.Value, cancellationToken));
+
+            Result updateNameResult = leaveType.UpdateName(nameResult.Value, requirement);
 
             if(updateNameResult.IsFailure)
             {
