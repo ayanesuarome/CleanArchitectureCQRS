@@ -1,4 +1,4 @@
-﻿using CleanArch.Domain.Entities;
+﻿using CleanArch.Domain.Authentication;
 
 namespace CleanArch.Application.Abstractions.Authentication;
 

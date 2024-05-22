@@ -1,11 +1,9 @@
 ﻿using CleanArch.Application.Abstractions.Authentication;
 using CleanArch.Application.Abstractions.Messaging;
 using CleanArch.Contracts.LeaveRequests;
-using CleanArch.Domain.Entities;
+using CleanArch.Domain.Core.Primitives.Result;
 using CleanArch.Domain.Errors;
-using CleanArch.Domain.Primitives.Result;
-using CleanArch.Domain.Repositories;
-using CleanArch.Domain.ValueObjects;
+using CleanArch.Domain.LeaveRequests;
 
 namespace CleanArch.Api.Features.LeaveRequests.GetLeaveRequestDetails;
 

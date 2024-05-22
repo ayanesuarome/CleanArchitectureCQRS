@@ -1,9 +1,7 @@
 ﻿using CleanArch.Api.Contracts;
 using CleanArch.Api.Features.LeaveTypes.GetLeaveTypeDetails;
 using CleanArch.Contracts.LeaveTypes;
-using CleanArch.Domain.Enumerations;
-using CleanArch.Domain.Primitives.Result;
-using CleanArch.Identity.Authentication;
+using CleanArch.Domain.Core.Primitives.Result;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CleanArch.Api.Features.LeaveTypes;

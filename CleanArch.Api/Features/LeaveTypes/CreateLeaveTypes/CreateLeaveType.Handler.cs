@@ -1,10 +1,8 @@
 ﻿using CleanArch.Application.Abstractions.Data;
 using CleanArch.Application.Abstractions.Messaging;
-using CleanArch.Domain.Entities;
-using CleanArch.Domain.Primitives.Result;
-using CleanArch.Domain.Repositories;
-using CleanArch.Domain.Requirements;
-using CleanArch.Domain.ValueObjects;
+using CleanArch.Domain.Core.Primitives.Result;
+using CleanArch.Domain.Core.ValueObjects;
+using CleanArch.Domain.LeaveTypes;
 
 namespace CleanArch.Api.Features.LeaveTypes.CreateLeaveTypes;
 

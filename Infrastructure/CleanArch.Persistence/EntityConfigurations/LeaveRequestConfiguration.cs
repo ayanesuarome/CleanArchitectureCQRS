@@ -1,5 +1,6 @@
-﻿using CleanArch.Domain.Entities;
-using CleanArch.Domain.ValueObjects;
+﻿using CleanArch.Domain.Core.ValueObjects;
+using CleanArch.Domain.LeaveRequests;
+using CleanArch.Domain.LeaveTypes;
 using CleanArch.Persistence.Constants;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;

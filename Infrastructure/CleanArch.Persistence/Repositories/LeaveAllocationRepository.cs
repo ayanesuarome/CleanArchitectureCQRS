@@ -1,6 +1,5 @@
-﻿using CleanArch.Domain.Entities;
-using CleanArch.Domain.Repositories;
-using CleanArch.Domain.ValueObjects;
+﻿using CleanArch.Domain.LeaveAllocations;
+using CleanArch.Domain.LeaveTypes;
 using Microsoft.EntityFrameworkCore;
 
 namespace CleanArch.Persistence.Repositories;

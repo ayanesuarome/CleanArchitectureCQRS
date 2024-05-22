@@ -1,6 +1,5 @@
-﻿using CleanArch.Domain.Entities;
-using CleanArch.Domain.Primitives.Result;
-using CleanArch.Domain.ValueObjects;
+﻿using CleanArch.Domain.Authentication;
+using CleanArch.Domain.Core.Primitives.Result;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;

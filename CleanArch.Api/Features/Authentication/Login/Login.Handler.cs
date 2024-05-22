@@ -1,9 +1,9 @@
 ﻿using CleanArch.Application.Abstractions.Authentication;
 using CleanArch.Application.Abstractions.Messaging;
 using CleanArch.Contracts.Identity;
-using CleanArch.Domain.Entities;
+using CleanArch.Domain.Authentication;
+using CleanArch.Domain.Core.Primitives.Result;
 using CleanArch.Domain.Errors;
-using CleanArch.Domain.Primitives.Result;
 using FluentValidation;
 using Microsoft.AspNetCore.Identity;
 

@@ -1,10 +1,10 @@
 ﻿using CleanArch.Api.Features.LeaveTypes.DeleteLeaveTypes;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using CleanArch.Domain.Primitives.Result;
 using CleanArch.Identity.Authentication;
-using CleanArch.Domain.Enumerations;
 using CleanArch.Api.Contracts;
+using CleanArch.Domain.Core.Primitives.Result;
+using CleanArch.Domain.Authentication;
 
 namespace CleanArch.Api.Features.LeaveTypes
 {
@@ -14,7 +14,7 @@ namespace CleanArch.Api.Features.LeaveTypes
         [HttpDelete(ApiRoutes.LeaveTypes.Delete)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [HasPermission(Permission.DeleteLeaveType)]
+        [HasPermission(Permissions.DeleteLeaveType)]
         public async Task<IActionResult> Delete([FromRoute] Guid id, CancellationToken cancellationToken)
         {
             Result<Unit> result = await Sender.Send(new DeleteLeaveType.Command(id), cancellationToken);

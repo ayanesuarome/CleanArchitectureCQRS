@@ -1,10 +1,8 @@
 ﻿using CleanArch.Application.Abstractions.Messaging;
 using CleanArch.Contracts.LeaveAllocations;
-using CleanArch.Domain.Entities;
+using CleanArch.Domain.Core.Primitives.Result;
 using CleanArch.Domain.Errors;
-using CleanArch.Domain.Primitives.Result;
-using CleanArch.Domain.Repositories;
-using CleanArch.Domain.ValueObjects;
+using CleanArch.Domain.LeaveAllocations;
 
 namespace CleanArch.Api.Features.LeaveAllocations.GetLeaveAllocationDetails;
 

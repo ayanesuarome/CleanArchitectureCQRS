@@ -1,6 +1,4 @@
-﻿using CleanArch.Contracts.Identity;
-using CleanArch.Domain.Enumerations;
-using MediatR;
+﻿using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 

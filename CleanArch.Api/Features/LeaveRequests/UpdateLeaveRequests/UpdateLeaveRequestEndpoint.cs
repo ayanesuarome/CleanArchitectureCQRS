@@ -1,9 +1,10 @@
 ﻿using CleanArch.Api.Contracts;
 using CleanArch.Api.Features.LeaveRequests.UpdateLeaveRequests;
 using CleanArch.Contracts.LeaveRequests;
-using CleanArch.Domain.Entities;
-using CleanArch.Domain.Events;
-using CleanArch.Domain.Primitives.Result;
+using CleanArch.Domain.Authentication;
+using CleanArch.Domain.Core.Primitives.Result;
+using CleanArch.Domain.LeaveRequests;
+using CleanArch.Domain.LeaveRequests.Events;
 using CleanArch.Identity.Authentication;
 using Microsoft.AspNetCore.Mvc;
 
@@ -16,7 +17,7 @@ public sealed partial class LeaveRequestController
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    [HasPermission(Domain.Enumerations.Permission.UpdateLeaveRequest)]
+    [HasPermission(Permissions.UpdateLeaveRequest)]
     public async Task<IActionResult> Put(
         [FromRoute] Guid id,
         [FromBody] UpdateLeaveRequestRequest request,

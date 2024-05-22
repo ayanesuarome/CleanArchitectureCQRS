@@ -1,5 +1,5 @@
-﻿using CleanArch.Domain.Entities;
-using CleanArch.Domain.ValueObjects;
+﻿using CleanArch.Domain.Core.ValueObjects;
+using CleanArch.Domain.LeaveTypes;
 using FluentAssertions;
 
 namespace CleanArch.Domain.Tests.Entities;
@@ -11,9 +11,10 @@ public class LeaveTypeTest
     {
         // Arrange
         DefaultDays defaultDays = DefaultDays.Create(10).Value;
+        LeaveTypeNameUniqueRequirement requirement = new(() => Task.FromResult(true));
 
         // Act
-        LeaveType Action() => new(null, defaultDays);
+        LeaveType Action() => LeaveType.Create(null, defaultDays, requirement).Value;
 
         // Assert
         FluentActions.Invoking(Action).Should().Throw<ArgumentNullException>()
@@ -25,9 +26,10 @@ public class LeaveTypeTest
     {
         // Arrange
         Name name = Name.Create("Test").Value;
+        LeaveTypeNameUniqueRequirement requirement = new(() => Task.FromResult(true));
 
         // Act
-        LeaveType Action() => new(name, null);
+        LeaveType Action() => LeaveType.Create(name, null, requirement).Value;
 
         // Assert
         FluentActions.Invoking(Action).Should().Throw<ArgumentNullException>()
@@ -40,9 +42,10 @@ public class LeaveTypeTest
         // Arrange
         Name name = Name.Create("Test").Value;
         DefaultDays defaultDays = DefaultDays.Create(10).Value;
+        LeaveTypeNameUniqueRequirement requirement = new(() => Task.FromResult(true));
 
         // Act
-        LeaveType leaveType = new(name, defaultDays);
+        LeaveType leaveType = LeaveType.Create(name, defaultDays, requirement).Value;
 
         // Assert
         leaveType.Should().NotBeNull();

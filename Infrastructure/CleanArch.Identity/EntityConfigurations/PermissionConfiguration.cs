@@ -1,5 +1,4 @@
-﻿using CleanArch.Domain.Entities;
-using CleanArch.Domain.ValueObjects;
+﻿using CleanArch.Domain.Authentication;
 using CleanArch.Identity.Constants;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -20,7 +19,7 @@ internal sealed class PermissionConfiguration : IEntityTypeConfiguration<Permiss
                 id => new PermissionId(id));
 
         IEnumerable<Permission> permissions = Enum
-            .GetValues<Domain.Enumerations.Permission>()
+            .GetValues<Permissions>()
             .Select(permission => new Permission(
                 id: (int)permission,
                 name: permission.ToString()));

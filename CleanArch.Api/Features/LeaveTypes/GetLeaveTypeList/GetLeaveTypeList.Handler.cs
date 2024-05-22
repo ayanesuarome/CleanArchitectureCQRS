@@ -1,8 +1,7 @@
 ﻿using CleanArch.Application.Abstractions.Messaging;
 using CleanArch.Contracts.LeaveTypes;
-using CleanArch.Domain.Entities;
-using CleanArch.Domain.Primitives.Result;
-using CleanArch.Domain.Repositories;
+using CleanArch.Domain.Core.Primitives.Result;
+using CleanArch.Domain.LeaveTypes;
 
 namespace CleanArch.Api.Features.LeaveTypes.GetLeaveTypeList;
 

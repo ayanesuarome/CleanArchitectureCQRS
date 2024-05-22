@@ -1,5 +1,4 @@
 ﻿using CleanArch.Application.Extensions;
-using CleanArch.Contracts.Identity;
 using FluentValidation;
 
 namespace CleanArch.Api.Features.Authentication.CreateUsers;

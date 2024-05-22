@@ -1,9 +1,9 @@
 ﻿using CleanArch.Application.Abstractions.Authentication;
-using CleanArch.Domain.Primitives;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using CleanArch.Domain.Core.Primitives;
 
 namespace CleanArch.Persistence.Interceptors;
 

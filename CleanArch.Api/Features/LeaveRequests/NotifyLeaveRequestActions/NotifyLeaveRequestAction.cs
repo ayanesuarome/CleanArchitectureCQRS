@@ -3,10 +3,10 @@ using CleanArch.Application.Abstractions.Authentication;
 using CleanArch.Application.Abstractions.Logging;
 using MediatR;
 using Microsoft.Extensions.Options;
-using CleanArch.Domain.Events;
 using CleanArch.Api.Contracts.Emails;
 using CleanArch.Infrastructure.Emails.Settings;
 using CleanArch.Contracts.Identity;
+using CleanArch.Domain.LeaveRequests.Events;
 
 namespace CleanArch.Api.Features.LeaveRequests.NotifyLeaveRequestActions;
 

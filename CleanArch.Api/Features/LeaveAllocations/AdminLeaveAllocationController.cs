@@ -1,11 +1,11 @@
 ﻿using CleanArch.Api.Infrastructure;
-using CleanArch.Domain.Enumerations;
+using CleanArch.Domain.Authentication;
 using CleanArch.Identity.Authentication;
 using MediatR;
 
 namespace CleanArch.Api.Features.LeaveAllocations;
 
-[HasPermission(Permission.AccessLeaveAllocations)]
+[HasPermission(Permissions.AccessLeaveAllocations)]
 public sealed partial class AdminLeaveAllocationController(ISender mediator, IPublisher publisher)
     : BaseAdminController(mediator, publisher)
 {

@@ -1,7 +1,7 @@
 ﻿using BenchmarkDotNet.Attributes;
-using CleanArch.Domain.Entities;
-using CleanArch.Domain.Primitives.Result;
-using CleanArch.Domain.ValueObjects;
+using CleanArch.Domain.Core.Primitives.Result;
+using CleanArch.Domain.Core.ValueObjects;
+using CleanArch.Domain.LeaveTypes;
 using Microsoft.EntityFrameworkCore;
 
 namespace CleanArch.Benchmarking
@@ -14,8 +14,9 @@ namespace CleanArch.Benchmarking
         {
             Result<Name> name = Name.Create("Test Get Leave Type");
             Result<DefaultDays> defaultDays = DefaultDays.Create(15);
+            LeaveTypeNameUniqueRequirement requirement = new(() => Task.FromResult(true));
 
-            LeaveType entity = new(name.Value, defaultDays.Value);
+            LeaveType entity = LeaveType.Create(name.Value, defaultDays.Value, requirement).Value;
 
             await context.LeaveTypes.AddAsync(entity);
             await context.SaveChangesAsync();
@@ -30,13 +31,14 @@ namespace CleanArch.Benchmarking
         {
             Result<Name> name = Name.Create("Test Get Leave Type");
             Result<DefaultDays> defaultDays = DefaultDays.Create(15);
+            LeaveTypeNameUniqueRequirement requirement = new(() => Task.FromResult(true));
 
-            LeaveType entity = new(name.Value, defaultDays.Value);
+            LeaveType entity = LeaveType.Create(name.Value, defaultDays.Value, requirement).Value;
             
             await context.LeaveTypes.AddAsync(entity);
             await context.SaveChangesAsync();
 
-            LeaveType leaveType = await context.LeaveTypes
+            LeaveType? leaveType = await context.LeaveTypes
                 .AsNoTracking()
                 .FirstOrDefaultAsync(e => e.Id == entity.Id);
         }

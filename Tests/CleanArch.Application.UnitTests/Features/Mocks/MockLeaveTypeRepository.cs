@@ -1,7 +1,6 @@
-﻿using CleanArch.Domain.Entities;
-using CleanArch.Domain.Primitives.Result;
-using CleanArch.Domain.Repositories;
-using CleanArch.Domain.ValueObjects;
+﻿using CleanArch.Domain.Core.Primitives.Result;
+using CleanArch.Domain.Core.ValueObjects;
+using CleanArch.Domain.LeaveTypes;
 using Moq;
 
 namespace CleanArch.Application.Tests.Features.Mocks;
@@ -10,6 +9,8 @@ public static class MockLeaveTypeRepository
 {
     public static Mock<ILeaveTypeRepository> GetLeaveTypeRepositoryMock()
     {
+        LeaveTypeNameUniqueRequirement requirement = new(() => Task.FromResult(true));
+
         Result<Name> nameResult1 = Name.Create("Test Vacation");
         Result<Name> nameResult2 = Name.Create("Test Sick");
         Result<Name> nameResult3 = Name.Create("Test Maternity");
@@ -19,9 +20,9 @@ public static class MockLeaveTypeRepository
 
         List<LeaveType> leaveTypes = new()
         {
-            new(nameResult1.Value, defaultDaysResult1.Value),
-            new(nameResult2.Value, defaultDaysResult1.Value),
-            new(nameResult3.Value, defaultDaysResult1.Value)
+            LeaveType.Create(nameResult1.Value, defaultDaysResult1.Value, requirement).Value,
+            LeaveType.Create(nameResult2.Value, defaultDaysResult1.Value, requirement).Value,
+            LeaveType.Create(nameResult3.Value, defaultDaysResult1.Value, requirement).Value
         };
 
         Mock<ILeaveTypeRepository> repositoryMock = new Mock<ILeaveTypeRepository>();

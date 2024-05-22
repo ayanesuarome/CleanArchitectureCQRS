@@ -1,6 +1,6 @@
 ﻿using CleanArch.Application.Abstractions.Messaging;
-using CleanArch.Domain.Entities;
-using CleanArch.Domain.Primitives.Result;
+using CleanArch.Domain.Core.Primitives.Result;
+using CleanArch.Domain.LeaveRequests;
 using System.Globalization;
 
 namespace CleanArch.Api.Features.LeaveRequests.CreateLeaveRequests;

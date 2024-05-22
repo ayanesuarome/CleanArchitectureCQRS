@@ -1,9 +1,8 @@
-﻿using CleanArch.Domain.Primitives.Result;
-using CleanArch.Domain.Entities;
-using CleanArch.Domain.Repositories;
-using CleanArch.Domain.Errors;
+﻿using CleanArch.Domain.Errors;
 using CleanArch.Application.Abstractions.Messaging;
-using CleanArch.Domain.ValueObjects;
+using CleanArch.Domain.Core.Primitives.Result;
+using CleanArch.Domain.LeaveRequests;
+using CleanArch.Domain.LeaveAllocations;
 
 namespace CleanArch.Api.Features.LeaveRequests.CancelLeaveRequests;
 

@@ -1,7 +1,7 @@
-﻿using CleanArch.Domain.Entities;
-using CleanArch.Application.Abstractions.Messaging;
+﻿using CleanArch.Application.Abstractions.Messaging;
 using System.Globalization;
-using CleanArch.Domain.Primitives.Result;
+using CleanArch.Domain.Core.Primitives.Result;
+using CleanArch.Domain.LeaveRequests;
 
 namespace CleanArch.Api.Features.LeaveRequests.UpdateLeaveRequests;
 

@@ -1,6 +1,6 @@
 ﻿using CleanArch.Application.Abstractions.Messaging;
 using CleanArch.Contracts.Identity;
-using CleanArch.Domain.Primitives.Result;
+using CleanArch.Domain.Core.Primitives.Result;
 
 namespace CleanArch.Api.Features.Authentication.Login;
 

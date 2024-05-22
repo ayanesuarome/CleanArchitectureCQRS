@@ -1,10 +1,10 @@
-﻿using CleanArch.Domain.Primitives.Result;
-using CleanArch.Application.Tests.Features.Mocks;
-using CleanArch.Domain.Repositories;
+﻿using CleanArch.Application.Tests.Features.Mocks;
 using Moq;
 using Shouldly;
 using CleanArch.Api.Features.LeaveTypes.GetLeaveTypeList;
 using CleanArch.Contracts.LeaveTypes;
+using CleanArch.Domain.Core.Primitives.Result;
+using CleanArch.Domain.LeaveTypes;
 
 namespace CleanArch.Application.Tests.Features.LeaveTypes.Queries.GetAllLeaveTypes;
 

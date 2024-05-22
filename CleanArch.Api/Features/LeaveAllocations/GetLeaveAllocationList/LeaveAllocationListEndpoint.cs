@@ -1,7 +1,6 @@
 ﻿using CleanArch.Api.Contracts;
-using CleanArch.Contracts;
 using CleanArch.Contracts.LeaveAllocations;
-using CleanArch.Domain.Primitives.Result;
+using CleanArch.Domain.Core.Primitives.Result;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CleanArch.Api.Features.LeaveAllocations;

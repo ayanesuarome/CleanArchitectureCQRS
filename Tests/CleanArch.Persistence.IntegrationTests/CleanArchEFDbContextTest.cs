@@ -1,6 +1,6 @@
-using CleanArch.Domain.Entities;
-using CleanArch.Domain.Primitives.Result;
-using CleanArch.Domain.ValueObjects;
+using CleanArch.Domain.Core.Primitives.Result;
+using CleanArch.Domain.Core.ValueObjects;
+using CleanArch.Domain.LeaveTypes;
 using Microsoft.EntityFrameworkCore;
 using Shouldly;
 
@@ -15,8 +15,9 @@ public class CleanArchEFDbContextTest(CleanArchEFDbContextFixture fixture) : ICl
     {
         Result<Name> name = Name.Create("Test Vacation");
         Result<DefaultDays> defaultDays = DefaultDays.Create(10);
+        LeaveTypeNameUniqueRequirement requirement = new(() => Task.FromResult(true));
 
-        LeaveType leaveType = new(name.Value, defaultDays.Value);
+        LeaveType leaveType = LeaveType.Create(name.Value, defaultDays.Value, requirement).Value;
 
         await _fixture.context.LeaveTypes.AddAsync(leaveType);
         await _fixture.context.SaveChangesAsync();
@@ -30,8 +31,9 @@ public class CleanArchEFDbContextTest(CleanArchEFDbContextFixture fixture) : ICl
     {
         Result<Name> name = Name.Create("Test Get Leave Type");
         Result<DefaultDays> defaultDays = DefaultDays.Create(15);
+        LeaveTypeNameUniqueRequirement requirement = new(() => Task.FromResult(true));
 
-        LeaveType leaveType = new(name.Value, defaultDays.Value);
+        LeaveType leaveType = LeaveType.Create(name.Value, defaultDays.Value, requirement).Value;
 
         await _fixture.context.LeaveTypes.AddAsync(leaveType);
         await _fixture.context.SaveChangesAsync();

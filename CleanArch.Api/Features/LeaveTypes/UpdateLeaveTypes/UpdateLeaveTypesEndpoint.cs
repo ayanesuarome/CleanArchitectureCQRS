@@ -1,8 +1,8 @@
 ﻿using CleanArch.Api.Contracts;
 using CleanArch.Api.Features.LeaveTypes.UpdateLeaveTypes;
 using CleanArch.Contracts.LeaveTypes;
-using CleanArch.Domain.Enumerations;
-using CleanArch.Domain.Primitives.Result;
+using CleanArch.Domain.Authentication;
+using CleanArch.Domain.Core.Primitives.Result;
 using CleanArch.Identity.Authentication;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -16,7 +16,7 @@ public sealed partial class LeaveTypesController
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    [HasPermission(Permission.UpdateLeaveType)]
+    [HasPermission(Permissions.UpdateLeaveType)]
     public async Task<IActionResult> Put(
         [FromRoute] Guid id,
         [FromBody] UpdateLeaveTypeRequest request,

@@ -1,4 +1,4 @@
-﻿using CleanArch.Domain.Primitives.Result;
+﻿using CleanArch.Domain.Core.Primitives.Result;
 
 namespace CleanArch.Api.Contracts;
 

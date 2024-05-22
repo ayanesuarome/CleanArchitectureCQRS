@@ -3,9 +3,11 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using CleanArch.Persistence.Repositories;
-using CleanArch.Domain.Repositories;
 using CleanArch.Persistence.Interceptors;
 using CleanArch.Application.Abstractions.Data;
+using CleanArch.Domain.LeaveTypes;
+using CleanArch.Domain.LeaveAllocations;
+using CleanArch.Domain.LeaveRequests;
 
 namespace CleanArch.Persistence;
 

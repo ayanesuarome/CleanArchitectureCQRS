@@ -1,5 +1,4 @@
-﻿using CleanArch.Domain.Primitives.Result;
-using MediatR;
+﻿using MediatR;
 
 namespace CleanArch.Application.Abstractions.Messaging;
 

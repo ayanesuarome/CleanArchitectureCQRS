@@ -1,8 +1,8 @@
 ﻿using CleanArch.Contracts.Identity;
 using CleanArch.Api.Features.Authentication.CreateUsers;
 using Microsoft.AspNetCore.Mvc;
-using CleanArch.Domain.Primitives.Result;
 using CleanArch.Api.Contracts;
+using CleanArch.Domain.Core.Primitives.Result;
 
 namespace CleanArch.Api.Features.Authentication;
 

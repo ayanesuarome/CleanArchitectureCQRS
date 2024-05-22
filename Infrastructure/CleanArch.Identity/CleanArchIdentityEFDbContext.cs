@@ -1,5 +1,5 @@
 ﻿using CleanArch.Application.Abstractions.Data;
-using CleanArch.Domain.Entities;
+using CleanArch.Domain.Authentication;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;

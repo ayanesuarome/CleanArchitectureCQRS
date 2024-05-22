@@ -1,5 +1,7 @@
 ﻿using CleanArch.Application.Abstractions.Data;
-using CleanArch.Domain.Entities;
+using CleanArch.Domain.LeaveAllocations;
+using CleanArch.Domain.LeaveRequests;
+using CleanArch.Domain.LeaveTypes;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
 

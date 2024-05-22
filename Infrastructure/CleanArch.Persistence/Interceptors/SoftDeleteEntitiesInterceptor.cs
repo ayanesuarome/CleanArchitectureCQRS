@@ -1,7 +1,7 @@
-﻿using CleanArch.Domain.Primitives;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
+﻿using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.EntityFrameworkCore;
+using CleanArch.Domain.Core.Primitives;
 
 namespace CleanArch.Persistence.Interceptors;
 

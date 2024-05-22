@@ -1,9 +1,8 @@
 ﻿using CleanArch.Application.Abstractions.Authentication;
 using CleanArch.Application.Abstractions.Messaging;
 using CleanArch.Contracts.Identity;
-using CleanArch.Domain.Entities;
-using CleanArch.Domain.Primitives.Result;
-using CleanArch.Domain.ValueObjects;
+using CleanArch.Domain.Authentication;
+using CleanArch.Domain.Core.Primitives.Result;
 using Microsoft.AspNetCore.Identity;
 
 namespace CleanArch.Api.Features.Authentication.CreateUsers;
@@ -50,7 +49,7 @@ public static partial class CreateUser
                 return Result.Failure<RegistrationResponse>(ValidationErrors.CreateUser.CreateUserValidation(result.Errors.ToString()));
             }
 
-            await _userManager.AddToRoleAsync(user, Domain.Enumerations.Role.Employee.Name);
+            await _userManager.AddToRoleAsync(user, Roles.Employee.Name);
 
             RegistrationResponse response = new(user.Id);
 

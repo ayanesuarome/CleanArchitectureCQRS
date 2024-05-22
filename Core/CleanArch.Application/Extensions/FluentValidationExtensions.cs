@@ -1,4 +1,4 @@
-﻿using CleanArch.Domain.Primitives.Result;
+﻿using CleanArch.Domain.Core.Primitives.Result;
 using FluentValidation;
 using FluentValidation.Results;
 

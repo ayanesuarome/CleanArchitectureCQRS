@@ -1,10 +1,7 @@
-﻿using CleanArch.Domain.Entities;
-using CleanArch.Identity.Constants;
+﻿using CleanArch.Identity.Constants;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Role = CleanArch.Domain.Enumerations.Role;
-using Permission = CleanArch.Domain.Enumerations.Permission;
-using CleanArch.Domain.ValueObjects;
+using CleanArch.Domain.Authentication;
 
 namespace CleanArch.Identity.EntityConfigurations;
 
@@ -28,27 +25,27 @@ internal sealed class RolePermissionConfiguration : IEntityTypeConfiguration<Rol
 
         builder.HasData(
         #region Employee
-            Create(Role.Employee, Permission.AccessLeaveTypes),
-            Create(Role.Employee, Permission.AccessLeaveRequests),
-            Create(Role.Employee, Permission.CreateLeaveRequest),
-            Create(Role.Employee, Permission.UpdateLeaveRequest),
-            Create(Role.Employee, Permission.CancelLeaveRequest),
+            Create(Roles.Employee, Permissions.AccessLeaveTypes),
+            Create(Roles.Employee, Permissions.AccessLeaveRequests),
+            Create(Roles.Employee, Permissions.CreateLeaveRequest),
+            Create(Roles.Employee, Permissions.UpdateLeaveRequest),
+            Create(Roles.Employee, Permissions.CancelLeaveRequest),
         #endregion
         #region Administrator
-            Create(Role.Administrator, Permission.AccessLeaveTypes),
-            Create(Role.Administrator, Permission.CreateLeaveType),
-            Create(Role.Administrator, Permission.UpdateLeaveType),
-            Create(Role.Administrator, Permission.DeleteLeaveType),
-            Create(Role.Administrator, Permission.AccessLeaveRequests),
-            Create(Role.Administrator, Permission.DeleteLeaveRequest),
-            Create(Role.Administrator, Permission.ChangeLeaveRequestApproval),
-            Create(Role.Administrator, Permission.AccessLeaveAllocations),
-            Create(Role.Administrator, Permission.CreateLeaveAllocation)
+            Create(Roles.Administrator, Permissions.AccessLeaveTypes),
+            Create(Roles.Administrator, Permissions.CreateLeaveType),
+            Create(Roles.Administrator, Permissions.UpdateLeaveType),
+            Create(Roles.Administrator, Permissions.DeleteLeaveType),
+            Create(Roles.Administrator, Permissions.AccessLeaveRequests),
+            Create(Roles.Administrator, Permissions.DeleteLeaveRequest),
+            Create(Roles.Administrator, Permissions.ChangeLeaveRequestApproval),
+            Create(Roles.Administrator, Permissions.AccessLeaveAllocations),
+            Create(Roles.Administrator, Permissions.CreateLeaveAllocation)
         #endregion
             );
     }
 
-    private static RolePermission Create(Role role, Permission permission)
+    private static RolePermission Create(Roles role, Permissions permission)
     {
         return new RolePermission(
             roleId: role.Id,

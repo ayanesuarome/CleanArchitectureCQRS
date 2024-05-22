@@ -1,5 +1,5 @@
 ﻿using CleanArch.Application.Abstractions.Authentication;
-using CleanArch.Domain.Entities;
+using CleanArch.Domain.Authentication;
 using CleanArch.Identity.Constants;
 using CleanArch.Identity.Settings;
 using Microsoft.AspNetCore.Identity;

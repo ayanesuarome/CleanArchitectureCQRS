@@ -1,5 +1,4 @@
 ﻿using CleanArch.Application.Extensions;
-using CleanArch.Domain.Repositories;
 using FluentValidation;
 
 namespace CleanArch.Api.Features.LeaveTypes.CreateLeaveTypes;
