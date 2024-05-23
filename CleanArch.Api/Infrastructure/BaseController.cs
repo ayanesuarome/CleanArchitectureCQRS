@@ -9,13 +9,8 @@ namespace CleanArch.Api.Infrastructure;
 public abstract class BaseController : ControllerBase
 {
     protected ISender Sender { get; }
-    protected IPublisher Publisher { get; }
 
-    protected BaseController(ISender sender, IPublisher publisher)
-    {
-        Sender = sender;
-        Publisher = publisher;
-    }
+    protected BaseController(ISender sender) => Sender = sender;
 
     protected IActionResult HandleFailure(Result result) =>
         result switch

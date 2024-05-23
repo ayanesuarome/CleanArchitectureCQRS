@@ -21,7 +21,7 @@ internal sealed class SoftDeleteEntitiesInterceptor : SaveChangesInterceptor
             .Context
             .ChangeTracker
             .Entries<ISoftDeletableEntity>()
-            .Where(e => e.State == EntityState.Deleted);
+            .Where(entry => entry.State == EntityState.Deleted);
 
         DateTimeOffset now = DateTimeOffset.Now;
 

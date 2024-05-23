@@ -10,8 +10,7 @@ namespace CleanArch.Api.Infrastructure;
 [ProducesResponseType(StatusCodes.Status403Forbidden)]
 public abstract class BaseAdminController : BaseController
 {
-    protected BaseAdminController(ISender sender, IPublisher publisher)
-        : base(sender, publisher)
+    protected BaseAdminController(ISender sender) : base(sender)
     {
     }
 }

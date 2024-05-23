@@ -1,7 +1,6 @@
 ﻿using CleanArch.Api.Contracts;
 using CleanArch.Api.Features.LeaveRequests.CreateLeaveRequests;
 using CleanArch.Contracts.LeaveRequests;
-using CleanArch.Domain.Authentication;
 using CleanArch.Domain.Core.Primitives.Result;
 using CleanArch.Domain.LeaveRequests;
 using CleanArch.Domain.LeaveRequests.Events;
@@ -16,7 +15,7 @@ public sealed partial class LeaveRequestController
     [HttpPost(ApiRoutes.LeaveRequests.Post)]
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
-    [HasPermission(Permissions.CreateLeaveRequest)]
+    [HasPermission(LeaveRequestPermissions.CreateLeaveRequest)]
     public async Task<IActionResult> Post([FromBody] CreateLeaveRequestRequest request, CancellationToken cancellationToken)
     {
         CreateLeaveRequest.Command command = new(
@@ -31,8 +30,6 @@ public sealed partial class LeaveRequestController
         {
             return HandleFailure(result);
         }
-
-        await Publisher.Publish(new LeaveRequestEvent(result.Value, LeaveRequestAction.Created));
 
         return CreatedAtAction(
             nameof(Get),

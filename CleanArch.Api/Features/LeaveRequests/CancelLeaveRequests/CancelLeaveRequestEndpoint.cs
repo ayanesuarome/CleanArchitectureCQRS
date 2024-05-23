@@ -1,9 +1,7 @@
 ﻿using CleanArch.Api.Contracts;
 using CleanArch.Api.Features.LeaveRequests.CancelLeaveRequests;
-using CleanArch.Domain.Authentication;
 using CleanArch.Domain.Core.Primitives.Result;
 using CleanArch.Domain.LeaveRequests;
-using CleanArch.Domain.LeaveRequests.Events;
 using CleanArch.Identity.Authentication;
 using Microsoft.AspNetCore.Mvc;
 
@@ -16,7 +14,7 @@ public sealed partial class LeaveRequestController
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    [HasPermission(Permissions.CancelLeaveRequest)]
+    [HasPermission(LeaveRequestPermissions.CancelLeaveRequest)]
     public async Task<IActionResult> CancelRequest([FromRoute] Guid id, CancellationToken cancellationToken)
     {
         Result<LeaveRequest> result = await Sender.Send(new CancelLeaveRequest.Command(id), cancellationToken);
@@ -25,8 +23,6 @@ public sealed partial class LeaveRequestController
         {
             return HandleFailure(result);
         }
-
-        await Publisher.Publish(new LeaveRequestEvent(result.Value, LeaveRequestAction.Canceled));
 
         return NoContent();
     }

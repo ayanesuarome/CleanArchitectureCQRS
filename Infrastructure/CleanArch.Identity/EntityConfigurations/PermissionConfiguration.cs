@@ -18,11 +18,12 @@ internal sealed class PermissionConfiguration : IEntityTypeConfiguration<Permiss
                 permissionId => permissionId.Id,
                 id => new PermissionId(id));
 
-        IEnumerable<Permission> permissions = Enum
-            .GetValues<Permissions>()
+        IEnumerable<Permission> permissions = Permissions
+            .GetValues()
             .Select(permission => new Permission(
-                id: (int)permission,
-                name: permission.ToString()));
+                id: permission.Value,
+                name: permission.Name,
+                description: permission.Description));
 
         builder.HasData(permissions);
     }

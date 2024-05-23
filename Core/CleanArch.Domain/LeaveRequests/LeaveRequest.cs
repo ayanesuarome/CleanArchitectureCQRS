@@ -3,13 +3,14 @@ using CleanArch.Domain.Core.Primitives.Result;
 using CleanArch.Domain.Core.Utilities;
 using CleanArch.Domain.Core.ValueObjects;
 using CleanArch.Domain.Errors;
+using CleanArch.Domain.LeaveRequests.Events;
 using CleanArch.Domain.LeaveTypes;
 
 namespace CleanArch.Domain.LeaveRequests;
 
-public sealed class LeaveRequest : Entity<LeaveRequestId>, IAuditableEntity, ISoftDeletableEntity
+public sealed class LeaveRequest : AggregateRoot<LeaveRequestId>, IAuditableEntity, ISoftDeletableEntity
 {
-    public LeaveRequest(DateRange range, LeaveType leaveType, Guid employeeId, Comment? comments)
+    private LeaveRequest(DateRange range, LeaveType leaveType, Guid employeeId, Comment? comments)
         : base(new LeaveRequestId(Guid.NewGuid()))
     {
         Ensure.NotNull(range, "The date range is required.", nameof(range));
@@ -59,6 +60,19 @@ public sealed class LeaveRequest : Entity<LeaveRequestId>, IAuditableEntity, ISo
     #endregion
 
     public int DaysRequested => Range.EndDate.DayNumber - Range.StartDate.DayNumber + 1;
+
+    public static LeaveRequest Create(
+        DateRange range,
+        LeaveType leaveType,
+        Guid employeeId,
+        Comment? comments)
+    {
+        LeaveRequest request = new(range, leaveType, employeeId, comments);
+
+        request.RaiseDomainEvent(new LeaveRequestCreatedDomainEvent(request));
+
+        return request;
+    }
 
     public Result Reject()
     {

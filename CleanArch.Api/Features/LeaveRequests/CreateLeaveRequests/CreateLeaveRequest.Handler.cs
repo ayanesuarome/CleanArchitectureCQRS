@@ -71,7 +71,7 @@ public static partial class CreateLeaveRequest
                 return Result.Failure<LeaveRequest>(hasEnoughDaysResult.Error);
             }
 
-            LeaveRequest leaveRequest = new(
+            LeaveRequest leaveRequest = LeaveRequest.Create(
                 rangeResult.Value,
                 leaveType,
                 _userIdentifierProvider.UserId,
