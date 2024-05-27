@@ -35,6 +35,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Api\CleanArch.Api.csproj" />
     <ProjectReference Include="..\..\CleanArch.Api\CleanArch.Api.csproj" />
     <ProjectReference Include="..\..\Core\CleanArch.Application\CleanArch.Application.csproj" />
   </ItemGroup>

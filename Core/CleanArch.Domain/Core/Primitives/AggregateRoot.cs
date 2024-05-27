@@ -41,5 +41,5 @@ public abstract class AggregateRoot<TEntityKey> : Entity<TEntityKey>, IAggregate
     /// Adds the specified <see cref="IDomainEvent"/> to the <see cref="AggregateRoot{TEntityKey}"/>.
     /// </summary>
     /// <param name="domainEvent">The domain event.</param>
-    public void RaiseDomainEvent(IDomainEvent domainEvent) => _domainEvents.Add(domainEvent);
+    protected void RaiseDomainEvent(IDomainEvent domainEvent) => _domainEvents.Add(domainEvent);
 }

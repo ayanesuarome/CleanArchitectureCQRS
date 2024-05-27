@@ -1,6 +1,6 @@
-﻿namespace CleanArch.Infrastructure.Emails.Settings;
+﻿namespace CleanArch.Infrastructure.Emails.Options;
 
-public sealed record EmailTemplateIds
+public sealed record EmailTemplateIdOptions
 {
     public string LeaveRequestApproval { get; init; } = string.Empty;
     public string LeaveRequestCancelation { get; init; } = string.Empty;

@@ -8,7 +8,7 @@ namespace CleanArch.Domain.Core.Primitives;
 public interface IDomainEvent : INotification
 {
     /// <summary>
-    /// Gets the domain identifier.
+    /// Gets the domain event identifier.
     /// </summary>
     Guid Id { get; }
 

@@ -25,6 +25,7 @@
     <ProjectReference Include="..\Core\CleanArch.Application\CleanArch.Application.csproj" />
     <ProjectReference Include="..\Infrastructure\CleanArch.Identity\CleanArch.Identity.csproj" />
     <ProjectReference Include="..\Infrastructure\CleanArch.Infrastructure\CleanArch.Infrastructure.csproj" />
+    <ProjectReference Include="..\Infrastructure\CleanArch.IntegrationEvents\CleanArch.IntegrationEvents.csproj" />
     <ProjectReference Include="..\Infrastructure\CleanArch.Persistence\CleanArch.Persistence.csproj" />
   </ItemGroup>
 

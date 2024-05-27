@@ -14,8 +14,8 @@ public abstract record DomainEvent : IDomainEvent
     /// <param name="ocurredOn">The occurred on date and time.</param>
     protected DomainEvent(Guid id, DateTimeOffset ocurredOn)
     {
-        Id = Guid.NewGuid();
-        OcurredOn = SystemTimeProvider.UtcNow;
+        Id = id;
+        OcurredOn = ocurredOn;
     }
 
     /// <summary>
@@ -27,8 +27,8 @@ public abstract record DomainEvent : IDomainEvent
     }
 
     /// <inheritdoc/>
-    public Guid Id { get; }
+    public Guid Id { get; init; }
     
     /// <inheritdoc/>
-    public DateTimeOffset OcurredOn { get; }
+    public DateTimeOffset OcurredOn { get; init; }
 }

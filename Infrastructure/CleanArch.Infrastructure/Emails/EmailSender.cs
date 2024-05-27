@@ -1,6 +1,6 @@
 ﻿using CleanArch.Api.Contracts.Emails;
 using CleanArch.Application.Abstractions.Email;
-using CleanArch.Infrastructure.Emails.Settings;
+using CleanArch.Infrastructure.Emails.Options;
 using Microsoft.Extensions.Options;
 using SendGrid;
 using SendGrid.Helpers.Mail;
@@ -9,10 +9,10 @@ namespace CleanArch.Infrastructure.Emails;
 
 internal sealed class EmailSender : IEmailSender
 {
-    private readonly EmailSettings _emailSettings;
+    private readonly EmailOptions _emailSettings;
     private readonly SendGridClient _client;
 
-    public EmailSender(IOptions<EmailSettings> emailSettings)
+    public EmailSender(IOptions<EmailOptions> emailSettings)
     {
         _emailSettings = emailSettings.Value;
         _client = new(_emailSettings.ApiKey);
