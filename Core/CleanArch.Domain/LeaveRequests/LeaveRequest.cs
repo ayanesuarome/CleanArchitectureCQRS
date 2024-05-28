@@ -82,6 +82,7 @@ public sealed class LeaveRequest : AggregateRoot<LeaveRequestId>, IAuditableEnti
         }
 
         IsApproved = false;
+        RaiseDomainEvent(new LeaveRequestApprovalUpdatedDomainEvent(this));
 
         return Result.Success();
     }
@@ -94,6 +95,7 @@ public sealed class LeaveRequest : AggregateRoot<LeaveRequestId>, IAuditableEnti
         }
 
         IsApproved = true;
+        RaiseDomainEvent(new LeaveRequestApprovalUpdatedDomainEvent(this));
 
         return Result.Success();
     }
@@ -106,6 +108,7 @@ public sealed class LeaveRequest : AggregateRoot<LeaveRequestId>, IAuditableEnti
         }
 
         IsCancelled = true;
+        RaiseDomainEvent(new LeaveRequestCanceledDomainEvent(this));
 
         return Result.Success();
     }

@@ -19,9 +19,9 @@ builder.Host.UseSerilog((context, config) => config
     .WriteTo.Console()
     .ReadFrom.Configuration(context.Configuration));
 
-builder.Services.AddIdentityServices(builder.Configuration);
 builder.Services.AddCleanArchEFDbContext(builder.Configuration);
 builder.Services.AddInfrastructureServices(builder.Configuration);
+builder.Services.AddIdentityServices(builder.Configuration);
 builder.Services.AddPersistenceServices();
 builder.Services.AddApiServices();
 

@@ -1,7 +1,7 @@
 ﻿using CleanArch.Application.Abstractions.Authentication;
 using CleanArch.Domain.Authentication;
 using CleanArch.Identity.Constants;
-using CleanArch.Identity.Settings;
+using CleanArch.Identity.Options;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;

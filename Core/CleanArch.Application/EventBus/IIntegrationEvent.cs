@@ -1,9 +1,11 @@
-﻿namespace CleanArch.Application.EventBus;
+﻿using MediatR;
+
+namespace CleanArch.Application.EventBus;
 
 /// <summary>
 /// Represents the integration event interface.
 /// </summary>
-public interface IIntegrationEvent
+public interface IIntegrationEvent : INotification
 {
     /// <summary>
     /// Gets the integration event identifier.

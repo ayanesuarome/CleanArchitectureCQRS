@@ -1,9 +1,8 @@
 ﻿using CleanArch.Application.Abstractions.Authentication;
 using CleanArch.Domain.Authentication;
 using CleanArch.Identity.Authentication;
-using CleanArch.Identity.ConfigureOptions;
+using CleanArch.Identity.Options;
 using CleanArch.Identity.Services;
-using CleanArch.Identity.Settings;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -31,9 +30,9 @@ public static class DependencyInjection
             .AddEntityFrameworkStores<CleanArchIdentityEFDbContext>()
             .AddDefaultTokenProviders();
 
-        services.ConfigureOptions<JwtOptionsSetup>();
-        services.AddSingleton<IValidateOptions<JwtOptions>, JwtSettingValidation>();
-        services.ConfigureOptions<JwtBearerOptionsSetup>();
+        services.ConfigureOptions<JwtSetup>();
+        services.AddSingleton<IValidateOptions<JwtOptions>, JwtValidation>();
+        services.ConfigureOptions<JwtBearerSetup>();
 
         services.AddAuthentication(options =>
         {

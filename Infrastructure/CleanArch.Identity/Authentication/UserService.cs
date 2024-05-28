@@ -9,9 +9,9 @@ internal sealed class UserService(UserManager<User> userManager) : IUserService
 {
     private readonly UserManager<User> _userManager = userManager;
 
-    public async Task<Employee> GetEmployee(Guid userId)
+    public async Task<Employee?> GetEmployee(Guid userId)
     {
-        User employee = await _userManager.FindByIdAsync(userId.ToString());
+        User? employee = await _userManager.FindByIdAsync(userId.ToString());
 
         return new Employee(
             employee.Id,

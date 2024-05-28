@@ -1,4 +1,4 @@
-﻿namespace CleanArch.Identity.Settings;
+﻿namespace CleanArch.Identity.Options;
 
 /// <summary>
 /// Represents the JWT configuration settings.

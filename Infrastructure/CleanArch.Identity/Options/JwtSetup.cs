@@ -1,10 +1,9 @@
-﻿using CleanArch.Identity.Settings;
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
 
-namespace CleanArch.Identity.ConfigureOptions;
+namespace CleanArch.Identity.Options;
 
-internal sealed class JwtOptionsSetup(IConfiguration configuration) : IConfigureOptions<JwtOptions>
+internal sealed class JwtSetup(IConfiguration configuration) : IConfigureOptions<JwtOptions>
 {
     private const string SectionName = "Jwt";
     private readonly IConfiguration _configuration = configuration;

@@ -5,7 +5,7 @@ namespace CleanArch.Infrastructure.Emails.Options;
 
 internal sealed class EmailTemplateIdSetup(IConfiguration configuration) : IConfigureOptions<EmailTemplateIdOptions>
 {
-    private const string SectionName = nameof(EmailTemplateIdOptions);
+    private const string SectionName = "EmailTemplateIds";
     private readonly IConfiguration _configuration = configuration;
 
     public void Configure(EmailTemplateIdOptions options)

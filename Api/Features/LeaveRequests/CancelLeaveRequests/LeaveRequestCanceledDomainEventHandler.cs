@@ -11,7 +11,7 @@ public class LeaveRequestCanceledDomainEventHandler(IEventBus eventBus)
     public async Task Handle(LeaveRequestCanceledDomainEvent notification, CancellationToken cancellationToken)
     {
         await eventBus.PublishAsync(
-            new LeaveRequestCreatedIntegrationEvent(
+            new LeaveRequestCanceledIntegrationEvent(
                 notification.Id,
                 notification.OcurredOn,
                 notification.LeaveRequest.Id,

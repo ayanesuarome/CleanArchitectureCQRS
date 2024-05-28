@@ -9,27 +9,27 @@ namespace CleanArch.Infrastructure.Emails;
 
 internal sealed class EmailSender : IEmailSender
 {
-    private readonly EmailOptions _emailSettings;
+    private readonly EmailOptions _emailOptions;
     private readonly SendGridClient _client;
 
-    public EmailSender(IOptions<EmailOptions> emailSettings)
+    public EmailSender(IOptions<EmailOptions> emailOptions)
     {
-        _emailSettings = emailSettings.Value;
-        _client = new(_emailSettings.ApiKey);
+        _emailOptions = emailOptions.Value;
+        _client = new(_emailOptions.ApiKey);
     }
 
     public async Task<bool> SendEmail(EmailMessage email)
     {
         SendGridMessage message = new()
         {
-            From = new(email: _emailSettings.FromAddress, name: _emailSettings.FromName),
-            ReplyTo = new(email: _emailSettings.ReplyTo),
+            From = new(email: _emailOptions.FromAddress, name: _emailOptions.FromName),
+            ReplyTo = new(email: _emailOptions.ReplyTo),
             Subject = email.Subject,
             PlainTextContent = email.Body,
             HtmlContent = email.Body
         };
 
-        message.AddHeader("Content-Encoding", "gzip");
+        //message.AddHeader("Content-Encoding", "gzip");
         message.AddTo(email.To);
 
         var response = await _client.SendEmailAsync(message);
@@ -42,10 +42,10 @@ internal sealed class EmailSender : IEmailSender
         EmailAddress to = new(email.To);
         EmailAddress from = new()
         {
-            Email = _emailSettings.FromAddress,
-            Name = _emailSettings.FromName
+            Email = _emailOptions.FromAddress,
+            Name = _emailOptions.FromName
         };
-        EmailAddress replyTo = new(_emailSettings.ReplyTo);
+        EmailAddress replyTo = new(_emailOptions.ReplyTo);
 
         SendGridMessage message = MailHelper.CreateSingleTemplateEmail(from, to, email.TemplateId, email.TemplateData);
         message.AddReplyTo(replyTo);

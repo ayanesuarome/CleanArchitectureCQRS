@@ -10,12 +10,15 @@ using Microsoft.Extensions.Options;
 namespace CleanArch.Api.Features.LeaveRequests.ChangeLeaveRequestApprovals;
 
 public class LeaveRequestApprovalUpdatedIntegrationEventHandler(
-    IUserService userService,
-    IEmailSender emailSender,
+    IServiceScopeFactory serviceScopeFactory,
     IOptions<EmailTemplateIdOptions> emailTemplateOptions) : IIntegrationEventHandler<LeaveRequestApprovalUpdatedIntegrationEvent>
 {
     public async Task Handle(LeaveRequestApprovalUpdatedIntegrationEvent integrationEvent, CancellationToken cancellationToken = default)
     {
+        using IServiceScope scope = serviceScopeFactory.CreateScope();
+        IUserService userService = scope.ServiceProvider.GetRequiredService<IUserService>();
+        IEmailSender emailSender = scope.ServiceProvider.GetRequiredService<IEmailSender>();
+
         Employee employee = await userService.GetEmployee(integrationEvent.EmployeeId);
 
         EmailMessageTemplate email = new()

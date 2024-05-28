@@ -5,7 +5,7 @@ namespace CleanArch.Infrastructure.Emails.Options;
 
 internal sealed class EmailSetup(IConfiguration configuration) : IConfigureOptions<EmailOptions>
 {
-    private const string SectionName = nameof(EmailOptions);
+    private const string SectionName = "Email";
     private readonly IConfiguration _configuration = configuration;
 
     public void Configure(EmailOptions options)

@@ -11,13 +11,14 @@ public class LeaveRequestApprovalUpdatedDomainEventHandler(IEventBus eventBus)
     public async Task Handle(LeaveRequestApprovalUpdatedDomainEvent notification, CancellationToken cancellationToken)
     {
         await eventBus.PublishAsync(
-            new LeaveRequestCreatedIntegrationEvent(
+            new LeaveRequestApprovalUpdatedIntegrationEvent(
                 notification.Id,
                 notification.OcurredOn,
                 notification.LeaveRequest.Id,
                 notification.LeaveRequest.Range.StartDate,
                 notification.LeaveRequest.Range.EndDate,
-                notification.LeaveRequest.RequestingEmployeeId),
+                notification.LeaveRequest.RequestingEmployeeId,
+                notification.LeaveRequest.IsApproved),
             cancellationToken);
     }
 }

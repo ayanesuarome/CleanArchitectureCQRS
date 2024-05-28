@@ -1,19 +1,16 @@
-﻿using CleanArch.Identity.Settings;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 
-namespace CleanArch.Identity.ConfigureOptions;
+namespace CleanArch.Identity.Options;
 
-internal sealed class JwtBearerOptionsSetup(IOptions<JwtOptions> jwtOptions)
+internal sealed class JwtBearerSetup(IOptions<JwtOptions> jwtOptions)
     : IPostConfigureOptions<JwtBearerOptions>
 {
-    private readonly JwtOptions _jwtOptions = jwtOptions.Value;
-
     public void PostConfigure(string? name, JwtBearerOptions options)
     {
-        options.TokenValidationParameters = new()
+        options.TokenValidationParameters = new TokenValidationParameters
         {
             ValidateIssuerSigningKey = true,
             ValidateIssuer = true,
@@ -21,9 +18,9 @@ internal sealed class JwtBearerOptionsSetup(IOptions<JwtOptions> jwtOptions)
             ValidateAudience = true,
             // set clockskew to zero so tokens expire exactly at token expiration time (instead of 5 minutes later)
             ClockSkew = TimeSpan.Zero,
-            ValidIssuer = _jwtOptions.Issuer,
-            ValidAudience = _jwtOptions.Audience,
-            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtOptions.Key))
+            ValidIssuer = jwtOptions.Value.Issuer,
+            ValidAudience = jwtOptions.Value.Audience,
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtOptions.Value.Key))
         };
     }
 }

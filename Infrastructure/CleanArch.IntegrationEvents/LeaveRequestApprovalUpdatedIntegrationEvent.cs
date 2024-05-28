@@ -9,6 +9,6 @@ namespace CleanArch.IntegrationEvents
         DateOnly StartDate,
         DateOnly EndDate,
         Guid EmployeeId,
-        bool IsApproved) : IntegrationEvent(Id, OcurredOn);
+        bool? IsApproved) : IntegrationEvent(Id, OcurredOn);
 
 }

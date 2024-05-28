@@ -1,6 +1,7 @@
 ﻿using CleanArch.Application.Abstractions.Logging;
 using CleanArch.Application.EventBus;
 using MediatR;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
 namespace CleanArch.Infrastructure.Events;
@@ -8,12 +9,16 @@ namespace CleanArch.Infrastructure.Events;
 internal sealed class IntegrationEventProcessorJob(
     InMemoryMessageQueue queue,
     IPublisher publisher,
-    IAppLogger<IntegrationEventProcessorJob> logger) : BackgroundService
+    IServiceScopeFactory serviceScopeFactory) : BackgroundService
 {
     private int RetryCount => 3;
 
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
+        using IServiceScope scope = serviceScopeFactory.CreateScope();
+        IAppLogger<IntegrationEventProcessorJob> logger = scope.ServiceProvider
+            .GetRequiredService<IAppLogger<IntegrationEventProcessorJob>>();
+
         await foreach(IIntegrationEvent @event in queue.Reader.ReadAllAsync(stoppingToken))
         {
             logger.LogInformation("Publishing {IntegrationEventId}", @event.Id);
