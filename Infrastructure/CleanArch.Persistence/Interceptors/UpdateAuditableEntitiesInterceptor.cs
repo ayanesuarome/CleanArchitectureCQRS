@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using CleanArch.Domain.Core.Primitives;
+using CleanArch.Domain.Core.Time;
 
 namespace CleanArch.Persistence.Interceptors;
 
@@ -19,29 +20,32 @@ internal sealed class UpdateAuditableEntitiesInterceptor(IServiceScopeFactory se
             return base.SavingChangesAsync(eventData, result, cancellationToken);
         }
 
-        using IServiceScope scope = serviceScopeFactory.CreateScope();
-        IUserIdentifierProvider userIdentifierProvider = scope
-            .ServiceProvider
-            .GetRequiredService<IUserIdentifierProvider>();
-
         IEnumerable<EntityEntry<IAuditableEntity>> entries = eventData
             .Context
             .ChangeTracker
             .Entries<IAuditableEntity>()
             .Where(e => e.State == EntityState.Added || e.State == EntityState.Modified);
 
-        DateTimeOffset now = DateTimeOffset.Now;
+        if(!entries.Any())
+        {
+            return base.SavingChangesAsync(eventData, result, cancellationToken);
+        }
+
+        using IServiceScope scope = serviceScopeFactory.CreateScope();
+        IUserIdentifierProvider userIdentifierProvider = scope
+            .ServiceProvider
+            .GetRequiredService<IUserIdentifierProvider>();
 
         foreach (var entry in entries)
         {
             if (entry.State == EntityState.Added)
             {
-                SetCurrentPropertyValue(entry, nameof(IAuditableEntity.DateCreated), now);
+                SetCurrentPropertyValue(entry, nameof(IAuditableEntity.DateCreated), SystemTimeProvider.UtcNow);
                 SetCurrentPropertyValue(entry, nameof(IAuditableEntity.CreatedBy), userIdentifierProvider.UserId);
             }
             else
             {
-                SetCurrentPropertyValue(entry, nameof(IAuditableEntity.DateModified), now);
+                SetCurrentPropertyValue(entry, nameof(IAuditableEntity.DateModified), SystemTimeProvider.UtcNow);
                 SetCurrentPropertyValue(entry, nameof(IAuditableEntity.ModifiedBy), userIdentifierProvider.UserId);
             }
         }

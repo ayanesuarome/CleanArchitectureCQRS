@@ -17,6 +17,7 @@ public static class DependencyInjection
 
     public static IServiceCollection AddCleanArchEFDbContext(this IServiceCollection services, IConfiguration configuration)
     {
+        services.AddSingleton<ConvertDomainEventsToOutboxMessagesInterceptor>();
         services.AddSingleton<UpdateAuditableEntitiesInterceptor>();
         services.AddSingleton<SoftDeleteEntitiesInterceptor>();
 
@@ -25,6 +26,7 @@ public static class DependencyInjection
             options.UseSqlServer(configuration.GetConnectionString(CleanArchSqlServerDbContext));
             options.LogTo(Console.WriteLine, new[] { RelationalEventId.CommandExecuting });
             options.AddInterceptors(
+                sp.GetRequiredService<ConvertDomainEventsToOutboxMessagesInterceptor>(),
                 sp.GetRequiredService<UpdateAuditableEntitiesInterceptor>(),
                 sp.GetRequiredService<SoftDeleteEntitiesInterceptor>());
         });

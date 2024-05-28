@@ -9,7 +9,7 @@ using Microsoft.Extensions.Options;
 
 namespace CleanArch.Api.Features.LeaveRequests.ChangeLeaveRequestApprovals;
 
-public class LeaveRequestApprovalUpdatedIntegrationEventHandler(
+public sealed class LeaveRequestApprovalUpdatedIntegrationEventHandler(
     IServiceScopeFactory serviceScopeFactory,
     IOptions<EmailTemplateIdOptions> emailTemplateOptions) : IIntegrationEventHandler<LeaveRequestApprovalUpdatedIntegrationEvent>
 {

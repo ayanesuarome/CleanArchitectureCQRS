@@ -9,7 +9,7 @@ using Microsoft.Extensions.Options;
 
 namespace CleanArch.Api.Features.LeaveRequests.CancelLeaveRequests;
 
-public class LeaveRequestCanceledIntegrationEventHandler(
+public sealed class LeaveRequestCanceledIntegrationEventHandler(
     IServiceScopeFactory serviceScopeFactory,
     IOptions<EmailTemplateIdOptions> emailTemplateOptions) : IIntegrationEventHandler<LeaveRequestCanceledIntegrationEvent>
 {

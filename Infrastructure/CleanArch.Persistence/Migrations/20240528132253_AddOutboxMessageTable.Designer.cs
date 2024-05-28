@@ -5,6 +5,7 @@ using CleanArch.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -12,9 +13,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CleanArch.Persistence.Migrations
 {
     [DbContext(typeof(CleanArchEFDbContext))]
-    partial class CleanArchEFDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240528132253_AddOutboxMessageTable")]
+    partial class AddOutboxMessageTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

@@ -13,7 +13,7 @@ public class CleanArchEFDbContextFixture : IDisposable
         DbContextOptions<CleanArchEFDbContext> dbOptions = new DbContextOptionsBuilder<CleanArchEFDbContext>()
             .UseInMemoryDatabase(Guid.NewGuid().ToString()).Options;
 
-        context = new CleanArchEFDbContext(dbOptions, new Mock<IPublisher>().Object);
+        context = new CleanArchEFDbContext(dbOptions);
     }
 
     public void Dispose()

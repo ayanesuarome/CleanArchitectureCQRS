@@ -25,7 +25,7 @@ internal sealed class LeaveRequestConfiguration : IEntityTypeConfiguration<Leave
             .HasQueryFilter(leaveRequest => !leaveRequest.IsDeleted)
             // Filtered Index
             .HasIndex(leaveRequest => leaveRequest.IsDeleted)
-                .HasFilter($"IsDeleted = 0");
+                .HasFilter($"{nameof(LeaveRequest.IsDeleted)} = 0");
 
         builder.HasOne<LeaveType>()
             .WithMany()

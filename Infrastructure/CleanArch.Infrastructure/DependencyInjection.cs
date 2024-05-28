@@ -1,12 +1,14 @@
 ﻿using CleanArch.Application.Abstractions.Email;
 using CleanArch.Application.Abstractions.Logging;
 using CleanArch.Application.EventBus;
+using CleanArch.Infrastructure.BackgroundJobs;
 using CleanArch.Infrastructure.Emails;
 using CleanArch.Infrastructure.Emails.Options;
 using CleanArch.Infrastructure.Events;
 using CleanArch.Infrastructure.Logging;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Quartz;
 
 namespace CleanArch.Infrastructure;
 
@@ -18,6 +20,25 @@ public static class DependencyInjection
         services.ConfigureOptions<EmailTemplateIdSetup>();
         services.AddTransient<IEmailSender, EmailSender>();
         services.AddScoped(typeof(IAppLogger<>), typeof(LoggerAdapter<>));
+
+        services.AddQuartz(configure =>
+        {
+            JobKey jobKey = new(nameof(ProceessOutboxMessagesJob));
+
+            configure
+                .AddJob<ProceessOutboxMessagesJob>(jobKey)
+                .AddTrigger(trigger =>
+                {
+                    trigger
+                        .ForJob(jobKey)
+                        .WithSimpleSchedule(schedule =>
+                            schedule
+                                .WithIntervalInSeconds(20)
+                                .RepeatForever());
+                });
+        });
+
+        services.AddQuartzHostedService();
 
         services.AddSingleton<InMemoryMessageQueue>();
         services.AddSingleton<IEventBus, EventBus>();

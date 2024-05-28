@@ -5,7 +5,7 @@ using CleanArch.IntegrationEvents;
 
 namespace CleanArch.Api.Features.LeaveRequests.NotifyLeaveRequestActions;
 
-public class LeaveRequestCreatedDomainEventHandler(IEventBus eventBus)
+public sealed class LeaveRequestCreatedDomainEventHandler(IEventBus eventBus)
     : IDomainEventHandler<LeaveRequestCreatedDomainEvent>
 {
     public async Task Handle(LeaveRequestCreatedDomainEvent notification, CancellationToken cancellationToken)

@@ -5,7 +5,7 @@ using CleanArch.IntegrationEvents;
 
 namespace CleanArch.Api.Features.LeaveRequests.ChangeLeaveRequestApprovals;
 
-public class LeaveRequestApprovalUpdatedDomainEventHandler(IEventBus eventBus)
+public sealed class LeaveRequestApprovalUpdatedDomainEventHandler(IEventBus eventBus)
     : IDomainEventHandler<LeaveRequestApprovalUpdatedDomainEvent>
 {
     public async Task Handle(LeaveRequestApprovalUpdatedDomainEvent notification, CancellationToken cancellationToken)

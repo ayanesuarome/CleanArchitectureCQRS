@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.EntityFrameworkCore;
 using CleanArch.Domain.Core.Primitives;
+using CleanArch.Domain.Core.Time;
 
 namespace CleanArch.Persistence.Interceptors;
 
@@ -23,13 +24,11 @@ internal sealed class SoftDeleteEntitiesInterceptor : SaveChangesInterceptor
             .Entries<ISoftDeletableEntity>()
             .Where(entry => entry.State == EntityState.Deleted);
 
-        DateTimeOffset now = DateTimeOffset.Now;
-
         foreach (var softDeletable in entries)
         {
             softDeletable.State = EntityState.Modified;
             softDeletable.Property(property => property.IsDeleted).CurrentValue = true;
-            softDeletable.Property(property => property.DeletedOn).CurrentValue = now;
+            softDeletable.Property(property => property.DeletedOn).CurrentValue = SystemTimeProvider.UtcNow;
         }
 
         return base.SavingChangesAsync(eventData, result, cancellationToken);

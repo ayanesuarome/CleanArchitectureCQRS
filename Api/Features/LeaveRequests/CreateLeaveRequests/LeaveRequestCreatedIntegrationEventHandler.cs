@@ -9,7 +9,7 @@ using Microsoft.Extensions.Options;
 
 namespace CleanArch.Api.Features.LeaveRequests.NotifyLeaveRequestActions;
 
-public class LeaveRequestCreatedIntegrationEventHandler(
+public sealed class LeaveRequestCreatedIntegrationEventHandler(
     IServiceScopeFactory serviceScopeFactory,
     IOptions<EmailTemplateIdOptions> emailTemplateOptions) : IIntegrationEventHandler<LeaveRequestCreatedIntegrationEvent>
 {

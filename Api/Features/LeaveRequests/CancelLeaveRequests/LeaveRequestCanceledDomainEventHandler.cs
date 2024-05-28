@@ -5,7 +5,7 @@ using CleanArch.IntegrationEvents;
 
 namespace CleanArch.Api.Features.LeaveRequests.CancelLeaveRequests;
 
-public class LeaveRequestCanceledDomainEventHandler(IEventBus eventBus)
+public sealed class LeaveRequestCanceledDomainEventHandler(IEventBus eventBus)
     : IDomainEventHandler<LeaveRequestCanceledDomainEvent>
 {
     public async Task Handle(LeaveRequestCanceledDomainEvent notification, CancellationToken cancellationToken)
