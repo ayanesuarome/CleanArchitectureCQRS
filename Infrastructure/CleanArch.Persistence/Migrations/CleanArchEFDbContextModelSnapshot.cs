@@ -161,7 +161,6 @@ namespace CleanArch.Persistence.Migrations
             modelBuilder.Entity("CleanArch.Persistence.Outbox.OutboxMessage", b =>
                 {
                     b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Content")
@@ -171,7 +170,7 @@ namespace CleanArch.Persistence.Migrations
                     b.Property<string>("Error")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTimeOffset>("OcurredOn")
+                    b.Property<DateTimeOffset>("OccurredOn")
                         .HasColumnType("datetimeoffset");
 
                     b.Property<DateTimeOffset?>("ProcessedOn")
@@ -186,7 +185,7 @@ namespace CleanArch.Persistence.Migrations
                     b.HasIndex("ProcessedOn")
                         .HasFilter("ProcessedOn IS NULL");
 
-                    b.ToTable("OutBoxMessages", (string)null);
+                    b.ToTable("OutboxMessages", (string)null);
                 });
 
             modelBuilder.Entity("CleanArch.Domain.LeaveAllocations.LeaveAllocation", b =>

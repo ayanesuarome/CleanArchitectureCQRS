@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Globalization;
 
 namespace CleanArch.BlazorUI.Models.LeaveRequests;
 
@@ -8,11 +9,11 @@ internal sealed class LeaveRequestVM
 
     [Display(Name = "Start Date")]
     [Required]
-    public DateOnly StartDate { get; set; }
+    public DateOnly StartDate { get; set; } = DateOnly.FromDateTime(DateTime.Now);
     
     [Display(Name = "End Date")]
     [Required]
-    public DateOnly EndDate { get; set; }
+    public DateOnly EndDate { get; set; } = DateOnly.FromDateTime(DateTime.Now);
 
     [Required]
     public Guid LeaveTypeId { get; set; }

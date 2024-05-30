@@ -53,9 +53,17 @@ internal sealed class LeaveTypeConfiguration : IEntityTypeConfiguration<LeaveTyp
         //});
 
         // IAuditableEntity
-        builder.Property(leaveType => leaveType.DateCreated).IsRequired();
-        builder.Property(leaveType => leaveType.CreatedBy).IsRequired();
-        builder.Property(leaveType => leaveType.DateModified);
-        builder.Property(leaveType => leaveType.ModifiedBy);
+        builder
+            .Property(leaveType => leaveType.DateCreated)
+            .IsRequired();
+        builder
+            .Property(leaveType => leaveType.CreatedBy)
+            .IsRequired();
+        builder
+            .Property(leaveType => leaveType.DateModified)
+            .IsRequired(false);
+        builder
+            .Property(leaveType => leaveType.ModifiedBy)
+            .IsRequired(false);
     }
 }

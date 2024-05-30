@@ -5,6 +5,8 @@ using CleanArch.Domain.Core.ValueObjects;
 using CleanArch.Domain.Errors;
 using CleanArch.Domain.LeaveRequests.Events;
 using CleanArch.Domain.LeaveTypes;
+using MediatR;
+using System.Runtime.CompilerServices;
 
 namespace CleanArch.Domain.LeaveRequests;
 
@@ -69,7 +71,13 @@ public sealed class LeaveRequest : AggregateRoot<LeaveRequestId>, IAuditableEnti
     {
         LeaveRequest request = new(range, leaveType, employeeId, comments);
 
-        request.RaiseDomainEvent(new LeaveRequestCreatedDomainEvent(request));
+        request.RaiseDomainEvent(new LeaveRequestCreatedDomainEvent(
+            request.Id,
+            request.Range,
+            request.LeaveTypeName,
+            request.LeaveTypeId,
+            request.RequestingEmployeeId,
+            request.Comments));
 
         return request;
     }
@@ -82,7 +90,11 @@ public sealed class LeaveRequest : AggregateRoot<LeaveRequestId>, IAuditableEnti
         }
 
         IsApproved = false;
-        RaiseDomainEvent(new LeaveRequestApprovalUpdatedDomainEvent(this));
+        RaiseDomainEvent(new LeaveRequestApprovalUpdatedDomainEvent(
+            Id,
+            Range,
+            RequestingEmployeeId,
+            false));
 
         return Result.Success();
     }
@@ -95,7 +107,11 @@ public sealed class LeaveRequest : AggregateRoot<LeaveRequestId>, IAuditableEnti
         }
 
         IsApproved = true;
-        RaiseDomainEvent(new LeaveRequestApprovalUpdatedDomainEvent(this));
+        RaiseDomainEvent(new LeaveRequestApprovalUpdatedDomainEvent(
+            Id,
+            Range,
+            RequestingEmployeeId,
+            true));
 
         return Result.Success();
     }
@@ -108,7 +124,11 @@ public sealed class LeaveRequest : AggregateRoot<LeaveRequestId>, IAuditableEnti
         }
 
         IsCancelled = true;
-        RaiseDomainEvent(new LeaveRequestCanceledDomainEvent(this));
+        RaiseDomainEvent(new LeaveRequestCanceledDomainEvent(
+            Id,
+            Range,
+            RequestingEmployeeId,
+            true));
 
         return Result.Success();
     }

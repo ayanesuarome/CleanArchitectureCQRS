@@ -32,7 +32,7 @@ public static class DependencyInjection
 
         services.ConfigureOptions<JwtSetup>();
         services.AddSingleton<IValidateOptions<JwtOptions>, JwtValidation>();
-        services.ConfigureOptions<JwtBearerSetup>();
+        services.ConfigureOptions<JwtOptionsSetup>();
 
         services.AddAuthentication(options =>
         {

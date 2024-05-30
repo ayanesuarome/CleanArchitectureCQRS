@@ -14,11 +14,11 @@ public sealed class LeaveRequestApprovalUpdatedDomainEventHandler(IEventBus even
             new LeaveRequestApprovalUpdatedIntegrationEvent(
                 notification.Id,
                 notification.OcurredOn,
-                notification.LeaveRequest.Id,
-                notification.LeaveRequest.Range.StartDate,
-                notification.LeaveRequest.Range.EndDate,
-                notification.LeaveRequest.RequestingEmployeeId,
-                notification.LeaveRequest.IsApproved),
+                notification.LeaveRequestId,
+                notification.Range.StartDate,
+                notification.Range.EndDate,
+                notification.RequestingEmployeeId,
+                notification.IsApproved),
             cancellationToken);
     }
 }

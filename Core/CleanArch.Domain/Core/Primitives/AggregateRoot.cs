@@ -4,7 +4,7 @@
 /// Represents the aggregate root.
 /// </summary>
 public abstract class AggregateRoot<TEntityKey> : Entity<TEntityKey>, IAggregateRoot
-     where TEntityKey : class, IEquatable<TEntityKey>
+     where TEntityKey : class, IEntityKey
 {
     /// <summary>
     /// Initializes a new instance of the <see cref="AggregateRoot{TEntityKey}"/> class.

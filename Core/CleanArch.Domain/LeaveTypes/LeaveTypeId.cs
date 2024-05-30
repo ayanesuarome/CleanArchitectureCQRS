@@ -1,6 +1,8 @@
-﻿namespace CleanArch.Domain.LeaveTypes;
+﻿using CleanArch.Domain.Core.Primitives;
 
-public record LeaveTypeId(Guid Id)
+namespace CleanArch.Domain.LeaveTypes;
+
+public record LeaveTypeId(Guid Id) : IEntityKey
 {
     public static implicit operator Guid(LeaveTypeId value) => value.Id;
 }

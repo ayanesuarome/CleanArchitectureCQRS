@@ -3,9 +3,9 @@ using CleanArch.IntegrationEvents;
 using CleanArch.Contracts.Identity;
 using CleanArch.Application.Abstractions.Authentication;
 using CleanArch.Application.Abstractions.Email;
-using CleanArch.Infrastructure.Emails.Options;
 using CleanArch.Api.Contracts.Emails;
 using Microsoft.Extensions.Options;
+using CleanArch.Infrastructure.Emails;
 
 namespace CleanArch.Api.Features.LeaveRequests.NotifyLeaveRequestActions;
 

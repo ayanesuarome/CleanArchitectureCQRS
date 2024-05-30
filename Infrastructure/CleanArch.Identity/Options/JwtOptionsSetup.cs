@@ -5,7 +5,7 @@ using System.Text;
 
 namespace CleanArch.Identity.Options;
 
-internal sealed class JwtBearerSetup(IOptions<JwtOptions> jwtOptions)
+internal sealed class JwtOptionsSetup(IOptions<JwtOptions> jwtOptions)
     : IPostConfigureOptions<JwtBearerOptions>
 {
     public void PostConfigure(string? name, JwtBearerOptions options)

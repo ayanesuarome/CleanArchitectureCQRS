@@ -10,14 +10,22 @@ public sealed class LeaveRequestCreatedDomainEventHandler(IEventBus eventBus)
 {
     public async Task Handle(LeaveRequestCreatedDomainEvent notification, CancellationToken cancellationToken)
     {
+        string? comments = null;
+
+        if (notification.Comments is not null)
+        {
+            comments = notification.Comments;
+        }
+
         await eventBus.PublishAsync(
             new LeaveRequestCreatedIntegrationEvent(
                 notification.Id,
                 notification.OcurredOn,
-                notification.LeaveRequest.Id,
-                notification.LeaveRequest.Range.StartDate,
-                notification.LeaveRequest.Range.EndDate,
-                notification.LeaveRequest.RequestingEmployeeId),
+                notification.LeaveRequestId,
+                notification.Range.StartDate,
+                notification.Range.EndDate,
+                notification.RequestingEmployeeId,
+                comments),
             cancellationToken);
     }
 }

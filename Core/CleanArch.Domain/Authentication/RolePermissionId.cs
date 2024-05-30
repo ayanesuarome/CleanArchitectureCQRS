@@ -1,3 +1,5 @@
-﻿namespace CleanArch.Domain.Authentication;
+﻿using CleanArch.Domain.Core.Primitives;
 
-public record RolePermissionId(Guid Id);
+namespace CleanArch.Domain.Authentication;
+
+public record RolePermissionId(Guid Id) : IEntityKey;

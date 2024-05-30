@@ -8,4 +8,5 @@ public sealed record LeaveRequestCreatedIntegrationEvent(
     Guid LeaveRequestId,
     DateOnly StartDate,
     DateOnly EndDate,
-    Guid EmployeeId) : IntegrationEvent(Id, OcurredOn);
+    Guid EmployeeId,
+    string? Comments) : IntegrationEvent(Id, OcurredOn);

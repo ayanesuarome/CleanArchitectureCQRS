@@ -8,8 +8,8 @@ public static class ExceptionExtensions
     {
         return exception switch
         {
-            ArgumentNullException or InvalidOperationException => false,
-            _ => true,
+            // Define transient errors => true,
+            _ => false,
         };
     }
 }

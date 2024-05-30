@@ -11,6 +11,10 @@ public sealed record DateRange
         EndDate = endDate;
     }
 
+    private DateRange()
+    {
+    }
+
     public DateOnly StartDate { get; }
     public DateOnly EndDate { get; }
 

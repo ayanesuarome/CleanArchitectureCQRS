@@ -1,4 +1,4 @@
-﻿namespace CleanArch.Infrastructure.Emails.Options;
+﻿namespace CleanArch.Infrastructure.Emails;
 
 internal sealed record EmailOptions
 {

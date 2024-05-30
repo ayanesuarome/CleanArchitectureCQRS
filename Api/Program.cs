@@ -55,7 +55,7 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy(name: "CleanArchAll",
         policy => policy
-            .WithOrigins("https://localhost:7162")
+            .WithOrigins("https://localhost:7162", "http://localhost:5195")
             .WithMethods("GET", "POST", "PUT", "DELETE")
             .AllowAnyHeader());
 });

@@ -29,6 +29,22 @@ namespace CleanArch.Persistence.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "OutboxMessages",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Type = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Content = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    OccurredOn = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
+                    ProcessedOn = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
+                    Error = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_OutboxMessages", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "LeaveAllocations",
                 columns: table => new
                 {
@@ -103,6 +119,12 @@ namespace CleanArch.Persistence.Migrations
                 table: "LeaveTypes",
                 column: "Name",
                 unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_OutboxMessages_ProcessedOn",
+                table: "OutboxMessages",
+                column: "ProcessedOn",
+                filter: "ProcessedOn IS NULL");
         }
 
         /// <inheritdoc />
@@ -113,6 +135,9 @@ namespace CleanArch.Persistence.Migrations
 
             migrationBuilder.DropTable(
                 name: "LeaveRequests");
+
+            migrationBuilder.DropTable(
+                name: "OutboxMessages");
 
             migrationBuilder.DropTable(
                 name: "LeaveTypes");

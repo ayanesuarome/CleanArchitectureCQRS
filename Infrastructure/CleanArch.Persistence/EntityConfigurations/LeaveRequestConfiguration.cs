@@ -70,16 +70,25 @@ internal sealed class LeaveRequestConfiguration : IEntityTypeConfiguration<Leave
         builder.Ignore(leaveRequest => leaveRequest.DaysRequested);
 
         // IAuditableEntity
-        builder.Property(leaveRequest => leaveRequest.DateCreated)
+        builder
+            .Property(leaveType => leaveType.DateCreated)
             .IsRequired();
-        builder.Property(leaveRequest => leaveRequest.CreatedBy)
+        builder
+            .Property(leaveType => leaveType.CreatedBy)
             .IsRequired();
-        builder.Property(leaveRequest => leaveRequest.DateModified);
-        builder.Property(leaveRequest => leaveRequest.ModifiedBy);
+        builder
+            .Property(leaveType => leaveType.DateModified)
+            .IsRequired(false);
+        builder
+            .Property(leaveType => leaveType.ModifiedBy)
+            .IsRequired(false);
 
         // IDeletableEntity
-        builder.Property(leaveRequest => leaveRequest.DeletedOn);
-        builder.Property(leaveRequest => leaveRequest.IsDeleted)
+        builder
+            .Property(leaveRequest => leaveRequest.DeletedOn)
+            .IsRequired(false);
+        builder
+            .Property(leaveRequest => leaveRequest.IsDeleted)
             .HasDefaultValue(false);
     }
 }

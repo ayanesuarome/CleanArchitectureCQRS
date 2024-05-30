@@ -14,10 +14,10 @@ public sealed class LeaveRequestCanceledDomainEventHandler(IEventBus eventBus)
             new LeaveRequestCanceledIntegrationEvent(
                 notification.Id,
                 notification.OcurredOn,
-                notification.LeaveRequest.Id,
-                notification.LeaveRequest.Range.StartDate,
-                notification.LeaveRequest.Range.EndDate,
-                notification.LeaveRequest.RequestingEmployeeId),
+                notification.LeaveRequestId,
+                notification.Range.StartDate,
+                notification.Range.EndDate,
+                notification.RequestingEmployeeId),
             cancellationToken);
     }
 }
