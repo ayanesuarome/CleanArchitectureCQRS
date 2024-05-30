@@ -7,8 +7,6 @@ using CleanArch.Infrastructure.Events;
 using CleanArch.Infrastructure.Logging;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Polly;
-using Polly.Retry;
 using Quartz;
 
 namespace CleanArch.Infrastructure;
@@ -20,32 +18,10 @@ public static class DependencyInjection
         services.ConfigureOptions<EmailOptionsSetup>();
         services.ConfigureOptions<EmailTemplateIdOptionsSetup>();
         services.ConfigureOptions<ProcessOutboxMessagesOptionsSetup>();
+        services.ConfigureOptions<IntegrationEventProcessorJobOptionsSetup>();
 
         services.AddTransient<IEmailSender, EmailSender>();
         services.AddScoped(typeof(IAppLogger<>), typeof(LoggerAdapter<>));
-
-        
-
-        services.AddResiliencePipeline<string, Task>("publish-domain-event",
-            pipelineBuilder =>
-            {
-                pipelineBuilder
-                .AddRetry(new RetryStrategyOptions()
-                {
-                    MaxRetryAttempts = _options.RetryCount,
-                    BackoffType = DelayBackoffType.Exponential,
-                    Delay = TimeSpan.FromSeconds(_options.IntervalInSeconds),
-                    ShouldHandle = new PredicateBuilder().Handle<ApplicationException>(),
-                    OnRetry = retryArguments =>
-                    {
-                        _logger.LogError(
-                            retryArguments.Outcome.Exception,
-                            $"Waiting {retryArguments.RetryDelay} before next retry. Current attempt: {retryArguments.AttemptNumber}.");
-
-                        return ValueTask.CompletedTask;
-                    }
-                });
-            });
 
         services.AddQuartz(configure =>
         {

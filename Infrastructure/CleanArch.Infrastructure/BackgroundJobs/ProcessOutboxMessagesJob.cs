@@ -53,13 +53,12 @@ internal sealed class ProcessOutboxMessagesJob : IJob
                     MaxRetryAttempts = _options.RetryCount,
                     BackoffType = DelayBackoffType.Exponential,
                     Delay = TimeSpan.FromSeconds(_options.IntervalInSeconds),
-                    ShouldHandle = new PredicateBuilder().Handle<ApplicationException>(),
+                    ShouldHandle = new PredicateBuilder().Handle<Exception>(),
                     OnRetry = retryArguments =>
                     {
                         _logger.LogError(
                             retryArguments.Outcome.Exception,
                             $"Waiting {retryArguments.RetryDelay} before next retry. Current attempt: {retryArguments.AttemptNumber}.");
-                        Console.WriteLine($"Waiting {retryArguments.RetryDelay} before next retry. Current attempt: {retryArguments.AttemptNumber}.");
 
                         return ValueTask.CompletedTask;
                     }
@@ -85,7 +84,7 @@ internal sealed class ProcessOutboxMessagesJob : IJob
 
             PolicyResult policyResult = await _pipeline
                 .AsAsyncPolicy()
-                .ExecuteAndCaptureAsync(() => Exec() /*_publisher.Publish(domainEvent, context.CancellationToken)*/);
+                .ExecuteAndCaptureAsync(() => _publisher.Publish(domainEvent, context.CancellationToken));
 
             await UpdateOutboxMessageAsync(message, policyResult.FinalException);
 
@@ -95,7 +94,7 @@ internal sealed class ProcessOutboxMessagesJob : IJob
                 continue;
             }
 
-            _logger.LogInformation("Processed {IntegrationEventId}", domainEvent.Id);
+            _logger.LogInformation("Processed Domain Event: {DomainEventId}", domainEvent.Id);
         }
     }
 
@@ -112,10 +111,5 @@ internal sealed class ProcessOutboxMessagesJob : IJob
         message.UpdateProcessedOn(SystemTimeProvider.UtcNow);
         message.UpdateError(exception?.ToString());
         await _dbContext.SaveChangesAsync();
-    }
-
-    private Task Exec()
-    {
-        throw new ApplicationException();
     }
 }

@@ -3,8 +3,6 @@
 /// <summary>
 /// Represents the <see cref="ProcessOutboxMessagesJob"/> options.
 /// </summary>
-/// <param name="RetryCount">Retry count.</param>
-/// <param name="BatchSize">Amount of messages to bring from data source per read.</param>
 internal sealed record ProcessOutboxMessagesOptions
 {
     /// <summary>
@@ -12,7 +10,13 @@ internal sealed record ProcessOutboxMessagesOptions
     /// </summary>
     public int IntervalInSeconds { get; init; }
 
+    /// <summary>
+    /// Gets retry count.
+    /// </summary>
     public int RetryCount { get; init; }
 
+    /// <summary>
+    /// Gets size of batches.
+    /// </summary>
     public int BatchSize { get; init; }
 }
