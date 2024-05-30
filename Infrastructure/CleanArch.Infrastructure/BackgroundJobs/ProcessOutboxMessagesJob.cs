@@ -1,9 +1,6 @@
-﻿using Azure;
-using CleanArch.Application.Abstractions.Logging;
-using CleanArch.Application.Extensions;
+﻿using CleanArch.Application.Abstractions.Logging;
 using CleanArch.Domain.Core.Primitives;
 using CleanArch.Domain.Core.Time;
-using CleanArch.Domain.LeaveRequests.Events;
 using CleanArch.Persistence;
 using CleanArch.Persistence.Outbox;
 using MediatR;
@@ -13,8 +10,6 @@ using Newtonsoft.Json;
 using Polly;
 using Polly.Retry;
 using Quartz;
-using System;
-using System.Collections.ObjectModel;
 
 namespace CleanArch.Infrastructure.BackgroundJobs;
 

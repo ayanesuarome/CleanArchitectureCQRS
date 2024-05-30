@@ -1,5 +1,6 @@
 ﻿using CleanArch.Domain.Core.Primitives.Result;
 using CleanArch.Domain.Errors;
+using Newtonsoft.Json;
 
 namespace CleanArch.Domain.Authentication;
 
@@ -13,6 +14,7 @@ public sealed record UserName
     /// </summary>
     public const int MaxLength = 100;
 
+    [JsonConstructor]
     private UserName(string value) => Value = value;
 
     public string Value { get; }

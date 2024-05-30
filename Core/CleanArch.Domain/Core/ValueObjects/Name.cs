@@ -1,5 +1,6 @@
 ﻿using CleanArch.Domain.Core.Primitives.Result;
 using CleanArch.Domain.Errors;
+using System.Text.Json.Serialization;
 
 namespace CleanArch.Domain.Core.ValueObjects;
 
@@ -13,6 +14,7 @@ public sealed record Name
     /// </summary>
     public const int MaxLength = 70;
 
+    [JsonConstructor]
     private Name(string value) => Value = value;
 
     public string Value { get; }

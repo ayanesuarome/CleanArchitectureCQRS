@@ -1,5 +1,6 @@
 ﻿using CleanArch.Domain.Core.Primitives.Result;
 using CleanArch.Domain.Errors;
+using Newtonsoft.Json;
 using System.Numerics;
 using System.Runtime.CompilerServices;
 
@@ -11,6 +12,7 @@ public record Comment
 {
     public const int MaxLength = 300;
 
+    [JsonConstructor]
     private Comment(string value) => Value = value;
 
     public string Value { get; }

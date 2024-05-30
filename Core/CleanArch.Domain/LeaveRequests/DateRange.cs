@@ -1,18 +1,16 @@
 ﻿using CleanArch.Domain.Core.Primitives.Result;
 using CleanArch.Domain.Errors;
+using Newtonsoft.Json;
 
 namespace CleanArch.Domain.LeaveRequests;
 
 public sealed record DateRange
 {
+    [JsonConstructor]
     private DateRange(DateOnly startDate, DateOnly endDate)
     {
         StartDate = startDate;
         EndDate = endDate;
-    }
-
-    private DateRange()
-    {
     }
 
     public DateOnly StartDate { get; }
