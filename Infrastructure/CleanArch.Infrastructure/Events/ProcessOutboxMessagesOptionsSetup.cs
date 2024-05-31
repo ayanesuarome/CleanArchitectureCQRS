@@ -10,7 +10,7 @@ namespace CleanArch.Infrastructure.BackgroundJobs;
 internal sealed class IntegrationEventProcessorJobOptionsSetup(IConfiguration configuration)
     : IConfigureOptions<IntegrationEventProcessorJobOptions>
 {
-    private const string SectionName = "BackgroundService:IntegrationEventProcessor";
+    private const string SectionName = "BackgroundServiceBus:IntegrationEventProcessor";
 
     /// <inheritdoc />
     public void Configure(IntegrationEventProcessorJobOptions options) => configuration.GetSection(SectionName).Bind(options);

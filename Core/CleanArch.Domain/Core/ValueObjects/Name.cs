@@ -1,6 +1,6 @@
 ﻿using CleanArch.Domain.Core.Primitives.Result;
 using CleanArch.Domain.Errors;
-using System.Text.Json.Serialization;
+using Newtonsoft.Json;
 
 namespace CleanArch.Domain.Core.ValueObjects;
 
