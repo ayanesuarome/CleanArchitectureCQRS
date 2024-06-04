@@ -1,11 +1,10 @@
 ﻿using CleanArch.Application.Exceptions;
-using CleanArch.Application.Abstractions.Logging;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CleanArch.Api.ExceptionHandlers;
 
-internal sealed class NotFoundExceptionHandler(IServiceScopeFactory serviceScopeFactory) : IExceptionHandler
+internal sealed class NotFoundExceptionHandler(ILogger<NotFoundExceptionHandler> logger) : IExceptionHandler
 {
     /// <summary>
     /// TryHandleAsync attempts to handle the specified exception within the ASP.NET Core pipeline.
@@ -23,11 +22,6 @@ internal sealed class NotFoundExceptionHandler(IServiceScopeFactory serviceScope
         {
             return false;
         }
-
-        using IServiceScope scope = serviceScopeFactory.CreateScope();
-        IAppLogger<NotFoundExceptionHandler> logger = scope
-            .ServiceProvider
-            .GetRequiredService<IAppLogger<NotFoundExceptionHandler>>();
 
         logger.LogError(notFoundException, "Exception ocurred: {Message}", exception.Message);
 

@@ -1,5 +1,4 @@
 ﻿using CleanArch.Application.Exceptions;
-using CleanArch.Application.Abstractions.Logging;
 using Newtonsoft.Json;
 using System.Net;
 using Microsoft.AspNetCore.Mvc;
@@ -8,10 +7,8 @@ namespace CleanArch.Api.Middlewares;
 
 // Middleware activated by MiddlewareFactory.
 // Use instead the new feature introduced by .NET8, the IExceptionHandler. see folder ExceptionHandlers
-public class ExceptionMiddleware(IAppLogger<ExceptionMiddleware> logger) : IMiddleware
+internal class ExceptionMiddleware(ILogger<ExceptionMiddleware> logger) : IMiddleware
 {
-    private readonly IAppLogger<ExceptionMiddleware> _logger = logger;
-
     public async Task InvokeAsync(HttpContext context, RequestDelegate next)
     {
         try
@@ -71,7 +68,7 @@ public class ExceptionMiddleware(IAppLogger<ExceptionMiddleware> logger) : IMidd
 
         string logMessage = JsonConvert.SerializeObject(errorDetails, Formatting.None);
 
-        _logger.LogError(message: logMessage);
+        logger.LogError(message: logMessage);
 
         httpContext.Response.StatusCode = (int)statusCode;
         await httpContext.Response.WriteAsJsonAsync(errorDetails);

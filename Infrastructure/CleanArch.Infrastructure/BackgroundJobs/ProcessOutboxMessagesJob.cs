@@ -1,10 +1,10 @@
-﻿using CleanArch.Application.Abstractions.Logging;
-using CleanArch.Domain.Core.Primitives;
+﻿using CleanArch.Domain.Core.Primitives;
 using CleanArch.Domain.Core.Time;
 using CleanArch.Persistence;
 using CleanArch.Persistence.Outbox;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using Polly;
@@ -27,7 +27,7 @@ internal sealed class ProcessOutboxMessagesJob : IJob
     private readonly CleanArchEFDbContext _dbContext;
     private readonly IPublisher _publisher;
     private readonly ProcessOutboxMessagesOptions _options;
-    private readonly IAppLogger<ProcessOutboxMessagesJob> _logger;
+    private readonly ILogger<ProcessOutboxMessagesJob> _logger;
     private readonly ResiliencePipeline _pipeline;
 
     /// <summary>
@@ -41,7 +41,7 @@ internal sealed class ProcessOutboxMessagesJob : IJob
         CleanArchEFDbContext dbContext,
         IPublisher publisher,
         IOptions<ProcessOutboxMessagesOptions> options,
-        IAppLogger<ProcessOutboxMessagesJob> logger)
+        ILogger<ProcessOutboxMessagesJob> logger)
     {
         _dbContext = dbContext;
         _publisher = publisher;

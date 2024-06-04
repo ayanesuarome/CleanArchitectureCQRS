@@ -1,12 +1,11 @@
 ﻿using CleanArch.Application.Exceptions;
-using CleanArch.Application.Abstractions.Logging;
 using Microsoft.AspNetCore.Diagnostics;
 using Newtonsoft.Json;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CleanArch.Api.ExceptionHandlers;
 
-internal sealed class BadRequestExceptionHandler(IServiceScopeFactory serviceScopeFactory) : IExceptionHandler
+internal sealed class BadRequestExceptionHandler(ILogger<BadRequestExceptionHandler> logger) : IExceptionHandler
 {
     /// <summary>
     /// TryHandleAsync attempts to handle the specified exception within the ASP.NET Core pipeline.
@@ -24,11 +23,6 @@ internal sealed class BadRequestExceptionHandler(IServiceScopeFactory serviceSco
         {
             return false;
         }
-
-        using IServiceScope scope = serviceScopeFactory.CreateScope();
-        IAppLogger<BadRequestExceptionHandler> logger = scope
-            .ServiceProvider
-            .GetRequiredService<IAppLogger<BadRequestExceptionHandler>>();
 
         ProblemDetails errorDetails = new()
         {

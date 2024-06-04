@@ -2,7 +2,7 @@
 using CleanArch.Api.Behaviors;
 using FluentValidation;
 
-namespace CleanArch.Api.Infrastructure
+namespace CleanArch.Api
 {
     public static class DependencyInjection
     {
@@ -18,6 +18,7 @@ namespace CleanArch.Api.Infrastructure
             services.AddMediatR(config =>
             {
                 config.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly());
+                config.AddOpenBehavior(typeof(RequestLoggingPipelineBehavior<,>));
                 config.AddOpenBehavior(typeof(ValidationPipelineBehavior<,>));
                 config.AddOpenBehavior(typeof(TransactionBehavior<,>));
             });

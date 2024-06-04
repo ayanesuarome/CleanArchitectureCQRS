@@ -1,10 +1,8 @@
 ﻿using CleanArch.Application.Abstractions.Email;
-using CleanArch.Application.Abstractions.Logging;
 using CleanArch.Application.EventBus;
 using CleanArch.Infrastructure.BackgroundJobs;
 using CleanArch.Infrastructure.Emails;
 using CleanArch.Infrastructure.Events;
-using CleanArch.Infrastructure.Logging;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Quartz;
@@ -21,7 +19,6 @@ public static class DependencyInjection
         services.ConfigureOptions<IntegrationEventProcessorJobOptionsSetup>();
 
         services.AddTransient<IEmailSender, EmailSender>();
-        services.AddScoped(typeof(IAppLogger<>), typeof(LoggerAdapter<>));
 
         services.AddQuartz(configure =>
         {

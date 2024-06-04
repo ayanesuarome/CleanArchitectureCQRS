@@ -1,11 +1,11 @@
-﻿using CleanArch.Application.Abstractions.Logging;
-using Microsoft.AspNetCore.Diagnostics;
+﻿using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
 
 namespace CleanArch.Api.ExceptionHandlers;
 
-internal sealed class GlobalExceptionHandler(IServiceScopeFactory serviceScopeFactory) : IExceptionHandler
+internal sealed class GlobalExceptionHandler(ILogger<GlobalExceptionHandler> logger)
+    : IExceptionHandler
 {
     /// <summary>
     /// TryHandleAsync attempts to handle the specified exception within the ASP.NET Core pipeline.
@@ -19,12 +19,7 @@ internal sealed class GlobalExceptionHandler(IServiceScopeFactory serviceScopeFa
         Exception exception,
         CancellationToken cancellationToken)
     {
-        using IServiceScope scope = serviceScopeFactory.CreateScope();
-        IAppLogger<GlobalExceptionHandler> logger = scope
-            .ServiceProvider
-            .GetRequiredService<IAppLogger<GlobalExceptionHandler>>();
-
-        logger.LogError(exception, "Exception ocurred: {Message}", exception.Message);
+        logger.LogError(exception, "Exception ocurred: {ErrorMessage}", exception.Message);
 
         ProblemDetails errorDetails = new()
         {

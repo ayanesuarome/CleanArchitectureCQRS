@@ -1,5 +1,5 @@
+using CleanArch.Api;
 using CleanArch.Api.ExceptionHandlers;
-using CleanArch.Api.Infrastructure;
 using CleanArch.Api.Middlewares;
 using CleanArch.Api.Swagger;
 using CleanArch.Identity;
@@ -15,9 +15,8 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 
 // Serilog
-builder.Host.UseSerilog((context, config) => config
-    .WriteTo.Console()
-    .ReadFrom.Configuration(context.Configuration));
+builder.Host.UseSerilog((context, configureLogger) =>
+    configureLogger.ReadFrom.Configuration(context.Configuration));
 
 builder.Services.AddCleanArchEFDbContext(builder.Configuration);
 builder.Services.AddInfrastructureServices(builder.Configuration);
@@ -28,13 +27,13 @@ builder.Services.AddApiServices();
 builder.Services.Configure<ApiBehaviorOptions>(options => options.SuppressModelStateInvalidFilter = true);
 
 // The factory-activated middleware is added to the built-in container
-//builder.Services.AddTransient<ExceptionMiddleware>();
+// builder.Services.AddTransient<ExceptionMiddleware>();
 builder.Services.AddTransient<RequestContextLoggingMiddleware>();
 
 // registered with a singleton lifetime
 // chaining Exception Handlers. They are called in the order they are registered
-//builder.Services.AddExceptionHandler<BadRequestExceptionHandler>();
-//builder.Services.AddExceptionHandler<NotFoundExceptionHandler>();
+// builder.Services.AddExceptionHandler<BadRequestExceptionHandler>();
+// builder.Services.AddExceptionHandler<NotFoundExceptionHandler>();
 builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
 builder.Services.AddProblemDetails();
 
@@ -80,7 +79,7 @@ app.UseExceptionHandler();
 app.UseSwagger();
 app.UseSwaggerUI();
 
-// Adds Serilog
+// Serilog. Adds ASP.NET's internal operations to the same Serilog sinks as your application events
 app.UseSerilogRequestLogging();
 
 // Enables same CORS policy to the whole web servie.

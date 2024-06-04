@@ -1,8 +1,8 @@
-﻿using CleanArch.Application.Abstractions.Logging;
-using CleanArch.Application.EventBus;
+﻿using CleanArch.Application.EventBus;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using Polly;
@@ -21,22 +21,21 @@ internal sealed class IntegrationEventProcessorJob : BackgroundService
     private readonly IPublisher _publisher;
     private readonly IntegrationEventProcessorJobOptions _options;
     private readonly IServiceScopeFactory _serviceScopeFactory;
+    private readonly ILogger<IntegrationEventProcessorJob> _logger;
     private readonly ResiliencePipeline _pipeline;
 
     public IntegrationEventProcessorJob(
         InMemoryMessageQueue queue,
         IPublisher publisher,
         IOptions<IntegrationEventProcessorJobOptions> options,
+        ILogger<IntegrationEventProcessorJob> logger,
         IServiceScopeFactory serviceScopeFactory)
     {
         _queue = queue;
         _publisher = publisher;
         _options = options.Value;
+        _logger = logger;
         _serviceScopeFactory = serviceScopeFactory;
-
-        using IServiceScope scope = serviceScopeFactory.CreateScope();
-        IAppLogger<IntegrationEventProcessorJob> logger = scope.ServiceProvider
-            .GetRequiredService<IAppLogger<IntegrationEventProcessorJob>>();
 
         _pipeline = new ResiliencePipelineBuilder()
                 .AddRetry(new RetryStrategyOptions()
@@ -59,13 +58,9 @@ internal sealed class IntegrationEventProcessorJob : BackgroundService
 
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
-        using IServiceScope scope = _serviceScopeFactory.CreateScope();
-        IAppLogger<IntegrationEventProcessorJob> logger = scope.ServiceProvider
-            .GetRequiredService<IAppLogger<IntegrationEventProcessorJob>>();
-
         await foreach(IIntegrationEvent integrationEvent in _queue.Reader.ReadAllAsync(stoppingToken))
         {
-            logger.LogInformation("Publishing Integration Event: {IntegrationEventId}", integrationEvent.Id);
+            _logger.LogInformation("Publishing Integration Event: {IntegrationEventId}", integrationEvent.Id);
 
             PolicyResult policyResult = await _pipeline
             .AsAsyncPolicy()
@@ -73,11 +68,11 @@ internal sealed class IntegrationEventProcessorJob : BackgroundService
 
             if (policyResult.Outcome == OutcomeType.Failure)
             {
-                logger.LogError(policyResult.FinalException, "Operation Exception Publishing Integration Event {IntegrationEventId}", integrationEvent.Id);
+                _logger.LogError(policyResult.FinalException, "Operation Exception Publishing Integration Event {IntegrationEventId}", integrationEvent.Id);
                 continue;
             }
 
-            logger.LogInformation("Processed Integration Event: {IntegrationEventId}", integrationEvent.Id);
+            _logger.LogInformation("Processed Integration Event: {IntegrationEventId}", integrationEvent.Id);
         }
     }
 }

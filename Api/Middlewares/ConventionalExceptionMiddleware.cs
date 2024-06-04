@@ -1,5 +1,4 @@
 ﻿using CleanArch.Application.Exceptions;
-using CleanArch.Application.Abstractions.Logging;
 using System.Net;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,7 +9,7 @@ public class ConventionalExceptionMiddleware(RequestDelegate next)
 {
     private readonly RequestDelegate _next = next;
 
-    public async Task InvokeAsync(HttpContext httpContext, IAppLogger<ConventionalExceptionMiddleware> logger)
+    public async Task InvokeAsync(HttpContext httpContext, ILogger<ConventionalExceptionMiddleware> logger)
     {
         try
         {
@@ -24,7 +23,7 @@ public class ConventionalExceptionMiddleware(RequestDelegate next)
 
     private async Task HandleExceptionAsync(HttpContext httpContext,
         Exception exception,
-        IAppLogger<ConventionalExceptionMiddleware> logger)
+        ILogger<ConventionalExceptionMiddleware> logger)
     {
         HttpStatusCode statusCode = HttpStatusCode.InternalServerError;
         ProblemDetails errorDetails;

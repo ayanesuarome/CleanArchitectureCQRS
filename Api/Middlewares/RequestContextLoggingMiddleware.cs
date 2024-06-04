@@ -3,9 +3,9 @@ using Serilog.Context;
 
 namespace CleanArch.Api.Middlewares;
 
-public class RequestContextLoggingMiddleware : IMiddleware
+internal sealed class RequestContextLoggingMiddleware : IMiddleware
 {
-    private const string CorrelationIdHeader = "X-Correlation-Id";
+    private const string CorrelationIdHeaderName = "X-Correlation-Id";
     public Task InvokeAsync(HttpContext context, RequestDelegate next)
     {
         using (LogContext.PushProperty("CorrelationId", GetCorrelationId(context)))
@@ -14,10 +14,10 @@ public class RequestContextLoggingMiddleware : IMiddleware
         }
     }
 
-    private object GetCorrelationId(HttpContext context)
+    private string GetCorrelationId(HttpContext context)
     {
         context.Request.Headers.TryGetValue(
-            CorrelationIdHeader,
+            CorrelationIdHeaderName,
             out StringValues correlationId);
 
         return correlationId.FirstOrDefault() ?? context.TraceIdentifier;

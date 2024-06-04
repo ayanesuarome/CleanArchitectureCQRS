@@ -1,0 +1,2 @@
+docker build -t cleanarch-blazorwasm ./UI
+docker run -d -p 5195:80 cleanarch-blazorwasm

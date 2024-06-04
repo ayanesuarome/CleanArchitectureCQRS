@@ -1,0 +1,28 @@
+version: '3.4'
+
+services:
+  cleanarch.api:
+    image: ${DOCKER_REGISTRY-}cleanarch-api
+    build:
+      context: .
+      dockerfile: Api/Dockerfile
+    depends_on:
+      - cleanarch.sqlserver
+  
+  cleanarch.sqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: cleanarch-sql-server
+    environment:
+      SA_PASSWORD: Ayane123456789!
+      ACCEPT_EULA: Y
+    ports:
+      - 1433:1433
+
+  cleanarch.seq:
+    image: datalust/seq:latest
+    container_name: cleanarch-seq
+    environment:
+      - ACCEPT_EULA=Y
+    ports:
+      - 5341:5341
+      - 8081:80
