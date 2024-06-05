@@ -10,90 +10,96 @@ using CleanArch.Persistence.Migrations;
 using Microsoft.AspNetCore.Mvc;
 using Serilog;
 
-var builder = WebApplication.CreateBuilder(args);
-
-// Add services to the container.
-
-// Serilog
-builder.Host.UseSerilog((context, configureLogger) =>
-    configureLogger.ReadFrom.Configuration(context.Configuration));
-
-builder.Services.AddCleanArchEFDbContext(builder.Configuration);
-builder.Services.AddInfrastructureServices(builder.Configuration);
-builder.Services.AddIdentityServices(builder.Configuration);
-builder.Services.AddPersistenceServices();
-builder.Services.AddApiServices();
-
-builder.Services.Configure<ApiBehaviorOptions>(options => options.SuppressModelStateInvalidFilter = true);
-
-// The factory-activated middleware is added to the built-in container
-// builder.Services.AddTransient<ExceptionMiddleware>();
-builder.Services.AddTransient<RequestContextLoggingMiddleware>();
-
-// registered with a singleton lifetime
-// chaining Exception Handlers. They are called in the order they are registered
-// builder.Services.AddExceptionHandler<BadRequestExceptionHandler>();
-// builder.Services.AddExceptionHandler<NotFoundExceptionHandler>();
-builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
-builder.Services.AddProblemDetails();
-
-builder.Services.AddHttpContextAccessor();
-
-builder.Services.AddControllers();
-
-builder.Services.AddHttpLogging(options =>
+public class Program
 {
-    // Add the Origin header so it will not be redacted.
-    options.RequestHeaders.Add("Origin");
-    // Add the rate limiting headers so they will not be redacted. (DoS)
-    options.RequestHeaders.Add("X-Client-Id");
-    options.RequestHeaders.Add("X-Real-IP");
-    options.ResponseHeaders.Add("Retry-After");
-});
-builder.Services.AddCors(options =>
-{
-    options.AddPolicy(name: "CleanArchAll",
-        policy => policy
-            .WithOrigins("https://localhost:7162", "http://localhost:5195")
-            .WithMethods("GET", "POST", "PUT", "DELETE")
-            .AllowAnyHeader());
-});
+    private static void Main(string[] args)
+    {
+        var builder = WebApplication.CreateBuilder(args);
 
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwagger();
+        // Add services to the container.
 
-var app = builder.Build();
+        // Serilog
+        builder.Host.UseSerilog((context, configureLogger) =>
+            configureLogger.ReadFrom.Configuration(context.Configuration));
 
-// Middleware activated by convention and it is registered in the request processing pipeline
-//app.UseMiddleware<ConventionalExceptionMiddleware>();
+        builder.Services.AddCleanArchEFDbContext(builder.Configuration);
+        builder.Services.AddInfrastructureServices(builder.Configuration);
+        builder.Services.AddIdentityServices(builder.Configuration);
+        builder.Services.AddPersistenceServices();
+        builder.Services.AddApiServices();
 
-// Middleware activated by MiddlewareFactory and it is registered in the request processing pipeline.
-// The factory-activated middleware is added to the built-in container with builder.Services.AddTransient<FactoryActivatedMiddleware>();
-// app.UseMiddleware<ExceptionMiddleware>();
-app.UseMiddleware<RequestContextLoggingMiddleware>();
+        builder.Services.Configure<ApiBehaviorOptions>(options => options.SuppressModelStateInvalidFilter = true);
 
-app.UseExceptionHandler();
+        // The factory-activated middleware is added to the built-in container
+        // builder.Services.AddTransient<ExceptionMiddleware>();
+        builder.Services.AddTransient<RequestContextLoggingMiddleware>();
 
-// Configure the HTTP request pipeline.
-app.UseSwagger();
-app.UseSwaggerUI();
+        // registered with a singleton lifetime
+        // chaining Exception Handlers. They are called in the order they are registered
+        // builder.Services.AddExceptionHandler<BadRequestExceptionHandler>();
+        // builder.Services.AddExceptionHandler<NotFoundExceptionHandler>();
+        builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
+        builder.Services.AddProblemDetails();
 
-// Serilog. Adds ASP.NET's internal operations to the same Serilog sinks as your application events
-app.UseSerilogRequestLogging();
+        builder.Services.AddHttpContextAccessor();
 
-// Enables same CORS policy to the whole web servie.
-app.UseCors(policyName: "CleanArchAll");
+        builder.Services.AddControllers();
 
-app.UseHttpsRedirection();
+        builder.Services.AddHttpLogging(options =>
+        {
+            // Add the Origin header so it will not be redacted.
+            options.RequestHeaders.Add("Origin");
+            // Add the rate limiting headers so they will not be redacted. (DoS)
+            options.RequestHeaders.Add("X-Client-Id");
+            options.RequestHeaders.Add("X-Real-IP");
+            options.ResponseHeaders.Add("Retry-After");
+        });
+        builder.Services.AddCors(options =>
+        {
+            options.AddPolicy(name: "CleanArchAll",
+                policy => policy
+                    .WithOrigins("https://localhost:7162", "http://localhost:5195")
+                    .WithMethods("GET", "POST", "PUT", "DELETE")
+                    .AllowAnyHeader());
+        });
 
-// Authentication and Authorization
-app.UseAuthentication().UseAuthorization();
+        // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+        builder.Services.AddEndpointsApiExplorer();
+        builder.Services.AddSwagger();
 
-app.MapControllers();
+        var app = builder.Build();
 
-// apply pending migrations
-app.ApplyMigrations();
-app.ApplyIdentityMigrations();
+        // Middleware activated by convention and it is registered in the request processing pipeline
+        //app.UseMiddleware<ConventionalExceptionMiddleware>();
 
-app.Run();
+        // Middleware activated by MiddlewareFactory and it is registered in the request processing pipeline.
+        // The factory-activated middleware is added to the built-in container with builder.Services.AddTransient<FactoryActivatedMiddleware>();
+        // app.UseMiddleware<ExceptionMiddleware>();
+        app.UseMiddleware<RequestContextLoggingMiddleware>();
+
+        app.UseExceptionHandler();
+
+        // Configure the HTTP request pipeline.
+        app.UseSwagger();
+        app.UseSwaggerUI();
+
+        // Serilog. Adds ASP.NET's internal operations to the same Serilog sinks as your application events
+        app.UseSerilogRequestLogging();
+
+        // Enables same CORS policy to the whole web servie.
+        app.UseCors(policyName: "CleanArchAll");
+
+        app.UseHttpsRedirection();
+
+        // Authentication and Authorization
+        app.UseAuthentication().UseAuthorization();
+
+        app.MapControllers();
+
+        // apply pending migrations
+        app.ApplyMigrations();
+        app.ApplyIdentityMigrations();
+
+        app.Run();
+    }
+}

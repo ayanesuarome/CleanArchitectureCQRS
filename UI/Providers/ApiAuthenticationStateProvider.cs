@@ -14,24 +14,24 @@ public class ApiAuthenticationStateProvider : AuthenticationStateProvider
     public ApiAuthenticationStateProvider(ILocalStorageService localStorage, IConfiguration configuration)
     {
         _localStorage = localStorage;
-        _storageKey = configuration.GetValue<string>("StorageKey");
+        _storageKey = configuration.GetValue<string>("StorageKey")!;
     }
 
     public override async Task<AuthenticationState> GetAuthenticationStateAsync()
     {
         ClaimsPrincipal user = new(new ClaimsIdentity());
-        bool isTokenPresent = await _localStorage.ContainKeyAsync(_storageKey);
+        bool isTokenPresent = await _localStorage.ContainKeyAsync(_storageKey).ConfigureAwait(false);
         
         if (!isTokenPresent)
         {
             return new AuthenticationState(user);
         }
 
-        JwtSecurityToken tokenContent = await GetJwtSecurityToken();
+        JwtSecurityToken tokenContent = await GetJwtSecurityToken().ConfigureAwait(false);
 
         if(tokenContent.ValidTo < DateTimeOffset.Now)
         {
-            await _localStorage.RemoveItemAsync(_storageKey);
+            await _localStorage.RemoveItemAsync(_storageKey).ConfigureAwait(false);
             return new AuthenticationState(user);
         }
 
@@ -43,8 +43,8 @@ public class ApiAuthenticationStateProvider : AuthenticationStateProvider
 
     public async Task LoggedIn(string token)
     {
-        await _localStorage.SetItemAsync(_storageKey, token);
-        JwtSecurityToken tokenContent = await GetJwtSecurityToken();
+        await _localStorage.SetItemAsync(_storageKey, token).ConfigureAwait(false);
+        JwtSecurityToken tokenContent = await GetJwtSecurityToken().ConfigureAwait(false);
         List<Claim> claims = GetClaims(tokenContent); 
         ClaimsPrincipal user = new(new ClaimsIdentity(claims, "jwt"));
         Task<AuthenticationState> authState = Task.FromResult(new AuthenticationState(user));
@@ -53,7 +53,7 @@ public class ApiAuthenticationStateProvider : AuthenticationStateProvider
 
     public async Task LoggedOut()
     {
-        await _localStorage.RemoveItemAsync(_storageKey);
+        await _localStorage.RemoveItemAsync(_storageKey).ConfigureAwait(false);
         ClaimsPrincipal nobody = new(new ClaimsIdentity());
         Task<AuthenticationState> authState = Task.FromResult(new AuthenticationState(nobody));
         NotifyAuthenticationStateChanged(authState);
@@ -61,15 +61,15 @@ public class ApiAuthenticationStateProvider : AuthenticationStateProvider
 
     private async Task<JwtSecurityToken> GetJwtSecurityToken()
     {
-        string savedToken = await _localStorage.GetItemAsync<string>(_storageKey);
+        string? savedToken = await _localStorage.GetItemAsync<string>(_storageKey).ConfigureAwait(false);
         return _jwtSecurityTokenHandler.ReadJwtToken(savedToken);
     }
 
-    private List<Claim> GetClaims(JwtSecurityToken tokenContent)
+    private static List<Claim> GetClaims(JwtSecurityToken tokenContent)
     {
         List<Claim> claims = tokenContent.Claims.ToList();
+        // TODO: get name
         claims.Add(new Claim(ClaimTypes.Name, tokenContent.Subject));
-
         return claims;
     }
 }

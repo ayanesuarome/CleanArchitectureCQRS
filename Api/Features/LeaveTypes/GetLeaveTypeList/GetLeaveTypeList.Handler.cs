@@ -7,7 +7,7 @@ namespace CleanArch.Api.Features.LeaveTypes.GetLeaveTypeList;
 
 public static partial class GetLeaveTypeList
 {
-    public sealed class Handler(ILeaveTypeRepository repository) : IQueryHandler<Query, LeaveTypeListDto>
+    internal sealed class Handler(ILeaveTypeRepository repository) : IQueryHandler<Query, LeaveTypeListDto>
     {
         private readonly ILeaveTypeRepository _repository = repository;
 
