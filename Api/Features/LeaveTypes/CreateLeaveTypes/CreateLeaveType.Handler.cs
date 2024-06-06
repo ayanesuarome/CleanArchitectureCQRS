@@ -31,7 +31,7 @@ public static partial class CreateLeaveType
                 return Result.Failure<Guid>(firstFailureOrSuccess.Error);
             }
 
-            LeaveTypeNameUniqueRequirement requirement = new (async () =>
+            LeaveTypeNameUniqueRequirement requirement = new(async () =>
                 await _repository.IsUniqueAsync(nameResult.Value, cancellationToken));
 
             Result<LeaveType> leaveTypeResult = LeaveType.Create(nameResult.Value, defaultDaysResult.Value, requirement);

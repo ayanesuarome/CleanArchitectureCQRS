@@ -11,13 +11,14 @@ internal sealed class LeaveTypeRepository : GenericRepository<LeaveType, LeaveTy
     {
     }
 
-    public async Task<bool> IsUniqueAsync(Name name, CancellationToken token = default)
+    public async Task<bool> IsUniqueAsync(Name name, CancellationToken cancellationToken = default)
     {
-        return !await TableNoTracking.AnyAsync(t => t.Name == name);
+        var result = !await TableNoTracking.AnyAsync(t => t.Name == name, cancellationToken);
+        return result;
     }
 
-    public async Task<bool> AnyAsync(LeaveTypeId id, CancellationToken token = default)
+    public async Task<bool> AnyAsync(LeaveTypeId id, CancellationToken cancellationToken = default)
     {
-        return await TableNoTracking.AnyAsync(t => t.Id == id);
+        return await TableNoTracking.AnyAsync(t => t.Id == id, cancellationToken);
     }
 }
