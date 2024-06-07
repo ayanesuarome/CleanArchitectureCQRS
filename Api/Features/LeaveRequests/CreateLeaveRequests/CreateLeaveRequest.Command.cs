@@ -13,7 +13,7 @@ public static partial class CreateLeaveRequest
         {
             LeaveTypeId = leaveTypeId;
             StartDate = DateOnly.Parse(startDate, CultureInfo.InvariantCulture);
-            EndDate = DateOnly.Parse(endDate, CultureInfo.InvariantCulture); ;
+            EndDate = DateOnly.Parse(endDate, CultureInfo.InvariantCulture);
             Comments = comments;
         }
 

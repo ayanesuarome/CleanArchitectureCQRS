@@ -3,8 +3,14 @@ using Xunit.Sdk;
 
 namespace CleanArch.Integration.Tests;
 
-public class PriorityOrderer : ITestCaseOrderer
+/// <summary>
+/// Custom xUnit test case orderer that uses the order attribute.
+/// </summary>
+internal sealed class TestCasePriorityOrderer : ITestCaseOrderer
 {
+    public const string TypeName = "CleanArch.Integration.Tests.TestCasePriorityOrderer";
+    public const string AssemblyName = "CleanArch.Integration.Tests";
+
     public IEnumerable<TTestCase> OrderTestCases<TTestCase>(IEnumerable<TTestCase> testCases) where TTestCase : ITestCase
     {
         var sortedMethods = new SortedDictionary<int, List<TTestCase>>();
@@ -13,8 +19,10 @@ public class PriorityOrderer : ITestCaseOrderer
         {
             int priority = 0;
 
-            foreach (IAttributeInfo attr in testCase.TestMethod.Method.GetCustomAttributes((typeof(TestPriorityAttribute).AssemblyQualifiedName)))
+            foreach (IAttributeInfo attr in testCase.TestMethod.Method.GetCustomAttributes(typeof(TestPriorityAttribute).AssemblyQualifiedName))
+            {
                 priority = attr.GetNamedArgument<int>("Priority");
+            }
 
             GetOrCreate(sortedMethods, priority).Add(testCase);
         }
@@ -27,11 +35,12 @@ public class PriorityOrderer : ITestCaseOrderer
         }
     }
 
-    static TValue GetOrCreate<TKey, TValue>(IDictionary<TKey, TValue> dictionary, TKey key) where TValue : new()
+    private static TValue GetOrCreate<TKey, TValue>(IDictionary<TKey, TValue> dictionary, TKey key) where TValue : new()
     {
-        TValue result;
-
-        if (dictionary.TryGetValue(key, out result)) return result;
+        if (dictionary.TryGetValue(key, out TValue? result))
+        {
+            return result;
+        }
 
         result = new TValue();
         dictionary[key] = result;

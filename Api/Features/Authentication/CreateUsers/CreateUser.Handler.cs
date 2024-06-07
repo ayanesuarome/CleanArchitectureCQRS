@@ -38,7 +38,7 @@ public static partial class CreateUser
             User user = new(firstNameResult.Value, lastNameResult.Value)
             {
                 Email = emailResult.Value,
-                UserName = command.Email,
+                UserName = emailResult.Value,
                 EmailConfirmed = true
             };
 

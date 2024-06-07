@@ -1,4 +1,7 @@
-﻿using CleanArch.Identity;
+﻿using CleanArch.Application.Abstractions.Authentication;
+using CleanArch.Contracts.Identity;
+using CleanArch.Identity;
+using CleanArch.Integration.Tests;
 using CleanArch.Persistence;
 using DotNet.Testcontainers.Builders;
 using DotNet.Testcontainers.Containers;
@@ -7,6 +10,8 @@ using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
+using Moq;
 using Quartz;
 using Quartz.Impl;
 
@@ -47,6 +52,19 @@ public class IntegrationTestWebAppFactory : WebApplicationFactory<Program>, IAsy
             if (descriptor is not null)
             {
                 services.Remove(descriptor);
+            }
+
+            descriptor = services
+                .SingleOrDefault(service => service.ServiceType == typeof(IUserIdentifierProvider));
+
+            if (descriptor is not null)
+            {
+                services.Replace(ServiceDescriptor.Scoped(_ =>
+                {
+                    Mock<IUserIdentifierProvider> mock = new();
+                    mock.Setup(a => a.UserId).Returns(Guid.Parse("f8b3c041-3397-43f1-95db-6fd3b5eb2e40"));
+                    return mock.Object;
+                }));
             }
 
             var scheduler = StdSchedulerFactory.GetDefaultScheduler().Result;

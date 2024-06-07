@@ -12,7 +12,7 @@ using MediatR;
 
 namespace CleanArch.Integration.Tests.LeaveTypes;
 
-[TestCaseOrderer("CleanArch.Integration.Tests.PriorityOrderer", "CleanArch.Integration.Tests")]
+//[TestPriority(1)]
 public class LeaveTypeTest : BaseIntegrationTest
 {
     public LeaveTypeTest(IntegrationTestWebAppFactory factory)
@@ -98,23 +98,15 @@ public class LeaveTypeTest : BaseIntegrationTest
     public async Task DeleteHandlerShouldDelete_LeaveTypeFromDatabase()
     {
         // Arrange
-        Result<Name> nameResult = Name.Create("VacatioToDelete");
-        Result<DefaultDays> defaultDaysResult = DefaultDays.Create(20);
-        LeaveTypeNameUniqueRequirement requirement = new(() => Task.FromResult(true));
-
-        Result<LeaveType> leaveTypeResult = LeaveType.Create(nameResult.Value, defaultDaysResult.Value, requirement);
-
-        DbContext.Add(leaveTypeResult.Value);
-        await DbContext.SaveChangesAsync();
-
-        DeleteLeaveType.Command command = new(leaveTypeResult.Value.Id);
+        LeaveType? leaveType = DbContext.LeaveTypes.FirstOrDefault(leave => leave.Name == "Sick");
+        DeleteLeaveType.Command command = new(leaveType.Id);
 
         // Act
         Result<Unit> result = await Sender.Send(command);
 
         // Assert
         Assert.True(result.IsSuccess);
-        LeaveType? leaveType = await DbContext.LeaveTypes.FindAsync(leaveTypeResult.Value.Id);
+        leaveType = await DbContext.LeaveTypes.FindAsync(leaveType.Id);
         Assert.Null(leaveType);
     }
 }
