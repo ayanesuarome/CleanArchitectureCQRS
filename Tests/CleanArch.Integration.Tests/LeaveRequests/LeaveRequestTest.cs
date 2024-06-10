@@ -8,12 +8,12 @@ using CleanArch.Domain.LeaveRequests;
 using CleanArch.Domain.LeaveRequests.Events;
 using CleanArch.Domain.LeaveTypes;
 using FluentAssertions;
+using Microsoft.AspNetCore.Identity;
 
 namespace CleanArch.Integration.Tests.LeaveRequests;
 
-public class LeaveRequestTest : BaseIntegrationTest
+public class LeaveRequestTest : BaseIntegrationTest, IAsyncLifetime
 {
-    private Task Initialization { get; set; }
     private User Employee { get; set; }
     private LeaveType LeaveType { get; set; }
     private LeaveAllocation LeaveAllocation { get; set; }
@@ -21,15 +21,19 @@ public class LeaveRequestTest : BaseIntegrationTest
     public LeaveRequestTest(IntegrationTestWebAppFactory factory)
         : base(factory)
     {
-        Initialization = InitializeAsync();
     }
 
-    private async Task InitializeAsync()
+    public async Task InitializeAsync()
     {
         // Asynchronously initialize this instance.
         Employee = await CreateUser();
         LeaveType = await CreateLeaveType();
         LeaveAllocation = await CreateLeaveAllocation(LeaveType, Employee);
+    }
+
+    public Task DisposeAsync()
+    {
+        return Task.CompletedTask;
     }
 
     private async Task<User> CreateUser()
@@ -47,7 +51,7 @@ public class LeaveRequestTest : BaseIntegrationTest
             EmailConfirmed = true
         };
 
-        await UserManager.CreateAsync(user, Faker.Internet.Password());
+        IdentityResult result = await UserManager.CreateAsync(user, Faker.Internet.Password(prefix: "%"));
         await UserManager.AddToRoleAsync(user, Roles.Employee.Name);
 
         return user;
@@ -84,8 +88,6 @@ public class LeaveRequestTest : BaseIntegrationTest
     public async Task CreateHandlerShouldAdd_NewLeaveRequestTo()
     {
         // Arrange
-        await Initialization;
-
         string startDate = "06/06/2024";
         string endDate = "06/07/2024";
 
