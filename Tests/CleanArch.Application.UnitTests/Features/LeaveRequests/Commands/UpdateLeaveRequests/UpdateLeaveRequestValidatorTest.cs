@@ -11,12 +11,10 @@ public class UpdateLeaveRequestValidatorTest(UpdateLeaveRequestValidatorFixture 
     [Fact]
     public async Task TestValidatorShouldFailWithInvalidId()
     {
-
-
         UpdateLeaveRequest.Command command = new(
             Guid.Empty,
-            DateTime.Now.ToString(),
-            DateTime.Now.AddDays(1).ToString(),
+            "06/06/2024",
+            "06/07/2024",
             null);
 
         var result = await _fixture.validator.TestValidateAsync(command);
@@ -30,8 +28,8 @@ public class UpdateLeaveRequestValidatorTest(UpdateLeaveRequestValidatorFixture 
     {
         UpdateLeaveRequest.Command command = new(
             Guid.NewGuid(),
-            DateTime.Now.ToString(),
-            DateTime.Now.AddDays(1).ToString(),
+            "06/06/2024",
+            "06/07/2024",
             null);
 
         var result = await _fixture.validator.TestValidateAsync(command);
