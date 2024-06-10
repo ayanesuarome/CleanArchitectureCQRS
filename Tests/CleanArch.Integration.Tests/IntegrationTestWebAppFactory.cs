@@ -1,7 +1,5 @@
 ﻿using CleanArch.Application.Abstractions.Authentication;
-using CleanArch.Contracts.Identity;
 using CleanArch.Identity;
-using CleanArch.Integration.Tests;
 using CleanArch.Persistence;
 using DotNet.Testcontainers.Builders;
 using DotNet.Testcontainers.Containers;
@@ -38,45 +36,36 @@ public class IntegrationTestWebAppFactory : WebApplicationFactory<Program>, IAsy
     {
         builder.ConfigureTestServices(services =>
         {
-            ServiceDescriptor? descriptor = services
-                .SingleOrDefault(service => service.ServiceType == typeof(DbContextOptions<CleanArchEFDbContext>));
+            // Way to check whether the service descriptior has a specific dependency
+            //ServiceDescriptor? descriptor = services
+            //    .SingleOrDefault(service => service.ServiceType == typeof(DbContextOptions<CleanArchEFDbContext>));
 
-            if (descriptor is not null)
-            {
-                services.Remove(descriptor);
-            }
-
-            descriptor = services
-                .SingleOrDefault(service => service.ServiceType == typeof(DbContextOptions<CleanArchIdentityEFDbContext>));
-
-            if (descriptor is not null)
-            {
-                services.Remove(descriptor);
-            }
-
-            descriptor = services
-                .SingleOrDefault(service => service.ServiceType == typeof(IUserIdentifierProvider));
-
-            if (descriptor is not null)
-            {
-                services.Replace(ServiceDescriptor.Scoped(_ =>
-                {
-                    Mock<IUserIdentifierProvider> mock = new();
-                    mock.Setup(a => a.UserId).Returns(Guid.Parse("f8b3c041-3397-43f1-95db-6fd3b5eb2e40"));
-                    return mock.Object;
-                }));
-            }
-
-            var scheduler = StdSchedulerFactory.GetDefaultScheduler().Result;
-            scheduler.Standby();
-            scheduler.PauseTrigger(new TriggerKey("ProcessOutboxMessagesJob"));
+            //if (descriptor is not null)
+            //{
+            //    services.Remove(descriptor);
+            //}
 
             string host = _dbContainer.Hostname;
             ushort port = _dbContainer.GetMappedPublicPort(MsSqlPort);
             string connectionString = $"Server={host},{port};Database={Database};User={Username};Password={Password};Trust Server Certificate=True;";
 
+            services.RemoveAll(typeof(DbContextOptions<CleanArchEFDbContext>));
             services.AddDbContext<CleanArchEFDbContext>(options => options.UseSqlServer(connectionString));
+
+            services.RemoveAll(typeof(DbContextOptions<CleanArchIdentityEFDbContext>));
             services.AddDbContext<CleanArchIdentityEFDbContext>(options => options.UseSqlServer(connectionString));
+
+            services.RemoveAll(typeof(IUserIdentifierProvider));
+            services.Replace(ServiceDescriptor.Scoped(_ =>
+            {
+                Mock<IUserIdentifierProvider> mock = new();
+                mock.Setup(a => a.UserId).Returns(Guid.Parse("f8b3c041-3397-43f1-95db-6fd3b5eb2e40"));
+                return mock.Object;
+            }));
+
+            var scheduler = StdSchedulerFactory.GetDefaultScheduler().Result;
+            scheduler.Standby();
+            scheduler.PauseTrigger(new TriggerKey("ProcessOutboxMessagesJob"));
         });
     }
 

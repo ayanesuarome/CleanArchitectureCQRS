@@ -1,4 +1,5 @@
-﻿using CleanArch.Domain.Authentication;
+﻿using Bogus;
+using CleanArch.Domain.Authentication;
 using CleanArch.Persistence;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
@@ -9,12 +10,14 @@ using Microsoft.Extensions.DependencyInjection;
 namespace CleanArch.Integration.Tests;
 
 [TestCaseOrderer(TestCasePriorityOrderer.TypeName, TestCasePriorityOrderer.AssemblyName)]
-public abstract class BaseIntegrationTest : IClassFixture<IntegrationTestWebAppFactory>
+public abstract class BaseIntegrationTest : IClassFixture<IntegrationTestWebAppFactory>, IDisposable
 {
     private readonly IServiceScope _scope;
-    protected readonly ISender Sender;
-    protected readonly CleanArchEFDbContext DbContext;
-    protected readonly UserManager<User> UserManager;
+
+    protected ISender Sender { get; }
+    protected CleanArchEFDbContext DbContext { get; }
+    protected UserManager<User> UserManager { get; }
+    protected Faker Faker { get; }
 
     protected BaseIntegrationTest(IntegrationTestWebAppFactory factory)
     {
@@ -22,5 +25,12 @@ public abstract class BaseIntegrationTest : IClassFixture<IntegrationTestWebAppF
         Sender = _scope.ServiceProvider.GetRequiredService<ISender>();
         DbContext = _scope.ServiceProvider.GetRequiredService<CleanArchEFDbContext>();
         UserManager = _scope.ServiceProvider.GetRequiredService<UserManager<User>>();
+        Faker = new();
+    }
+
+    public void Dispose()
+    {
+        _scope.Dispose();
+        DbContext.Dispose();
     }
 }

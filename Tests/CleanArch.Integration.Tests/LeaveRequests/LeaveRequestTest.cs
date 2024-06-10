@@ -1,4 +1,5 @@
-﻿using CleanArch.Api.Features.LeaveRequests.CreateLeaveRequests;
+﻿using Bogus;
+using CleanArch.Api.Features.LeaveRequests.CreateLeaveRequests;
 using CleanArch.Domain.Authentication;
 using CleanArch.Domain.Core.Primitives.Result;
 using CleanArch.Domain.Core.ValueObjects;
@@ -33,9 +34,10 @@ public class LeaveRequestTest : BaseIntegrationTest
 
     private async Task<User> CreateUser()
     {
-        Result<UserName> firstNameResult = UserName.Create("Ayane");
-        Result<UserName> lastNameResult = UserName.Create("Suarez");
-        Result<Email> emailResult = Email.Create("ayane@cleanarch.com");
+        Bogus.DataSets.Name name = Faker.Name;
+        Result<UserName> firstNameResult = UserName.Create(name.FirstName());
+        Result<UserName> lastNameResult = UserName.Create(name.LastName());
+        Result<Email> emailResult = Email.Create(Faker.Internet.Email());
 
         User user = new(firstNameResult.Value, lastNameResult.Value)
         {
@@ -45,7 +47,7 @@ public class LeaveRequestTest : BaseIntegrationTest
             EmailConfirmed = true
         };
 
-        await UserManager.CreateAsync(user, "P@ssword987ToAdd%");
+        await UserManager.CreateAsync(user, Faker.Internet.Password());
         await UserManager.AddToRoleAsync(user, Roles.Employee.Name);
 
         return user;
