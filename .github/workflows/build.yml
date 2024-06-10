@@ -9,11 +9,10 @@ on:
     branches: [ "develop" ]
 
 env:
-  DOTNET_VERSION: 8.0.x
+  DOTNET_VERSION: '8.0.x'
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     steps:
@@ -31,4 +30,4 @@ jobs:
       run: dotnet build ./CleanArch.sln --no-restore
       
     - name: Test
-      run: dotnet test ./CleanArch.sln --no-build --no-restore --verbosity normal
+      run: dotnet test --filter FullyQualifiedName!~CleanArch.Benchmarking ./CleanArch.sln --no-build --no-restore --verbosity normal
