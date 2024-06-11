@@ -1,6 +1,6 @@
 ﻿using CleanArch.Api.Features.LeaveRequests.UpdateLeaveRequests;
 
-namespace CleanArch.Application.UnitTests.Features.LeaveRequests.Commands.UpdateLeaveRequests;
+namespace CleanArch.Application.Tests.Features.LeaveRequests.Commands.UpdateLeaveRequests;
 
 public class UpdateLeaveRequestValidatorFixture : IDisposable
 {

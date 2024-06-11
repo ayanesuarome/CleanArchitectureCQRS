@@ -10,9 +10,10 @@ using CleanArch.Domain.LeaveTypes;
 using FluentAssertions;
 using MediatR;
 
-namespace CleanArch.Integration.Tests.LeaveTypes;
+namespace CleanArch.Integration.Tests.Features.LeaveTypes;
 
 //[TestPriority(1)]
+[TestCaseOrderer(TestCasePriorityOrderer.TypeName, TestCasePriorityOrderer.AssemblyName)]
 public class LeaveTypeTest : BaseIntegrationTest
 {
     public LeaveTypeTest(IntegrationTestWebAppFactory factory)
@@ -30,9 +31,13 @@ public class LeaveTypeTest : BaseIntegrationTest
         Result<Guid> result = await Sender.Send(command);
 
         // Assert
-        Assert.True(result.IsSuccess);
+        result.IsSuccess.Should().BeTrue();
+        result.Value.Should().NotBeEmpty();
         LeaveType? leaveType = DbContext.LeaveTypes.FirstOrDefault(leave => leave.Id == result.Value);
-        Assert.NotNull(leaveType);
+        leaveType.Should().NotBeNull();
+        leaveType?.DateCreated.Should().NotBe(DateTimeOffset.MinValue);
+        leaveType?.CreatedBy.Should().NotBeEmpty();
+
     }
 
     [Fact, TestPriority(1)]
@@ -51,9 +56,11 @@ public class LeaveTypeTest : BaseIntegrationTest
         leaveType.Should().NotBeNull();
         leaveType?.Name.Value.Should().Be("Vacation");
         leaveType?.DefaultDays.Value.Should().Be(20);
+        leaveType?.DateModified.Should().NotBe(DateTimeOffset.MinValue);
+        leaveType?.ModifiedBy.Should().NotBeEmpty();
     }
 
-    [Fact, TestPriority(3)]
+    [Fact, TestPriority(2)]
     public async Task GetHandlerShouldFetch_LeaveTypeFromDatabase()
     {
         // Arrange
@@ -69,7 +76,7 @@ public class LeaveTypeTest : BaseIntegrationTest
         result.Value.Name.Should().Be("Vacation");
     }
 
-    [Fact, TestPriority(4)]
+    [Fact, TestPriority(3)]
     public async Task GetListHandlerShouldFetch_LeaveTypesFromDatabase()
     {
         // Arrange
@@ -94,7 +101,7 @@ public class LeaveTypeTest : BaseIntegrationTest
         result.Value.LeaveTypes.Should().HaveCount(2);
     }
 
-    [Fact, TestPriority(5)]
+    [Fact, TestPriority(4)]
     public async Task DeleteHandlerShouldDelete_LeaveTypeFromDatabase()
     {
         // Arrange
@@ -105,8 +112,8 @@ public class LeaveTypeTest : BaseIntegrationTest
         Result<Unit> result = await Sender.Send(command);
 
         // Assert
-        Assert.True(result.IsSuccess);
+        result.IsSuccess.Should().BeTrue();
         leaveType = await DbContext.LeaveTypes.FindAsync(leaveType.Id);
-        Assert.Null(leaveType);
+        leaveType.Should().BeNull();
     }
 }

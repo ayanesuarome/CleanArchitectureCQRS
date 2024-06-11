@@ -1,7 +1,7 @@
 ﻿using CleanArch.Api.Features.LeaveRequests.UpdateLeaveRequests;
 using FluentValidation.TestHelper;
 
-namespace CleanArch.Application.UnitTests.Features.LeaveRequests.Commands.UpdateLeaveRequests;
+namespace CleanArch.Application.Tests.Features.LeaveRequests.Commands.UpdateLeaveRequests;
 
 public class UpdateLeaveRequestValidatorTest(UpdateLeaveRequestValidatorFixture fixture)
     : IClassFixture<UpdateLeaveRequestValidatorFixture>

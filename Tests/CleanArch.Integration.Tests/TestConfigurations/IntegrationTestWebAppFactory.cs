@@ -1,6 +1,7 @@
-﻿using CleanArch.Application.Abstractions.Authentication;
-using CleanArch.Identity;
+﻿using CleanArch.Identity;
+using CleanArch.Integration.Tests.TestConfigurations;
 using CleanArch.Persistence;
+using CleanArch.Persistence.Interceptors;
 using DotNet.Testcontainers.Builders;
 using DotNet.Testcontainers.Containers;
 using Microsoft.AspNetCore.Hosting;
@@ -9,7 +10,6 @@ using Microsoft.AspNetCore.TestHost;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
-using Moq;
 using Quartz;
 using Quartz.Impl;
 
@@ -34,34 +34,27 @@ public class IntegrationTestWebAppFactory : WebApplicationFactory<Program>, IAsy
 
     protected override void ConfigureWebHost(IWebHostBuilder builder)
     {
+        builder.UseEnvironment("Test");
+
         builder.ConfigureTestServices(services =>
         {
-            // Way to check whether the service descriptior has a specific dependency
-            //ServiceDescriptor? descriptor = services
-            //    .SingleOrDefault(service => service.ServiceType == typeof(DbContextOptions<CleanArchEFDbContext>));
-
-            //if (descriptor is not null)
-            //{
-            //    services.Remove(descriptor);
-            //}
-
             string host = _dbContainer.Hostname;
             ushort port = _dbContainer.GetMappedPublicPort(MsSqlPort);
             string connectionString = $"Server={host},{port};Database={Database};User={Username};Password={Password};Trust Server Certificate=True;";
 
             services.RemoveAll(typeof(DbContextOptions<CleanArchEFDbContext>));
-            services.AddDbContext<CleanArchEFDbContext>(options => options.UseSqlServer(connectionString));
+            services.AddDbContext<CleanArchEFDbContext>((sp, options) =>
+            {
+                options.UseSqlServer(connectionString);
+                options.AddInterceptors(
+                    sp.GetRequiredService<UpdateAuditableEntitiesInterceptor>(),
+                    sp.GetRequiredService<SoftDeleteEntitiesInterceptor>());
+            });
 
             services.RemoveAll(typeof(DbContextOptions<CleanArchIdentityEFDbContext>));
             services.AddDbContext<CleanArchIdentityEFDbContext>(options => options.UseSqlServer(connectionString));
 
-            services.RemoveAll(typeof(IUserIdentifierProvider));
-            services.Replace(ServiceDescriptor.Scoped(_ =>
-            {
-                Mock<IUserIdentifierProvider> mock = new();
-                mock.Setup(a => a.UserId).Returns(Guid.Parse("f8b3c041-3397-43f1-95db-6fd3b5eb2e40"));
-                return mock.Object;
-            }));
+            services.AddUserIdentifierProviderMock();
 
             var scheduler = StdSchedulerFactory.GetDefaultScheduler().Result;
             scheduler.Standby();
@@ -69,13 +62,13 @@ public class IntegrationTestWebAppFactory : WebApplicationFactory<Program>, IAsy
         });
     }
 
-    public Task InitializeAsync()
+    public async Task InitializeAsync()
     {
-        return _dbContainer.StartAsync();
+        await _dbContainer.StartAsync();
     }
 
-    public new Task DisposeAsync()
+    public new async Task DisposeAsync()
     {
-        return _dbContainer.StopAsync();
+        await _dbContainer.StopAsync();
     }
 }

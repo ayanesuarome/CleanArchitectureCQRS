@@ -17,7 +17,7 @@ var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");
 builder.RootComponents.Add<HeadOutlet>("head::after");
 
-// Memory Configuration
+// In-Memory Configuration
 Dictionary<string, string?> data = new()
 {
     { "StorageKey", "token" }

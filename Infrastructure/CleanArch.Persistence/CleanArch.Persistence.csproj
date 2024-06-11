@@ -19,4 +19,8 @@
     <ProjectReference Include="..\..\Core\CleanArch.Domain\CleanArch.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <InternalsVisibleTo Include="CleanArch.Integration.Tests"/>
+  </ItemGroup>
+
 </Project>
