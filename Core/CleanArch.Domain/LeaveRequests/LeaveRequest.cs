@@ -5,8 +5,6 @@ using CleanArch.Domain.Core.ValueObjects;
 using CleanArch.Domain.Errors;
 using CleanArch.Domain.LeaveRequests.Events;
 using CleanArch.Domain.LeaveTypes;
-using MediatR;
-using System.Runtime.CompilerServices;
 
 namespace CleanArch.Domain.LeaveRequests;
 

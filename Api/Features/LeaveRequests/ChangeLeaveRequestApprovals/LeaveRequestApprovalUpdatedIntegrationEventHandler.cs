@@ -1,11 +1,10 @@
 ﻿using CleanArch.Application.EventBus;
 using CleanArch.IntegrationEvents;
-using CleanArch.Contracts.Identity;
 using CleanArch.Application.Abstractions.Authentication;
 using CleanArch.Application.Abstractions.Email;
-using CleanArch.Api.Contracts.Emails;
 using Microsoft.Extensions.Options;
 using CleanArch.Infrastructure.Emails;
+using CleanArch.Application.Contracts;
 
 namespace CleanArch.Api.Features.LeaveRequests.ChangeLeaveRequestApprovals;
 
@@ -25,7 +24,7 @@ public sealed class LeaveRequestApprovalUpdatedIntegrationEventHandler(
         {
             To = employee.Email,
             TemplateId = emailTemplateOptions.Value.LeaveRequestApproval,
-            TemplateData = new EmailMessageDto(
+            TemplateData = new EmailMessageResponse(
                 RecipientName: employee.FullName,
                 Start: integrationEvent.StartDate,
                 End: integrationEvent.EndDate,

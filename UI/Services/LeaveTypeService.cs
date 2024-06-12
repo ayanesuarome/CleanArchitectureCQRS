@@ -1,7 +1,6 @@
 ﻿using CleanArch.BlazorUI.Interfaces;
 using CleanArch.BlazorUI.Models.LeaveTypes;
 using CleanArch.BlazorUI.Services.Base;
-using System.Collections.Generic;
 
 namespace CleanArch.BlazorUI.Services;
 

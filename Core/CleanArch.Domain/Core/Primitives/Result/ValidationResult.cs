@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace CleanArch.Domain.Core.Primitives.Result;
+﻿namespace CleanArch.Domain.Core.Primitives.Result;
 
 public interface IValidationResult
 {

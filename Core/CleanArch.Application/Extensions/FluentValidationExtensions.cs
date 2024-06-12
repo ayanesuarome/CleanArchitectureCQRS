@@ -1,6 +1,5 @@
 ﻿using CleanArch.Domain.Core.Primitives.Result;
 using FluentValidation;
-using FluentValidation.Results;
 
 namespace CleanArch.Application.Extensions;
 

@@ -1,6 +1,5 @@
 ﻿using CleanArch.Api.Contracts;
 using CleanArch.Api.Features.LeaveRequests.ChangeLeaveRequestApprovals;
-using CleanArch.Contracts.LeaveRequests;
 using CleanArch.Domain.Core.Primitives.Result;
 using CleanArch.Domain.LeaveRequests;
 using CleanArch.Identity.Authentication;
@@ -18,7 +17,7 @@ public sealed partial class AdminLeaveRequestController
     [HasPermission(LeaveRequestPermissions.ChangeLeaveRequestApproval)]
     public async Task<IActionResult> UpdateApproval(
         [FromRoute] Guid id,
-        [FromBody] ChangeLeaveRequestApprovalRequest request,
+        [FromBody] ChangeLeaveRequestApproval.Request request,
         CancellationToken cancellationToken)
     {
         ChangeLeaveRequestApproval.Command command = new(id, request.Approved);

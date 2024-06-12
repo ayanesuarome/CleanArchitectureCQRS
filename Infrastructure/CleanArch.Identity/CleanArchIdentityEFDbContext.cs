@@ -1,8 +1,6 @@
-﻿using CleanArch.Application.Abstractions.Data;
-using CleanArch.Domain.Authentication;
+﻿using CleanArch.Domain.Authentication;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Storage;
 
 namespace CleanArch.Identity;
 

@@ -1,5 +1,4 @@
 ﻿using CleanArch.Domain.Core.Primitives;
-using CleanArch.Domain.LeaveTypes;
 
 namespace CleanArch.Domain.LeaveRequests.Events;
 

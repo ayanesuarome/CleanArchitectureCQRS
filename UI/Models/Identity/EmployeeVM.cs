@@ -1,6 +1,4 @@
-﻿using System.Text;
-
-namespace CleanArch.BlazorUI.Models.Identity;
+﻿namespace CleanArch.BlazorUI.Models.Identity;
 
 internal sealed class EmployeeVM
 {

@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using CleanArch.Api.Features.LeaveAllocations;
 
 namespace CleanArch.Application.Tests.AutoMapper;
 

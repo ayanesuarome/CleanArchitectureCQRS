@@ -1,5 +1,4 @@
 ﻿using CleanArch.Domain.Core.Utilities;
-using System.Runtime.CompilerServices;
 
 namespace CleanArch.Domain.Core.Primitives;
 

@@ -1,4 +1,4 @@
-﻿using CleanArch.Api.Contracts.Emails;
+﻿using CleanArch.Application.Contracts;
 
 namespace CleanArch.Application.Abstractions.Email;
 

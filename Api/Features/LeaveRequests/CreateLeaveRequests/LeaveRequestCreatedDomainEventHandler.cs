@@ -12,7 +12,7 @@ public sealed class LeaveRequestCreatedDomainEventHandler(IEventBus eventBus)
     {
         string? comments = null;
 
-        if (notification.Comments is not null)
+        if (notification?.Comments is not null)
         {
             comments = notification.Comments;
         }

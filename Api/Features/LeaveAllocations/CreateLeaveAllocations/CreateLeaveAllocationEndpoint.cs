@@ -1,6 +1,5 @@
 ﻿using CleanArch.Api.Contracts;
 using CleanArch.Api.Features.LeaveAllocations.CreateLeaveAllocations;
-using CleanArch.Contracts.LeaveAllocations;
 using CleanArch.Domain.Core.Primitives.Result;
 using CleanArch.Identity.Authentication;
 using Microsoft.AspNetCore.Mvc;
@@ -15,7 +14,7 @@ public sealed partial class AdminLeaveAllocationController
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
     [HasPermission(LeaveAllocationPermissions.CreateLeaveAllocation)]
-    public async Task<IActionResult> Post([FromBody] CreateLeaveAllocationRequest request, CancellationToken cancellationToken)
+    public async Task<IActionResult> Post([FromBody] CreateLeaveAllocation.Request request, CancellationToken cancellationToken)
     {
         Result<int> rowsAffectedResult = await Sender.Send(new CreateLeaveAllocation.Command(request.LeaveTypeId), cancellationToken);
 

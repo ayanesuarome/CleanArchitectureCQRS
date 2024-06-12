@@ -1,5 +1,4 @@
 ﻿using CleanArch.Api.Contracts;
-using CleanArch.Contracts.LeaveAllocations;
 using CleanArch.Domain.Core.Primitives.Result;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,10 +8,10 @@ public sealed partial class LeaveAllocationController
 {
     // GET: api/<v>/leave-allocations
     [HttpGet(ApiRoutes.LeaveAllocations.Get)]
-    [ProducesResponseType(typeof(LeaveAllocationListDto), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(GetLeaveAllocationList.GetLeaveAllocationList.Response), StatusCodes.Status200OK)]
     public async Task<IActionResult> Get(CancellationToken cancellationToken)
     {
-        Result<LeaveAllocationListDto> result = await Sender.Send(
+        Result<GetLeaveAllocationList.GetLeaveAllocationList.Response> result = await Sender.Send(
             new GetLeaveAllocationList.GetLeaveAllocationList.Query(),
             cancellationToken);
 

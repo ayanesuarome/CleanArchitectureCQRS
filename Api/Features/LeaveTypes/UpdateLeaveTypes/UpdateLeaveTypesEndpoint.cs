@@ -1,6 +1,5 @@
 ﻿using CleanArch.Api.Contracts;
 using CleanArch.Api.Features.LeaveTypes.UpdateLeaveTypes;
-using CleanArch.Contracts.LeaveTypes;
 using CleanArch.Domain.Core.Primitives.Result;
 using CleanArch.Identity.Authentication;
 using MediatR;
@@ -18,7 +17,7 @@ public sealed partial class LeaveTypesController
     [HasPermission(LeaveTypePermissions.UpdateLeaveType)]
     public async Task<IActionResult> Put(
         [FromRoute] Guid id,
-        [FromBody] UpdateLeaveTypeRequest request,
+        [FromBody] UpdateLeaveType.Request request,
         CancellationToken cancellationToken)
     {
         UpdateLeaveType.Command command = new(id, request.Name, request.DefaultDays);

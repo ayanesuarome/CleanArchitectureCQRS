@@ -3,7 +3,6 @@ using CleanArch.Api.Features.LeaveTypes.DeleteLeaveTypes;
 using CleanArch.Api.Features.LeaveTypes.GetLeaveTypeDetails;
 using CleanArch.Api.Features.LeaveTypes.GetLeaveTypeList;
 using CleanArch.Api.Features.LeaveTypes.UpdateLeaveTypes;
-using CleanArch.Contracts.LeaveTypes;
 using CleanArch.Domain.Core.Primitives.Result;
 using CleanArch.Domain.Core.ValueObjects;
 using CleanArch.Domain.LeaveTypes;
@@ -68,7 +67,7 @@ public class LeaveTypeTest : BaseIntegrationTest
         GetLeaveTypeDetail.Query query = new(leaveType.Id);
 
         // Act
-        Result<LeaveTypeDetailDto> result = await Sender.Send(query);
+        Result<GetLeaveTypeDetail.Response> result = await Sender.Send(query);
 
         // Assert
         result.IsSuccess.Should().BeTrue();
@@ -92,7 +91,7 @@ public class LeaveTypeTest : BaseIntegrationTest
         GetLeaveTypeList.Query query = new();
 
         // Act
-        Result<LeaveTypeListDto> result = await Sender.Send(query);
+        Result<GetLeaveTypeList.Response> result = await Sender.Send(query);
 
         // Assert
         result.IsSuccess.Should().BeTrue();

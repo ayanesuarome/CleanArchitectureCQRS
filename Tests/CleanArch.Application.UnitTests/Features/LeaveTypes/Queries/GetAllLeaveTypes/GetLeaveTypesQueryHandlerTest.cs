@@ -2,7 +2,6 @@
 using Moq;
 using Shouldly;
 using CleanArch.Api.Features.LeaveTypes.GetLeaveTypeList;
-using CleanArch.Contracts.LeaveTypes;
 using CleanArch.Domain.Core.Primitives.Result;
 using CleanArch.Domain.LeaveTypes;
 
@@ -45,7 +44,7 @@ public class GetLeaveTypesQueryHandlerTest : IDisposable
     [Fact]
     public async Task HandleReturnListOfLeaveTypeDto()
     {
-        Result<LeaveTypeListDto> result = await _handler.Handle(It.IsAny<GetLeaveTypeList.Query>(), default);
+        Result<GetLeaveTypeList.Response> result = await _handler.Handle(It.IsAny<GetLeaveTypeList.Query>(), default);
 
         _repositoryMock
             .Verify(m => m.GetAsync(), Times.Once);

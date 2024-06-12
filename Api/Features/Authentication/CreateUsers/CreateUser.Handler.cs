@@ -1,6 +1,4 @@
-﻿using CleanArch.Application.Abstractions.Authentication;
-using CleanArch.Application.Abstractions.Messaging;
-using CleanArch.Contracts.Identity;
+﻿using CleanArch.Application.Abstractions.Messaging;
 using CleanArch.Domain.Authentication;
 using CleanArch.Domain.Core.Primitives.Result;
 using Microsoft.AspNetCore.Identity;
@@ -9,20 +7,16 @@ namespace CleanArch.Api.Features.Authentication.CreateUsers;
 
 public static partial class CreateUser
 {
-    internal sealed class Handler : ICommandHandler<Command, Result<RegistrationResponse>>
+    internal sealed class Handler : ICommandHandler<Command, Result<Response>>
     {
         private readonly UserManager<User> _userManager;
-        private readonly IJwtProvider _jwtProvider;
 
-        public Handler(
-            UserManager<User> userManager,
-            IJwtProvider jwtProvider)
+        public Handler(UserManager<User> userManager)
         {
             _userManager = userManager;
-            _jwtProvider = jwtProvider;
         }
 
-        public async Task<Result<RegistrationResponse>> Handle(Command command, CancellationToken cancellationToken)
+        public async Task<Result<Response>> Handle(Command command, CancellationToken cancellationToken)
         {
             Result<UserName> firstNameResult = UserName.Create(command.FirstName);
             Result<UserName> lastNameResult = UserName.Create(command.LastName);
@@ -32,7 +26,7 @@ public static partial class CreateUser
 
             if (firstFailureOrSuccess.IsFailure)
             {
-                return Result.Failure<RegistrationResponse>(firstFailureOrSuccess.Error);
+                return Result.Failure<Response>(firstFailureOrSuccess.Error);
             }
             
             User user = new(firstNameResult.Value, lastNameResult.Value)
@@ -46,14 +40,14 @@ public static partial class CreateUser
 
             if (!result.Succeeded)
             {
-                return Result.Failure<RegistrationResponse>(ValidationErrors.CreateUser.CreateUserValidation(result.Errors.ToString()));
+                return Result.Failure<Response>(ValidationErrors.CreateUser.CreateUserValidation(result.Errors.ToString()));
             }
 
             await _userManager.AddToRoleAsync(user, Roles.Employee.Name);
 
-            RegistrationResponse response = new(user.Id);
+            Response response = new(user.Id);
 
-            return Result.Success<RegistrationResponse>(response);
+            return Result.Success<Response>(response);
         }
     }
 }

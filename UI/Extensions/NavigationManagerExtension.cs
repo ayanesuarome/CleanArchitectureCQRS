@@ -1,5 +1,4 @@
-﻿using CleanArch.BlazorUI.Pages.LeaveTypes;
-using Microsoft.AspNetCore.Components;
+﻿using Microsoft.AspNetCore.Components;
 
 namespace CleanArch.BlazorUI.Extensions;
 

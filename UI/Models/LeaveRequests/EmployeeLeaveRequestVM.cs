@@ -1,6 +1,4 @@
-﻿using CleanArch.BlazorUI.Models.Identity;
-
-namespace CleanArch.BlazorUI.Models.LeaveRequests;
+﻿namespace CleanArch.BlazorUI.Models.LeaveRequests;
 
 internal sealed class EmployeeLeaveRequestVM
 {

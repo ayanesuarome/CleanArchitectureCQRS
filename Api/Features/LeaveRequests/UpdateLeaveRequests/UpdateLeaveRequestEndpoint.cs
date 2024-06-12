@@ -1,9 +1,7 @@
 ﻿using CleanArch.Api.Contracts;
 using CleanArch.Api.Features.LeaveRequests.UpdateLeaveRequests;
-using CleanArch.Contracts.LeaveRequests;
 using CleanArch.Domain.Core.Primitives.Result;
 using CleanArch.Domain.LeaveRequests;
-using CleanArch.Domain.LeaveRequests.Events;
 using CleanArch.Identity.Authentication;
 using Microsoft.AspNetCore.Mvc;
 
@@ -19,7 +17,7 @@ public sealed partial class LeaveRequestController
     [HasPermission(LeaveRequestPermissions.UpdateLeaveRequest)]
     public async Task<IActionResult> Put(
         [FromRoute] Guid id,
-        [FromBody] UpdateLeaveRequestRequest request,
+        [FromBody] UpdateLeaveRequest.Request request,
         CancellationToken cancellationToken)
     {
         UpdateLeaveRequest.Command command = new(

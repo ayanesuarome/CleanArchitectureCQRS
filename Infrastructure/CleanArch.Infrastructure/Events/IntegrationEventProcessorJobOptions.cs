@@ -1,6 +1,4 @@
-﻿using CleanArch.Infrastructure.BackgroundJobs;
-
-namespace CleanArch.Infrastructure.Events;
+﻿namespace CleanArch.Infrastructure.Events;
 
 /// <summary>
 /// Represents the <see cref="IntegrationEventProcessorJobOptions"/> options.

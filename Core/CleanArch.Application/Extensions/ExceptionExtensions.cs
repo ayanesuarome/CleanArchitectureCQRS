@@ -1,6 +1,4 @@
-﻿using System.Runtime.CompilerServices;
-
-namespace CleanArch.Application.Extensions;
+﻿namespace CleanArch.Application.Extensions;
 
 public static class ExceptionExtensions
 {

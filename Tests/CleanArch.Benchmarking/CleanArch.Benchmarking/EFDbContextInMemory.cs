@@ -1,7 +1,5 @@
 ﻿using CleanArch.Persistence;
-using MediatR;
 using Microsoft.EntityFrameworkCore;
-using Moq;
 
 namespace CleanArch.Benchmarking
 {

@@ -4,8 +4,6 @@ using BenchmarkDotNet.Reports;
 using BenchmarkDotNet.Running;
 using CleanArch.Benchmarking;
 
-using CleanArch.Performance.Tests;
-
 public class BenchmarkFixture
 {
     public Summary BenchmarkSummary { get; }

@@ -1,6 +1,6 @@
 ﻿using CleanArch.Application.Abstractions.Authentication;
 using CleanArch.Application.Abstractions.Messaging;
-using CleanArch.Contracts.Identity;
+using CleanArch.Application.Contracts;
 using CleanArch.Domain.Core.Primitives.Result;
 using CleanArch.Domain.Errors;
 using CleanArch.Domain.LeaveAllocations;

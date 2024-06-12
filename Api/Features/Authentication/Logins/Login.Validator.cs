@@ -1,7 +1,7 @@
 ﻿using CleanArch.Application.Extensions;
 using FluentValidation;
 
-namespace CleanArch.Api.Features.Authentication.Login;
+namespace CleanArch.Api.Features.Authentication.Logins;
 
 public static partial class Login
 {

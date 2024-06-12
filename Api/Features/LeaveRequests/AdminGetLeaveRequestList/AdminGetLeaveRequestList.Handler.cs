@@ -1,6 +1,5 @@
 ﻿using CleanArch.Application.Abstractions.Authentication;
 using CleanArch.Application.Abstractions.Messaging;
-using CleanArch.Contracts.LeaveRequests;
 using CleanArch.Domain.Core.Primitives.Result;
 using CleanArch.Domain.LeaveRequests;
 
@@ -8,7 +7,7 @@ namespace CleanArch.Api.Features.LeaveRequests.AdminGetLeaveRequestList;
 
 public static partial class AdminGetLeaveRequestList
 {
-    internal sealed class Handler : IQueryHandler<Query, LeaveRequestListDto>
+    internal sealed class Handler : IQueryHandler<Query, Response>
     {
         private readonly ILeaveRequestRepository _repository;
         private readonly IUserService _userService;
@@ -21,10 +20,10 @@ public static partial class AdminGetLeaveRequestList
             _userService = userService;
         }
 
-        public async Task<Result<LeaveRequestListDto>> Handle(Query query, CancellationToken cancellationToken)
+        public async Task<Result<Response>> Handle(Query query, CancellationToken cancellationToken)
         {
             IReadOnlyCollection<LeaveRequest> leaveRequests = await _repository.GetLeaveRequestsWithDetailsAsync();
-            List<LeaveRequestListDto.LeaveRequestDetailsModel> models = [];
+            List<Response.Model> models = [];
 
             foreach(LeaveRequest leaveRequest in leaveRequests)
             {
@@ -44,9 +43,9 @@ public static partial class AdminGetLeaveRequestList
                     leaveRequest.DateCreated));
             }
 
-            LeaveRequestListDto requestListDto = new(models);
+            Response requestListDto = new(models);
             
-            return Result.Success<LeaveRequestListDto>(requestListDto);
+            return Result.Success<Response>(requestListDto);
         }
     }
 }
