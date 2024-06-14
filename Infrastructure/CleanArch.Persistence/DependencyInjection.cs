@@ -13,8 +13,6 @@ namespace CleanArch.Persistence;
 
 public static class DependencyInjection
 {
-    private const string CleanArchSqlServerDbContext = "CleanArchSqlServerDbContext";
-
     public static IServiceCollection AddCleanArchEFDbContext(this IServiceCollection services, IConfiguration configuration)
     {
         services.AddSingleton<ConvertDomainEventsToOutboxMessagesInterceptor>();
@@ -23,7 +21,7 @@ public static class DependencyInjection
 
         services.AddDbContext<CleanArchEFDbContext>((sp, options) =>
         {
-            options.UseSqlServer(configuration.GetConnectionString(CleanArchSqlServerDbContext));
+            options.UseSqlServer(configuration.GetConnectionString(CleanArchEFDbContext.ConnectionStringName));
             options.LogTo(Console.WriteLine, new[] { RelationalEventId.CommandExecuting });
             options.AddInterceptors(
                 sp.GetRequiredService<ConvertDomainEventsToOutboxMessagesInterceptor>(),

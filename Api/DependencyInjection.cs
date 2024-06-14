@@ -23,6 +23,8 @@ namespace CleanArch.Api
                 config.AddOpenBehavior(typeof(TransactionBehavior<,>));
             });
 
+            services.AddHealthChecks();
+
             return services;
         }
     }

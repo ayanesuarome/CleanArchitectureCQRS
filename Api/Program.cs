@@ -7,6 +7,8 @@ using CleanArch.Identity.Migrations;
 using CleanArch.Infrastructure;
 using CleanArch.Persistence;
 using CleanArch.Persistence.Migrations;
+using HealthChecks.UI.Client;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Mvc;
 using Serilog;
 
@@ -90,6 +92,11 @@ public class Program
         app.UseCors(policyName: "CleanArchAll");
 
         app.UseHttpsRedirection();
+
+        app.MapHealthChecks("health", new HealthCheckOptions
+        {
+            ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
+        });
 
         // Authentication and Authorization
         app.UseAuthentication().UseAuthorization();

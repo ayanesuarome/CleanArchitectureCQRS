@@ -9,6 +9,8 @@ namespace CleanArch.Persistence;
 
 public sealed partial class CleanArchEFDbContext : DbContext, IUnitOfWork
 {
+    public readonly static string ConnectionStringName = "CleanArchSqlServerDbContext";
+
     public CleanArchEFDbContext(DbContextOptions<CleanArchEFDbContext> options)
         : base(options)
     {

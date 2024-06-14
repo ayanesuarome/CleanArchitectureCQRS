@@ -9,8 +9,6 @@ namespace CleanArch.Api.Swagger;
 internal sealed class ConfigureSwaggerOptions(IApiVersionDescriptionProvider provider)
     : IConfigureNamedOptions<SwaggerGenOptions>
 {
-    private readonly IApiVersionDescriptionProvider _provider = provider;
-
     public void Configure(string? name, SwaggerGenOptions options)
     {
         Configure(options);
@@ -23,6 +21,8 @@ internal sealed class ConfigureSwaggerOptions(IApiVersionDescriptionProvider pro
         {
             options.SwaggerDoc(description.GroupName, CreateInfoForApiVersion(description));
         }
+
+        options.CustomSchemaIds(selector => selector.FullName);
 
         options.AddSecurityDefinition(
                 name: JwtBearerDefaults.AuthenticationScheme,
