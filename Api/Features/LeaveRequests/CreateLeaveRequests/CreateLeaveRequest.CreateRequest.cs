@@ -2,5 +2,5 @@
 
 public static partial class CreateLeaveRequest
 {
-    public sealed record Request(Guid LeaveTypeId, string StartDate, string EndDate, string? Comments);
+    public sealed record CreateRequest(Guid LeaveTypeId, string StartDate, string EndDate, string? Comments);
 }

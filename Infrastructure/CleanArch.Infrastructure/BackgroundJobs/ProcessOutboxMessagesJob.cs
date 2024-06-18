@@ -100,6 +100,8 @@ internal sealed class ProcessOutboxMessagesJob : IJob
 
     private async Task<IReadOnlyCollection<OutboxMessage>> GetOutboxMessages(CancellationToken cancellationToken)
     {
+        //_dbContext.Database.ExecuteSqlRawAsync
+
         return await _dbContext
             .Set<OutboxMessage>()
             .Take(_options.BatchSize)

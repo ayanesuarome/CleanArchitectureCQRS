@@ -22,7 +22,11 @@ public static partial class AdminGetLeaveRequestList
 
         public async Task<Result<Response>> Handle(Query query, CancellationToken cancellationToken)
         {
-            IReadOnlyCollection<LeaveRequest> leaveRequests = await _repository.GetLeaveRequestsWithDetailsAsync();
+            IReadOnlyCollection<LeaveRequest> leaveRequests = await _repository.GetLeaveRequestsWithDetailsAsync(
+                query.SearchTerm,
+                query.SortColumn,
+                query.SortOrder);
+
             List<Response.Model> models = [];
 
             foreach(LeaveRequest leaveRequest in leaveRequests)

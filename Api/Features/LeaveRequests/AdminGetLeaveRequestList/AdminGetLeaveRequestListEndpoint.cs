@@ -11,10 +11,18 @@ public sealed partial class AdminLeaveRequestController
     [HttpGet(ApiRoutes.LeaveRequests.Get)]
     [ProducesResponseType(typeof(AdminGetLeaveRequestList.AdminGetLeaveRequestList.Response), StatusCodes.Status200OK)]
     [HasPermission(LeaveRequestPermissions.AccessLeaveRequests)]
-    public async Task<IActionResult> Get(CancellationToken cancellationToken)
+    public async Task<IActionResult> Get(
+        [FromQuery] string? searchTerm,
+        [FromQuery] string? sortColumn,
+        [FromQuery] string? sortOrder,
+        CancellationToken cancellationToken)
     {
-        Result<AdminGetLeaveRequestList.AdminGetLeaveRequestList.Response> result = 
-            await Sender.Send(new AdminGetLeaveRequestList.AdminGetLeaveRequestList.Query(), cancellationToken);
+        Result<AdminGetLeaveRequestList.AdminGetLeaveRequestList.Response> result =
+            await Sender.Send(new AdminGetLeaveRequestList.AdminGetLeaveRequestList.Query(
+                searchTerm,
+                sortColumn,
+                sortOrder),
+            cancellationToken);
 
         return Ok(result.Value);
     }

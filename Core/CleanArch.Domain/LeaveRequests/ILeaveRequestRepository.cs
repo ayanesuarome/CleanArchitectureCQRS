@@ -7,5 +7,8 @@ public interface ILeaveRequestRepository
     void Update(LeaveRequest entity);
     void Delete(LeaveRequest entity);
     Task<LeaveRequest> GetLeaveRequestWithDetailsAsync(LeaveRequestId id);
-    Task<IReadOnlyCollection<LeaveRequest>> GetLeaveRequestsWithDetailsAsync(Guid? employeeId = null);
+    Task<IReadOnlyCollection<LeaveRequest>> GetLeaveRequestsWithDetailsAsync(
+        string? searchTerm,
+        string? sortColumn,
+        string? sortOrder, Guid? employeeId = null);
 }

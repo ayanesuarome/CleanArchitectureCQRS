@@ -23,11 +23,15 @@ public static partial class GetLeaveRequestList
             _userService = userService;
         }
 
-        public async Task<Result<Response>> Handle(Query request, CancellationToken cancellationToken)
+        public async Task<Result<Response>> Handle(Query query, CancellationToken cancellationToken)
         {
             Guid userId = _userIdentifierProvider.UserId;
 
-            IReadOnlyCollection<LeaveRequest> leaveRequests = await _repository.GetLeaveRequestsWithDetailsAsync(userId);
+            IReadOnlyCollection<LeaveRequest> leaveRequests = await _repository.GetLeaveRequestsWithDetailsAsync(
+                query.SearchTerm,
+                query.SortColumn,
+                query.SortOrder,
+                userId);
             List<Response.Model> models = [];
 
             foreach (LeaveRequest leaveRequest in leaveRequests)
