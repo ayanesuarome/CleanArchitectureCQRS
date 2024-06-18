@@ -1,12 +1,14 @@
-﻿namespace CleanArch.Api.Features.LeaveRequests.AdminGetLeaveRequestList;
+﻿using CleanArch.Domain.Core.Primitives;
+
+namespace CleanArch.Api.Features.LeaveRequests.AdminGetLeaveRequestList;
 
 public static partial class AdminGetLeaveRequestList
 {
     public sealed record Response
     {
-        public Response(IReadOnlyCollection<Model> leaveRequests) => LeaveRequests = leaveRequests;
+        public Response(PagedList<Model> leaveRequests) => LeaveRequests = leaveRequests;
 
-        public IReadOnlyCollection<Model> LeaveRequests { get; }
+        public PagedList<Model> LeaveRequests { get; }
 
         public sealed record Model(
             Guid Id,

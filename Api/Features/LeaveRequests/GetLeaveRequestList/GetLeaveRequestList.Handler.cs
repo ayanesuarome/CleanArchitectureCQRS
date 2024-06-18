@@ -1,5 +1,8 @@
-﻿using CleanArch.Application.Abstractions.Authentication;
+﻿using CleanArch.Api.Contracts;
+using CleanArch.Application.Abstractions.Authentication;
 using CleanArch.Application.Abstractions.Messaging;
+using CleanArch.Application.Contracts;
+using CleanArch.Domain.Core.Primitives;
 using CleanArch.Domain.Core.Primitives.Result;
 using CleanArch.Domain.LeaveRequests;
 
@@ -27,14 +30,17 @@ public static partial class GetLeaveRequestList
         {
             Guid userId = _userIdentifierProvider.UserId;
 
-            IReadOnlyCollection<LeaveRequest> leaveRequests = await _repository.GetLeaveRequestsWithDetailsAsync(
+            PagedList<LeaveRequest> pagedList = await _repository.GetLeaveRequestsWithDetailsAsync(
                 query.SearchTerm,
                 query.SortColumn,
                 query.SortOrder,
+                query.Page,
+                query.PageSize,
                 userId);
+
             List<Response.Model> models = [];
 
-            foreach (LeaveRequest leaveRequest in leaveRequests)
+            foreach (LeaveRequest leaveRequest in pagedList.Items)
             {
                 var employeeFullName = (await _userService.GetEmployee(userId)).FullName;
                 models.Add(new(
@@ -51,7 +57,9 @@ public static partial class GetLeaveRequestList
                     leaveRequest.DateCreated));
             }
 
-            Response requestListDto = new(models);
+            PagedList<Response.Model> pagedListDto = PagedList<Response.Model>.Map(pagedList, models);
+
+            Response requestListDto = new(pagedListDto);
 
             return Result.Success<Response>(requestListDto);
         }

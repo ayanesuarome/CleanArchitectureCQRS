@@ -26,12 +26,12 @@ namespace CleanArch.BlazorUI.Services.Base
     {
         /// <returns>Created</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task LeaveAllocationsPOSTAsync(CreateLeaveAllocationRequest body);
+        System.Threading.Tasks.Task LeaveAllocationsPOSTAsync(CreateLeaveAllocation_Request body);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Created</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task LeaveAllocationsPOSTAsync(CreateLeaveAllocationRequest body, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task LeaveAllocationsPOSTAsync(CreateLeaveAllocation_Request body, System.Threading.CancellationToken cancellationToken);
 
         /// <returns>No Content</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
@@ -42,23 +42,23 @@ namespace CleanArch.BlazorUI.Services.Base
         /// <exception cref="ApiException">A server side error occurred.</exception>
         System.Threading.Tasks.Task LeaveAllocationsDELETEAsync(System.Guid id, System.Threading.CancellationToken cancellationToken);
 
-        /// <returns>Success</returns>
+        /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<LeaveRequestListDto> LeaveRequestsGETAsync();
+        System.Threading.Tasks.Task<AdminGetLeaveRequestList_Response> LeaveRequestsGETAsync(string searchTerm, string sortColumn, string sortOrder);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
-        /// <returns>Success</returns>
+        /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<LeaveRequestListDto> LeaveRequestsGETAsync(System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<AdminGetLeaveRequestList_Response> LeaveRequestsGETAsync(string searchTerm, string sortColumn, string sortOrder, System.Threading.CancellationToken cancellationToken);
 
         /// <returns>No Content</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task UpdateApprovalAsync(System.Guid id, ChangeLeaveRequestApprovalRequest body);
+        System.Threading.Tasks.Task UpdateApprovalAsync(System.Guid id, ChangeLeaveRequestApproval_Request body);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>No Content</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task UpdateApprovalAsync(System.Guid id, ChangeLeaveRequestApprovalRequest body, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task UpdateApprovalAsync(System.Guid id, ChangeLeaveRequestApproval_Request body, System.Threading.CancellationToken cancellationToken);
 
         /// <returns>No Content</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
@@ -69,41 +69,41 @@ namespace CleanArch.BlazorUI.Services.Base
         /// <exception cref="ApiException">A server side error occurred.</exception>
         System.Threading.Tasks.Task LeaveTypesDELETEAsync(System.Guid id, System.Threading.CancellationToken cancellationToken);
 
-        /// <returns>Success</returns>
+        /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<RegistrationResponse> RegisterAsync(RegistrationRequest body);
+        System.Threading.Tasks.Task<CreateUser_Response> RegisterAsync(CreateUser_Request body);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
-        /// <returns>Success</returns>
+        /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<RegistrationResponse> RegisterAsync(RegistrationRequest body, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<CreateUser_Response> RegisterAsync(CreateUser_Request body, System.Threading.CancellationToken cancellationToken);
 
-        /// <returns>Success</returns>
+        /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<TokenResponse> LoginAsync(LoginRequest body);
-
-        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
-        /// <returns>Success</returns>
-        /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<TokenResponse> LoginAsync(LoginRequest body, System.Threading.CancellationToken cancellationToken);
-
-        /// <returns>Success</returns>
-        /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<LeaveAllocationDetailsDto> LeaveAllocationsGETAsync(System.Guid id);
+        System.Threading.Tasks.Task<Login_Response> LoginAsync(Login_Request body);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
-        /// <returns>Success</returns>
+        /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<LeaveAllocationDetailsDto> LeaveAllocationsGETAsync(System.Guid id, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<Login_Response> LoginAsync(Login_Request body, System.Threading.CancellationToken cancellationToken);
 
-        /// <returns>Success</returns>
+        /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<LeaveAllocationListDto> LeaveAllocationsGET2Async();
+        System.Threading.Tasks.Task<GetLeaveAllocationDetail_Response> LeaveAllocationsGETAsync(System.Guid id);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
-        /// <returns>Success</returns>
+        /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<LeaveAllocationListDto> LeaveAllocationsGET2Async(System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<GetLeaveAllocationDetail_Response> LeaveAllocationsGETAsync(System.Guid id, System.Threading.CancellationToken cancellationToken);
+
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<GetLeaveAllocationList_Response> LeaveAllocationsGET2Async();
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<GetLeaveAllocationList_Response> LeaveAllocationsGET2Async(System.Threading.CancellationToken cancellationToken);
 
         /// <returns>No Content</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
@@ -116,21 +116,21 @@ namespace CleanArch.BlazorUI.Services.Base
 
         /// <returns>Created</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task LeaveRequestsPOSTAsync(CreateLeaveRequestRequest body);
+        System.Threading.Tasks.Task LeaveRequestsPOSTAsync(CreateLeaveRequest_CreateRequest body);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Created</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task LeaveRequestsPOSTAsync(CreateLeaveRequestRequest body, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task LeaveRequestsPOSTAsync(CreateLeaveRequest_CreateRequest body, System.Threading.CancellationToken cancellationToken);
 
-        /// <returns>Success</returns>
+        /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<LeaveRequestListDto> LeaveRequestsGET2Async();
+        System.Threading.Tasks.Task<GetLeaveRequestList_Response> LeaveRequestsGET2Async(string searchTerm, string sortColumn, string sortOrder);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
-        /// <returns>Success</returns>
+        /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<LeaveRequestListDto> LeaveRequestsGET2Async(System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<GetLeaveRequestList_Response> LeaveRequestsGET2Async(string searchTerm, string sortColumn, string sortOrder, System.Threading.CancellationToken cancellationToken);
 
         /// <returns>No Content</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
@@ -141,59 +141,59 @@ namespace CleanArch.BlazorUI.Services.Base
         /// <exception cref="ApiException">A server side error occurred.</exception>
         System.Threading.Tasks.Task LeaveRequestsDELETEAsync(System.Guid id, System.Threading.CancellationToken cancellationToken);
 
-        /// <returns>Success</returns>
+        /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<LeaveRequestDetailsDto> LeaveRequestsGET3Async(System.Guid id);
+        System.Threading.Tasks.Task<GetLeaveRequestDetail_Response> LeaveRequestsGET3Async(System.Guid id);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
-        /// <returns>Success</returns>
+        /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<LeaveRequestDetailsDto> LeaveRequestsGET3Async(System.Guid id, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<GetLeaveRequestDetail_Response> LeaveRequestsGET3Async(System.Guid id, System.Threading.CancellationToken cancellationToken);
 
         /// <returns>No Content</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task LeaveRequestsPUTAsync(System.Guid id, UpdateLeaveRequestRequest body);
+        System.Threading.Tasks.Task LeaveRequestsPUTAsync(System.Guid id, UpdateLeaveRequest_Request body);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>No Content</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task LeaveRequestsPUTAsync(System.Guid id, UpdateLeaveRequestRequest body, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task LeaveRequestsPUTAsync(System.Guid id, UpdateLeaveRequest_Request body, System.Threading.CancellationToken cancellationToken);
 
         /// <returns>Created</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task LeaveTypesPOSTAsync(CreateLeaveTypeRequest body);
+        System.Threading.Tasks.Task LeaveTypesPOSTAsync(CreateLeaveType_Request body);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Created</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task LeaveTypesPOSTAsync(CreateLeaveTypeRequest body, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task LeaveTypesPOSTAsync(CreateLeaveType_Request body, System.Threading.CancellationToken cancellationToken);
 
-        /// <returns>Success</returns>
+        /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<LeaveTypeListDto> LeaveTypesGETAsync();
-
-        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
-        /// <returns>Success</returns>
-        /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<LeaveTypeListDto> LeaveTypesGETAsync(System.Threading.CancellationToken cancellationToken);
-
-        /// <returns>Success</returns>
-        /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<LeaveTypeDetailDto> LeaveTypesGET2Async(System.Guid id);
+        System.Threading.Tasks.Task<GetLeaveTypeList_Response> LeaveTypesGETAsync();
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
-        /// <returns>Success</returns>
+        /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<LeaveTypeDetailDto> LeaveTypesGET2Async(System.Guid id, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<GetLeaveTypeList_Response> LeaveTypesGETAsync(System.Threading.CancellationToken cancellationToken);
+
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<GetLeaveTypeDetail_Response> LeaveTypesGET2Async(System.Guid id);
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<GetLeaveTypeDetail_Response> LeaveTypesGET2Async(System.Guid id, System.Threading.CancellationToken cancellationToken);
 
         /// <returns>No Content</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task LeaveTypesPUTAsync(System.Guid id, UpdateLeaveTypeRequest body);
+        System.Threading.Tasks.Task LeaveTypesPUTAsync(System.Guid id, UpdateLeaveType_Request body);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>No Content</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task LeaveTypesPUTAsync(System.Guid id, UpdateLeaveTypeRequest body, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task LeaveTypesPUTAsync(System.Guid id, UpdateLeaveType_Request body, System.Threading.CancellationToken cancellationToken);
 
     }
 
@@ -227,7 +227,7 @@ namespace CleanArch.BlazorUI.Services.Base
 
         /// <returns>Created</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task LeaveAllocationsPOSTAsync(CreateLeaveAllocationRequest body)
+        public virtual System.Threading.Tasks.Task LeaveAllocationsPOSTAsync(CreateLeaveAllocation_Request body)
         {
             return LeaveAllocationsPOSTAsync(body, System.Threading.CancellationToken.None);
         }
@@ -235,7 +235,7 @@ namespace CleanArch.BlazorUI.Services.Base
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Created</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task LeaveAllocationsPOSTAsync(CreateLeaveAllocationRequest body, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task LeaveAllocationsPOSTAsync(CreateLeaveAllocation_Request body, System.Threading.CancellationToken cancellationToken)
         {
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -442,17 +442,17 @@ namespace CleanArch.BlazorUI.Services.Base
             }
         }
 
-        /// <returns>Success</returns>
+        /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<LeaveRequestListDto> LeaveRequestsGETAsync()
+        public virtual System.Threading.Tasks.Task<AdminGetLeaveRequestList_Response> LeaveRequestsGETAsync(string searchTerm, string sortColumn, string sortOrder)
         {
-            return LeaveRequestsGETAsync(System.Threading.CancellationToken.None);
+            return LeaveRequestsGETAsync(searchTerm, sortColumn, sortOrder, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
-        /// <returns>Success</returns>
+        /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<LeaveRequestListDto> LeaveRequestsGETAsync(System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<AdminGetLeaveRequestList_Response> LeaveRequestsGETAsync(string searchTerm, string sortColumn, string sortOrder, System.Threading.CancellationToken cancellationToken)
         {
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -467,6 +467,20 @@ namespace CleanArch.BlazorUI.Services.Base
                 
                     // Operation Path: "api/admin/v1/leave-requests"
                     urlBuilder_.Append("api/admin/v1/leave-requests");
+                    urlBuilder_.Append('?');
+                    if (searchTerm != null)
+                    {
+                        urlBuilder_.Append(System.Uri.EscapeDataString("searchTerm")).Append('=').Append(System.Uri.EscapeDataString(ConvertToString(searchTerm, System.Globalization.CultureInfo.InvariantCulture))).Append('&');
+                    }
+                    if (sortColumn != null)
+                    {
+                        urlBuilder_.Append(System.Uri.EscapeDataString("sortColumn")).Append('=').Append(System.Uri.EscapeDataString(ConvertToString(sortColumn, System.Globalization.CultureInfo.InvariantCulture))).Append('&');
+                    }
+                    if (sortOrder != null)
+                    {
+                        urlBuilder_.Append(System.Uri.EscapeDataString("sortOrder")).Append('=').Append(System.Uri.EscapeDataString(ConvertToString(sortOrder, System.Globalization.CultureInfo.InvariantCulture))).Append('&');
+                    }
+                    urlBuilder_.Length--;
 
                     PrepareRequest(client_, request_, urlBuilder_);
 
@@ -513,7 +527,7 @@ namespace CleanArch.BlazorUI.Services.Base
                         else
                         if (status_ == 200)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<LeaveRequestListDto>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<AdminGetLeaveRequestList_Response>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
@@ -542,7 +556,7 @@ namespace CleanArch.BlazorUI.Services.Base
 
         /// <returns>No Content</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task UpdateApprovalAsync(System.Guid id, ChangeLeaveRequestApprovalRequest body)
+        public virtual System.Threading.Tasks.Task UpdateApprovalAsync(System.Guid id, ChangeLeaveRequestApproval_Request body)
         {
             return UpdateApprovalAsync(id, body, System.Threading.CancellationToken.None);
         }
@@ -550,7 +564,7 @@ namespace CleanArch.BlazorUI.Services.Base
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>No Content</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task UpdateApprovalAsync(System.Guid id, ChangeLeaveRequestApprovalRequest body, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task UpdateApprovalAsync(System.Guid id, ChangeLeaveRequestApproval_Request body, System.Threading.CancellationToken cancellationToken)
         {
             if (id == null)
                 throw new System.ArgumentNullException("id");
@@ -767,17 +781,17 @@ namespace CleanArch.BlazorUI.Services.Base
             }
         }
 
-        /// <returns>Success</returns>
+        /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<RegistrationResponse> RegisterAsync(RegistrationRequest body)
+        public virtual System.Threading.Tasks.Task<CreateUser_Response> RegisterAsync(CreateUser_Request body)
         {
             return RegisterAsync(body, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
-        /// <returns>Success</returns>
+        /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<RegistrationResponse> RegisterAsync(RegistrationRequest body, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<CreateUser_Response> RegisterAsync(CreateUser_Request body, System.Threading.CancellationToken cancellationToken)
         {
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -822,7 +836,7 @@ namespace CleanArch.BlazorUI.Services.Base
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<RegistrationResponse>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<CreateUser_Response>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
@@ -859,17 +873,17 @@ namespace CleanArch.BlazorUI.Services.Base
             }
         }
 
-        /// <returns>Success</returns>
+        /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<TokenResponse> LoginAsync(LoginRequest body)
+        public virtual System.Threading.Tasks.Task<Login_Response> LoginAsync(Login_Request body)
         {
             return LoginAsync(body, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
-        /// <returns>Success</returns>
+        /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<TokenResponse> LoginAsync(LoginRequest body, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<Login_Response> LoginAsync(Login_Request body, System.Threading.CancellationToken cancellationToken)
         {
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -914,7 +928,7 @@ namespace CleanArch.BlazorUI.Services.Base
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<TokenResponse>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<Login_Response>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
@@ -951,17 +965,17 @@ namespace CleanArch.BlazorUI.Services.Base
             }
         }
 
-        /// <returns>Success</returns>
+        /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<LeaveAllocationDetailsDto> LeaveAllocationsGETAsync(System.Guid id)
+        public virtual System.Threading.Tasks.Task<GetLeaveAllocationDetail_Response> LeaveAllocationsGETAsync(System.Guid id)
         {
             return LeaveAllocationsGETAsync(id, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
-        /// <returns>Success</returns>
+        /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<LeaveAllocationDetailsDto> LeaveAllocationsGETAsync(System.Guid id, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<GetLeaveAllocationDetail_Response> LeaveAllocationsGETAsync(System.Guid id, System.Threading.CancellationToken cancellationToken)
         {
             if (id == null)
                 throw new System.ArgumentNullException("id");
@@ -1026,7 +1040,7 @@ namespace CleanArch.BlazorUI.Services.Base
                         else
                         if (status_ == 200)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<LeaveAllocationDetailsDto>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<GetLeaveAllocationDetail_Response>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
@@ -1063,17 +1077,17 @@ namespace CleanArch.BlazorUI.Services.Base
             }
         }
 
-        /// <returns>Success</returns>
+        /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<LeaveAllocationListDto> LeaveAllocationsGET2Async()
+        public virtual System.Threading.Tasks.Task<GetLeaveAllocationList_Response> LeaveAllocationsGET2Async()
         {
             return LeaveAllocationsGET2Async(System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
-        /// <returns>Success</returns>
+        /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<LeaveAllocationListDto> LeaveAllocationsGET2Async(System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<GetLeaveAllocationList_Response> LeaveAllocationsGET2Async(System.Threading.CancellationToken cancellationToken)
         {
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -1134,7 +1148,7 @@ namespace CleanArch.BlazorUI.Services.Base
                         else
                         if (status_ == 200)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<LeaveAllocationListDto>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<GetLeaveAllocationList_Response>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
@@ -1281,7 +1295,7 @@ namespace CleanArch.BlazorUI.Services.Base
 
         /// <returns>Created</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task LeaveRequestsPOSTAsync(CreateLeaveRequestRequest body)
+        public virtual System.Threading.Tasks.Task LeaveRequestsPOSTAsync(CreateLeaveRequest_CreateRequest body)
         {
             return LeaveRequestsPOSTAsync(body, System.Threading.CancellationToken.None);
         }
@@ -1289,7 +1303,7 @@ namespace CleanArch.BlazorUI.Services.Base
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Created</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task LeaveRequestsPOSTAsync(CreateLeaveRequestRequest body, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task LeaveRequestsPOSTAsync(CreateLeaveRequest_CreateRequest body, System.Threading.CancellationToken cancellationToken)
         {
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -1385,17 +1399,17 @@ namespace CleanArch.BlazorUI.Services.Base
             }
         }
 
-        /// <returns>Success</returns>
+        /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<LeaveRequestListDto> LeaveRequestsGET2Async()
+        public virtual System.Threading.Tasks.Task<GetLeaveRequestList_Response> LeaveRequestsGET2Async(string searchTerm, string sortColumn, string sortOrder)
         {
-            return LeaveRequestsGET2Async(System.Threading.CancellationToken.None);
+            return LeaveRequestsGET2Async(searchTerm, sortColumn, sortOrder, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
-        /// <returns>Success</returns>
+        /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<LeaveRequestListDto> LeaveRequestsGET2Async(System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<GetLeaveRequestList_Response> LeaveRequestsGET2Async(string searchTerm, string sortColumn, string sortOrder, System.Threading.CancellationToken cancellationToken)
         {
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -1410,6 +1424,20 @@ namespace CleanArch.BlazorUI.Services.Base
                 
                     // Operation Path: "api/v1/leave-requests"
                     urlBuilder_.Append("api/v1/leave-requests");
+                    urlBuilder_.Append('?');
+                    if (searchTerm != null)
+                    {
+                        urlBuilder_.Append(System.Uri.EscapeDataString("searchTerm")).Append('=').Append(System.Uri.EscapeDataString(ConvertToString(searchTerm, System.Globalization.CultureInfo.InvariantCulture))).Append('&');
+                    }
+                    if (sortColumn != null)
+                    {
+                        urlBuilder_.Append(System.Uri.EscapeDataString("sortColumn")).Append('=').Append(System.Uri.EscapeDataString(ConvertToString(sortColumn, System.Globalization.CultureInfo.InvariantCulture))).Append('&');
+                    }
+                    if (sortOrder != null)
+                    {
+                        urlBuilder_.Append(System.Uri.EscapeDataString("sortOrder")).Append('=').Append(System.Uri.EscapeDataString(ConvertToString(sortOrder, System.Globalization.CultureInfo.InvariantCulture))).Append('&');
+                    }
+                    urlBuilder_.Length--;
 
                     PrepareRequest(client_, request_, urlBuilder_);
 
@@ -1456,7 +1484,7 @@ namespace CleanArch.BlazorUI.Services.Base
                         else
                         if (status_ == 200)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<LeaveRequestListDto>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<GetLeaveRequestList_Response>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
@@ -1589,17 +1617,17 @@ namespace CleanArch.BlazorUI.Services.Base
             }
         }
 
-        /// <returns>Success</returns>
+        /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<LeaveRequestDetailsDto> LeaveRequestsGET3Async(System.Guid id)
+        public virtual System.Threading.Tasks.Task<GetLeaveRequestDetail_Response> LeaveRequestsGET3Async(System.Guid id)
         {
             return LeaveRequestsGET3Async(id, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
-        /// <returns>Success</returns>
+        /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<LeaveRequestDetailsDto> LeaveRequestsGET3Async(System.Guid id, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<GetLeaveRequestDetail_Response> LeaveRequestsGET3Async(System.Guid id, System.Threading.CancellationToken cancellationToken)
         {
             if (id == null)
                 throw new System.ArgumentNullException("id");
@@ -1664,7 +1692,7 @@ namespace CleanArch.BlazorUI.Services.Base
                         else
                         if (status_ == 200)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<LeaveRequestDetailsDto>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<GetLeaveRequestDetail_Response>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
@@ -1703,7 +1731,7 @@ namespace CleanArch.BlazorUI.Services.Base
 
         /// <returns>No Content</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task LeaveRequestsPUTAsync(System.Guid id, UpdateLeaveRequestRequest body)
+        public virtual System.Threading.Tasks.Task LeaveRequestsPUTAsync(System.Guid id, UpdateLeaveRequest_Request body)
         {
             return LeaveRequestsPUTAsync(id, body, System.Threading.CancellationToken.None);
         }
@@ -1711,7 +1739,7 @@ namespace CleanArch.BlazorUI.Services.Base
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>No Content</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task LeaveRequestsPUTAsync(System.Guid id, UpdateLeaveRequestRequest body, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task LeaveRequestsPUTAsync(System.Guid id, UpdateLeaveRequest_Request body, System.Threading.CancellationToken cancellationToken)
         {
             if (id == null)
                 throw new System.ArgumentNullException("id");
@@ -1823,7 +1851,7 @@ namespace CleanArch.BlazorUI.Services.Base
 
         /// <returns>Created</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task LeaveTypesPOSTAsync(CreateLeaveTypeRequest body)
+        public virtual System.Threading.Tasks.Task LeaveTypesPOSTAsync(CreateLeaveType_Request body)
         {
             return LeaveTypesPOSTAsync(body, System.Threading.CancellationToken.None);
         }
@@ -1831,7 +1859,7 @@ namespace CleanArch.BlazorUI.Services.Base
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Created</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task LeaveTypesPOSTAsync(CreateLeaveTypeRequest body, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task LeaveTypesPOSTAsync(CreateLeaveType_Request body, System.Threading.CancellationToken cancellationToken)
         {
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -1927,17 +1955,17 @@ namespace CleanArch.BlazorUI.Services.Base
             }
         }
 
-        /// <returns>Success</returns>
+        /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<LeaveTypeListDto> LeaveTypesGETAsync()
+        public virtual System.Threading.Tasks.Task<GetLeaveTypeList_Response> LeaveTypesGETAsync()
         {
             return LeaveTypesGETAsync(System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
-        /// <returns>Success</returns>
+        /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<LeaveTypeListDto> LeaveTypesGETAsync(System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<GetLeaveTypeList_Response> LeaveTypesGETAsync(System.Threading.CancellationToken cancellationToken)
         {
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -1998,7 +2026,7 @@ namespace CleanArch.BlazorUI.Services.Base
                         else
                         if (status_ == 200)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<LeaveTypeListDto>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<GetLeaveTypeList_Response>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
@@ -2025,17 +2053,17 @@ namespace CleanArch.BlazorUI.Services.Base
             }
         }
 
-        /// <returns>Success</returns>
+        /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<LeaveTypeDetailDto> LeaveTypesGET2Async(System.Guid id)
+        public virtual System.Threading.Tasks.Task<GetLeaveTypeDetail_Response> LeaveTypesGET2Async(System.Guid id)
         {
             return LeaveTypesGET2Async(id, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
-        /// <returns>Success</returns>
+        /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<LeaveTypeDetailDto> LeaveTypesGET2Async(System.Guid id, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<GetLeaveTypeDetail_Response> LeaveTypesGET2Async(System.Guid id, System.Threading.CancellationToken cancellationToken)
         {
             if (id == null)
                 throw new System.ArgumentNullException("id");
@@ -2100,7 +2128,7 @@ namespace CleanArch.BlazorUI.Services.Base
                         else
                         if (status_ == 200)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<LeaveTypeDetailDto>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<GetLeaveTypeDetail_Response>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
@@ -2139,7 +2167,7 @@ namespace CleanArch.BlazorUI.Services.Base
 
         /// <returns>No Content</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task LeaveTypesPUTAsync(System.Guid id, UpdateLeaveTypeRequest body)
+        public virtual System.Threading.Tasks.Task LeaveTypesPUTAsync(System.Guid id, UpdateLeaveType_Request body)
         {
             return LeaveTypesPUTAsync(id, body, System.Threading.CancellationToken.None);
         }
@@ -2147,7 +2175,7 @@ namespace CleanArch.BlazorUI.Services.Base
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>No Content</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task LeaveTypesPUTAsync(System.Guid id, UpdateLeaveTypeRequest body, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task LeaveTypesPUTAsync(System.Guid id, UpdateLeaveType_Request body, System.Threading.CancellationToken cancellationToken)
         {
             if (id == null)
                 throw new System.ArgumentNullException("id");
@@ -2367,16 +2395,55 @@ namespace CleanArch.BlazorUI.Services.Base
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.0.7.0 (NJsonSchema v11.0.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class ChangeLeaveRequestApprovalRequest
+    public partial class CreateUser_Request
     {
 
-        [System.Text.Json.Serialization.JsonPropertyName("approved")]
-        public bool Approved { get; set; }
+        [System.Text.Json.Serialization.JsonPropertyName("firstName")]
+        public string FirstName { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("lastName")]
+        public string LastName { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("email")]
+        public string Email { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("password")]
+        public string Password { get; set; }
 
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.0.7.0 (NJsonSchema v11.0.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class CreateLeaveAllocationRequest
+    public partial class CreateUser_Response
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("userId")]
+        public System.Guid UserId { get; set; }
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.0.7.0 (NJsonSchema v11.0.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class Login_Request
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("email")]
+        public string Email { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("password")]
+        public string Password { get; set; }
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.0.7.0 (NJsonSchema v11.0.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class Login_Response
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("token")]
+        public string Token { get; set; }
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.0.7.0 (NJsonSchema v11.0.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class CreateLeaveAllocation_Request
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("leaveTypeId")]
@@ -2385,7 +2452,106 @@ namespace CleanArch.BlazorUI.Services.Base
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.0.7.0 (NJsonSchema v11.0.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class CreateLeaveRequestRequest
+    public partial class GetLeaveAllocationDetail_Response
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("numberOfDays")]
+        public int NumberOfDays { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("period")]
+        public int Period { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("leaveTypeId")]
+        public System.Guid LeaveTypeId { get; set; }
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.0.7.0 (NJsonSchema v11.0.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class GetLeaveAllocationList_Response
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("leaveAllocationList")]
+        public System.Collections.Generic.ICollection<GetLeaveAllocationList_Response_Model> LeaveAllocationList { get; set; }
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.0.7.0 (NJsonSchema v11.0.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class GetLeaveAllocationList_Response_Model
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid Id { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("numberOfDays")]
+        public int NumberOfDays { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("period")]
+        public int Period { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("leaveTypeId")]
+        public System.Guid LeaveTypeId { get; set; }
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.0.7.0 (NJsonSchema v11.0.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class AdminGetLeaveRequestList_Response
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("leaveRequests")]
+        public System.Collections.Generic.ICollection<AdminGetLeaveRequestList_Response_Model> LeaveRequests { get; set; }
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.0.7.0 (NJsonSchema v11.0.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class AdminGetLeaveRequestList_Response_Model
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid Id { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("startDate")]
+        public string StartDate { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("endDate")]
+        public string EndDate { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("requestComments")]
+        public string RequestComments { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("leaveTypeId")]
+        public System.Guid LeaveTypeId { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("leaveTypeName")]
+        public string LeaveTypeName { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("requestingEmployeeId")]
+        public System.Guid RequestingEmployeeId { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("employeeFullName")]
+        public string EmployeeFullName { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("isApproved")]
+        public bool? IsApproved { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("isCancelled")]
+        public bool IsCancelled { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("dateCreated")]
+        public System.DateTimeOffset DateCreated { get; set; }
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.0.7.0 (NJsonSchema v11.0.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class ChangeLeaveRequestApproval_Request
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("approved")]
+        public bool Approved { get; set; }
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.0.7.0 (NJsonSchema v11.0.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class CreateLeaveRequest_CreateRequest
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("leaveTypeId")]
@@ -2403,7 +2569,109 @@ namespace CleanArch.BlazorUI.Services.Base
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.0.7.0 (NJsonSchema v11.0.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class CreateLeaveTypeRequest
+    public partial class GetLeaveRequestDetail_Response
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid Id { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("startDate")]
+        public string StartDate { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("endDate")]
+        public string EndDate { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("requestComments")]
+        public string RequestComments { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("leaveTypeId")]
+        public System.Guid LeaveTypeId { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("leaveTypeName")]
+        public string LeaveTypeName { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("requestingEmployeeId")]
+        public System.Guid RequestingEmployeeId { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("employeeFullName")]
+        public string EmployeeFullName { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("isApproved")]
+        public bool? IsApproved { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("isCancelled")]
+        public bool IsCancelled { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("dateCreated")]
+        public System.DateTimeOffset DateCreated { get; set; }
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.0.7.0 (NJsonSchema v11.0.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class GetLeaveRequestList_Response
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("leaveRequests")]
+        public System.Collections.Generic.ICollection<GetLeaveRequestList_Response_Model> LeaveRequests { get; set; }
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.0.7.0 (NJsonSchema v11.0.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class GetLeaveRequestList_Response_Model
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid Id { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("startDate")]
+        public string StartDate { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("endDate")]
+        public string EndDate { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("requestComments")]
+        public string RequestComments { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("leaveTypeId")]
+        public System.Guid LeaveTypeId { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("leaveTypeName")]
+        public string LeaveTypeName { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("requestingEmployeeId")]
+        public System.Guid RequestingEmployeeId { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("employeeFullName")]
+        public string EmployeeFullName { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("isApproved")]
+        public bool? IsApproved { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("isCancelled")]
+        public bool IsCancelled { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("dateCreated")]
+        public System.DateTimeOffset DateCreated { get; set; }
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.0.7.0 (NJsonSchema v11.0.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class UpdateLeaveRequest_Request
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("startDate")]
+        public string StartDate { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("endDate")]
+        public string EndDate { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("comments")]
+        public string Comments { get; set; }
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.0.7.0 (NJsonSchema v11.0.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class CreateLeaveType_Request
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("name")]
@@ -2415,136 +2683,7 @@ namespace CleanArch.BlazorUI.Services.Base
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.0.7.0 (NJsonSchema v11.0.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class LeaveAllocationDetailsDto
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("numberOfDays")]
-        public int NumberOfDays { get; set; }
-
-        [System.Text.Json.Serialization.JsonPropertyName("period")]
-        public int Period { get; set; }
-
-        [System.Text.Json.Serialization.JsonPropertyName("leaveTypeId")]
-        public System.Guid LeaveTypeId { get; set; }
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.0.7.0 (NJsonSchema v11.0.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class LeaveAllocationListDto
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("leaveAllocationList")]
-        public System.Collections.Generic.ICollection<LeaveAllocationModel> LeaveAllocationList { get; set; }
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.0.7.0 (NJsonSchema v11.0.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class LeaveAllocationModel
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public System.Guid Id { get; set; }
-
-        [System.Text.Json.Serialization.JsonPropertyName("numberOfDays")]
-        public int NumberOfDays { get; set; }
-
-        [System.Text.Json.Serialization.JsonPropertyName("period")]
-        public int Period { get; set; }
-
-        [System.Text.Json.Serialization.JsonPropertyName("leaveTypeId")]
-        public System.Guid LeaveTypeId { get; set; }
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.0.7.0 (NJsonSchema v11.0.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class LeaveRequestDetailsDto
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public System.Guid Id { get; set; }
-
-        [System.Text.Json.Serialization.JsonPropertyName("startDate")]
-        public string StartDate { get; set; }
-
-        [System.Text.Json.Serialization.JsonPropertyName("endDate")]
-        public string EndDate { get; set; }
-
-        [System.Text.Json.Serialization.JsonPropertyName("requestComments")]
-        public string RequestComments { get; set; }
-
-        [System.Text.Json.Serialization.JsonPropertyName("leaveTypeId")]
-        public System.Guid LeaveTypeId { get; set; }
-
-        [System.Text.Json.Serialization.JsonPropertyName("leaveTypeName")]
-        public string LeaveTypeName { get; set; }
-
-        [System.Text.Json.Serialization.JsonPropertyName("requestingEmployeeId")]
-        public System.Guid RequestingEmployeeId { get; set; }
-
-        [System.Text.Json.Serialization.JsonPropertyName("employeeFullName")]
-        public string EmployeeFullName { get; set; }
-
-        [System.Text.Json.Serialization.JsonPropertyName("isApproved")]
-        public bool? IsApproved { get; set; }
-
-        [System.Text.Json.Serialization.JsonPropertyName("isCancelled")]
-        public bool IsCancelled { get; set; }
-
-        [System.Text.Json.Serialization.JsonPropertyName("dateCreated")]
-        public System.DateTimeOffset DateCreated { get; set; }
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.0.7.0 (NJsonSchema v11.0.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class LeaveRequestDetailsModel
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public System.Guid Id { get; set; }
-
-        [System.Text.Json.Serialization.JsonPropertyName("startDate")]
-        public string StartDate { get; set; }
-
-        [System.Text.Json.Serialization.JsonPropertyName("endDate")]
-        public string EndDate { get; set; }
-
-        [System.Text.Json.Serialization.JsonPropertyName("requestComments")]
-        public string RequestComments { get; set; }
-
-        [System.Text.Json.Serialization.JsonPropertyName("leaveTypeId")]
-        public System.Guid LeaveTypeId { get; set; }
-
-        [System.Text.Json.Serialization.JsonPropertyName("leaveTypeName")]
-        public string LeaveTypeName { get; set; }
-
-        [System.Text.Json.Serialization.JsonPropertyName("requestingEmployeeId")]
-        public System.Guid RequestingEmployeeId { get; set; }
-
-        [System.Text.Json.Serialization.JsonPropertyName("employeeFullName")]
-        public string EmployeeFullName { get; set; }
-
-        [System.Text.Json.Serialization.JsonPropertyName("isApproved")]
-        public bool? IsApproved { get; set; }
-
-        [System.Text.Json.Serialization.JsonPropertyName("isCancelled")]
-        public bool IsCancelled { get; set; }
-
-        [System.Text.Json.Serialization.JsonPropertyName("dateCreated")]
-        public System.DateTimeOffset DateCreated { get; set; }
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.0.7.0 (NJsonSchema v11.0.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class LeaveRequestListDto
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("leaveRequests")]
-        public System.Collections.Generic.ICollection<LeaveRequestDetailsModel> LeaveRequests { get; set; }
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.0.7.0 (NJsonSchema v11.0.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class LeaveTypeDetailDto
+    public partial class GetLeaveTypeDetail_Response
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("id")]
@@ -2562,16 +2701,16 @@ namespace CleanArch.BlazorUI.Services.Base
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.0.7.0 (NJsonSchema v11.0.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class LeaveTypeListDto
+    public partial class GetLeaveTypeList_Response
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("leaveTypes")]
-        public System.Collections.Generic.ICollection<LeaveTypeModel> LeaveTypes { get; set; }
+        public System.Collections.Generic.ICollection<GetLeaveTypeList_Response_Model> LeaveTypes { get; set; }
 
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.0.7.0 (NJsonSchema v11.0.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class LeaveTypeModel
+    public partial class GetLeaveTypeList_Response_Model
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("id")]
@@ -2586,14 +2725,14 @@ namespace CleanArch.BlazorUI.Services.Base
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.0.7.0 (NJsonSchema v11.0.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class LoginRequest
+    public partial class UpdateLeaveType_Request
     {
 
-        [System.Text.Json.Serialization.JsonPropertyName("email")]
-        public string Email { get; set; }
+        [System.Text.Json.Serialization.JsonPropertyName("name")]
+        public string Name { get; set; }
 
-        [System.Text.Json.Serialization.JsonPropertyName("password")]
-        public string Password { get; set; }
+        [System.Text.Json.Serialization.JsonPropertyName("defaultDays")]
+        public int DefaultDays { get; set; }
 
     }
 
@@ -2624,69 +2763,6 @@ namespace CleanArch.BlazorUI.Services.Base
             get { return _additionalProperties ?? (_additionalProperties = new System.Collections.Generic.Dictionary<string, object>()); }
             set { _additionalProperties = value; }
         }
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.0.7.0 (NJsonSchema v11.0.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class RegistrationRequest
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("firstName")]
-        public string FirstName { get; set; }
-
-        [System.Text.Json.Serialization.JsonPropertyName("lastName")]
-        public string LastName { get; set; }
-
-        [System.Text.Json.Serialization.JsonPropertyName("email")]
-        public string Email { get; set; }
-
-        [System.Text.Json.Serialization.JsonPropertyName("password")]
-        public string Password { get; set; }
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.0.7.0 (NJsonSchema v11.0.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class RegistrationResponse
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("userId")]
-        public System.Guid UserId { get; set; }
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.0.7.0 (NJsonSchema v11.0.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class TokenResponse
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("token")]
-        public string Token { get; set; }
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.0.7.0 (NJsonSchema v11.0.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class UpdateLeaveRequestRequest
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("comments")]
-        public string Comments { get; set; }
-
-        [System.Text.Json.Serialization.JsonPropertyName("startDate")]
-        public string StartDate { get; set; }
-
-        [System.Text.Json.Serialization.JsonPropertyName("endDate")]
-        public string EndDate { get; set; }
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.0.7.0 (NJsonSchema v11.0.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class UpdateLeaveTypeRequest
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("name")]
-        public string Name { get; set; }
-
-        [System.Text.Json.Serialization.JsonPropertyName("defaultDays")]
-        public int DefaultDays { get; set; }
 
     }
 

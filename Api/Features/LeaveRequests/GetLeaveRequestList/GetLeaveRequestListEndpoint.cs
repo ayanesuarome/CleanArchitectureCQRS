@@ -13,13 +13,17 @@ public sealed partial class LeaveRequestController
         [FromQuery] string? searchTerm,
         [FromQuery] string? sortColumn,
         [FromQuery] string? sortOrder,
+        [FromQuery] int page,
+        [FromQuery] int pageSize,
         CancellationToken cancellationToken)
     {
         Result<GetLeaveRequestList.GetLeaveRequestList.Response> result = 
             await Sender.Send(new GetLeaveRequestList.GetLeaveRequestList.Query(
                 searchTerm,
                 sortColumn,
-                sortOrder),
+                sortOrder,
+                page,
+                pageSize),
             cancellationToken);
 
         return Ok(result.Value);

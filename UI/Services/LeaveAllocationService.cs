@@ -9,7 +9,7 @@ public class LeaveAllocationService(IClient client): BaseHttpService(client), IL
     {
         try
         {
-            CreateLeaveAllocationRequest request = new()
+            CreateLeaveAllocation_Request request = new()
             {
                 LeaveTypeId = leaveTypeId
             };

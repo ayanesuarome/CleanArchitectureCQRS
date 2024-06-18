@@ -19,7 +19,7 @@ internal sealed class AuthenticationService : BaseHttpService, IAuthenticationSe
 
     public async Task<bool> AuthenticateAsync(LoginVM model)
     {
-        LoginRequest authRequest = new()
+        Login_Request authRequest = new()
         {
             Email = model.Email,
             Password = model.Password
@@ -27,7 +27,7 @@ internal sealed class AuthenticationService : BaseHttpService, IAuthenticationSe
 
         try
         {
-            TokenResponse response = await _client.LoginAsync(authRequest);
+            Login_Response response = await _client.LoginAsync(authRequest);
 
             if (string.IsNullOrEmpty(response?.Token))
             {
@@ -53,7 +53,7 @@ internal sealed class AuthenticationService : BaseHttpService, IAuthenticationSe
 
     public async Task<bool> RegisterAsync(RegistrationRequestVM model)
     {
-        RegistrationRequest request = new()
+        CreateUser_Request request = new()
         {
             FirstName = model.FirstName,
             LastName = model.LastName,

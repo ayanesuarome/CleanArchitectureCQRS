@@ -1,5 +1,5 @@
-﻿using CleanArch.Domain.LeaveRequests;
-using Microsoft.EntityFrameworkCore;
+﻿using CleanArch.Domain.Core.Primitives;
+using CleanArch.Domain.LeaveRequests;
 using System.Linq.Expressions;
 
 namespace CleanArch.Persistence.Repositories;
@@ -11,35 +11,36 @@ internal sealed class LeaveRequestRepository : GenericRepository<LeaveRequest, L
     {
     }
 
-    public async Task<IReadOnlyCollection<LeaveRequest>> GetLeaveRequestsWithDetailsAsync(
+    public async Task<PagedList<LeaveRequest>> GetLeaveRequestsWithDetailsAsync(
         string? searchTerm,
         string? sortColumn,
         string? sortOrder,
+        int page,
+        int pageSize,
         Guid? employeeId = null)
     {
-        IQueryable<LeaveRequest> query = TableNoTracking;
+        IQueryable<LeaveRequest> leaveRequestQuery = TableNoTracking;
 
         if(employeeId.HasValue)
         {
-            query = query.Where(e => e.RequestingEmployeeId == employeeId && !e.IsCancelled);
+            leaveRequestQuery = leaveRequestQuery.Where(e => e.RequestingEmployeeId == employeeId && !e.IsCancelled);
         }
         
         if(!string.IsNullOrWhiteSpace(searchTerm))
         {
-            query = query.Where(leave => leave.LeaveTypeName.Value.Contains(searchTerm));
+            leaveRequestQuery = leaveRequestQuery.Where(leave => ((string)leave.LeaveTypeName).Contains(searchTerm));
         }
 
-        if(sortOrder?.ToLower() == "desc")
+        if (sortOrder?.ToLower() == "desc")
         {
-            query = query.OrderByDescending(GetSortProperty(sortColumn));
+            leaveRequestQuery = leaveRequestQuery.OrderByDescending(GetSortProperty(sortColumn));
         }
         else
         {
-            query = query.OrderBy(GetSortProperty(sortColumn));
+            leaveRequestQuery = leaveRequestQuery.OrderBy(GetSortProperty(sortColumn));
         }
 
-        return await query
-            .ToArrayAsync();
+        return await PagedList<LeaveRequest>.CreateAsync(leaveRequestQuery, page, pageSize);
     }
 
     public async Task<LeaveRequest> GetLeaveRequestWithDetailsAsync(LeaveRequestId id)

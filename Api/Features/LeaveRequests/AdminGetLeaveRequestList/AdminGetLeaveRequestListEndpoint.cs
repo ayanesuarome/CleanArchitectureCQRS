@@ -15,13 +15,17 @@ public sealed partial class AdminLeaveRequestController
         [FromQuery] string? searchTerm,
         [FromQuery] string? sortColumn,
         [FromQuery] string? sortOrder,
+        [FromQuery] int page,
+        [FromQuery] int pageSize,
         CancellationToken cancellationToken)
     {
         Result<AdminGetLeaveRequestList.AdminGetLeaveRequestList.Response> result =
             await Sender.Send(new AdminGetLeaveRequestList.AdminGetLeaveRequestList.Query(
                 searchTerm,
                 sortColumn,
-                sortOrder),
+                sortOrder,
+                page,
+                pageSize),
             cancellationToken);
 
         return Ok(result.Value);

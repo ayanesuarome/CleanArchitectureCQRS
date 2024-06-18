@@ -10,7 +10,7 @@ internal sealed class LeaveRequestService(IClient client) : BaseHttpService(clie
     {
         try
         {
-            CreateLeaveRequestRequest request = new()
+            CreateLeaveRequest_CreateRequest request = new()
             {
                 LeaveTypeId = model.LeaveTypeId,
                 Comments = model.RequestComments,
@@ -30,7 +30,7 @@ internal sealed class LeaveRequestService(IClient client) : BaseHttpService(clie
 
     public async Task<AdminLeaveRequestVM> GetAdminLeaveRequestListAsync()
     {
-        LeaveRequestListDto response = await _client.LeaveRequestsGETAsync();
+        AdminGetLeaveRequestList_Response response = await _client.LeaveRequestsGETAsync(null,null, null);
         LeaveRequestVM[] models = response.LeaveRequests.Select(l =>
         new LeaveRequestVM()
         {
@@ -59,7 +59,7 @@ internal sealed class LeaveRequestService(IClient client) : BaseHttpService(clie
 
     public async Task<EmployeeLeaveRequestVM> GetEmployeeLeaveRequestListAsync()
     {
-        LeaveRequestListDto leaveRequestResponse = await _client.LeaveRequestsGET2Async();
+        GetLeaveRequestList_Response leaveRequestResponse = await _client.LeaveRequestsGET2Async(null, null, null);
 
         LeaveRequestVM[] leaveRequests = leaveRequestResponse.LeaveRequests.Select(l =>
         new LeaveRequestVM()
@@ -83,7 +83,7 @@ internal sealed class LeaveRequestService(IClient client) : BaseHttpService(clie
 
     public async Task<LeaveRequestVM> GetLeaveRequestAsync(Guid id)
     {
-        LeaveRequestDetailsDto leaveRequest = await _client.LeaveRequestsGET3Async(id);
+        GetLeaveRequestDetail_Response leaveRequest = await _client.LeaveRequestsGET3Async(id);
         return new LeaveRequestVM()
         {
             Id = leaveRequest.Id,
@@ -101,7 +101,7 @@ internal sealed class LeaveRequestService(IClient client) : BaseHttpService(clie
 
     public async Task<Response<Guid>> ApprovedLeaveRequestAsync(Guid id, bool status)
     {
-        ChangeLeaveRequestApprovalRequest request = new()
+        ChangeLeaveRequestApproval_Request request = new()
         {
             Approved = status
         };

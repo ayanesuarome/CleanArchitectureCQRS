@@ -8,10 +8,10 @@ public class LeaveTypeService(IClient client) : BaseHttpService(client), ILeaveT
 {
     public async Task<IReadOnlyCollection<LeaveTypeVM>> GetLeaveTypeList()
     {
-        LeaveTypeListDto dto = await _client.LeaveTypesGETAsync();
+        GetLeaveTypeList_Response dto = await _client.LeaveTypesGETAsync();
         List<LeaveTypeVM> models = new();
 
-        foreach (LeaveTypeModel leaveType in dto.LeaveTypes)
+        foreach (GetLeaveTypeList_Response_Model leaveType in dto.LeaveTypes)
         {
             models.Add(new()
             {
@@ -26,7 +26,7 @@ public class LeaveTypeService(IClient client) : BaseHttpService(client), ILeaveT
 
     public async Task<LeaveTypeVM> GetLeaveTypeDetails(Guid id)
     {
-        LeaveTypeDetailDto leaveType = await _client.LeaveTypesGET2Async(id);
+        GetLeaveTypeDetail_Response leaveType = await _client.LeaveTypesGET2Async(id);
         return new LeaveTypeVM()
         {
             Id = leaveType.Id,
@@ -39,7 +39,7 @@ public class LeaveTypeService(IClient client) : BaseHttpService(client), ILeaveT
     {
         try
         {
-            CreateLeaveTypeRequest request = new()
+            CreateLeaveType_Request request = new()
             {
                 Name = leaveType.Name,
                 DefaultDays = leaveType.DefaultDays
@@ -59,7 +59,7 @@ public class LeaveTypeService(IClient client) : BaseHttpService(client), ILeaveT
     {
         try
         {
-            UpdateLeaveTypeRequest request = new()
+            UpdateLeaveType_Request request = new()
             {
                 Name = leaveType.Name,
                 DefaultDays = leaveType.DefaultDays
