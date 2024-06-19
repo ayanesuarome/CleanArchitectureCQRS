@@ -1,4 +1,5 @@
-﻿using CleanArch.Domain.Core.Primitives;
+﻿using CleanArch.Application.Extensions;
+using CleanArch.Domain.Core.Primitives;
 using CleanArch.Domain.LeaveRequests;
 using System.Linq.Expressions;
 
@@ -31,14 +32,7 @@ internal sealed class LeaveRequestRepository : GenericRepository<LeaveRequest, L
             leaveRequestQuery = leaveRequestQuery.Where(leave => ((string)leave.LeaveTypeName).Contains(searchTerm));
         }
 
-        if (sortOrder?.ToLower() == "desc")
-        {
-            leaveRequestQuery = leaveRequestQuery.OrderByDescending(GetSortProperty(sortColumn));
-        }
-        else
-        {
-            leaveRequestQuery = leaveRequestQuery.OrderBy(GetSortProperty(sortColumn));
-        }
+        leaveRequestQuery = leaveRequestQuery.OrderBy(GetSortProperty(sortColumn), sortOrder);
 
         return await PagedList<LeaveRequest>.CreateAsync(leaveRequestQuery, page, pageSize);
     }
@@ -48,7 +42,7 @@ internal sealed class LeaveRequestRepository : GenericRepository<LeaveRequest, L
         return await GetAsNoTrackingByIdAsync(id);
     }
 
-    private static Expression<Func<LeaveRequest, object>> GetSortProperty(string sortColumn) => 
+    private static Expression<Func<LeaveRequest, object>> GetSortProperty(string sortColumn) =>
         sortColumn?.ToLower() switch
         {
             "leavetypename" => leave => leave.LeaveTypeName,

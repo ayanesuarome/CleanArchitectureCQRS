@@ -30,8 +30,8 @@ internal sealed class LeaveRequestService(IClient client) : BaseHttpService(clie
 
     public async Task<AdminLeaveRequestVM> GetAdminLeaveRequestListAsync()
     {
-        AdminGetLeaveRequestList_Response response = await _client.LeaveRequestsGETAsync(null,null, null);
-        LeaveRequestVM[] models = response.LeaveRequests.Select(l =>
+        AdminGetLeaveRequestList_Response response = await _client.LeaveRequestsGETAsync(null,null, null, 1, 20);
+        LeaveRequestVM[] models = response.LeaveRequests.Items.Select(l =>
         new LeaveRequestVM()
         {
             Id = l.Id,
@@ -48,10 +48,10 @@ internal sealed class LeaveRequestService(IClient client) : BaseHttpService(clie
 
         AdminLeaveRequestVM model = new(models)
         {
-            TotalRequests = response.LeaveRequests.Count,
-            ApprovedRequests = response.LeaveRequests.Count(request => request.IsApproved is true),
-            PendingRequests = response.LeaveRequests.Count(request => request.IsApproved is null),
-            RejectedRequests = response.LeaveRequests.Count(request => request.IsApproved is false)
+            TotalRequests = response.LeaveRequests.Items.Count,
+            ApprovedRequests = response.LeaveRequests.Items.Count(request => request.IsApproved is true),
+            PendingRequests = response.LeaveRequests.Items.Count(request => request.IsApproved is null),
+            RejectedRequests = response.LeaveRequests.Items.Count(request => request.IsApproved is false)
         };
 
         return model;
@@ -59,9 +59,9 @@ internal sealed class LeaveRequestService(IClient client) : BaseHttpService(clie
 
     public async Task<EmployeeLeaveRequestVM> GetEmployeeLeaveRequestListAsync()
     {
-        GetLeaveRequestList_Response leaveRequestResponse = await _client.LeaveRequestsGET2Async(null, null, null);
+        GetLeaveRequestList_Response leaveRequestResponse = await _client.LeaveRequestsGET2Async(null, null, null, 1, 20);
 
-        LeaveRequestVM[] leaveRequests = leaveRequestResponse.LeaveRequests.Select(l =>
+        LeaveRequestVM[] leaveRequests = leaveRequestResponse.LeaveRequests.Items.Select(l =>
         new LeaveRequestVM()
         {
             Id = l.Id,

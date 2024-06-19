@@ -12,7 +12,6 @@ using Microsoft.Extensions.Configuration;
 
 namespace CleanArch.Integration.Tests.Features.LeaveRequests;
 
-[TestCaseOrderer(TestCasePriorityOrderer.TypeName, TestCasePriorityOrderer.AssemblyName)]
 public class LeaveRequestTest : BaseIntegrationTest
 {
     public LeaveRequestTest(IntegrationTestWebAppFactory factory)

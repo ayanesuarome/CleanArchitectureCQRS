@@ -44,12 +44,12 @@ namespace CleanArch.BlazorUI.Services.Base
 
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<AdminGetLeaveRequestList_Response> LeaveRequestsGETAsync(string searchTerm, string sortColumn, string sortOrder);
+        System.Threading.Tasks.Task<AdminGetLeaveRequestList_Response> LeaveRequestsGETAsync(string searchTerm, string sortColumn, string sortOrder, int? page, int? pageSize);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<AdminGetLeaveRequestList_Response> LeaveRequestsGETAsync(string searchTerm, string sortColumn, string sortOrder, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<AdminGetLeaveRequestList_Response> LeaveRequestsGETAsync(string searchTerm, string sortColumn, string sortOrder, int? page, int? pageSize, System.Threading.CancellationToken cancellationToken);
 
         /// <returns>No Content</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
@@ -125,12 +125,12 @@ namespace CleanArch.BlazorUI.Services.Base
 
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<GetLeaveRequestList_Response> LeaveRequestsGET2Async(string searchTerm, string sortColumn, string sortOrder);
+        System.Threading.Tasks.Task<GetLeaveRequestList_Response> LeaveRequestsGET2Async(string searchTerm, string sortColumn, string sortOrder, int? page, int? pageSize);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<GetLeaveRequestList_Response> LeaveRequestsGET2Async(string searchTerm, string sortColumn, string sortOrder, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<GetLeaveRequestList_Response> LeaveRequestsGET2Async(string searchTerm, string sortColumn, string sortOrder, int? page, int? pageSize, System.Threading.CancellationToken cancellationToken);
 
         /// <returns>No Content</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
@@ -444,15 +444,15 @@ namespace CleanArch.BlazorUI.Services.Base
 
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<AdminGetLeaveRequestList_Response> LeaveRequestsGETAsync(string searchTerm, string sortColumn, string sortOrder)
+        public virtual System.Threading.Tasks.Task<AdminGetLeaveRequestList_Response> LeaveRequestsGETAsync(string searchTerm, string sortColumn, string sortOrder, int? page, int? pageSize)
         {
-            return LeaveRequestsGETAsync(searchTerm, sortColumn, sortOrder, System.Threading.CancellationToken.None);
+            return LeaveRequestsGETAsync(searchTerm, sortColumn, sortOrder, page, pageSize, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<AdminGetLeaveRequestList_Response> LeaveRequestsGETAsync(string searchTerm, string sortColumn, string sortOrder, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<AdminGetLeaveRequestList_Response> LeaveRequestsGETAsync(string searchTerm, string sortColumn, string sortOrder, int? page, int? pageSize, System.Threading.CancellationToken cancellationToken)
         {
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -479,6 +479,14 @@ namespace CleanArch.BlazorUI.Services.Base
                     if (sortOrder != null)
                     {
                         urlBuilder_.Append(System.Uri.EscapeDataString("sortOrder")).Append('=').Append(System.Uri.EscapeDataString(ConvertToString(sortOrder, System.Globalization.CultureInfo.InvariantCulture))).Append('&');
+                    }
+                    if (page != null)
+                    {
+                        urlBuilder_.Append(System.Uri.EscapeDataString("page")).Append('=').Append(System.Uri.EscapeDataString(ConvertToString(page, System.Globalization.CultureInfo.InvariantCulture))).Append('&');
+                    }
+                    if (pageSize != null)
+                    {
+                        urlBuilder_.Append(System.Uri.EscapeDataString("pageSize")).Append('=').Append(System.Uri.EscapeDataString(ConvertToString(pageSize, System.Globalization.CultureInfo.InvariantCulture))).Append('&');
                     }
                     urlBuilder_.Length--;
 
@@ -1401,15 +1409,15 @@ namespace CleanArch.BlazorUI.Services.Base
 
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<GetLeaveRequestList_Response> LeaveRequestsGET2Async(string searchTerm, string sortColumn, string sortOrder)
+        public virtual System.Threading.Tasks.Task<GetLeaveRequestList_Response> LeaveRequestsGET2Async(string searchTerm, string sortColumn, string sortOrder, int? page, int? pageSize)
         {
-            return LeaveRequestsGET2Async(searchTerm, sortColumn, sortOrder, System.Threading.CancellationToken.None);
+            return LeaveRequestsGET2Async(searchTerm, sortColumn, sortOrder, page, pageSize, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<GetLeaveRequestList_Response> LeaveRequestsGET2Async(string searchTerm, string sortColumn, string sortOrder, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<GetLeaveRequestList_Response> LeaveRequestsGET2Async(string searchTerm, string sortColumn, string sortOrder, int? page, int? pageSize, System.Threading.CancellationToken cancellationToken)
         {
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -1436,6 +1444,14 @@ namespace CleanArch.BlazorUI.Services.Base
                     if (sortOrder != null)
                     {
                         urlBuilder_.Append(System.Uri.EscapeDataString("sortOrder")).Append('=').Append(System.Uri.EscapeDataString(ConvertToString(sortOrder, System.Globalization.CultureInfo.InvariantCulture))).Append('&');
+                    }
+                    if (page != null)
+                    {
+                        urlBuilder_.Append(System.Uri.EscapeDataString("page")).Append('=').Append(System.Uri.EscapeDataString(ConvertToString(page, System.Globalization.CultureInfo.InvariantCulture))).Append('&');
+                    }
+                    if (pageSize != null)
+                    {
+                        urlBuilder_.Append(System.Uri.EscapeDataString("pageSize")).Append('=').Append(System.Uri.EscapeDataString(ConvertToString(pageSize, System.Globalization.CultureInfo.InvariantCulture))).Append('&');
                     }
                     urlBuilder_.Length--;
 
@@ -2498,7 +2514,7 @@ namespace CleanArch.BlazorUI.Services.Base
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("leaveRequests")]
-        public System.Collections.Generic.ICollection<AdminGetLeaveRequestList_Response_Model> LeaveRequests { get; set; }
+        public PagedList_1OfOfAdminGetLeaveRequestList_Response_ModelAndApiAnd_0AndCulture_neutralAndPublicKeyToken_null LeaveRequests { get; set; }
 
     }
 
@@ -2612,7 +2628,7 @@ namespace CleanArch.BlazorUI.Services.Base
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("leaveRequests")]
-        public System.Collections.Generic.ICollection<GetLeaveRequestList_Response_Model> LeaveRequests { get; set; }
+        public PagedList_1OfOfGetLeaveRequestList_Response_ModelAndApiAnd_0AndCulture_neutralAndPublicKeyToken_null LeaveRequests { get; set; }
 
     }
 
@@ -2733,6 +2749,54 @@ namespace CleanArch.BlazorUI.Services.Base
 
         [System.Text.Json.Serialization.JsonPropertyName("defaultDays")]
         public int DefaultDays { get; set; }
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.0.7.0 (NJsonSchema v11.0.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class PagedList_1OfOfAdminGetLeaveRequestList_Response_ModelAndApiAnd_0AndCulture_neutralAndPublicKeyToken_null
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("page")]
+        public int Page { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("pageSize")]
+        public int PageSize { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("totalCount")]
+        public int TotalCount { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("hasNextPage")]
+        public bool HasNextPage { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("hasPreviousPage")]
+        public bool HasPreviousPage { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("items")]
+        public System.Collections.Generic.ICollection<AdminGetLeaveRequestList_Response_Model> Items { get; set; }
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.0.7.0 (NJsonSchema v11.0.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class PagedList_1OfOfGetLeaveRequestList_Response_ModelAndApiAnd_0AndCulture_neutralAndPublicKeyToken_null
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("page")]
+        public int Page { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("pageSize")]
+        public int PageSize { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("totalCount")]
+        public int TotalCount { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("hasNextPage")]
+        public bool HasNextPage { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("hasPreviousPage")]
+        public bool HasPreviousPage { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("items")]
+        public System.Collections.Generic.ICollection<GetLeaveRequestList_Response_Model> Items { get; set; }
 
     }
 

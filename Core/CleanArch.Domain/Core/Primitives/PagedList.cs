@@ -11,8 +11,8 @@ public sealed class PagedList<T>
 {
     private PagedList(IEnumerable<T> items, int page, int pageSize, int totalCount)
     {
-        Page = page;
-        PageSize = pageSize;
+        Page = page == 0 ? 1 : page;
+        PageSize = pageSize == 0 ? 10 : pageSize;
         TotalCount = totalCount;
         Items = items.ToList();
     }
@@ -50,6 +50,9 @@ public sealed class PagedList<T>
     public static async Task<PagedList<T>> CreateAsync(IQueryable<T> query, int page, int pageSize)
     {
         int totalCount = await query.CountAsync();
+
+        page = page == 0 ? 1 : page;
+        pageSize = pageSize == 0 ? 10 : pageSize;
 
         T[] items = await query
             .Skip((page - 1) * pageSize)
