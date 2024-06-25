@@ -43,7 +43,7 @@ public class LeaveRequestTest : BaseIntegrationTest
 
         string? name = Configuration.GetValue<string>("TestInitialData:LeaveTypeName");
 
-        LeaveType? leaveType = DbContext.LeaveTypes.FirstOrDefault(leave => leave.Name == name);
+        LeaveType? leaveType = WriteDbContext.LeaveTypes.FirstOrDefault(leave => leave.Name == name);
 
         CreateLeaveRequest.Command command = new(leaveType.Id, startDate, endDate, "comments");
 
@@ -53,7 +53,7 @@ public class LeaveRequestTest : BaseIntegrationTest
         // Assert
         result.IsSuccess.Should().BeTrue();
         result.Value.Should().NotBeNull();
-        LeaveRequest? leaveRequest = await DbContext.LeaveRequests.FindAsync(result.Value.Id);
+        LeaveRequest? leaveRequest = await WriteDbContext.LeaveRequests.FindAsync(result.Value.Id);
         leaveRequest.Should().NotBeNull();
         leaveRequest?.DomainEvents.Should().HaveCount(1).And.AllBeOfType<LeaveRequestCreatedDomainEvent>();
         leaveRequest?.DateCreated.Should().NotBe(DateTimeOffset.MinValue);
@@ -66,8 +66,8 @@ public class LeaveRequestTest : BaseIntegrationTest
         // Arrange
         string? name = Configuration.GetValue<string>("TestInitialData:LeaveTypeName");
 
-        LeaveType? leaveType = DbContext.LeaveTypes.FirstOrDefault(leave => leave.Name == name);
-        LeaveRequest? leaveRequest = await DbContext.LeaveRequests.FirstOrDefaultAsync(leave => leave.LeaveTypeId == leaveType.Id);
+        LeaveType? leaveType = WriteDbContext.LeaveTypes.FirstOrDefault(leave => leave.Name == name);
+        LeaveRequest? leaveRequest = await WriteDbContext.LeaveRequests.FirstOrDefaultAsync(leave => leave.LeaveTypeId == leaveType.Id);
 
         DeleteLeaveRequest.Command command = new(leaveRequest.Id);
 
@@ -76,7 +76,7 @@ public class LeaveRequestTest : BaseIntegrationTest
 
         // Assert
         result.IsSuccess.Should().BeTrue();
-        leaveRequest = await DbContext.LeaveRequests
+        leaveRequest = await WriteDbContext.LeaveRequests
             .IgnoreQueryFilters()
             .FirstOrDefaultAsync(leave => leave.Id == leaveRequest.Id);
 

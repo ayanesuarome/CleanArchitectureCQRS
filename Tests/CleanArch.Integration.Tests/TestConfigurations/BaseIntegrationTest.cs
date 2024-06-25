@@ -22,7 +22,8 @@ public abstract class BaseIntegrationTest : IClassFixture<IntegrationTestWebAppF
     protected IConfiguration Configuration { get; }
 
     protected ISender Sender { get; }
-    protected CleanArchEFDbContext DbContext { get; }
+    internal CleanArchEFWriteDbContext WriteDbContext { get; }
+    internal CleanArchEFReadDbContext ReadDbContext { get; }
     protected UserManager<User> UserManager { get; }
     protected Faker Faker { get; }
 
@@ -31,7 +32,7 @@ public abstract class BaseIntegrationTest : IClassFixture<IntegrationTestWebAppF
         _scope = factory.Services.CreateScope();
         Configuration = _scope.ServiceProvider.GetRequiredService<IConfiguration>();
         Sender = _scope.ServiceProvider.GetRequiredService<ISender>();
-        DbContext = _scope.ServiceProvider.GetRequiredService<CleanArchEFDbContext>();
+        WriteDbContext = _scope.ServiceProvider.GetRequiredService<CleanArchEFWriteDbContext>();
         UserManager = _scope.ServiceProvider.GetRequiredService<UserManager<User>>();
         Faker = new();
     }
@@ -39,7 +40,7 @@ public abstract class BaseIntegrationTest : IClassFixture<IntegrationTestWebAppF
     public void Dispose()
     {
         _scope.Dispose();
-        DbContext.Dispose();
+        WriteDbContext.Dispose();
     }
 
     protected async Task<User> CreateUser()
@@ -76,8 +77,8 @@ public abstract class BaseIntegrationTest : IClassFixture<IntegrationTestWebAppF
 
         Result<LeaveType> leaveTypeResult = LeaveType.Create(nameResult.Value, defaultDaysResult.Value, requirement);
 
-        DbContext.Add(leaveTypeResult.Value);
-        await DbContext.SaveChangesAsync();
+        WriteDbContext.Add(leaveTypeResult.Value);
+        await WriteDbContext.SaveChangesAsync();
 
         return leaveTypeResult.Value;
     }
@@ -89,8 +90,8 @@ public abstract class BaseIntegrationTest : IClassFixture<IntegrationTestWebAppF
         // assign allocations if an allocation does not already exist for a period and leave type
         LeaveAllocation allocation = new(period, leaveType, employee.Id);
         allocation.ChangeNumberOfDays(leaveType.DefaultDays.Value);
-        DbContext.Add(allocation);
-        await DbContext.SaveChangesAsync();
+        WriteDbContext.Add(allocation);
+        await WriteDbContext.SaveChangesAsync();
 
         return allocation;
     }

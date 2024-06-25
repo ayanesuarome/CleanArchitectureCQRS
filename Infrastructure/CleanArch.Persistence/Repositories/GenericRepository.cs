@@ -7,16 +7,17 @@ namespace CleanArch.Persistence.Repositories;
 /// Represents the generic repository with the most common repository methods.
 /// </summary>
 /// <typeparam name="TEntity">The entity type.</typeparam>
+/// <typeparam name="TEntityKey">The entity key type.</typeparam>
 internal abstract class GenericRepository<TEntity, TEntityKey>
     where TEntity : Entity<TEntityKey>
     where TEntityKey : class, IEntityKey
 {
-    protected GenericRepository(CleanArchEFDbContext dbContext) => DbContext = dbContext;
+    protected GenericRepository(CleanArchEFWriteDbContext dbContext) => DbContext = dbContext;
 
     /// <summary>
     /// Gets the database context.
     /// </summary>
-    protected CleanArchEFDbContext DbContext { get; }
+    protected CleanArchEFWriteDbContext DbContext { get; }
 
     private DbSet<TEntity> Entities => DbContext.Set<TEntity>();
 
@@ -30,8 +31,6 @@ internal abstract class GenericRepository<TEntity, TEntityKey>
     /// <returns>The entity with the specified identifier.</returns>
     public async Task<TEntity> GetByIdAsync(TEntityKey id) => await Table.FirstOrDefaultAsync(e => e.Id.Equals(id));
     public async Task<IReadOnlyCollection<TEntity>> GetAsync() => await TableNoTracking.ToArrayAsync();
-
-    public async Task<TEntity> GetAsNoTrackingByIdAsync(TEntityKey id) => await TableNoTracking.FirstOrDefaultAsync(e => e.Id.Equals(id));
 
     public async Task CreateAsync(TEntity entity)
     {

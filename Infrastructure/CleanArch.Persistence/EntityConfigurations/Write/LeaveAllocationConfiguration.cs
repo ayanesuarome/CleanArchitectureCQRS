@@ -4,16 +4,16 @@ using CleanArch.Persistence.Constants;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace CleanArch.Persistence.EntityConfigurations;
+namespace CleanArch.Persistence.EntityConfigurations.Write;
 
-internal sealed class LeaveAllocationConfiguration : IEntityTypeConfiguration<LeaveAllocation>
+internal sealed class LeaveAllocationConfiguration : IEntityTypeConfiguration<LeaveAllocation>, IWriteConfiguration
 {
     public void Configure(EntityTypeBuilder<LeaveAllocation> builder)
     {
         builder.ToTable(TableNames.LeaveAllocations);
 
-        builder.HasKey(leaveAllocation =>  leaveAllocation.Id);
-        
+        builder.HasKey(leaveAllocation => leaveAllocation.Id);
+
         builder.Property(leaveAllocation => leaveAllocation.Id)
             .HasConversion(
                 leaveAllocationId => leaveAllocationId.Id,
@@ -24,7 +24,7 @@ internal sealed class LeaveAllocationConfiguration : IEntityTypeConfiguration<Le
             .HasForeignKey(leaveAllocation => leaveAllocation.LeaveTypeId)
             .IsRequired()
             .OnDelete(DeleteBehavior.NoAction);
-        
+
         // IAuditableEntity
         builder
             .Property(leaveType => leaveType.DateCreated)

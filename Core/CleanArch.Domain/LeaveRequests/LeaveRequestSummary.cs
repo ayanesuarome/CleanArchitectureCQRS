@@ -1,12 +1,10 @@
-﻿namespace CleanArch.Api.Features.LeaveRequests.GetLeaveRequestDetails;
+﻿namespace CleanArch.Domain.LeaveRequests;
 
-public static partial class GetLeaveRequestDetail
-{
-    public sealed record Response(
+public record LeaveRequestSummary(
     Guid Id,
     string StartDate,
     string EndDate,
-    string? RequestComments,
+    string? Comments,
     Guid LeaveTypeId,
     string LeaveTypeName,
     Guid RequestingEmployeeId,
@@ -14,4 +12,3 @@ public static partial class GetLeaveRequestDetail
     bool? IsApproved,
     bool IsCancelled,
     DateTimeOffset DateCreated);
-}

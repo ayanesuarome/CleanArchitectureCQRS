@@ -25,4 +25,8 @@
     <ProjectReference Include="..\CleanArch.Persistence\CleanArch.Persistence.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Update="SonarAnalyzer.CSharp" Version="9.27.0.93347" />
+  </ItemGroup>
+
 </Project>

@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CleanArch.Persistence.Migrations
 {
-    [DbContext(typeof(CleanArchEFDbContext))]
+    [DbContext(typeof(CleanArchEFWriteDbContext))]
     [Migration("20240529132316_CreateDatabase")]
     partial class CreateDatabase
     {

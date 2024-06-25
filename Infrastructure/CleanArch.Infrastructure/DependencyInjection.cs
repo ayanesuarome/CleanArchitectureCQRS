@@ -46,7 +46,7 @@ public static class DependencyInjection
         services.AddSingleton<IEventBus, EventBus>();
         services.AddHostedService<IntegrationEventProcessorJob>();
 
-        string sqlServerConnectionString = configuration.GetConnectionString(CleanArchEFDbContext.ConnectionStringName)!;
+        string sqlServerConnectionString = configuration.GetConnectionString(CleanArchEFWriteDbContext.ConnectionStringName)!;
 
         services.AddHealthChecks()
             // only use custom health checks when required
@@ -54,7 +54,7 @@ public static class DependencyInjection
             // using AspNetCore.HealthChecks.SqlServer
             .AddSqlServer(sqlServerConnectionString)
             // using DB context. Slower response than using AspNetCore.HealthChecks.SqlServer and less informative when server is inaccessible
-            .AddDbContextCheck<CleanArchEFDbContext>();
+            .AddDbContextCheck<CleanArchEFWriteDbContext>();
 
         return services;
     }

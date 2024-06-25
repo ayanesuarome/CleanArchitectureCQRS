@@ -19,9 +19,9 @@ public static class DependencyInjection
         services.AddSingleton<UpdateAuditableEntitiesInterceptor>();
         services.AddSingleton<SoftDeleteEntitiesInterceptor>();
 
-        services.AddDbContext<CleanArchEFDbContext>((sp, options) =>
+        services.AddDbContext<CleanArchEFWriteDbContext>((sp, options) =>
         {
-            options.UseSqlServer(configuration.GetConnectionString(CleanArchEFDbContext.ConnectionStringName));
+            options.UseSqlServer(configuration.GetConnectionString(CleanArchEFWriteDbContext.ConnectionStringName));
             options.LogTo(Console.WriteLine, new[] { RelationalEventId.CommandExecuting });
             options.AddInterceptors(
                 sp.GetRequiredService<ConvertDomainEventsToOutboxMessagesInterceptor>(),
@@ -29,7 +29,14 @@ public static class DependencyInjection
                 sp.GetRequiredService<SoftDeleteEntitiesInterceptor>());
         });
 
-        services.AddScoped<IUnitOfWork>(serviceProvider => serviceProvider.GetRequiredService<CleanArchEFDbContext>());
+        services.AddDbContext<CleanArchEFReadDbContext>(
+            options => options
+                .UseSqlServer(configuration.GetConnectionString(CleanArchEFReadDbContext.ConnectionStringName))
+                .LogTo(Console.WriteLine, new[] { RelationalEventId.CommandExecuting })
+                .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking));
+
+        services.AddScoped<IUnitOfWork>(serviceProvider => serviceProvider.GetRequiredService<CleanArchEFWriteDbContext>());
+        services.AddScoped<IUnitOfWork>(serviceProvider => serviceProvider.GetRequiredService<CleanArchEFReadDbContext>());
 
         return services;
     }
@@ -38,6 +45,7 @@ public static class DependencyInjection
     {
         services.AddScoped<ILeaveTypeRepository, LeaveTypeRepository>();
         services.AddScoped<ILeaveRequestRepository, LeaveRequestRepository>();
+        services.AddScoped<ILeaveRequestSummaryRepository, LeaveRequestSummaryRepository>();
         services.AddScoped<ILeaveAllocationRepository, LeaveAllocationRepository>();
 
         return services;

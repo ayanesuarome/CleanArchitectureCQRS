@@ -13,9 +13,9 @@ public sealed class LeaveRequest : AggregateRoot<LeaveRequestId>, IAuditableEnti
     private LeaveRequest(DateRange range, LeaveType leaveType, Guid employeeId, Comment? comments)
         : base(new LeaveRequestId(Guid.NewGuid()))
     {
-        Ensure.NotNull(range, "The date range is required.", nameof(range));
-        Ensure.NotNull(leaveType, "The leave type is required.", nameof(leaveType));
-        Ensure.NotEmpty(employeeId, "The employee ID is required.", nameof(employeeId));
+        Ensure.NotNull(range, "The date range is required.");
+        Ensure.NotNull(leaveType, "The leave type is required.");
+        Ensure.NotEmpty(employeeId, "The employee ID is required.");
 
         Range = range;
         LeaveTypeId = leaveType.Id;
@@ -75,7 +75,10 @@ public sealed class LeaveRequest : AggregateRoot<LeaveRequestId>, IAuditableEnti
             request.LeaveTypeName,
             request.LeaveTypeId,
             request.RequestingEmployeeId,
-            request.Comments));
+            request.Comments,
+            request.IsApproved,
+            request.IsCancelled,
+            request.DateCreated));
 
         return request;
     }

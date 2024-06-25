@@ -3,9 +3,9 @@ using CleanArch.Persistence.Outbox;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace CleanArch.Persistence.EntityConfigurations;
+namespace CleanArch.Persistence.EntityConfigurations.Write;
 
-internal sealed class OutboxMessageConfiguration : IEntityTypeConfiguration<OutboxMessage>
+internal sealed class OutboxMessageConfiguration : IEntityTypeConfiguration<OutboxMessage>, IWriteConfiguration
 {
     public void Configure(EntityTypeBuilder<OutboxMessage> builder)
     {

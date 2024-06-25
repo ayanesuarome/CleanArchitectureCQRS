@@ -1,32 +1,27 @@
 ﻿using CleanArch.Application.Abstractions.Data;
-using CleanArch.Domain.LeaveAllocations;
 using CleanArch.Domain.LeaveRequests;
-using CleanArch.Domain.LeaveTypes;
 using CleanArch.Persistence.EntityConfigurations.Read;
-using CleanArch.Persistence.EntityConfigurations.Write;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
 
 namespace CleanArch.Persistence;
 
-internal sealed partial class CleanArchEFWriteDbContext : DbContext, IUnitOfWork
+internal sealed partial class CleanArchEFReadDbContext : DbContext, IUnitOfWork
 {
     public const string ConnectionStringName = "CleanArchSqlServerDbContext";
 
-    public CleanArchEFWriteDbContext(DbContextOptions<CleanArchEFWriteDbContext> options)
+    public CleanArchEFReadDbContext(DbContextOptions<CleanArchEFReadDbContext> options)
         : base(options)
     {
     }
 
-    public DbSet<LeaveType> LeaveTypes { get; set; }
-    public DbSet<LeaveRequest> LeaveRequests { get; set; }
-    public DbSet<LeaveAllocation> LeaveAllocations { get; set; }
+    public DbSet<LeaveRequestSummary> LeaveRequests { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.ApplyConfigurationsFromAssembly(
-            typeof(CleanArchEFWriteDbContext).Assembly,
-            type => WriteConfigurationsFilter(type));
+            typeof(CleanArchEFReadDbContext).Assembly,
+            type => ReadConfigurationsFilter(type));
 
         base.OnModelCreating(modelBuilder);
     }
@@ -45,6 +40,6 @@ internal sealed partial class CleanArchEFWriteDbContext : DbContext, IUnitOfWork
     public Task<IDbContextTransaction> BeginTransactionAsync(CancellationToken cancellationToken = default)
         => Database.BeginTransactionAsync(cancellationToken);
 
-    private static bool WriteConfigurationsFilter(Type type) =>
-        type.GetInterface(nameof(IWriteConfiguration)) != null;
+    private static bool ReadConfigurationsFilter(Type type) =>
+        type.GetInterface(nameof(IReadConfiguration)) != null;
 }

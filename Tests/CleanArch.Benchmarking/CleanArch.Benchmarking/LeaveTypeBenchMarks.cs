@@ -18,10 +18,10 @@ namespace CleanArch.Benchmarking
 
             LeaveType entity = LeaveType.Create(name.Value, defaultDays.Value, requirement).Value;
 
-            await context.LeaveTypes.AddAsync(entity);
-            await context.SaveChangesAsync();
+            await Context.LeaveTypes.AddAsync(entity);
+            await Context.SaveChangesAsync();
 
-            bool exist = await context.LeaveTypes
+            bool exist = await Context.LeaveTypes
                 .AsNoTracking()
                 .AnyAsync(e => e.Id == entity.Id);
         }
@@ -35,10 +35,10 @@ namespace CleanArch.Benchmarking
 
             LeaveType entity = LeaveType.Create(name.Value, defaultDays.Value, requirement).Value;
             
-            await context.LeaveTypes.AddAsync(entity);
-            await context.SaveChangesAsync();
+            await Context.LeaveTypes.AddAsync(entity);
+            await Context.SaveChangesAsync();
 
-            LeaveType? leaveType = await context.LeaveTypes
+            LeaveType? leaveType = await Context.LeaveTypes
                 .AsNoTracking()
                 .FirstOrDefaultAsync(e => e.Id == entity.Id);
         }

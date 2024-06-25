@@ -4,7 +4,7 @@ namespace CleanArch.Api.Features.LeaveRequests.GetLeaveRequestList;
 
 public static partial class GetLeaveRequestList
 {
-    public sealed record Response
+    internal sealed record Response
     {
         public Response(PagedList<Model> leaveRequests) => LeaveRequests = leaveRequests;
 
@@ -14,11 +14,7 @@ public static partial class GetLeaveRequestList
             Guid Id,
             string StartDate,
             string EndDate,
-            string? RequestComments,
-            Guid LeaveTypeId,
             string LeaveTypeName,
-            Guid RequestingEmployeeId,
-            string EmployeeFullName,
             bool? IsApproved,
             bool IsCancelled,
             DateTimeOffset DateCreated)

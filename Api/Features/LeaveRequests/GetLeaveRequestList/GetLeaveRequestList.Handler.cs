@@ -1,7 +1,5 @@
-﻿using CleanArch.Api.Contracts;
-using CleanArch.Application.Abstractions.Authentication;
+﻿using CleanArch.Application.Abstractions.Authentication;
 using CleanArch.Application.Abstractions.Messaging;
-using CleanArch.Application.Contracts;
 using CleanArch.Domain.Core.Primitives;
 using CleanArch.Domain.Core.Primitives.Result;
 using CleanArch.Domain.LeaveRequests;
@@ -12,12 +10,12 @@ public static partial class GetLeaveRequestList
 {
     internal sealed class Handler : IQueryHandler<Query, Response>
     {
-        private readonly ILeaveRequestRepository _repository;
+        private readonly ILeaveRequestSummaryRepository _repository;
         private readonly IUserIdentifierProvider _userIdentifierProvider;
         private readonly IUserService _userService;
 
         public Handler(
-            ILeaveRequestRepository repository,
+            ILeaveRequestSummaryRepository repository,
             IUserIdentifierProvider userIdentifierProvider,
             IUserService userService)
         {
@@ -30,7 +28,7 @@ public static partial class GetLeaveRequestList
         {
             Guid userId = _userIdentifierProvider.UserId;
 
-            PagedList<LeaveRequest> pagedList = await _repository.GetLeaveRequestsWithDetailsAsync(
+            PagedList<LeaveRequestSummary> pagedList = await _repository.GetLeaveRequestsWithDetailsAsync(
                 query.SearchTerm,
                 query.SortColumn,
                 query.SortOrder,
@@ -40,18 +38,13 @@ public static partial class GetLeaveRequestList
 
             List<Response.Model> models = [];
 
-            foreach (LeaveRequest leaveRequest in pagedList.Items)
+            foreach (LeaveRequestSummary leaveRequest in pagedList.Items)
             {
-                var employeeFullName = (await _userService.GetEmployee(userId)).FullName;
                 models.Add(new(
                     leaveRequest.Id,
-                    leaveRequest.Range.StartDate.ToString(),
-                    leaveRequest.Range.EndDate.ToString(),
-                    leaveRequest.Comments?.Value,
-                    leaveRequest.LeaveTypeId,
+                    leaveRequest.StartDate,
+                    leaveRequest.EndDate,
                     leaveRequest.LeaveTypeName,
-                    leaveRequest.RequestingEmployeeId,
-                    employeeFullName,
                     leaveRequest.IsApproved,
                     leaveRequest.IsCancelled,
                     leaveRequest.DateCreated));

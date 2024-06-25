@@ -27,4 +27,8 @@
     <ProjectReference Include="..\CleanArch.Benchmarking\CleanArch.Benchmarking\CleanArch.Benchmarking.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Update="SonarAnalyzer.CSharp" Version="9.27.0.93347" />
+  </ItemGroup>
+
 </Project>

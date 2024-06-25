@@ -4,3 +4,4 @@ docker build --no-cache --pull -t cleanarch-blazorwasm ./UI
 
 
 docker run -d -p 5195:80 cleanarch-blazorwasm
+docker container run -d --name cleanarch-ui --publish 5195:80 cleanarch-blazorwasm

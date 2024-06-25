@@ -65,8 +65,8 @@ public class LeaveRequestTest : BaseIntegrationTest, IAsyncLifetime
 
         Result<LeaveType> leaveTypeResult = LeaveType.Create(nameResult.Value, defaultDaysResult.Value, requirement);
 
-        DbContext.Add(leaveTypeResult.Value);
-        await DbContext.SaveChangesAsync();
+        WriteDbContext.Add(leaveTypeResult.Value);
+        await WriteDbContext.SaveChangesAsync();
 
         return leaveTypeResult.Value;
     }
@@ -78,8 +78,8 @@ public class LeaveRequestTest : BaseIntegrationTest, IAsyncLifetime
         // assign allocations if an allocation does not already exist for a period and leave type
         LeaveAllocation allocation = new(period, leaveType, employee.Id);
         allocation.ChangeNumberOfDays(leaveType.DefaultDays.Value);
-        DbContext.Add(allocation);
-        await DbContext.SaveChangesAsync();
+        WriteDbContext.Add(allocation);
+        await WriteDbContext.SaveChangesAsync();
 
         return allocation;
     }
@@ -99,7 +99,7 @@ public class LeaveRequestTest : BaseIntegrationTest, IAsyncLifetime
         // Assert
         result.IsSuccess.Should().BeTrue();
         result.Value.Should().NotBeNull();
-        LeaveRequest? leaveRequest = await DbContext.LeaveRequests.FindAsync(result.Value.Id);
+        LeaveRequest? leaveRequest = await WriteDbContext.LeaveRequests.FindAsync(result.Value.Id);
         leaveRequest.Should().NotBeNull();
         leaveRequest?.DomainEvents.Should().HaveCount(1).And.AllBeOfType<LeaveRequestCreatedDomainEvent>();
     }

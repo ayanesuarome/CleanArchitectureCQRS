@@ -6,7 +6,7 @@ namespace CleanArch.Persistence.Repositories;
 
 internal sealed class LeaveAllocationRepository : GenericRepository<LeaveAllocation, LeaveAllocationId>, ILeaveAllocationRepository
 {
-    public LeaveAllocationRepository(CleanArchEFDbContext dbContext)
+    public LeaveAllocationRepository(CleanArchEFWriteDbContext dbContext)
         : base(dbContext)
     {
     }

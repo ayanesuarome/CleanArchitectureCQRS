@@ -1,13 +1,10 @@
-﻿using CleanArch.Api.Contracts;
-using CleanArch.Application.Abstractions.Messaging;
-using CleanArch.Application.Contracts;
-using CleanArch.Domain.Core.Primitives;
+﻿using CleanArch.Application.Abstractions.Messaging;
 
 namespace CleanArch.Api.Features.LeaveRequests.GetLeaveRequestList;
 
 public static partial class GetLeaveRequestList
 {
-    public sealed record Query(
+    internal sealed record Query(
         string? SearchTerm,
         string? SortColumn,
         string? SortOrder,

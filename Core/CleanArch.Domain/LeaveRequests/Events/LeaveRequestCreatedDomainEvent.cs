@@ -13,4 +13,7 @@ public sealed record LeaveRequestCreatedDomainEvent(
     Name LeaveTypeName,
     LeaveTypeId LeaveTypeId,
     Guid RequestingEmployeeId,
-    Comment? Comments) : DomainEvent;
+    Comment? Comments,
+    bool? IsApproved,
+    bool IsCancelled,
+    DateTimeOffset DateCreated) : DomainEvent;

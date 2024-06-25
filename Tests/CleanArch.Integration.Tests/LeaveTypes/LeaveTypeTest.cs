@@ -30,7 +30,7 @@ public class LeaveTypeTest : BaseIntegrationTest
 
         // Assert
         Assert.True(result.IsSuccess);
-        LeaveType? leaveType = DbContext.LeaveTypes.FirstOrDefault(leave => leave.Id == result.Value);
+        LeaveType? leaveType = WriteDbContext.LeaveTypes.FirstOrDefault(leave => leave.Id == result.Value);
         Assert.NotNull(leaveType);
     }
 
@@ -38,7 +38,7 @@ public class LeaveTypeTest : BaseIntegrationTest
     public async Task UpdateHandlerShouldUpdate_LeaveTypeFromDatabase()
     {
         // Arrange
-        LeaveType? leaveType = DbContext.LeaveTypes.FirstOrDefault(leave => leave.Name == "Vaca");
+        LeaveType? leaveType = WriteDbContext.LeaveTypes.FirstOrDefault(leave => leave.Name == "Vaca");
         UpdateLeaveType.Command command = new(leaveType.Id, "Vacation", 20);
 
         // Act
@@ -46,7 +46,7 @@ public class LeaveTypeTest : BaseIntegrationTest
 
         // Assert
         result.IsSuccess.Should().BeTrue();
-        leaveType = await DbContext.LeaveTypes.FindAsync(leaveType.Id);
+        leaveType = await WriteDbContext.LeaveTypes.FindAsync(leaveType.Id);
         leaveType.Should().NotBeNull();
         leaveType?.Name.Value.Should().Be("Vacation");
         leaveType?.DefaultDays.Value.Should().Be(20);
@@ -56,7 +56,7 @@ public class LeaveTypeTest : BaseIntegrationTest
     public async Task GetHandlerShouldFetch_LeaveTypeFromDatabase()
     {
         // Arrange
-        LeaveType? leaveType = DbContext.LeaveTypes.FirstOrDefault(leave => leave.Name == "Vacation");
+        LeaveType? leaveType = WriteDbContext.LeaveTypes.FirstOrDefault(leave => leave.Name == "Vacation");
         GetLeaveTypeDetail.Query query = new(leaveType.Id);
 
         // Act
@@ -78,8 +78,8 @@ public class LeaveTypeTest : BaseIntegrationTest
 
         Result<LeaveType> leaveTypeResult = LeaveType.Create(nameResult.Value, defaultDaysResult.Value, requirement);
 
-        DbContext.Add(leaveTypeResult.Value);
-        await DbContext.SaveChangesAsync();
+        WriteDbContext.Add(leaveTypeResult.Value);
+        await WriteDbContext.SaveChangesAsync();
 
         GetLeaveTypeList.Query query = new();
 
@@ -97,7 +97,7 @@ public class LeaveTypeTest : BaseIntegrationTest
     public async Task DeleteHandlerShouldDelete_LeaveTypeFromDatabase()
     {
         // Arrange
-        LeaveType? leaveType = DbContext.LeaveTypes.FirstOrDefault(leave => leave.Name == "Sick");
+        LeaveType? leaveType = WriteDbContext.LeaveTypes.FirstOrDefault(leave => leave.Name == "Sick");
         DeleteLeaveType.Command command = new(leaveType.Id);
 
         // Act
@@ -105,7 +105,7 @@ public class LeaveTypeTest : BaseIntegrationTest
 
         // Assert
         Assert.True(result.IsSuccess);
-        leaveType = await DbContext.LeaveTypes.FindAsync(leaveType.Id);
+        leaveType = await WriteDbContext.LeaveTypes.FindAsync(leaveType.Id);
         Assert.Null(leaveType);
     }
 }

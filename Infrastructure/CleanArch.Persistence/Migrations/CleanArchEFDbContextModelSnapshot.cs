@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CleanArch.Persistence.Migrations
 {
-    [DbContext(typeof(CleanArchEFDbContext))]
+    [DbContext(typeof(CleanArchEFWriteDbContext))]
     partial class CleanArchEFDbContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)

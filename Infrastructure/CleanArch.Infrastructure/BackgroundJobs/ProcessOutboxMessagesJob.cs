@@ -24,7 +24,7 @@ internal sealed class ProcessOutboxMessagesJob : IJob
         TypeNameHandling = TypeNameHandling.All
     };
 
-    private readonly CleanArchEFDbContext _dbContext;
+    private readonly CleanArchEFWriteDbContext _dbContext;
     private readonly IPublisher _publisher;
     private readonly ProcessOutboxMessagesOptions _options;
     private readonly ILogger<ProcessOutboxMessagesJob> _logger;
@@ -38,7 +38,7 @@ internal sealed class ProcessOutboxMessagesJob : IJob
     /// <param name="options">The options.</param>
     /// <param name="options">The logger.</param>
     public ProcessOutboxMessagesJob(
-        CleanArchEFDbContext dbContext,
+        CleanArchEFWriteDbContext dbContext,
         IPublisher publisher,
         IOptions<ProcessOutboxMessagesOptions> options,
         ILogger<ProcessOutboxMessagesJob> logger)

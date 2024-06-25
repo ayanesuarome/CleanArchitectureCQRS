@@ -42,14 +42,17 @@ public class IntegrationTestWebAppFactory : WebApplicationFactory<Program>, IAsy
             ushort port = _dbContainer.GetMappedPublicPort(MsSqlPort);
             string connectionString = $"Server={host},{port};Database={Database};User={Username};Password={Password};Trust Server Certificate=True;";
 
-            services.RemoveAll(typeof(DbContextOptions<CleanArchEFDbContext>));
-            services.AddDbContext<CleanArchEFDbContext>((sp, options) =>
+            services.RemoveAll(typeof(DbContextOptions<CleanArchEFWriteDbContext>));            
+            services.AddDbContext<CleanArchEFWriteDbContext>((sp, options) =>
             {
                 options.UseSqlServer(connectionString);
                 options.AddInterceptors(
                     sp.GetRequiredService<UpdateAuditableEntitiesInterceptor>(),
                     sp.GetRequiredService<SoftDeleteEntitiesInterceptor>());
             });
+
+            services.RemoveAll(typeof(DbContextOptions<CleanArchEFReadDbContext>));
+            services.AddDbContext<CleanArchEFReadDbContext>(options => options.UseSqlServer(connectionString));
 
             services.RemoveAll(typeof(DbContextOptions<CleanArchIdentityEFDbContext>));
             services.AddDbContext<CleanArchIdentityEFDbContext>(options => options.UseSqlServer(connectionString));

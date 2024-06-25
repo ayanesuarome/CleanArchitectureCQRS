@@ -10,4 +10,8 @@
     <ProjectReference Include="..\..\Core\CleanArch.Application\CleanArch.Application.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Update="SonarAnalyzer.CSharp" Version="9.27.0.93347" />
+  </ItemGroup>
+
 </Project>

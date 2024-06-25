@@ -4,9 +4,9 @@ using CleanArch.Persistence.Constants;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace CleanArch.Persistence.EntityConfigurations;
+namespace CleanArch.Persistence.EntityConfigurations.Write;
 
-internal sealed class LeaveTypeConfiguration : IEntityTypeConfiguration<LeaveType>
+internal sealed class LeaveTypeConfiguration : IEntityTypeConfiguration<LeaveType>, IWriteConfiguration
 {
     public void Configure(EntityTypeBuilder<LeaveType> builder)
     {

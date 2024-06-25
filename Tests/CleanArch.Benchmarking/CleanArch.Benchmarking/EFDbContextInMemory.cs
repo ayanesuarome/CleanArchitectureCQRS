@@ -5,19 +5,19 @@ namespace CleanArch.Benchmarking
 {
     public abstract class EFDbContextInMemory : IDisposable
     {
-        public readonly CleanArchEFDbContext context;
+        internal readonly CleanArchEFWriteDbContext Context;
 
         public EFDbContextInMemory()
         {
-            DbContextOptions<CleanArchEFDbContext> dbOptions = new DbContextOptionsBuilder<CleanArchEFDbContext>()
+            DbContextOptions<CleanArchEFWriteDbContext> dbOptions = new DbContextOptionsBuilder<CleanArchEFWriteDbContext>()
                 .UseInMemoryDatabase(Guid.NewGuid().ToString()).Options;
 
-            context = new CleanArchEFDbContext(dbOptions);
+            Context = new CleanArchEFWriteDbContext(dbOptions);
         }
 
         public void Dispose()
         {
-            context.Dispose();
+            Context.Dispose();
         }
     }
 }
