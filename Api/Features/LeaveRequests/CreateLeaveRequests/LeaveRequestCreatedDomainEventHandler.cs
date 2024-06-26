@@ -13,17 +13,17 @@ public sealed class LeaveRequestCreatedDomainEventHandler : IDomainEventHandler<
 {
     private readonly IUserService _userService;
     private readonly ILeaveRequestSummaryRepository _summaryRepository;
-    private readonly IUnitOfWork _unitOfWork;
+    private readonly IReadUnitOfWork _unitOfWork;
     private readonly IEventBus _eventBus;
 
     public LeaveRequestCreatedDomainEventHandler(
         IUserService userService,
         ILeaveRequestSummaryRepository summaryRepository,
-        IUnitOfWork unitOfWork,
+        IReadUnitOfWork unitOfWork,
         IEventBus eventBus)
     {
-        _summaryRepository = summaryRepository;
         _userService = userService;
+        _summaryRepository = summaryRepository;
         _unitOfWork = unitOfWork;
         _eventBus = eventBus;
     }

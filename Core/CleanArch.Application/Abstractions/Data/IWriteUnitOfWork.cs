@@ -5,7 +5,7 @@ namespace CleanArch.Application.Abstractions.Data;
 /// <summary>
 /// Represents the unit of work interface.
 /// </summary>
-public interface IUnitOfWork
+public interface IWriteUnitOfWork
 {
     /// <summary>
     /// Saves all of the pending changes in the unit of work.

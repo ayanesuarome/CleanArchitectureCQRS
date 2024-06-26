@@ -9,7 +9,9 @@ public static class MigrationExtension
     public static void ApplyMigrations(this WebApplication app)
     {
         using var scope = app.Services.CreateScope();
-        CleanArchEFWriteDbContext dbContext = scope.ServiceProvider.GetRequiredService<CleanArchEFWriteDbContext>();
-        dbContext.Database.Migrate();
+        CleanArchEFWriteDbContext writeDbContext = scope.ServiceProvider.GetRequiredService<CleanArchEFWriteDbContext>();
+        writeDbContext.Database.Migrate();
+        CleanArchEFReadDbContext readDbContext = scope.ServiceProvider.GetRequiredService<CleanArchEFReadDbContext>();
+        readDbContext.Database.Migrate();
     }
 }

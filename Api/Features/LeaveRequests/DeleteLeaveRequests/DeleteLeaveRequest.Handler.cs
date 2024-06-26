@@ -20,6 +20,8 @@ public static partial class DeleteLeaveRequest
                 return new NotFoundResult(DomainErrors.LeaveRequest.NotFound(command.Id));
             }
 
+            leaveRequest.Delete();
+
             _repository.Delete(leaveRequest);
 
             return Result.Success();

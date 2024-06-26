@@ -1,4 +1,6 @@
-﻿namespace CleanArch.Domain.LeaveRequests;
+﻿using System.Runtime.CompilerServices;
+
+namespace CleanArch.Domain.LeaveRequests;
 
 public record LeaveRequestSummary(
     Guid Id,

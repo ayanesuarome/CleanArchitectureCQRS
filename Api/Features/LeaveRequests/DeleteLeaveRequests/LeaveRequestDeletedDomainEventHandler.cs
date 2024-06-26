@@ -8,11 +8,11 @@ namespace CleanArch.Api.Features.LeaveRequests.DeleteLeaveRequests;
 public class LeaveRequestDeletedDomainEventHandler : IDomainEventHandler<LeaveRequestDeletedDomainEvent>
 {
     private readonly ILeaveRequestSummaryRepository _summaryRepository;
-    private readonly IUnitOfWork _unitOfWork;
+    private readonly IReadUnitOfWork _unitOfWork;
 
     public LeaveRequestDeletedDomainEventHandler(
         ILeaveRequestSummaryRepository summaryRepository,
-        IUnitOfWork unitOfWork)
+        IReadUnitOfWork unitOfWork)
     {
         _summaryRepository = summaryRepository;
         _unitOfWork = unitOfWork;

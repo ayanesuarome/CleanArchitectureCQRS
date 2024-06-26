@@ -35,8 +35,8 @@ public static class DependencyInjection
                 .LogTo(Console.WriteLine, new[] { RelationalEventId.CommandExecuting })
                 .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking));
 
-        services.AddScoped<IUnitOfWork>(serviceProvider => serviceProvider.GetRequiredService<CleanArchEFWriteDbContext>());
-        services.AddScoped<IUnitOfWork>(serviceProvider => serviceProvider.GetRequiredService<CleanArchEFReadDbContext>());
+        services.AddScoped<IWriteUnitOfWork>(serviceProvider => serviceProvider.GetRequiredService<CleanArchEFWriteDbContext>());
+        services.AddScoped<IReadUnitOfWork>(serviceProvider => serviceProvider.GetRequiredService<CleanArchEFReadDbContext>());
 
         return services;
     }

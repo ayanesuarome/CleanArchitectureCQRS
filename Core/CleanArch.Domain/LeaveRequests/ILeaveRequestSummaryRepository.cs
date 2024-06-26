@@ -13,5 +13,6 @@ public interface ILeaveRequestSummaryRepository
         int pageSize,
         Guid? employeeId = null);
     void Add(LeaveRequestSummary summary);
+    void Update(LeaveRequestSummary summary);
     void Delete(LeaveRequestSummary summary);
 }

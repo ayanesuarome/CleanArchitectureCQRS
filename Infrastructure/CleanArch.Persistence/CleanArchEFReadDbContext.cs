@@ -2,11 +2,10 @@
 using CleanArch.Domain.LeaveRequests;
 using CleanArch.Persistence.EntityConfigurations.Read;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Storage;
 
 namespace CleanArch.Persistence;
 
-internal sealed partial class CleanArchEFReadDbContext : DbContext, IUnitOfWork
+internal sealed partial class CleanArchEFReadDbContext : DbContext, IReadUnitOfWork
 {
     public const string ConnectionStringName = "CleanArchSqlServerDbContext";
 
@@ -35,10 +34,6 @@ internal sealed partial class CleanArchEFReadDbContext : DbContext, IUnitOfWork
     {
         return await base.SaveChangesAsync(cancellationToken);
     }
-
-    /// <inheritdoc />
-    public Task<IDbContextTransaction> BeginTransactionAsync(CancellationToken cancellationToken = default)
-        => Database.BeginTransactionAsync(cancellationToken);
 
     private static bool ReadConfigurationsFilter(Type type) =>
         type.GetInterface(nameof(IReadConfiguration)) != null;

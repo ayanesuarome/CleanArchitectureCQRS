@@ -134,6 +134,11 @@ public sealed class LeaveRequest : AggregateRoot<LeaveRequestId>, IAuditableEnti
         return Result.Success();
     }
 
+    public void Delete()
+    {
+        RaiseDomainEvent(new LeaveRequestDeletedDomainEvent(Id));
+    }
+
     public void UpdateDateRange(DateRange range)
     {
         if (range == Range)

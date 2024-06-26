@@ -50,11 +50,16 @@ internal sealed class LeaveRequestSummaryRepository(CleanArchEFReadDbContext dbC
 
     public void Add(LeaveRequestSummary summary)
     {
-        dbContext.Add(summary);
+        dbContext.LeaveRequests.Add(summary);
+    }
+
+    public void Update(LeaveRequestSummary summary)
+    {
+        dbContext.LeaveRequests.Update(summary);
     }
 
     public void Delete(LeaveRequestSummary summary)
     {
-        dbContext.Remove(summary);
+        dbContext.LeaveRequests.Remove(summary);
     }
 }

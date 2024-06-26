@@ -15,13 +15,13 @@ internal sealed class TransactionBehavior<TRequest, TResponse> : IPipelineBehavi
     where TRequest : ICommand<TResponse>
     where TResponse : Result
 {
-    private readonly IUnitOfWork _unitOfWork;
+    private readonly IWriteUnitOfWork _unitOfWork;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="TransactionBehavior{TRequest,TResponse}"/> class.
     /// </summary>
     /// <param name="unitOfWork">The unit of work.</param>
-    public TransactionBehavior(IUnitOfWork unitOfWork) => _unitOfWork = unitOfWork;
+    public TransactionBehavior(IWriteUnitOfWork unitOfWork) => _unitOfWork = unitOfWork;
 
     public async Task<TResponse> Handle(TRequest request, RequestHandlerDelegate<TResponse> next, CancellationToken cancellationToken)
     {

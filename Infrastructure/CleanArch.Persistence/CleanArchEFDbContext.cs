@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage;
 
 namespace CleanArch.Persistence;
 
-internal sealed partial class CleanArchEFWriteDbContext : DbContext, IUnitOfWork
+internal sealed partial class CleanArchEFWriteDbContext : DbContext, IWriteUnitOfWork
 {
     public const string ConnectionStringName = "CleanArchSqlServerDbContext";
 
