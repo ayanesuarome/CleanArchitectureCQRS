@@ -100,18 +100,40 @@ internal sealed class ProcessOutboxMessagesJob : IJob
 
     private async Task<IReadOnlyCollection<OutboxMessage>> GetOutboxMessages(CancellationToken cancellationToken)
     {
-        //_dbContext.Database.ExecuteSqlRawAsync
+        //return await _dbContext
+        //    .Set<OutboxMessage>()
+        //    .Take(_options.BatchSize)
+        //    .ToListAsync(cancellationToken);
 
         return await _dbContext
-            .Set<OutboxMessage>()
-            .Take(_options.BatchSize)
-            .ToListAsync(cancellationToken);
+            .Database
+            .SqlQuery<OutboxMessage>($@"
+                SELECT Id, Content
+                FROM OutboxMessages
+                WHERE ProcessedOn IS NULL
+                ORDER BY OccurredOn
+                LIMIT {_options.BatchSize}")
+            .ToArrayAsync();
     }
 
     private async Task UpdateOutboxMessageAsync(OutboxMessage message, Exception? exception)
     {
-        message.UpdateProcessedOn(SystemTimeProvider.UtcNow);
-        message.UpdateError(exception?.ToString());
-        await _dbContext.SaveChangesAsync();
+        //message.UpdateProcessedOn(SystemTimeProvider.UtcNow);
+        //message.UpdateError(exception?.ToString());
+        //await _dbContext.SaveChangesAsync();
+
+        string updateOutboxMessageSql = $@"
+            UPDATE OutboxMessages
+            SET ProcessedOn = {SystemTimeProvider.UtcNow},
+                Error = {exception?.ToString()}
+            WHERE Id = {message.Id}";
+
+        await _dbContext
+            .Database
+            .ExecuteSqlAsync($@"
+                UPDATE OutboxMessages
+                SET ProcessedOn = {SystemTimeProvider.UtcNow},
+                    Error = {exception?.ToString()}
+                WHERE Id = {message.Id}");
     }
 }

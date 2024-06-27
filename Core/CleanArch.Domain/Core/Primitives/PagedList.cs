@@ -62,7 +62,7 @@ public sealed class PagedList<T>
         return new(items, page, pageSize, totalCount);
     }
 
-    public static PagedList<T> Map<TEntity>(PagedList<TEntity> pagedList, IReadOnlyCollection<T> valuesToMap)
+    public static PagedList<T> Map<TModel>(PagedList<TModel> pagedList, IReadOnlyCollection<T> valuesToMap)
     {
         return new(valuesToMap, pagedList.Page, pagedList.PageSize, pagedList.TotalCount);
     }

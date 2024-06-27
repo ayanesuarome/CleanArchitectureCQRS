@@ -12,4 +12,5 @@ ManualConfig config = new()
 };
 
 //BenchmarkRunner.Run<LeaveTypeBenchMarks>();
-BenchmarkRunner.Run<StringBenchMarks>();
+//BenchmarkRunner.Run<StringBenchMarks>();
+BenchmarkRunner.Run<OutBoxMessageBenchMarks>();
