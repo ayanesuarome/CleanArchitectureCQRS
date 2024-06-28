@@ -4,5 +4,10 @@ namespace CleanArch.Api.Features.LeaveTypes.GetLeaveTypeList;
 
 public static partial class GetLeaveTypeList
 {
-    public sealed record Query : IQuery<Response>;
+    public sealed record Query : ICachedQuery<Response>
+    {
+        public string CacheKey => "users-list";
+
+        public TimeSpan? Expiration => null;
+    }
 }

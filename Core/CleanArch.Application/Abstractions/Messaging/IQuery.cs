@@ -7,6 +7,4 @@ namespace CleanArch.Application.Abstractions.Messaging;
 /// Marker interface to represent a query with a response.
 /// </summary>
 /// <typeparam name="TResponse">The query response type.</typeparam>
-public interface IQuery<TResponse> : IRequest<Result<TResponse>>
-{
-}
+public interface IQuery<TResponse> : IRequest<Result<TResponse>>;

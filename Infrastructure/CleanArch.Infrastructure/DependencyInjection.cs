@@ -1,6 +1,8 @@
-﻿using CleanArch.Application.Abstractions.Email;
+﻿using CleanArch.Application.Abstractions.Caching;
+using CleanArch.Application.Abstractions.Email;
 using CleanArch.Application.EventBus;
 using CleanArch.Infrastructure.BackgroundJobs;
+using CleanArch.Infrastructure.Caching;
 using CleanArch.Infrastructure.Emails;
 using CleanArch.Infrastructure.Events;
 using CleanArch.Infrastructure.Health;
@@ -55,6 +57,9 @@ public static class DependencyInjection
             .AddSqlServer(sqlServerConnectionString)
             // using DB context. Slower response than using AspNetCore.HealthChecks.SqlServer and less informative when server is inaccessible
             .AddDbContextCheck<CleanArchEFDbContext>();
+
+        services.AddMemoryCache();
+        services.AddSingleton<ICacheService, CacheService>();
 
         return services;
     }

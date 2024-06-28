@@ -19,6 +19,7 @@ namespace CleanArch.Api
             {
                 config.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly());
                 config.AddOpenBehavior(typeof(RequestLoggingPipelineBehavior<,>));
+                config.AddOpenBehavior(typeof(QueryCachingPipelineBehavior<,>));
                 config.AddOpenBehavior(typeof(ValidationPipelineBehavior<,>));
                 config.AddOpenBehavior(typeof(TransactionBehavior<,>));
             });
