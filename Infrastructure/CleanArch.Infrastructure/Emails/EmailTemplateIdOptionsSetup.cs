@@ -8,5 +8,6 @@ internal sealed class EmailTemplateIdOptionsSetup(IConfiguration configuration)
 {
     private const string SectionName = "EmailTemplateIds";
 
+    /// <inheritdoc />
     public void Configure(EmailTemplateIdOptions options) => configuration.GetRequiredSection(SectionName).Bind(options);
 }

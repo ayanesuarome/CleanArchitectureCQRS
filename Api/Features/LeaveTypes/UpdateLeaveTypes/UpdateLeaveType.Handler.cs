@@ -46,6 +46,8 @@ public static partial class UpdateLeaveType
 
             leaveType.UpdateDefaultDays(defaultDaysResult.Value);
 
+            leaveType.NotifyUpdate();
+
             return Result.Success<Unit>(Unit.Value);
         }
     }

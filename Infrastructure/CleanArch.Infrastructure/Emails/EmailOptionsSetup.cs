@@ -8,5 +8,6 @@ internal sealed class EmailOptionsSetup(IConfiguration configuration)
 {
     private const string SectionName = "Email";
 
+    /// <inheritdoc />
     public void Configure(EmailOptions options) => configuration.GetRequiredSection(SectionName).Bind(options);
 }

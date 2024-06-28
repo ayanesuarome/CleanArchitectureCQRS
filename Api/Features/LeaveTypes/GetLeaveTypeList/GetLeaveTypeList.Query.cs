@@ -6,7 +6,7 @@ public static partial class GetLeaveTypeList
 {
     public sealed record Query : ICachedQuery<Response>
     {
-        public string CacheKey => "users-list";
+        public string CacheKey => "users";
 
         public TimeSpan? Expiration => null;
     }

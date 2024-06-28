@@ -22,6 +22,8 @@ public static partial class DeleteLeaveType
             }
 
             _repository.Delete(leaveTypeToDelete);
+            leaveTypeToDelete.NotifyDeletion();
+
             return Result.Success<Unit>(Unit.Value);
         }
     }

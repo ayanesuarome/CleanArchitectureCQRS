@@ -22,6 +22,7 @@ public static class DependencyInjection
         services.ConfigureOptions<EmailTemplateIdOptionsSetup>();
         services.ConfigureOptions<ProcessOutboxMessagesOptionsSetup>();
         services.ConfigureOptions<IntegrationEventProcessorJobOptionsSetup>();
+        services.ConfigureOptions<CacheOptionsSetup>();
 
         services.AddTransient<IEmailSender, EmailSender>();
 
