@@ -10,8 +10,8 @@ internal sealed class CacheService : ICacheService
         IMemoryCache memoryCache,
         IOptions<CacheOptions> options)
     {
-        this._memoryCache = memoryCache;
-        this._options = options;
+        _memoryCache = memoryCache;
+        _options = options;
         _defaultExpiration = TimeSpan.FromMinutes(5);
     }
 

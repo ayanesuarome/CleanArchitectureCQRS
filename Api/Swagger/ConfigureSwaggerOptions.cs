@@ -22,7 +22,7 @@ internal sealed class ConfigureSwaggerOptions(IApiVersionDescriptionProvider pro
             options.SwaggerDoc(description.GroupName, CreateInfoForApiVersion(description));
         }
 
-        options.CustomSchemaIds(selector => selector.FullName);
+        options.CustomSchemaIds(selector => selector.FullName?.Replace('+', '.'));
 
         options.AddSecurityDefinition(
                 name: JwtBearerDefaults.AuthenticationScheme,

@@ -26,8 +26,8 @@ internal sealed class CacheInvalidationLeaveTypeHandler(ICacheService cacheServi
 
     private Task HandleInternal(Guid leaveTypeId)
     {
-        cacheService.Remove($"users-by-id-{leaveTypeId}");
-        cacheService.Remove($"users");
+        cacheService.Remove($"leave-type-by-id-{leaveTypeId}");
+        cacheService.Remove($"leavetypes");
 
         return Task.CompletedTask;
     }
