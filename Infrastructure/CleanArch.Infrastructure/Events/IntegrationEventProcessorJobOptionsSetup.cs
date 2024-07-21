@@ -5,7 +5,7 @@ using Microsoft.Extensions.Options;
 namespace CleanArch.Infrastructure.BackgroundJobs;
 
 /// <summary>
-/// Represents the <see cref="ProcessOutboxMessagesOptions"/> setup.
+/// Represents the <see cref="IntegrationEventProcessorJobOptionsSetup"/> setup.
 /// </summary>
 internal sealed class IntegrationEventProcessorJobOptionsSetup(IConfiguration configuration)
     : IConfigureOptions<IntegrationEventProcessorJobOptions>
