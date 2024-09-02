@@ -42,20 +42,21 @@ internal sealed class TransactionBehavior<TRequest, TResponse> : IPipelineBehavi
             await transaction.CommitAsync(cancellationToken);
             return response;
         }
-        
+
         // I would rather use transactions per commands and not from a pipeline
-        catch(DbUpdateException e)
+        catch (DbUpdateConcurrencyException e)
+        {
+            throw;
+        }
+        // I would rather use transactions per commands and not from a pipeline
+        catch (DbUpdateException e)
             //when (e.InnerException is SqlException { SqlState: })
         {
             await transaction.RollbackAsync(cancellationToken);
 
             throw;
         }
-        // I would rather use transactions per commands and not from a pipeline
-        catch (DbUpdateConcurrencyException)
-        {
-            throw;
-        }
+
         catch (Exception)
         {
             await transaction.RollbackAsync(cancellationToken);
