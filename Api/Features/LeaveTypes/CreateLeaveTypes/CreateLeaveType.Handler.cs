@@ -11,12 +11,10 @@ public static partial class CreateLeaveType
     internal sealed class Handler : ICommandHandler<Command, Result<Guid>>
     {
         private readonly ILeaveTypeRepository _repository;
-        private readonly IUnitOfWork unitOfWork;
 
-        public Handler(ILeaveTypeRepository repository, IUnitOfWork unitOfWork)
+        public Handler(ILeaveTypeRepository repository)
         {
             _repository = repository;
-            this.unitOfWork = unitOfWork;
         }
 
         public async Task<Result<Guid>> Handle(Command command, CancellationToken cancellationToken)

@@ -69,6 +69,12 @@ internal sealed class LeaveRequestConfiguration : IEntityTypeConfiguration<Leave
 
         builder.Ignore(leaveRequest => leaveRequest.DaysRequested);
 
+        // Shadow property to hide the concurrency token from the entity class
+        // Optimistic concurrency
+        builder
+            .Property<byte[]>("Version")
+            .IsRowVersion();
+
         // IAuditableEntity
         builder
             .Property(leaveType => leaveType.DateCreated)

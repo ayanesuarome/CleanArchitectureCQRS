@@ -2,6 +2,8 @@
 using CleanArch.Application.Abstractions.Messaging;
 using CleanArch.Domain.Core.Primitives.Result;
 using MediatR;
+using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
 
 namespace CleanArch.Api.Behaviors;
@@ -39,6 +41,20 @@ internal sealed class TransactionBehavior<TRequest, TResponse> : IPipelineBehavi
             await _unitOfWork.SaveChangesAsync();
             await transaction.CommitAsync(cancellationToken);
             return response;
+        }
+        
+        // I would rather use transactions per commands and not from a pipeline
+        catch(DbUpdateException e)
+            //when (e.InnerException is SqlException { SqlState: })
+        {
+            await transaction.RollbackAsync(cancellationToken);
+
+            throw;
+        }
+        // I would rather use transactions per commands and not from a pipeline
+        catch (DbUpdateConcurrencyException)
+        {
+            throw;
         }
         catch (Exception)
         {
