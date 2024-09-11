@@ -26,7 +26,7 @@ internal sealed class BadRequestExceptionHandler(ILogger<BadRequestExceptionHand
 
         ProblemDetails errorDetails = new()
         {
-            Title = badRequestException.Message,
+            Title = "Validation Error",
             Status = StatusCodes.Status400BadRequest,
             Type = nameof(BadRequestException),
             Detail = badRequestException.Message,

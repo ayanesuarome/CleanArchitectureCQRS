@@ -27,18 +27,22 @@ internal sealed class ValidationPipelineBehavior<TRequest, TResponse> : IPipelin
         RequestHandlerDelegate<TResponse> next,
         CancellationToken cancellationToken)
     {
-        if(!_validators.Any())
+        if (!_validators.Any())
         {
             return await next();
         }
 
-        IReadOnlyCollection<Error> errors = _validators
-            .Select(validator => validator.Validate(request))
+        ValidationContext<TRequest> context = new(request);
+
+        FluentValidation.Results.ValidationResult[] validationFailures = await Task.WhenAll(
+            _validators.Select(validator => validator.ValidateAsync(context)));
+
+        IReadOnlyCollection<Error> errors = validationFailures
+            .Where(validationResult => !validationResult.IsValid)
             .SelectMany(validationResult => validationResult.Errors)
-            .Where(validationFailure => validationFailure is not null)
-            .Select(failure => new Error(
-                failure.ErrorCode, // failure.PropertyName or failure.ErrorCode depending on the design
-                failure.ErrorMessage))
+            .Select(validationFailure => new Error(
+                validationFailure.ErrorCode, // validationFailure.PropertyName or failure.ErrorCode depending on the design
+                validationFailure.ErrorMessage))
             .Distinct()
             .ToArray();
 
@@ -46,6 +50,8 @@ internal sealed class ValidationPipelineBehavior<TRequest, TResponse> : IPipelin
         {
             return await next();
         }
+
+        // if using exceptions: throw new ValidationException(errors) and grab it from a middleware error handler
 
         return CreateValidationResult<TResponse>(errors);
     }

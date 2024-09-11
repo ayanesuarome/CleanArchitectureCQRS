@@ -2,7 +2,7 @@
 
 public interface IValidationResult
 {
-    public static Error ValidationError => new("ValidationError", "A validation problem occurred.");
+    public static Error ValidationError => new("ValidationError", "One or more validation failures has occurred.");
 
     IReadOnlyCollection<Error> Errors { get; }
 }
