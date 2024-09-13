@@ -13,7 +13,10 @@ internal sealed class LeaveAllocationConfiguration : IEntityTypeConfiguration<Le
         builder.ToTable(TableNames.LeaveAllocations);
 
         builder.HasKey(leaveAllocation =>  leaveAllocation.Id);
-        
+        builder
+            .Property(leaveAllocation => leaveAllocation.Id)
+            .ValueGeneratedNever();
+
         builder.Property(leaveAllocation => leaveAllocation.Id)
             .HasConversion(
                 leaveAllocationId => leaveAllocationId.Id,

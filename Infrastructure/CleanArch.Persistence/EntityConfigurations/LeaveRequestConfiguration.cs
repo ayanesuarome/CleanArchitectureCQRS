@@ -14,6 +14,9 @@ internal sealed class LeaveRequestConfiguration : IEntityTypeConfiguration<Leave
         builder.ToTable(TableNames.LeaveRequests);
 
         builder.HasKey(leaveRequest => leaveRequest.Id);
+        builder
+            .Property(leaveRequest => leaveRequest.Id)
+            .ValueGeneratedNever();
 
         builder.Property(leaveRequest => leaveRequest.Id)
             .HasConversion(

@@ -13,6 +13,9 @@ internal sealed class LeaveTypeConfiguration : IEntityTypeConfiguration<LeaveTyp
         builder.ToTable(TableNames.LeaveTypes);
 
         builder.HasKey(leaveType => leaveType.Id);
+        builder
+            .Property(leaveType => leaveType.Id)
+            .ValueGeneratedNever();
 
         builder.Property(leaveType => leaveType.Id)
             .HasConversion(

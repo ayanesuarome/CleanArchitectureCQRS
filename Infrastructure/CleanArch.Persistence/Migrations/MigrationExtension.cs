@@ -6,9 +6,9 @@ namespace CleanArch.Persistence.Migrations;
 
 public static class MigrationExtension
 {
-    public static void ApplyMigrations(this WebApplication app)
+    public static void ApplyMigrations(this IApplicationBuilder app)
     {
-        using var scope = app.Services.CreateScope();
+        using IServiceScope scope = app.ApplicationServices.CreateScope();
         CleanArchEFDbContext dbContext = scope.ServiceProvider.GetRequiredService<CleanArchEFDbContext>();
         dbContext.Database.Migrate();
     }
