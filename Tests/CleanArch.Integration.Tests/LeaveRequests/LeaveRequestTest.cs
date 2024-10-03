@@ -85,7 +85,7 @@ public class LeaveRequestTest : BaseIntegrationTest, IAsyncLifetime
     }
 
     [Fact, TestPriority(1)]
-    public async Task CreateHandlerShouldAdd_NewLeaveRequestTo()
+    public async Task CreateHandlerShouldAdd_NewLeaveRequestToDatabase()
     {
         // Arrange
         string startDate = "06/06/2024";
