@@ -1,5 +1,4 @@
-﻿using Bogus;
-using CleanArch.Api.Features.LeaveRequests.CreateLeaveRequests;
+﻿using CleanArch.Api.Features.LeaveRequests.CreateLeaveRequests;
 using CleanArch.Domain.Authentication;
 using CleanArch.Domain.Core.Primitives.Result;
 using CleanArch.Domain.Core.ValueObjects;
@@ -8,7 +7,6 @@ using CleanArch.Domain.LeaveRequests;
 using CleanArch.Domain.LeaveRequests.Events;
 using CleanArch.Domain.LeaveTypes;
 using FluentAssertions;
-using Microsoft.AspNetCore.Identity;
 
 namespace CleanArch.Integration.Tests.LeaveRequests;
 
@@ -34,27 +32,6 @@ public class LeaveRequestTest : BaseIntegrationTest, IAsyncLifetime
     public Task DisposeAsync()
     {
         return Task.CompletedTask;
-    }
-
-    private async Task<User> CreateUser()
-    {
-        Bogus.DataSets.Name name = Faker.Name;
-        Result<UserName> firstNameResult = UserName.Create(name.FirstName());
-        Result<UserName> lastNameResult = UserName.Create(name.LastName());
-        Result<Email> emailResult = Email.Create(Faker.Internet.Email());
-
-        User user = new(firstNameResult.Value, lastNameResult.Value)
-        {
-            Id = Guid.Parse("f8b3c041-3397-43f1-95db-6fd3b5eb2e40"),
-            Email = emailResult.Value,
-            UserName = emailResult.Value,
-            EmailConfirmed = true
-        };
-
-        IdentityResult result = await UserManager.CreateAsync(user, Faker.Internet.Password(prefix: "%"));
-        await UserManager.AddToRoleAsync(user, Roles.Employee.Name);
-
-        return user;
     }
 
     private async Task<LeaveType> CreateLeaveType()

@@ -9,6 +9,7 @@ using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using System.Globalization;
 
 //[assembly: TestCollectionOrderer(TestCollectionPriorityOrderer.TypeName, TestCollectionPriorityOrderer.AssemblyName)]
 
@@ -56,10 +57,11 @@ public abstract class BaseIntegrationTest : IClassFixture<IntegrationTestWebAppF
             Id = Guid.Parse(userId),
             Email = emailResult.Value,
             UserName = emailResult.Value,
-            EmailConfirmed = true
+            EmailConfirmed = true,
+            SecurityStamp = DateTimeOffset.UtcNow.ToString(CultureInfo.InvariantCulture)
         };
 
-        await UserManager.CreateAsync(user, Faker.Internet.Password(prefix: "%"));
+        await UserManager.CreateAsync(user, Faker.Internet.Password(prefix: "%1"));
         await UserManager.AddToRoleAsync(user, Roles.Employee.Name);
 
         return user;
